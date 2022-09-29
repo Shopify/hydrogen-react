@@ -1,4 +1,3 @@
-// test
 export {ExternalVideo} from './ExternalVideo.js';
 export {flattenConnection} from './flatten-connection.js';
 export {Image} from './Image.js';
