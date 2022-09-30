@@ -1,6 +1,6 @@
 # Hydrogen-UI
 
-The monorepo for the Hydrogen-UI suite of libraries, each of which can be found in the `./packages` folder.
+The monorepo for the Hydrogen-UI library; each package can be found in the `./packages` folder.
 
 ## Versioning
 
