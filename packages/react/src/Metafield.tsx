@@ -305,7 +305,7 @@ export function getMeasurementAsString(
   locale = 'en-us',
   options: Intl.NumberFormatOptions = {}
 ) {
-  let measure: {value: number; unit: string} = {
+  let measure: Measurement = {
     value: measurement.value,
     unit: UNIT_MAPPING[measurement.unit],
   };
@@ -321,7 +321,7 @@ export function getMeasurementAsString(
   }).format(measure.value);
 }
 
-function convertToSupportedUnit(value: number, unit: string) {
+function convertToSupportedUnit(value: number, unit: string): Measurement {
   switch (unit) {
     case 'cl':
       return {
