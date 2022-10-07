@@ -1,9 +1,12 @@
-import React, {ComponentProps} from 'react';
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, {ComponentProps, PropsWithChildren} from 'react';
 import {vi} from 'vitest';
 import {renderHook, act} from '@testing-library/react';
-import {useCart} from '../../../hooks/useCart/useCart.js';
-import {ShopifyTestProviders} from '../../../utilities/tests/provider-helpers.js';
-import {getCartMock} from './fixtures.js';
+import {useCart} from '../useCart/useCart.js';
+import {getCartMock, getCartLineMock} from './CartProvider.test.helpers.js';
+import {ShopifyProvider} from '../../ShopifyProvider.js';
+import {getShopifyConfig} from '../../ShopifyProvider.test.js';
 
 const mockUseCartActions = vi.fn();
 
@@ -17,33 +20,30 @@ vi.mock('../hooks.client.js', () => ({
   useCartFetch: mockUseCartFetch,
 }));
 
-import {CartProviderV2} from '../CartProviderV2.client.js';
+import {CartProvider} from '../CartProvider.js';
 import {cartFromGraphQL} from '../useCartAPIStateMachine.client.js';
-import {CountryCode} from '../../../storefront-api-types.js';
+import {CountryCode} from '../../storefront-api-types.js';
 import {CART_ID_STORAGE_KEY} from '../constants.js';
-import {ClientAnalytics} from '../../../foundation/Analytics/ClientAnalytics.js';
-import {CartFragmentFragment} from '../graphql/CartFragment.js';
-import {getCartLineMock} from '../../CartLineProvider/tests/fixtures.js';
 
 function ShopifyCartProvider(
-  props: Omit<ComponentProps<typeof CartProviderV2>, 'children'> = {}
+  props: Omit<ComponentProps<typeof CartProvider>, 'children'> = {}
 ) {
-  return function Wrapper({children}) {
+  return function Wrapper({children}: PropsWithChildren) {
     return (
-      <ShopifyTestProviders>
-        <CartProviderV2 {...props}>{children}</CartProviderV2>
-      </ShopifyTestProviders>
+      <ShopifyProvider shopifyConfig={getShopifyConfig()}>
+        <CartProvider {...props}>{children}</CartProvider>
+      </ShopifyProvider>
     );
   };
 }
 
-const cartMock = getCartMock({buyerIdentity: {countryCode: CountryCode.Us}});
+const cartMock = getCartMock({});
 const cartMockWithLine = {
   ...cartMock,
   lines: {edges: [{node: getCartLineMock()}]},
 };
 
-describe('<CartProviderV2 />', () => {
+describe('<CartProvider />', () => {
   beforeEach(() => {
     mockUseCartActions.mockClear();
     mockUseCartFetch.mockClear();
@@ -67,7 +67,7 @@ describe('<CartProviderV2 />', () => {
         }),
       });
 
-      expect(cartFetchSpy).not.toBeCalled();
+      expect(cartFetchSpy).not.toHaveBeenCalled();
       expect(result.current).toMatchObject({
         status: 'idle',
         ...cartFromGraphQL(cartMock),
@@ -94,7 +94,7 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartFetchSpy).toBeCalledWith('cart-id');
+      expect(cartFetchSpy).toHaveBeenCalledWith('cart-id');
       expect(result.current).toMatchObject({
         status: 'idle',
         ...cartFromGraphQL(cartMock),
@@ -119,7 +119,7 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartFetchSpy).not.toBeCalled();
+      expect(cartFetchSpy).not.toHaveBeenCalled();
       expect(result.current).toMatchObject({
         status: 'uninitialized',
         lines: expect.arrayContaining([]),
@@ -132,7 +132,7 @@ describe('<CartProviderV2 />', () => {
 
       const result = await useCartWithInitializedCart();
 
-      expect(spy).toBeCalledWith(CART_ID_STORAGE_KEY, result.current.id);
+      expect(spy).toHaveBeenCalledWith(CART_ID_STORAGE_KEY, result.current.id);
     });
 
     it('deletes cart id on cart completion', async () => {
@@ -153,13 +153,13 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartFetchSpy).toBeCalledWith('cart-id');
+      expect(cartFetchSpy).toHaveBeenCalledWith('cart-id');
       expect(result.current).toMatchObject({
         status: 'idle',
         lines: [],
       });
 
-      expect(spy).toBeCalledWith(CART_ID_STORAGE_KEY);
+      expect(spy).toHaveBeenCalledWith(CART_ID_STORAGE_KEY);
     });
   });
 
@@ -186,7 +186,7 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartCreateSpy).toBeCalledTimes(1);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(1);
 
       expect(result.current).toMatchObject({
         status: 'idle',
@@ -217,53 +217,12 @@ describe('<CartProviderV2 />', () => {
         result.current.cartCreate({});
       });
 
-      expect(onCartCreateSpy).toBeCalledTimes(1);
-      expect(onCartCreateCompleteSpy).toBeCalledTimes(0);
+      expect(onCartCreateSpy).toHaveBeenCalledTimes(1);
+      expect(onCartCreateCompleteSpy).toHaveBeenCalledTimes(0);
 
       await act(async () => {});
 
-      expect(onCartCreateCompleteSpy).toBeCalledTimes(1);
-    });
-
-    it('sends analytics event after creating a cart', async () => {
-      const cartCreateSpy = vi.fn(async () => ({
-        data: {cartCreate: {cart: cartMockWithLine}},
-      }));
-
-      const ClientAnalyticsSpy = vi.spyOn(ClientAnalytics, 'publish');
-
-      mockUseCartActions.mockReturnValue({
-        cartCreate: cartCreateSpy,
-      });
-
-      const {result} = renderHook(() => useCart(), {
-        wrapper: ShopifyCartProvider(),
-      });
-
-      const cartInput = {
-        lines: [
-          {
-            merchandiseId: cartMockWithLine.lines.edges[0].node.merchandise.id,
-          },
-        ],
-      };
-
-      act(() => {
-        result.current.cartCreate(cartInput);
-      });
-
-      await act(async () => {});
-
-      expect(ClientAnalyticsSpy).toHaveBeenCalledTimes(1);
-      expect(ClientAnalyticsSpy).toHaveBeenCalledWith(
-        ClientAnalytics.eventNames.ADD_TO_CART,
-        true,
-        {
-          addedCartLines: cartInput.lines,
-          cart: cartMockWithLine,
-          prevCart: null,
-        }
-      );
+      expect(onCartCreateCompleteSpy).toHaveBeenCalledTimes(1);
     });
 
     it('creates a cart when adding a cart line', async () => {
@@ -397,7 +356,7 @@ describe('<CartProviderV2 />', () => {
   });
 
   describe('idle', () => {
-    describe('adds cart line', async () => {
+    describe('adds cart line', () => {
       it('resolves', async () => {
         const cartLineAddSpy = vi.fn(async () => ({
           data: {cartLinesAdd: {cart: cartMock}},
@@ -420,7 +379,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(cartLineAddSpy).toBeCalledTimes(1);
+        expect(cartLineAddSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -478,48 +437,16 @@ describe('<CartProviderV2 />', () => {
           ]);
         });
 
-        expect(onLineAddSpy).toBeCalledTimes(1);
+        expect(onLineAddSpy).toHaveBeenCalledTimes(1);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onLineAddCompleteSpy).toBeCalledTimes(1);
-      });
-
-      it('send analytics event after adding a cart line', async () => {
-        const cartLineAddSpy = vi.fn(async () => ({
-          data: {cartLinesAdd: {cart: cartMockWithLine}},
-        }));
-
-        const result = await useCartWithInitializedCart({
-          cartLineAdd: cartLineAddSpy,
-        });
-
-        const cartLinesInput = [{merchandiseId: '123'}];
-
-        const clientAnalyticsSpy = vi.spyOn(ClientAnalytics, 'publish');
-
-        act(() => {
-          result.current.linesAdd(cartLinesInput);
-        });
-
-        // wait till idle
-        await act(async () => {});
-
-        expect(clientAnalyticsSpy).toHaveBeenCalledTimes(1);
-        expect(clientAnalyticsSpy).toHaveBeenLastCalledWith(
-          ClientAnalytics.eventNames.ADD_TO_CART,
-          true,
-          {
-            addedCartLines: cartLinesInput,
-            cart: cartMockWithLine,
-            prevCart: cartFromGraphQL(cartMock),
-          }
-        );
+        expect(onLineAddCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('updates cartline', async () => {
+    describe('updates cartline', () => {
       it('resolves', async () => {
         const cartLineUpdateSpy = vi.fn(async () => ({
           data: {cartLinesUpdate: {cart: cartMock}},
@@ -543,7 +470,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(cartLineUpdateSpy).toBeCalledTimes(1);
+        expect(cartLineUpdateSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -603,50 +530,17 @@ describe('<CartProviderV2 />', () => {
           ]);
         });
 
-        expect(onLineUpdateSpy).toBeCalledTimes(1);
-        expect(onLineUpdateCompleteSpy).toBeCalledTimes(0);
+        expect(onLineUpdateSpy).toHaveBeenCalledTimes(1);
+        expect(onLineUpdateCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onLineUpdateCompleteSpy).toBeCalledTimes(1);
-      });
-
-      it('send analytics event after updating a cart line', async () => {
-        const cartLineUpdateSpy = vi.fn(async () => ({
-          data: {cartLinesUpdate: {cart: cartMockWithLine}},
-        }));
-
-        const result = await useCartWithInitializedCart({
-          cartLineUpdate: cartLineUpdateSpy,
-        });
-
-        const cartLinesInput = [{id: '123', merchandiseId: '123', quantity: 2}];
-
-        const clientAnalyticsSpy = vi.spyOn(ClientAnalytics, 'publish');
-
-        act(() => {
-          result.current.linesUpdate(cartLinesInput);
-        });
-
-        // wait till idle
-        await act(async () => {});
-
-        expect(clientAnalyticsSpy).toHaveBeenCalledTimes(1);
-        expect(clientAnalyticsSpy).toHaveBeenLastCalledWith(
-          ClientAnalytics.eventNames.UPDATE_CART,
-          true,
-          {
-            updatedCartLines: cartLinesInput,
-            cart: cartMockWithLine,
-            prevCart: cartFromGraphQL(cartMock),
-            oldCart: cartFromGraphQL(cartMock),
-          }
-        );
+        expect(onLineUpdateCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('removes cartline', async () => {
+    describe('removes cartline', () => {
       it('resolves', async () => {
         const cartLineRemoveSpy = vi.fn(async () => ({
           data: {cartLinesRemove: {cart: cartMock}},
@@ -665,7 +559,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(cartLineRemoveSpy).toBeCalledTimes(1);
+        expect(cartLineRemoveSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -714,54 +608,17 @@ describe('<CartProviderV2 />', () => {
           result.current.linesRemove(['123']);
         });
 
-        expect(onLineRemoveSpy).toBeCalledTimes(1);
-        expect(onLineRemoveCompleteSpy).toBeCalledTimes(0);
+        expect(onLineRemoveSpy).toHaveBeenCalledTimes(1);
+        expect(onLineRemoveCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onLineRemoveCompleteSpy).toBeCalledTimes(1);
-      });
-
-      it('send analytics event after removing a cart line', async () => {
-        const cartCreateSpy = vi.fn(async () => ({
-          data: {cartCreate: {cart: cartMockWithLine}},
-        }));
-
-        const cartLineRemoveSpy = vi.fn(async () => ({
-          data: {cartLinesRemove: {cart: cartMock}},
-        }));
-
-        const result = await useCartWithInitializedCart({
-          cartCreate: cartCreateSpy,
-          cartLineRemove: cartLineRemoveSpy,
-        });
-
-        const clientAnalyticsSpy = vi.spyOn(ClientAnalytics, 'publish');
-
-        const cartLineIds = ['123'];
-
-        act(() => {
-          result.current.linesRemove(cartLineIds);
-        });
-
-        // wait till idle
-        await act(async () => {});
-
-        expect(clientAnalyticsSpy).toHaveBeenCalledTimes(1);
-        expect(clientAnalyticsSpy).toHaveBeenLastCalledWith(
-          ClientAnalytics.eventNames.REMOVE_FROM_CART,
-          true,
-          {
-            removedCartLines: cartLineIds,
-            cart: cartMock,
-            prevCart: cartFromGraphQL(cartMockWithLine),
-          }
-        );
+        expect(onLineRemoveCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('note update', async () => {
+    describe('note update', () => {
       it('resolves', async () => {
         const noteUpdateSpy = vi.fn(async () => ({
           data: {cartNoteUpdate: {cart: cartMock}},
@@ -780,7 +637,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(noteUpdateSpy).toBeCalledTimes(1);
+        expect(noteUpdateSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -829,17 +686,17 @@ describe('<CartProviderV2 />', () => {
           result.current.noteUpdate('test note');
         });
 
-        expect(onNoteUpdateSpy).toBeCalledTimes(1);
-        expect(onNoteUpdateCompleteSpy).toBeCalledTimes(0);
+        expect(onNoteUpdateSpy).toHaveBeenCalledTimes(1);
+        expect(onNoteUpdateCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onNoteUpdateCompleteSpy).toBeCalledTimes(1);
+        expect(onNoteUpdateCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('buyer identity update', async () => {
+    describe('buyer identity update', () => {
       it('resolves', async () => {
         const buyerIdentityUpdateSpy = vi.fn(async () => ({
           data: {cartBuyerIdentityUpdate: {cart: cartMock}},
@@ -850,7 +707,7 @@ describe('<CartProviderV2 />', () => {
         });
 
         act(() => {
-          result.current.buyerIdentityUpdate({countryCode: CountryCode.Us});
+          result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
         expect(result.current.status).toEqual('updating');
@@ -858,7 +715,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(buyerIdentityUpdateSpy).toBeCalledTimes(1);
+        expect(buyerIdentityUpdateSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -877,7 +734,7 @@ describe('<CartProviderV2 />', () => {
         });
 
         act(() => {
-          result.current.buyerIdentityUpdate({countryCode: CountryCode.Us});
+          result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
         // wait till idle
@@ -904,20 +761,20 @@ describe('<CartProviderV2 />', () => {
         );
 
         act(() => {
-          result.current.buyerIdentityUpdate({countryCode: CountryCode.Us});
+          result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
-        expect(onBuyerIdentityUpdateSpy).toBeCalledTimes(1);
-        expect(onBuyerIdentityUpdateCompleteSpy).toBeCalledTimes(0);
+        expect(onBuyerIdentityUpdateSpy).toHaveBeenCalledTimes(1);
+        expect(onBuyerIdentityUpdateCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onBuyerIdentityUpdateCompleteSpy).toBeCalledTimes(1);
+        expect(onBuyerIdentityUpdateCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('cart attributes update', async () => {
+    describe('cart attributes update', () => {
       it('resolves', async () => {
         const cartAttributesUpdateSpy = vi.fn(async () => ({
           data: {cartAttributesUpdate: {cart: cartMock}},
@@ -936,7 +793,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(cartAttributesUpdateSpy).toBeCalledTimes(1);
+        expect(cartAttributesUpdateSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -985,17 +842,17 @@ describe('<CartProviderV2 />', () => {
           result.current.cartAttributesUpdate([{key: 'key', value: 'value'}]);
         });
 
-        expect(onCartAttributesUpdateSpy).toBeCalledTimes(1);
-        expect(onCartAttributesUpdateCompleteSpy).toBeCalledTimes(0);
+        expect(onCartAttributesUpdateSpy).toHaveBeenCalledTimes(1);
+        expect(onCartAttributesUpdateCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onCartAttributesUpdateCompleteSpy).toBeCalledTimes(1);
+        expect(onCartAttributesUpdateCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
-    describe('discount update', async () => {
+    describe('discount update', () => {
       it('resolves', async () => {
         const discountCodesUpdateSpy = vi.fn(async () => ({
           data: {cartDiscountCodesUpdate: {cart: cartMock}},
@@ -1014,7 +871,7 @@ describe('<CartProviderV2 />', () => {
         // wait till idle
         await act(async () => {});
 
-        expect(discountCodesUpdateSpy).toBeCalledTimes(1);
+        expect(discountCodesUpdateSpy).toHaveBeenCalledTimes(1);
         expect(result.current).toMatchObject({
           status: 'idle',
           ...cartFromGraphQL(cartMock),
@@ -1064,48 +921,13 @@ describe('<CartProviderV2 />', () => {
           result.current.discountCodesUpdate(['DiscountCode']);
         });
 
-        expect(onDiscountUpdateSpy).toBeCalledTimes(1);
-        expect(onDiscountUpdateCompleteSpy).toBeCalledTimes(0);
+        expect(onDiscountUpdateSpy).toHaveBeenCalledTimes(1);
+        expect(onDiscountUpdateCompleteSpy).toHaveBeenCalledTimes(0);
 
         // wait till idle
         await act(async () => {});
 
-        expect(onDiscountUpdateCompleteSpy).toBeCalledTimes(1);
-      });
-
-      it('sends analytics event on discount codes update', async () => {
-        const discountCodes = ['DiscountCode'];
-        const cartWithDiscountCode: CartFragmentFragment = {
-          ...cartMock,
-          discountCodes: [{code: discountCodes[0], applicable: true}],
-        };
-        const discountCodesUpdateSpy = vi.fn(async () => ({
-          data: {cartDiscountCodesUpdate: {cart: cartWithDiscountCode}},
-        }));
-
-        const result = await useCartWithInitializedCart({
-          discountCodesUpdate: discountCodesUpdateSpy,
-        });
-
-        const clientAnalyticsSpy = vi.spyOn(ClientAnalytics, 'publish');
-
-        act(() => {
-          result.current.discountCodesUpdate(discountCodes);
-        });
-
-        // wait till idle
-        await act(async () => {});
-
-        expect(clientAnalyticsSpy).toHaveBeenCalledTimes(1);
-        expect(clientAnalyticsSpy).toHaveBeenLastCalledWith(
-          ClientAnalytics.eventNames.DISCOUNT_CODE_UPDATED,
-          true,
-          {
-            updatedDiscountCodes: discountCodes,
-            cart: cartWithDiscountCode,
-            prevCart: cartFromGraphQL(cartMock),
-          }
-        );
+        expect(onDiscountUpdateCompleteSpy).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -1135,7 +957,7 @@ describe('<CartProviderV2 />', () => {
     });
   });
 
-  describe('creates cart', async () => {
+  describe('creates cart', () => {
     it('resolves', async () => {
       const cartCreateSpy = vi.fn(async () => ({
         data: {cartCreate: {cart: cartMock}},
@@ -1155,7 +977,7 @@ describe('<CartProviderV2 />', () => {
       await act(async () => {});
 
       // our setup function also is called once to create
-      expect(cartCreateSpy).toBeCalledTimes(2);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(2);
       expect(result.current).toMatchObject({
         status: 'idle',
         ...cartFromGraphQL(cartMock),
@@ -1210,9 +1032,9 @@ describe('<CartProviderV2 />', () => {
     });
   });
 
-  describe('countryCode', async () => {
+  describe('countryCode', () => {
     it('creates a cart with countryCode from props', async () => {
-      const mockCountryCode = CountryCode.Ca;
+      const mockCountryCode = 'CA';
       const cartWithCountry = {
         ...cartMock,
         buyerIdentity: {countryCode: mockCountryCode},
@@ -1233,15 +1055,15 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartCreateSpy).toBeCalledTimes(1);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(1);
       expect(cartCreateSpy).toHaveBeenCalledWith({
         buyerIdentity: {countryCode: mockCountryCode},
       });
     });
 
     it('creates a cart with countryCode from cartCreate input instead of props', async () => {
-      const mockCountryCode = CountryCode.Ca;
-      const mockCountryCodeServerProps = CountryCode.Us;
+      const mockCountryCode = 'CA';
+      const mockCountryCodeServerProps = 'US';
       const cartWithCountry = {
         ...cartMock,
         buyerIdentity: {countryCode: mockCountryCode},
@@ -1270,7 +1092,7 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartCreateSpy).toBeCalledTimes(1);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(1);
       expect(cartCreateSpy).toHaveBeenCalledWith({
         buyerIdentity: {countryCode: mockCountryCode},
       });
@@ -1288,8 +1110,8 @@ describe('<CartProviderV2 />', () => {
        * It will always take precendence and the country code will not get
        * updated.
        */
-      const mockCountryCode = CountryCode.Ca;
-      const mockCountryCodeServerProps = CountryCode.Us;
+      const mockCountryCode = 'CA';
+      const mockCountryCodeServerProps = 'US';
       const cartWithCountryCa = {
         ...cartMock,
         buyerIdentity: {countryCode: mockCountryCode},
@@ -1329,13 +1151,13 @@ describe('<CartProviderV2 />', () => {
     });
   });
 
-  describe('customerAccessToken', async () => {
+  describe('customerAccessToken', () => {
     it('creates a cart with customerAccessToken from props', async () => {
       const mockCustomerAccessToken = 'access token test';
       const cartWithCustomer = {
         ...cartMock,
         buyerIdentity: {
-          countryCode: CountryCode.Us,
+          countryCode: 'US',
           customer: {email: 'test@test.com'},
         },
       };
@@ -1357,10 +1179,10 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartCreateSpy).toBeCalledTimes(1);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(1);
       expect(cartCreateSpy).toHaveBeenCalledWith({
         buyerIdentity: {
-          countryCode: CountryCode.Us,
+          countryCode: 'US',
           customerAccessToken: mockCustomerAccessToken,
         },
       });
@@ -1372,7 +1194,7 @@ describe('<CartProviderV2 />', () => {
       const cartWithCustomer = {
         ...cartMock,
         buyerIdentity: {
-          countryCode: CountryCode.Us,
+          countryCode: 'US',
           customer: {email: 'test@test.com'},
         },
       };
@@ -1398,10 +1220,10 @@ describe('<CartProviderV2 />', () => {
 
       await act(async () => {});
 
-      expect(cartCreateSpy).toBeCalledTimes(1);
+      expect(cartCreateSpy).toHaveBeenCalledTimes(1);
       expect(cartCreateSpy).toHaveBeenCalledWith({
         buyerIdentity: {
-          countryCode: CountryCode.Us,
+          countryCode: 'US',
           customerAccessToken: mockCustomerAccessToken,
         },
       });
@@ -1602,9 +1424,10 @@ describe('<CartProviderV2 />', () => {
 
     mockUseCartFetch.mockReturnValue(fetchCartSpy);
 
-    const cartActions = await vi.importActual('../CartActions.client.js');
+    const cartActions = await vi.importActual<{useCartActions: () => void}>(
+      '../CartActions.client.js'
+    );
 
-    // @ts-ignore
     mockUseCartActions.mockImplementation(cartActions.useCartActions);
 
     const {result} = renderHook(() => useCart(), {
@@ -1617,7 +1440,7 @@ describe('<CartProviderV2 />', () => {
 
     await act(async () => {});
 
-    expect(fetchCartSpy).toBeCalledWith(
+    expect(fetchCartSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         query: expect.stringContaining(cartFragmentMock),
       })
@@ -1627,10 +1450,7 @@ describe('<CartProviderV2 />', () => {
 
 async function useCartWithInitializedCart(
   cartActionsMocks = {},
-  cartProviderProps: Omit<
-    ComponentProps<typeof CartProviderV2>,
-    'children'
-  > = {}
+  cartProviderProps: Omit<ComponentProps<typeof CartProvider>, 'children'> = {}
 ) {
   const cartCreateSpy = vi.fn(async () => ({
     data: {cartCreate: {cart: cartMock}},

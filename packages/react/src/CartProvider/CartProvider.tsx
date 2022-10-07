@@ -14,26 +14,20 @@ import {
   CartLineInput,
   CartLineUpdateInput,
   CountryCode,
-} from '../../storefront-api-types.js';
+} from '../storefront-api-types.js';
 import {CartContext} from './context.js';
 import {
   BuyerIdentityUpdateEvent,
-  CartCreateEvent,
-  CartLineAddEvent,
-  CartLineRemoveEvent,
-  CartLineUpdateEvent,
   CartMachineContext,
   CartMachineEvent,
   CartMachineTypeState,
   CartWithActions,
-  DiscountCodesUpdateEvent,
 } from './types.js';
 import {CartNoteUpdateMutationVariables} from './graphql/CartNoteUpdateMutation.js';
 import {useCartAPIStateMachine} from './useCartAPIStateMachine.client.js';
 import {CART_ID_STORAGE_KEY} from './constants.js';
-import {ClientAnalytics} from '../../foundation/Analytics/ClientAnalytics.js';
 
-export function CartProviderV2({
+export function CartProvider({
   children,
   numCartLines,
   onCreate,
@@ -55,7 +49,7 @@ export function CartProviderV2({
   data: cart,
   cartFragment = defaultCartFragment,
   customerAccessToken,
-  countryCode = CountryCode.Us,
+  countryCode = 'US',
 }: {
   /** Any `ReactNode` elements. */
   children: React.ReactNode;
@@ -192,16 +186,12 @@ export function CartProviderV2({
           case 'RESOLVE':
             switch (cartActionEvent.type) {
               case 'CART_CREATE':
-                publishCreateAnalytics(context, cartActionEvent);
                 return onCreateComplete?.();
               case 'CARTLINE_ADD':
-                publishLineAddAnalytics(context, cartActionEvent);
                 return onLineAddComplete?.();
               case 'CARTLINE_REMOVE':
-                publishLineRemoveAnalytics(context, cartActionEvent);
                 return onLineRemoveComplete?.();
               case 'CARTLINE_UPDATE':
-                publishLineUpdateAnalytics(context, cartActionEvent);
                 return onLineUpdateComplete?.();
               case 'NOTE_UPDATE':
                 return onNoteUpdateComplete?.();
@@ -213,7 +203,6 @@ export function CartProviderV2({
               case 'CART_ATTRIBUTES_UPDATE':
                 return onAttributesUpdateComplete?.();
               case 'DISCOUNT_CODES_UPDATE':
-                publishDiscountCodesUpdateAnalytics(context, cartActionEvent);
                 return onDiscountCodesUpdateComplete?.();
             }
         }
@@ -517,67 +506,6 @@ function countryCodeNotUpdated(
     event.payload.buyerIdentity.countryCode &&
     context.cart?.buyerIdentity?.countryCode !==
       event.payload.buyerIdentity.countryCode
-  );
-}
-
-// Cart Analytics
-function publishCreateAnalytics(
-  context: CartMachineContext,
-  event: CartCreateEvent
-) {
-  ClientAnalytics.publish(ClientAnalytics.eventNames.ADD_TO_CART, true, {
-    addedCartLines: event.payload.lines,
-    cart: context.rawCartResult,
-    prevCart: null,
-  });
-}
-
-function publishLineAddAnalytics(
-  context: CartMachineContext,
-  event: CartLineAddEvent
-) {
-  ClientAnalytics.publish(ClientAnalytics.eventNames.ADD_TO_CART, true, {
-    addedCartLines: event.payload.lines,
-    cart: context.rawCartResult,
-    prevCart: context.prevCart,
-  });
-}
-
-function publishLineUpdateAnalytics(
-  context: CartMachineContext,
-  event: CartLineUpdateEvent
-) {
-  ClientAnalytics.publish(ClientAnalytics.eventNames.UPDATE_CART, true, {
-    updatedCartLines: event.payload.lines,
-    oldCart: context.prevCart,
-    cart: context.rawCartResult,
-    prevCart: context.prevCart,
-  });
-}
-
-function publishLineRemoveAnalytics(
-  context: CartMachineContext,
-  event: CartLineRemoveEvent
-) {
-  ClientAnalytics.publish(ClientAnalytics.eventNames.REMOVE_FROM_CART, true, {
-    removedCartLines: event.payload.lines,
-    cart: context.rawCartResult,
-    prevCart: context.prevCart,
-  });
-}
-
-function publishDiscountCodesUpdateAnalytics(
-  context: CartMachineContext,
-  event: DiscountCodesUpdateEvent
-) {
-  ClientAnalytics.publish(
-    ClientAnalytics.eventNames.DISCOUNT_CODE_UPDATED,
-    true,
-    {
-      updatedDiscountCodes: event.payload.discountCodes,
-      cart: context.rawCartResult,
-      prevCart: context.prevCart,
-    }
   );
 }
 

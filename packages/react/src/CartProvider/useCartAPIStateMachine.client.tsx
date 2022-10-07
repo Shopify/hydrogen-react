@@ -10,11 +10,11 @@ import {
   CartMachineFetchResultEvent,
   CartMachineTypeState,
 } from './types.js';
-import {flattenConnection} from '../../utilities/flattenConnection/index.js';
+import {flattenConnection} from '../flatten-connection.js';
 import {useCartActions} from './CartActions.client.js';
 import {useMemo} from 'react';
 import {InitEvent} from '@xstate/fsm/lib/types.js';
-import {CountryCode} from '../../storefront-api-types.js';
+import {CountryCode} from '../storefront-api-types.js';
 
 function invokeCart(
   action: keyof CartMachineActions,
@@ -378,6 +378,7 @@ export function cartFromGraphQL(cart: CartFragmentFragment): Cart {
 function eventFromFetchResult(
   cartActionEvent: CartMachineActionEvent,
   cart?: CartFragmentFragment | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors?: any
 ): CartMachineFetchResultEvent {
   if (errors) {

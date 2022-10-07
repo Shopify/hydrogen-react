@@ -5,7 +5,7 @@ import {
   MutationCartNoteUpdateArgs,
   CartBuyerIdentityInput,
   MutationCartAttributesUpdateArgs,
-} from '../../storefront-api-types.js';
+} from '../storefront-api-types.js';
 import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {StateMachine} from '@xstate/fsm';
 
@@ -84,6 +84,7 @@ export type CartAction =
   | {type: 'cartAttributesUpdate'}
   | {type: 'discountCodesUpdate'}
   | {type: 'resolve'; cart: Cart; rawCartResult?: CartFragmentFragment}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | {type: 'reject'; errors: any}
   | {type: 'resetCart'};
 
@@ -95,6 +96,7 @@ export type CartMachineContext = {
   lastValidCart?: Cart;
   rawCartResult?: CartFragmentFragment;
   prevCart?: Cart;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors?: any;
 };
 
@@ -190,6 +192,7 @@ export type CartMachineFetchResultEvent =
     }
   | {
       type: 'ERROR';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       payload: {cartActionEvent: CartMachineActionEvent; errors: any};
     };
 
@@ -204,6 +207,7 @@ export type CartMachineTypeState =
         cart: undefined;
         lastValidCart: undefined;
         prevCart: undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors?: any;
       };
     }
@@ -213,6 +217,7 @@ export type CartMachineTypeState =
         cart: undefined;
         lastValidCart: undefined;
         prevCart: undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors: any;
       };
     }
@@ -222,6 +227,7 @@ export type CartMachineTypeState =
         cart: undefined;
         prevCart?: Cart;
         lastValidCart: undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors: any;
       };
     }
@@ -231,6 +237,7 @@ export type CartMachineTypeState =
         cart: Cart;
         prevCart?: Cart;
         lastValidCart?: Cart;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors?: any;
       };
     }
@@ -240,6 +247,7 @@ export type CartMachineTypeState =
         cart?: Cart;
         prevCart?: Cart;
         lastValidCart?: Cart;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors: any;
       };
     }

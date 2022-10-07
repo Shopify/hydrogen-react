@@ -6,7 +6,7 @@ import {
   CartLineInput,
   CartLineUpdateInput,
   CountryCode,
-} from '../../storefront-api-types.js';
+} from '../storefront-api-types.js';
 import {
   CartAttributesUpdate,
   CartBuyerIdentityUpdate,
@@ -61,7 +61,7 @@ import {useCartFetch} from './hooks.client.js';
 export function useCartActions({
   numCartLines,
   cartFragment,
-  countryCode = CountryCode.Us,
+  countryCode = 'US',
 }: {
   /**  Maximum number of cart lines to fetch. Defaults to 250 cart lines. */
   numCartLines?: number;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {useShop} from '../../foundation/index.js';
-import {flattenConnection} from '../../utilities/index.js';
-import {CartInput} from '../../storefront-api-types.js';
+import {useShop} from '../ShopifyProvider.js';
+import {flattenConnection} from '../flatten-connection.js';
+import {CartInput} from '../storefront-api-types.js';
 import {CartCreate, defaultCartFragment} from './cart-queries.js';
 import {
   CartCreateMutation,
@@ -15,7 +15,7 @@ import {
   SHOPIFY_STOREFRONT_S_HEADER,
   SHOPIFY_Y,
   SHOPIFY_S,
-} from '../../constants.js';
+} from './constants.js';
 import {parse} from 'worktop/cookie';
 
 export function useCartFetch() {
