@@ -100,7 +100,7 @@ However, when the body is only a query string, such as `{"..."}`, you can option
 createStorefrontClient({contentType: 'graphql', ...})
 ```
 
-Alternatively, each time you get the headers you can customize which `"content-type"` you want, just for that one invocation:
+Alternatively, each time you get the headers you can customize which `"content-type"` you want, for only that one invocation:
 
 ```ts
 getPrivateTokenHeaders({contentType: 'graphql'});
