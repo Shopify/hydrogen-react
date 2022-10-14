@@ -82,15 +82,25 @@ export async function getServerSideProps() {
 }
 ```
 
-### Set the content type for the Storefront client
+### (Optional) Set the content type for the Storefront client
 
-By default, the Storefront client sends the `"content-type": "application/json"` header. You can change this to `application/graphql`.
+By default, the Storefront client sends the `"content-type": "application/json"` header. Use the `json` content type when you have GraphQL variables and when the body is an object with the following shape:
+
+```json
+{
+  "query": "...",
+  "operationName": "...",
+  "variables": { "myVariable": "someValue", ... }
+}
+```
+
+However, when the body is only a query string, such as `{"..."}`, you can optionally change the default header to `application/graphql`:
 
 ```ts
 createStorefrontClient({contentType: 'graphql', ...})
 ```
 
-Alternatively, each time you get the headers you can customize which `"content-type"` you want, for only that one invocation:
+Alternatively, each time you get the headers you can customize which `"content-type"` you want, just for that one invocation:
 
 ```ts
 getPrivateTokenHeaders({contentType: 'graphql'});
