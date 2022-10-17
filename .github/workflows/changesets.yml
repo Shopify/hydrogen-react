@@ -68,7 +68,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: yarn changeset version --snapshot next
-          publish: yarn changeset publish --tag next > publish.output.txt
+          publish: yarn changeset publish --tag next
           commit: '[ci] release ${{ github.ref_name }}'
           title: '[ci] release ${{ github.ref_name }}'
         env:
