@@ -1,6 +1,5 @@
-import {flattenConnection} from '../flatten-connection.js';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
-import {getPrice} from '../Money.test.helpers.js';
+import {flattenConnection} from './flatten-connection.js';
+import {getPrice} from './Money.test.helpers.js';
 
 const CurrencyCode = {
   Usd: 'USD',

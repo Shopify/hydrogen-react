@@ -7,7 +7,7 @@ import {
   CartCreateMutation,
   CartCreateMutationVariables,
 } from './graphql/CartCreateMutation.js';
-import {Cart} from './types.js';
+import {Cart} from './cart-types.js';
 import {
   SHOPIFY_STOREFRONT_ID_HEADER,
   STOREFRONT_API_PUBLIC_TOKEN_HEADER,

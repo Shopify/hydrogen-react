@@ -8,12 +8,12 @@ import {
   CartMachineEvent,
   CartMachineFetchResultEvent,
   CartMachineTypeState,
-} from './types.js';
-import {flattenConnection} from '../flatten-connection.js';
+} from './cart-types.js';
+import {flattenConnection} from './flatten-connection.js';
 import {useCartActions} from './CartActions.client.js';
 import {useMemo} from 'react';
 import {InitEvent} from '@xstate/fsm/lib/types.js';
-import {CountryCode, Cart as CartType} from '../storefront-api-types.js';
+import {CountryCode, Cart as CartType} from './storefront-api-types.js';
 import type {PartialDeep} from 'type-fest';
 
 function invokeCart(
@@ -123,7 +123,9 @@ const UPDATING_CART_EVENTS: StateMachine.Machine<
   },
 };
 
-function createCartMachine(initialCart?: PartialDeep<CartType>) {
+function createCartMachine(
+  initialCart?: PartialDeep<CartType, {recurseIntoArrays: true}>
+) {
   return createMachine<
     CartMachineContext,
     CartMachineEvent,
@@ -194,7 +196,7 @@ export function useCartAPIStateMachine({
     event: CartMachineFetchResultEvent
   ) => void;
   /** An object with fields that correspond to the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart). */
-  data?: PartialDeep<CartType>;
+  data?: PartialDeep<CartType, {recurseIntoArrays: true}>;
   /** A fragment used to query the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart) for all queries and mutations. A default value is used if no argument is provided. */
   cartFragment: string;
   /** The ISO country code for i18n. */
@@ -371,17 +373,19 @@ export function useCartAPIStateMachine({
   return useMemo(() => [state, send, service] as const, [state, send, service]);
 }
 
-export function cartFromGraphQL(cart: PartialDeep<CartType>): Cart {
+export function cartFromGraphQL(
+  cart: PartialDeep<CartType, {recurseIntoArrays: true}>
+): Cart {
   return {
     ...cart,
-    lines: flattenConnection(cart.lines),
+    lines: flattenConnection(cart?.lines),
     note: cart.note ?? undefined,
   };
 }
 
 function eventFromFetchResult(
   cartActionEvent: CartMachineActionEvent,
-  cart?: PartialDeep<CartType> | null,
+  cart?: PartialDeep<CartType, {recurseIntoArrays: true}> | null,
   errors?: unknown
 ): CartMachineFetchResultEvent {
   if (errors) {

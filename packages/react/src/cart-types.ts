@@ -1,40 +1,41 @@
 import {
   Cart as CartType,
   CartInput,
+  CartLine,
   CartLineInput,
   CartLineUpdateInput,
   MutationCartNoteUpdateArgs,
   CartBuyerIdentityInput,
   MutationCartAttributesUpdateArgs,
-} from '../storefront-api-types.js';
-// import {CartFragmentFragment} from './graphql/CartFragment.js';
+} from './storefront-api-types.js';
 import {StateMachine} from '@xstate/fsm';
 import type {PartialDeep} from 'type-fest';
 
-type CartFragmentFragment = PartialDeep<CartType>;
-
 export type Status = State['status'];
 
-export interface Cart {
-  /** The cart's ID if it has been created through the Storefront API. */
-  id?: string;
-  /** The cart lines. */
-  lines: CartFragmentFragment['lines']['edges'][1]['node'][];
-  /** The checkout URL for the cart, if the cart has been created in the Storefront API. */
-  checkoutUrl?: string;
-  /** The cart's note. */
-  note?: string;
-  /** The cart's buyer identity. */
-  buyerIdentity?: CartFragmentFragment['buyerIdentity'];
-  /** The cart's attributes. */
-  attributes: CartFragmentFragment['attributes'];
-  /** The discount codes applied to the cart. */
-  discountCodes?: CartFragmentFragment['discountCodes'];
-  /** The cost for the cart, including the subtotal, total, taxes, and duties. */
-  cost?: CartFragmentFragment['cost'];
-  /** The total number of items in the cart, across all lines. If there are no lines, then the value is 0. */
-  totalQuantity: number;
-}
+export type Cart = PartialDeep<
+  {
+    /** The cart's ID if it has been created through the Storefront API. */
+    id?: string;
+    /** The cart lines. */
+    lines: CartLine[];
+    /** The checkout URL for the cart, if the cart has been created in the Storefront API. */
+    checkoutUrl?: string;
+    /** The cart's note. */
+    note?: string;
+    /** The cart's buyer identity. */
+    buyerIdentity?: CartType['buyerIdentity'];
+    /** The cart's attributes. */
+    attributes: CartType['attributes'];
+    /** The discount codes applied to the cart. */
+    discountCodes?: CartType['discountCodes'];
+    /** The cost for the cart, including the subtotal, total, taxes, and duties. */
+    cost?: CartType['cost'];
+    /** The total number of items in the cart, across all lines. If there are no lines, then the value is 0. */
+    totalQuantity: number;
+  },
+  {recurseIntoArrays: true}
+>;
 
 export interface CartWithActions extends Cart {
   /** The status of the cart. This returns 'uninitialized' when the cart is not yet created, `creating` when the cart is being created, `fetching` when an existing cart is being fetched, `updating` when the cart is updating, and `idle` when the cart isn't being created or updated. */
@@ -87,7 +88,11 @@ export type CartAction =
   | {type: 'buyerIdentityUpdate'}
   | {type: 'cartAttributesUpdate'}
   | {type: 'discountCodesUpdate'}
-  | {type: 'resolve'; cart: Cart; rawCartResult?: CartFragmentFragment}
+  | {
+      type: 'resolve';
+      cart: Cart;
+      rawCartResult?: PartialDeep<CartType, {recurseIntoArrays: true}>;
+    }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | {type: 'reject'; errors: any}
   | {type: 'resetCart'};
@@ -96,9 +101,9 @@ export type CartAction =
 
 // State Machine types
 export type CartMachineContext = {
-  cart?: Cart;
-  lastValidCart?: Cart;
-  rawCartResult?: CartFragmentFragment;
+  cart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  lastValidCart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  rawCartResult?: CartType;
   prevCart?: Cart;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors?: any;
@@ -119,7 +124,7 @@ export type CartCreateEvent = {
 export type CartSetEvent = {
   type: 'CART_SET';
   payload: {
-    cart: CartFragmentFragment;
+    cart: CartType;
   };
 };
 
@@ -191,7 +196,7 @@ export type CartMachineFetchResultEvent =
       payload: {
         cartActionEvent: CartMachineActionEvent;
         cart: Cart;
-        rawCartResult: CartFragmentFragment;
+        rawCartResult: PartialDeep<CartType, {recurseIntoArrays: true}>;
       };
     }
   | {

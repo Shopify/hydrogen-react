@@ -8,7 +8,7 @@ import {
   createContext,
   useContext,
 } from 'react';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
+// import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {
   AttributeInput,
   CartBuyerIdentityInput,
@@ -16,16 +16,16 @@ import {
   CartLineInput,
   CartLineUpdateInput,
   CountryCode,
-} from '../storefront-api-types.js';
+} from './storefront-api-types.js';
 import {
   BuyerIdentityUpdateEvent,
   CartMachineContext,
   CartMachineEvent,
   CartMachineTypeState,
   CartWithActions,
-} from './types.js';
-import {CartNoteUpdateMutationVariables} from './graphql/CartNoteUpdateMutation.js';
-import {useCartAPIStateMachine} from './useCartAPIStateMachine.client.js';
+} from './cart-types.js';
+// import {CartNoteUpdateMutationVariables} from './graphql/CartNoteUpdateMutation.js';
+import {useCartAPIStateMachine} from './useCartAPIStateMachine.js';
 import {CART_ID_STORAGE_KEY} from './constants.js';
 
 export const CartContext = createContext<CartWithActions | null>(null);
