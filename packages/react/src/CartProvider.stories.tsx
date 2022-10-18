@@ -1,4 +1,4 @@
-import React, {ComponentProps, useState} from 'react';
+import {ComponentProps, useState} from 'react';
 import type {Story} from '@ladle/react';
 import {CartProvider, storageAvailable} from './CartProvider.js';
 import {useCart} from './useCart/useCart.js';

@@ -1,6 +1,5 @@
 import {useMachine} from '@xstate/react/fsm';
 import {createMachine, assign, StateMachine} from '@xstate/fsm';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {
   Cart,
   CartMachineActionEvent,
@@ -14,7 +13,8 @@ import {flattenConnection} from '../flatten-connection.js';
 import {useCartActions} from './CartActions.client.js';
 import {useMemo} from 'react';
 import {InitEvent} from '@xstate/fsm/lib/types.js';
-import {CountryCode} from '../storefront-api-types.js';
+import {CountryCode, Cart as CartType} from '../storefront-api-types.js';
+import type {PartialDeep} from 'type-fest';
 
 function invokeCart(
   action: keyof CartMachineActions,
@@ -40,6 +40,7 @@ function invokeCart(
             prevCart: (context) => context?.cart,
             cart: (_, event) => event?.payload?.cart,
             rawCartResult: (_, event) => event?.payload?.rawCartResult,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             errors: (_) => undefined,
           }),
         ],
@@ -49,7 +50,7 @@ function invokeCart(
         actions: [
           assign({
             prevCart: (context) => context?.cart,
-            cart: (context, _) => context?.lastValidCart,
+            cart: (context) => context?.lastValidCart,
             errors: (_, event) => event?.payload?.errors,
           }),
         ],
@@ -57,9 +58,13 @@ function invokeCart(
       CART_COMPLETED: {
         target: 'cartCompleted',
         actions: assign({
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           prevCart: (_) => undefined,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           cart: (_) => undefined,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           lastValidCart: (_) => undefined,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           errors: (_) => undefined,
         }),
       },
@@ -118,7 +123,7 @@ const UPDATING_CART_EVENTS: StateMachine.Machine<
   },
 };
 
-function createCartMachine(initialCart?: CartFragmentFragment) {
+function createCartMachine(initialCart?: PartialDeep<CartType>) {
   return createMachine<
     CartMachineContext,
     CartMachineEvent,
@@ -189,7 +194,7 @@ export function useCartAPIStateMachine({
     event: CartMachineFetchResultEvent
   ) => void;
   /** An object with fields that correspond to the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart). */
-  data?: CartFragmentFragment;
+  data?: PartialDeep<CartType>;
   /** A fragment used to query the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart) for all queries and mutations. A default value is used if no argument is provided. */
   cartFragment: string;
   /** The ISO country code for i18n. */
@@ -366,10 +371,9 @@ export function useCartAPIStateMachine({
   return useMemo(() => [state, send, service] as const, [state, send, service]);
 }
 
-export function cartFromGraphQL(cart: CartFragmentFragment): Cart {
+export function cartFromGraphQL(cart: PartialDeep<CartType>): Cart {
   return {
     ...cart,
-    // @ts-expect-error While the cart still uses fragments, there will be a TS error here until we remove those fragments and get the type in-line
     lines: flattenConnection(cart.lines),
     note: cart.note ?? undefined,
   };
@@ -377,9 +381,8 @@ export function cartFromGraphQL(cart: CartFragmentFragment): Cart {
 
 function eventFromFetchResult(
   cartActionEvent: CartMachineActionEvent,
-  cart?: CartFragmentFragment | null,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  errors?: any
+  cart?: PartialDeep<CartType> | null,
+  errors?: unknown
 ): CartMachineFetchResultEvent {
   if (errors) {
     return {type: 'ERROR', payload: {errors, cartActionEvent}};

@@ -1,10 +1,12 @@
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
   useTransition,
+  createContext,
+  useContext,
 } from 'react';
 import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {
@@ -15,7 +17,6 @@ import {
   CartLineUpdateInput,
   CountryCode,
 } from '../storefront-api-types.js';
-import {CartContext} from './context.js';
 import {
   BuyerIdentityUpdateEvent,
   CartMachineContext,
@@ -26,6 +27,21 @@ import {
 import {CartNoteUpdateMutationVariables} from './graphql/CartNoteUpdateMutation.js';
 import {useCartAPIStateMachine} from './useCartAPIStateMachine.client.js';
 import {CART_ID_STORAGE_KEY} from './constants.js';
+
+export const CartContext = createContext<CartWithActions | null>(null);
+
+/**
+ * The `useCart` hook provides access to the cart object. It must be a descendent of a `CartProvider` component.
+ */
+export function useCart() {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error('Expected a Cart Context, but no Cart Context was found');
+  }
+
+  return context;
+}
 
 export function CartProvider({
   children,

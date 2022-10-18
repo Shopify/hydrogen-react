@@ -1,12 +1,12 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, {ComponentProps, PropsWithChildren} from 'react';
+import {ComponentProps, PropsWithChildren} from 'react';
 import {vi} from 'vitest';
 import {renderHook, act} from '@testing-library/react';
-import {useCart} from '../useCart/useCart.js';
+import {useCart} from './useCart/useCart.js';
 import {getCartMock, getCartLineMock} from './CartProvider.test.helpers.js';
-import {ShopifyProvider} from '../../ShopifyProvider.js';
-import {getShopifyConfig} from '../../ShopifyProvider.test.js';
+import {ShopifyProvider} from '../ShopifyProvider.js';
+import {getShopifyConfig} from '../ShopifyProvider.test.js';
 
 const mockUseCartActions = vi.fn();
 
@@ -20,10 +20,10 @@ vi.mock('../hooks.client.js', () => ({
   useCartFetch: mockUseCartFetch,
 }));
 
-import {CartProvider} from '../CartProvider.js';
-import {cartFromGraphQL} from '../useCartAPIStateMachine.client.js';
-import {CountryCode} from '../../storefront-api-types.js';
-import {CART_ID_STORAGE_KEY} from '../constants.js';
+import {CartProvider} from './CartProvider.js';
+import {cartFromGraphQL} from './useCartAPIStateMachine.client.js';
+import {CountryCode} from '../storefront-api-types.js';
+import {CART_ID_STORAGE_KEY} from './constants.js';
 
 function ShopifyCartProvider(
   props: Omit<ComponentProps<typeof CartProvider>, 'children'> = {}

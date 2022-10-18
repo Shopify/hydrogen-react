@@ -51,7 +51,7 @@ import {
   CartNoteUpdateMutationVariables,
 } from './graphql/CartNoteUpdateMutation.js';
 import {CartQueryQuery, CartQueryQueryVariables} from './graphql/CartQuery.js';
-import {useCartFetch} from './hooks.client.js';
+import {useCartFetch} from './cart-hooks.js';
 
 /**
  * The `useCartActions` hook returns helper graphql functions for Storefront Cart API

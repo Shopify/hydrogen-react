@@ -1,4 +1,5 @@
 import {
+  Cart as CartType,
   CartInput,
   CartLineInput,
   CartLineUpdateInput,
@@ -6,8 +7,11 @@ import {
   CartBuyerIdentityInput,
   MutationCartAttributesUpdateArgs,
 } from '../storefront-api-types.js';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
+// import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {StateMachine} from '@xstate/fsm';
+import type {PartialDeep} from 'type-fest';
+
+type CartFragmentFragment = PartialDeep<CartType>;
 
 export type Status = State['status'];
 
