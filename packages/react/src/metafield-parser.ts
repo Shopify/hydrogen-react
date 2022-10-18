@@ -175,7 +175,7 @@ export type ParsedMetafields = {
   product_reference: Simplify<ProductParsedRefMetafield>;
   rating: Simplify<RatingParsedMetafield>;
   single_line_text_field: Simplify<TextParsedMetafield>;
-  url: Simplify<TextListParsedMetafield>;
+  url: Simplify<TextParsedMetafield>;
   variant_reference: Simplify<VariantParsedRefMetafield>;
   volume: Simplify<MeasurementParsedMetafield>;
   weight: Simplify<MeasurementParsedMetafield>;
