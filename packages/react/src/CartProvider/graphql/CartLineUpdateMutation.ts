@@ -2,8 +2,7 @@
  * THIS FILE IS AUTO-GENERATED, DO NOT EDIT.
  * Instead, you can edit the associated .graphql file to query for additional fields and this file will be updated when you run `yarn graphql-types`
  */
-// @ts-nocheck
-import * as Types from '../../../storefront-api-types.js';
+import * as Types from '../../storefront-api-types.js';
 
 export type CartLineUpdateMutationVariables = Types.Exact<{
   cartId: Types.Scalars['ID'];

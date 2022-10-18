@@ -22,7 +22,6 @@ vi.mock('../hooks.client.js', () => ({
 
 import {CartProvider} from '../CartProvider.js';
 import {cartFromGraphQL} from '../useCartAPIStateMachine.client.js';
-import {CountryCode} from '../../storefront-api-types.js';
 import {CART_ID_STORAGE_KEY} from '../constants.js';
 
 function ShopifyCartProvider(
