@@ -471,7 +471,7 @@ function useDelayedStateUntilHydration<T>(state: T) {
 /** Check for storage availability funciton obtained from
  * https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
  */
-function storageAvailable(type: 'localStorage' | 'sessionStorage') {
+export function storageAvailable(type: 'localStorage' | 'sessionStorage') {
   let storage;
   try {
     storage = window[type];
