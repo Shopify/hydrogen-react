@@ -2,7 +2,7 @@ import {ComponentProps, useState} from 'react';
 import type {Story} from '@ladle/react';
 import {CartProvider, storageAvailable, useCart} from './CartProvider.js';
 import {ShopifyContextValue, ShopifyProvider} from './ShopifyProvider.js';
-import {CART_ID_STORAGE_KEY} from './constants.js';
+import {CART_ID_STORAGE_KEY} from './cart-constants.js';
 
 const merchandiseId = 'gid://shopify/ProductVariant/41007290482744';
 

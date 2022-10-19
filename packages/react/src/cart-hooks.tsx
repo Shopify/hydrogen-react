@@ -11,7 +11,7 @@ import {
   SHOPIFY_STOREFRONT_S_HEADER,
   SHOPIFY_Y,
   SHOPIFY_S,
-} from './constants.js';
+} from './cart-constants.js';
 import {parse} from 'worktop/cookie';
 import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
 

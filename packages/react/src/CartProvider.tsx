@@ -26,7 +26,7 @@ import {
   CartWithActions,
 } from './cart-types.js';
 import {useCartAPIStateMachine} from './useCartAPIStateMachine.js';
-import {CART_ID_STORAGE_KEY} from './constants.js';
+import {CART_ID_STORAGE_KEY} from './cart-constants.js';
 import {PartialDeep} from 'type-fest';
 
 export const CartContext = createContext<CartWithActions | null>(null);

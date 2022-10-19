@@ -21,7 +21,7 @@ vi.mock('./cart-hooks.js', () => ({
 
 import {CartProvider, useCart} from './CartProvider.js';
 import {cartFromGraphQL} from './useCartAPIStateMachine.js';
-import {CART_ID_STORAGE_KEY} from './constants.js';
+import {CART_ID_STORAGE_KEY} from './cart-constants.js';
 
 function ShopifyCartProvider(
   props: Omit<ComponentProps<typeof CartProvider>, 'children'> = {}
