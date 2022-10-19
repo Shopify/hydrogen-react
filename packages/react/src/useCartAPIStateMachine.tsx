@@ -10,7 +10,7 @@ import {
   CartMachineTypeState,
 } from './cart-types.js';
 import {flattenConnection} from './flatten-connection.js';
-import {useCartActions} from './CartActions.client.js';
+import {useCartActions} from './CartActions.js';
 import {useMemo} from 'react';
 import {InitEvent} from '@xstate/fsm/lib/types.js';
 import {CountryCode, Cart as CartType} from './storefront-api-types.js';

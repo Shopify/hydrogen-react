@@ -41,7 +41,7 @@ export interface CartWithActions extends Cart {
   /** The status of the cart. This returns 'uninitialized' when the cart is not yet created, `creating` when the cart is being created, `fetching` when an existing cart is being fetched, `updating` when the cart is updating, and `idle` when the cart isn't being created or updated. */
   status: Status;
   /** If an error occurred on the previous cart action, then `error` will exist and `cart` will be put back into the last valid status it was in. */
-  error?: string;
+  error?: unknown;
   /** A callback that creates a cart. Expects the same input you would provide to the Storefront API's `cartCreate` mutation. */
   cartCreate: (cart: CartInput) => void;
   /** A callback that adds lines to the cart. Expects the same `lines` input that you would provide to the Storefront API's `cartLinesAdd` mutation. If a cart doesn't already exist, then it will create the cart for you. */
@@ -93,8 +93,7 @@ export type CartAction =
       cart: Cart;
       rawCartResult?: PartialDeep<CartType, {recurseIntoArrays: true}>;
     }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | {type: 'reject'; errors: any}
+  | {type: 'reject'; errors: unknown}
   | {type: 'resetCart'};
 
 // CartProvider V2
@@ -103,10 +102,9 @@ export type CartAction =
 export type CartMachineContext = {
   cart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
   lastValidCart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
-  rawCartResult?: CartType;
-  prevCart?: Cart;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  errors?: any;
+  rawCartResult?: PartialDeep<CartType, {recurseIntoArrays: true}>;
+  prevCart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  errors?: unknown;
 };
 
 export type CartFetchEvent = {

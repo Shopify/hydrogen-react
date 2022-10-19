@@ -1,12 +1,8 @@
 import {useState, useCallback} from 'react';
 import {useShop} from './ShopifyProvider.js';
 import {flattenConnection} from './flatten-connection.js';
-import {CartInput} from './storefront-api-types.js';
+import {CartInput, Cart as CartType} from './storefront-api-types.js';
 import {CartCreate, defaultCartFragment} from './cart-queries.js';
-import {
-  CartCreateMutation,
-  CartCreateMutationVariables,
-} from './graphql/CartCreateMutation.js';
 import {Cart} from './cart-types.js';
 import {
   SHOPIFY_STOREFRONT_ID_HEADER,
@@ -17,19 +13,20 @@ import {
   SHOPIFY_S,
 } from './constants.js';
 import {parse} from 'worktop/cookie';
+import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
 
 export function useCartFetch() {
   const {storeDomain, storefrontApiVersion, storefrontToken, storefrontId} =
     useShop();
 
   return useCallback(
-    <T, K>({
+    <ReturnDataGeneric,>({
       query,
       variables,
     }: {
       query: string;
-      variables: T;
-    }): Promise<{data: K | undefined; errors: unknown}> => {
+      variables: Record<string, unknown>;
+    }): Promise<StorefrontApiResponseOkPartial<ReturnDataGeneric>> => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
         'X-SDK-Variant': 'hydrogen',
@@ -80,10 +77,9 @@ export function useInstantCheckout() {
 
   const createInstantCheckout = useCallback(
     async (cartInput: CartInput) => {
-      const {data, errors} = await fetch<
-        CartCreateMutationVariables,
-        CartCreateMutation
-      >({
+      const {data, errors} = await fetch<{
+        cartCreate: {cart: CartType};
+      }>({
         query: CartCreate(defaultCartFragment),
         variables: {
           input: cartInput,

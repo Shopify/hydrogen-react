@@ -6,7 +6,10 @@ import {
   CartLineInput,
   CartLineUpdateInput,
   CountryCode,
-} from '../storefront-api-types.js';
+  Cart as CartType,
+  MutationCartDiscountCodesUpdateArgs,
+  MutationCartNoteUpdateArgs,
+} from './storefront-api-types.js';
 import {
   CartAttributesUpdate,
   CartBuyerIdentityUpdate,
@@ -18,40 +21,10 @@ import {
   CartNoteUpdate,
   CartQuery,
 } from './cart-queries.js';
-import {
-  CartAttributesUpdateMutation,
-  CartAttributesUpdateMutationVariables,
-} from './graphql/CartAttributesUpdateMutation.js';
-import {
-  CartBuyerIdentityUpdateMutation,
-  CartBuyerIdentityUpdateMutationVariables,
-} from './graphql/CartBuyerIdentityUpdateMutation.js';
-import {
-  CartCreateMutation,
-  CartCreateMutationVariables,
-} from './graphql/CartCreateMutation.js';
-import {
-  CartDiscountCodesUpdateMutation,
-  CartDiscountCodesUpdateMutationVariables,
-} from './graphql/CartDiscountCodesUpdateMutation.js';
-import {
-  CartLineAddMutation,
-  CartLineAddMutationVariables,
-} from './graphql/CartLineAddMutation.js';
-import {
-  CartLineRemoveMutation,
-  CartLineRemoveMutationVariables,
-} from './graphql/CartLineRemoveMutation.js';
-import {
-  CartLineUpdateMutation,
-  CartLineUpdateMutationVariables,
-} from './graphql/CartLineUpdateMutation.js';
-import {
-  CartNoteUpdateMutation,
-  CartNoteUpdateMutationVariables,
-} from './graphql/CartNoteUpdateMutation.js';
-import {CartQueryQuery, CartQueryQueryVariables} from './graphql/CartQuery.js';
 import {useCartFetch} from './cart-hooks.js';
+import {PartialDeep} from 'type-fest';
+
+type CartResponse = PartialDeep<CartType, {recurseIntoArrays: true}>;
 
 /**
  * The `useCartActions` hook returns helper graphql functions for Storefront Cart API
@@ -74,7 +47,7 @@ export function useCartActions({
 
   const cartFetch = useCallback(
     (cartId: string) => {
-      return fetchCart<CartQueryQueryVariables, CartQueryQuery>({
+      return fetchCart<{cart: CartResponse}>({
         query: CartQuery(cartFragment),
         variables: {
           id: cartId,
@@ -88,7 +61,7 @@ export function useCartActions({
 
   const cartCreate = useCallback(
     (cart: CartInput) => {
-      return fetchCart<CartCreateMutationVariables, CartCreateMutation>({
+      return fetchCart<{cartCreate: {cart: CartResponse}}>({
         query: CartCreate(cartFragment),
         variables: {
           input: cart,
@@ -102,7 +75,7 @@ export function useCartActions({
 
   const cartLineAdd = useCallback(
     (cartId: string, lines: CartLineInput[]) => {
-      return fetchCart<CartLineAddMutationVariables, CartLineAddMutation>({
+      return fetchCart<{cartLinesAdd: {cart: CartResponse}}>({
         query: CartLineAdd(cartFragment),
         variables: {
           cartId,
@@ -117,61 +90,52 @@ export function useCartActions({
 
   const cartLineUpdate = useCallback(
     (cartId: string, lines: CartLineUpdateInput[]) => {
-      return fetchCart<CartLineUpdateMutationVariables, CartLineUpdateMutation>(
-        {
-          query: CartLineUpdate(cartFragment),
-          variables: {
-            cartId,
-            lines,
-            numCartLines,
-            country: countryCode,
-          },
-        }
-      );
+      return fetchCart<{cartLinesUpdate: {cart: CartResponse}}>({
+        query: CartLineUpdate(cartFragment),
+        variables: {
+          cartId,
+          lines,
+          numCartLines,
+          country: countryCode,
+        },
+      });
     },
     [cartFragment, countryCode, fetchCart, numCartLines]
   );
 
   const cartLineRemove = useCallback(
     (cartId: string, lines: string[]) => {
-      return fetchCart<CartLineRemoveMutationVariables, CartLineRemoveMutation>(
-        {
-          query: CartLineRemove(cartFragment),
-          variables: {
-            cartId,
-            lines,
-            numCartLines,
-            country: countryCode,
-          },
-        }
-      );
+      return fetchCart<{cartLinesRemove: {cart: CartResponse}}>({
+        query: CartLineRemove(cartFragment),
+        variables: {
+          cartId,
+          lines,
+          numCartLines,
+          country: countryCode,
+        },
+      });
     },
     [cartFragment, countryCode, fetchCart, numCartLines]
   );
 
   const noteUpdate = useCallback(
-    (cartId: string, note: CartNoteUpdateMutationVariables['note']) => {
-      return fetchCart<CartNoteUpdateMutationVariables, CartNoteUpdateMutation>(
-        {
-          query: CartNoteUpdate(cartFragment),
-          variables: {
-            cartId,
-            note,
-            numCartLines,
-            country: countryCode,
-          },
-        }
-      );
+    (cartId: string, note: MutationCartNoteUpdateArgs['note']) => {
+      return fetchCart<{cartNoteUpdate: {cart: CartResponse}}>({
+        query: CartNoteUpdate(cartFragment),
+        variables: {
+          cartId,
+          note,
+          numCartLines,
+          country: countryCode,
+        },
+      });
     },
     [fetchCart, cartFragment, numCartLines, countryCode]
   );
 
   const buyerIdentityUpdate = useCallback(
     (cartId: string, buyerIdentity: CartBuyerIdentityInput) => {
-      return fetchCart<
-        CartBuyerIdentityUpdateMutationVariables,
-        CartBuyerIdentityUpdateMutation
-      >({
+      return fetchCart<{cartBuyerIdentityUpdate: {cart: CartResponse}}>({
         query: CartBuyerIdentityUpdate(cartFragment),
         variables: {
           cartId,
@@ -186,10 +150,7 @@ export function useCartActions({
 
   const cartAttributesUpdate = useCallback(
     (cartId: string, attributes: AttributeInput[]) => {
-      return fetchCart<
-        CartAttributesUpdateMutationVariables,
-        CartAttributesUpdateMutation
-      >({
+      return fetchCart<{cartAttributesUpdate: {cart: CartResponse}}>({
         query: CartAttributesUpdate(cartFragment),
         variables: {
           cartId,
@@ -205,12 +166,9 @@ export function useCartActions({
   const discountCodesUpdate = useCallback(
     (
       cartId: string,
-      discountCodes: CartDiscountCodesUpdateMutationVariables['discountCodes']
+      discountCodes: MutationCartDiscountCodesUpdateArgs['discountCodes']
     ) => {
-      return fetchCart<
-        CartDiscountCodesUpdateMutationVariables,
-        CartDiscountCodesUpdateMutation
-      >({
+      return fetchCart<{cartDiscountCodesUpdate: {cart: CartResponse}}>({
         query: CartDiscountCodesUpdate(cartFragment),
         variables: {
           cartId,
