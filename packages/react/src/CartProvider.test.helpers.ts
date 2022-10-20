@@ -1,12 +1,9 @@
-import {flattenConnection} from '../../flatten-connection.js';
-import {CartFragmentFragment} from '../graphql/CartFragment.js';
-import {getPrice} from '../../Money.test.helpers.js';
+import {flattenConnection} from './flatten-connection.js';
+import {getPrice} from './Money.test.helpers.js';
+import type {Cart, CartLine} from './storefront-api-types.js';
+import type {PartialDeep} from 'type-fest';
 
-const CurrencyCode = {
-  Usd: 'USD',
-};
-
-export const CART_LINE = {
+export const CART_LINE: PartialDeep<CartLine, {recurseIntoArrays: true}> = {
   attributes: [{key: 'color', value: 'red'}],
   quantity: 1,
   id: 'abc',
@@ -15,7 +12,7 @@ export const CART_LINE = {
     availableForSale: true,
     priceV2: {
       amount: '123',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: 'USD',
     },
     product: {
       handle: 'foo',
@@ -28,16 +25,16 @@ export const CART_LINE = {
   cost: {
     totalAmount: {
       amount: '123',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: 'USD',
     },
-    compareAtAmount: {
+    compareAtAmountPerQuantity: {
       amount: '125',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: 'USD',
     },
   },
 };
 
-export const CART = {
+export const CART: PartialDeep<Cart, {recurseIntoArrays: true}> = {
   id: 'abc',
   checkoutUrl: 'https://shopify.com/checkout',
   attributes: [],
@@ -56,24 +53,31 @@ export const CART = {
   },
   lines: {edges: []},
   note: '',
-} as CartFragmentFragment;
+};
 
-export function getCartMock(options?: Partial<CartFragmentFragment>) {
+export function getCartMock(
+  options?: Partial<Cart>
+): PartialDeep<Cart, {recurseIntoArrays: true}> {
   return {...CART, ...options};
 }
 
-export const CART_WITH_LINES = {
+export const CART_WITH_LINES: PartialDeep<Cart, {recurseIntoArrays: true}> = {
   ...CART,
   lines: {edges: [{node: CART_LINE}]},
 };
 
-export const CART_WITH_LINES_FLATTENED = {
+export const CART_WITH_LINES_FLATTENED: PartialDeep<
+  Cart,
+  {recurseIntoArrays: true}
+> & {
+  lines: PartialDeep<CartLine[], {recurseIntoArrays: true}>;
+} = {
   ...CART,
   lines: flattenConnection(CART_WITH_LINES.lines),
 };
 
 export function getCartLineMock(
-  options?: Partial<CartFragmentFragment['lines']['edges'][0]['node']>
-) {
+  options?: Partial<CartLine>
+): PartialDeep<CartLine, {recurseIntoArrays: true}> {
   return {...CART_LINE, ...options};
 }

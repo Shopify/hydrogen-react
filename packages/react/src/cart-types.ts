@@ -1,42 +1,47 @@
 import {
+  Cart as CartType,
   CartInput,
+  CartLine,
   CartLineInput,
   CartLineUpdateInput,
   MutationCartNoteUpdateArgs,
   CartBuyerIdentityInput,
   MutationCartAttributesUpdateArgs,
-} from '../storefront-api-types.js';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
+} from './storefront-api-types.js';
 import {StateMachine} from '@xstate/fsm';
+import type {PartialDeep} from 'type-fest';
 
 export type Status = State['status'];
 
-export interface Cart {
-  /** The cart's ID if it has been created through the Storefront API. */
-  id?: string;
-  /** The cart lines. */
-  lines: CartFragmentFragment['lines']['edges'][1]['node'][];
-  /** The checkout URL for the cart, if the cart has been created in the Storefront API. */
-  checkoutUrl?: string;
-  /** The cart's note. */
-  note?: string;
-  /** The cart's buyer identity. */
-  buyerIdentity?: CartFragmentFragment['buyerIdentity'];
-  /** The cart's attributes. */
-  attributes: CartFragmentFragment['attributes'];
-  /** The discount codes applied to the cart. */
-  discountCodes?: CartFragmentFragment['discountCodes'];
-  /** The cost for the cart, including the subtotal, total, taxes, and duties. */
-  cost?: CartFragmentFragment['cost'];
-  /** The total number of items in the cart, across all lines. If there are no lines, then the value is 0. */
-  totalQuantity: number;
-}
+export type Cart = PartialDeep<
+  {
+    /** The cart's ID if it has been created through the Storefront API. */
+    id?: string;
+    /** The cart lines. */
+    lines: CartLine[];
+    /** The checkout URL for the cart, if the cart has been created in the Storefront API. */
+    checkoutUrl?: string;
+    /** The cart's note. */
+    note?: string;
+    /** The cart's buyer identity. */
+    buyerIdentity?: CartType['buyerIdentity'];
+    /** The cart's attributes. */
+    attributes: CartType['attributes'];
+    /** The discount codes applied to the cart. */
+    discountCodes?: CartType['discountCodes'];
+    /** The cost for the cart, including the subtotal, total, taxes, and duties. */
+    cost?: CartType['cost'];
+    /** The total number of items in the cart, across all lines. If there are no lines, then the value is 0. */
+    totalQuantity: number;
+  },
+  {recurseIntoArrays: true}
+>;
 
 export interface CartWithActions extends Cart {
   /** The status of the cart. This returns 'uninitialized' when the cart is not yet created, `creating` when the cart is being created, `fetching` when an existing cart is being fetched, `updating` when the cart is updating, and `idle` when the cart isn't being created or updated. */
   status: Status;
   /** If an error occurred on the previous cart action, then `error` will exist and `cart` will be put back into the last valid status it was in. */
-  error?: string;
+  error?: unknown;
   /** A callback that creates a cart. Expects the same input you would provide to the Storefront API's `cartCreate` mutation. */
   cartCreate: (cart: CartInput) => void;
   /** A callback that adds lines to the cart. Expects the same `lines` input that you would provide to the Storefront API's `cartLinesAdd` mutation. If a cart doesn't already exist, then it will create the cart for you. */
@@ -83,21 +88,23 @@ export type CartAction =
   | {type: 'buyerIdentityUpdate'}
   | {type: 'cartAttributesUpdate'}
   | {type: 'discountCodesUpdate'}
-  | {type: 'resolve'; cart: Cart; rawCartResult?: CartFragmentFragment}
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | {type: 'reject'; errors: any}
+  | {
+      type: 'resolve';
+      cart: Cart;
+      rawCartResult?: PartialDeep<CartType, {recurseIntoArrays: true}>;
+    }
+  | {type: 'reject'; errors: unknown}
   | {type: 'resetCart'};
 
 // CartProvider V2
 
 // State Machine types
 export type CartMachineContext = {
-  cart?: Cart;
-  lastValidCart?: Cart;
-  rawCartResult?: CartFragmentFragment;
-  prevCart?: Cart;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  errors?: any;
+  cart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  lastValidCart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  rawCartResult?: PartialDeep<CartType, {recurseIntoArrays: true}>;
+  prevCart?: PartialDeep<Cart, {recurseIntoArrays: true}>;
+  errors?: unknown;
 };
 
 export type CartFetchEvent = {
@@ -115,7 +122,7 @@ export type CartCreateEvent = {
 export type CartSetEvent = {
   type: 'CART_SET';
   payload: {
-    cart: CartFragmentFragment;
+    cart: CartType;
   };
 };
 
@@ -187,7 +194,7 @@ export type CartMachineFetchResultEvent =
       payload: {
         cartActionEvent: CartMachineActionEvent;
         cart: Cart;
-        rawCartResult: CartFragmentFragment;
+        rawCartResult: PartialDeep<CartType, {recurseIntoArrays: true}>;
       };
     }
   | {
