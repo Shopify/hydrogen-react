@@ -10,7 +10,7 @@ export function flattenConnection<T>(
   connection?: PartialDeep<GraphQLConnection<T>, {recurseIntoArrays: true}>
 ): PartialDeep<T, {recurseIntoArrays: true}>[] {
   if (!connection) {
-    const noConnectionErr = `flattenConnection(): needs a 'connection' to flatte, but received '${connection}' instead`;
+    const noConnectionErr = `flattenConnection(): needs a 'connection' to flatten, but received '${connection}' instead`;
     if (__HYDROGEN_DEV__) {
       throw new Error(noConnectionErr);
     } else {

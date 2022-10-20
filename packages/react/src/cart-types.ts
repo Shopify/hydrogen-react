@@ -11,7 +11,7 @@ import {
 import {StateMachine} from '@xstate/fsm';
 import type {PartialDeep} from 'type-fest';
 
-export type Status = State['status'];
+export type CartStatus = CartState['status'];
 
 export type Cart = PartialDeep<
   {
@@ -39,7 +39,7 @@ export type Cart = PartialDeep<
 
 export interface CartWithActions extends Cart {
   /** The status of the cart. This returns 'uninitialized' when the cart is not yet created, `creating` when the cart is being created, `fetching` when an existing cart is being fetched, `updating` when the cart is updating, and `idle` when the cart isn't being created or updated. */
-  status: Status;
+  status: CartStatus;
   /** If an error occurred on the previous cart action, then `error` will exist and `cart` will be put back into the last valid status it was in. */
   error?: unknown;
   /** A callback that creates a cart. Expects the same input you would provide to the Storefront API's `cartCreate` mutation. */
@@ -66,7 +66,7 @@ export interface CartWithActions extends Cart {
   cartFragment: string;
 }
 
-export type State =
+export type CartState =
   /** A cart has not been created yet, or an error occurred when a cart was attempting to be created or fetched. */
   | {status: 'uninitialized'; error?: string}
   /** An existing cart is being fetched from the Storefront API. */
