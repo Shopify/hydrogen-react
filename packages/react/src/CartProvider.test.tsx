@@ -9,7 +9,7 @@ import {getShopifyConfig} from './ShopifyProvider.test.js';
 
 const mockUseCartActions = vi.fn();
 
-vi.mock('./CartActions.js', () => ({
+vi.mock('./useCartActions.js', () => ({
   useCartActions: mockUseCartActions,
 }));
 
@@ -1427,7 +1427,7 @@ describe('<CartProvider />', () => {
     mockUseCartFetch.mockReturnValue(fetchCartSpy);
 
     const cartActions = await vi.importActual<{useCartActions: () => void}>(
-      './CartActions.js'
+      './useCartActions.js'
     );
 
     mockUseCartActions.mockImplementation(cartActions.useCartActions);
