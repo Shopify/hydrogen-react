@@ -1,10 +1,13 @@
-# @shopify/hydrogen-react
+<div align="center">
 
-## IMPORTANT
+# Hydrogen UI React
 
-This is an beta version of `@shopify/hydrogen-react`.
+<a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/latest.svg"></a> <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/next.svg"></a> 
 
-Refer to how this package is [versioned](../../README.md#versioning).
+ </div>
+
+  **IMPORTANT:** This is an experimental version of `@shopify/hydrogen-react` and functionality is subject to change. Refer to how this package is [versioned](../../README.md#versioning).
+
 
 This document contains the following topics:
 
@@ -213,6 +216,3 @@ If you can't get [GraphQL autocompletion](<(#storefront-api-graphql-autocompleti
 
 For example, in VSCode do the following:
 
-1. Open the [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
-1. Type `graphql`.
-1. Select `VSCode GraphQL: Manual Restart`.
