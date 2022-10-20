@@ -14,9 +14,9 @@ Hydrogen UI is a library of reusable components and utilities for building Shopi
 
 ## Packages
 
-| Package | Latest | Next |
-| --- | --- | --- |
-| [`@shopify/hydrogen-react`](/packages/react/) | <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/latest.svg"></a> | <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/next.svg"></a> | 
+| Package                                       | Latest                                                                                                                                          | Next                                                                                                                                          |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@shopify/hydrogen-react`](/packages/react/) | <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/latest.svg"></a> | <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/next.svg"></a> |
 
 ## Versioning
 

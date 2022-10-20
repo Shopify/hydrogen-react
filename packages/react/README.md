@@ -2,12 +2,11 @@
 
 # Hydrogen UI React
 
-<a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/latest.svg"></a> <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/next.svg"></a> 
+<a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/latest.svg"></a> <a href="https://www.npmjs.com/package/@shopify/hydrogen-react"><img src="https://img.shields.io/npm/v/@shopify/hydrogen-react/next.svg"></a>
 
- </div>
+</div>
 
-  **IMPORTANT:** This is an experimental version of `@shopify/hydrogen-react` and functionality is subject to change. Refer to how this package is [versioned](../../README.md#versioning).
-
+**IMPORTANT:** This is an experimental version of `@shopify/hydrogen-react` and functionality is subject to change. Refer to how this package is [versioned](../../README.md#versioning).
 
 This document contains the following topics:
 
@@ -215,4 +214,3 @@ The following will help you troubleshoot common problems in this version of Hydr
 If you can't get [GraphQL autocompletion](<(#storefront-api-graphql-autocompletion)>) to work, then try restarting the GraphQL server in your IDE.
 
 For example, in VSCode do the following:
-
