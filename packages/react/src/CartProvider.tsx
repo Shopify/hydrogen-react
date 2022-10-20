@@ -1,12 +1,13 @@
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
   useTransition,
+  createContext,
+  useContext,
 } from 'react';
-import {CartFragmentFragment} from './graphql/CartFragment.js';
 import {
   AttributeInput,
   CartBuyerIdentityInput,
@@ -14,18 +15,34 @@ import {
   CartLineInput,
   CartLineUpdateInput,
   CountryCode,
-} from '../storefront-api-types.js';
-import {CartContext} from './context.js';
+  Cart as CartType,
+  MutationCartNoteUpdateArgs,
+} from './storefront-api-types.js';
 import {
   BuyerIdentityUpdateEvent,
   CartMachineContext,
   CartMachineEvent,
   CartMachineTypeState,
   CartWithActions,
-} from './types.js';
-import {CartNoteUpdateMutationVariables} from './graphql/CartNoteUpdateMutation.js';
-import {useCartAPIStateMachine} from './useCartAPIStateMachine.client.js';
-import {CART_ID_STORAGE_KEY} from './constants.js';
+} from './cart-types.js';
+import {useCartAPIStateMachine} from './useCartAPIStateMachine.js';
+import {CART_ID_STORAGE_KEY} from './cart-constants.js';
+import {PartialDeep} from 'type-fest';
+
+export const CartContext = createContext<CartWithActions | null>(null);
+
+/**
+ * The `useCart` hook provides access to the cart object. It must be a descendent of a `CartProvider` component.
+ */
+export function useCart() {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error('Expected a Cart Context, but no Cart Context was found');
+  }
+
+  return context;
+}
 
 export function CartProvider({
   children,
@@ -88,7 +105,7 @@ export function CartProvider({
   /** A callback that is invoked when the process to update the cart discount codes completes */
   onDiscountCodesUpdateComplete?: () => void;
   /** An object with fields that correspond to the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart). */
-  data?: CartFragmentFragment;
+  data?: PartialDeep<CartType, {recurseIntoArrays: true}>;
   /** A fragment used to query the Storefront API's [Cart object](https://shopify.dev/api/storefront/latest/objects/cart) for all queries and mutations. A default value is used if no argument is provided. */
   cartFragment?: string;
   /** A customer access token that's accessible on the server if there's a customer login. */
@@ -149,8 +166,8 @@ export function CartProvider({
             lastValidCart: context.cart,
             cart: {
               ...context.cart,
-              lines: context?.cart?.lines.filter(
-                ({id}) => !event.payload.lines.includes(id)
+              lines: context?.cart?.lines?.filter(
+                (line) => line?.id && !event.payload.lines.includes(line?.id)
               ),
             },
           };
@@ -160,9 +177,9 @@ export function CartProvider({
             lastValidCart: context.cart,
             cart: {
               ...context.cart,
-              lines: context.cart.lines.map((line) => {
+              lines: context?.cart?.lines?.map((line) => {
                 const updatedLine = event.payload.lines.find(
-                  ({id}) => id === line.id
+                  ({id}) => id === line?.id
                 );
 
                 if (updatedLine && updatedLine.quantity) {
@@ -361,7 +378,7 @@ export function CartProvider({
           },
         });
       },
-      noteUpdate(note: CartNoteUpdateMutationVariables['note']) {
+      noteUpdate(note: MutationCartNoteUpdateArgs['note']) {
         onCartReadySend({
           type: 'NOTE_UPDATE',
           payload: {

@@ -1,29 +1,27 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, {ComponentProps, PropsWithChildren} from 'react';
+import {ComponentProps, PropsWithChildren} from 'react';
 import {vi} from 'vitest';
 import {renderHook, act} from '@testing-library/react';
-import {useCart} from '../useCart/useCart.js';
 import {getCartMock, getCartLineMock} from './CartProvider.test.helpers.js';
-import {ShopifyProvider} from '../../ShopifyProvider.js';
-import {getShopifyConfig} from '../../ShopifyProvider.test.js';
+import {ShopifyProvider} from './ShopifyProvider.js';
+import {getShopifyConfig} from './ShopifyProvider.test.js';
 
 const mockUseCartActions = vi.fn();
 
-vi.mock('../CartActions.client.js', () => ({
+vi.mock('./CartActions.js', () => ({
   useCartActions: mockUseCartActions,
 }));
 
 const mockUseCartFetch = vi.fn();
 
-vi.mock('../hooks.client.js', () => ({
+vi.mock('./cart-hooks.js', () => ({
   useCartFetch: mockUseCartFetch,
 }));
 
-import {CartProvider} from '../CartProvider.js';
-import {cartFromGraphQL} from '../useCartAPIStateMachine.client.js';
-import {CountryCode} from '../../storefront-api-types.js';
-import {CART_ID_STORAGE_KEY} from '../constants.js';
+import {CartProvider, useCart} from './CartProvider.js';
+import {cartFromGraphQL} from './useCartAPIStateMachine.js';
+import {CART_ID_STORAGE_KEY} from './cart-constants.js';
 
 function ShopifyCartProvider(
   props: Omit<ComponentProps<typeof CartProvider>, 'children'> = {}
@@ -1250,7 +1248,9 @@ describe('<CartProvider />', () => {
       );
 
       act(() => {
-        result.current.linesRemove([cartMockWithLine.lines.edges[0].node.id]);
+        result.current.linesRemove([
+          cartMockWithLine.lines.edges[0].node.id ?? '',
+        ]);
       });
 
       expect(result.current.status).toEqual('updating');
@@ -1282,7 +1282,9 @@ describe('<CartProvider />', () => {
       });
 
       act(() => {
-        result.current.linesRemove([cartMockWithLine.lines.edges[0].node.id]);
+        result.current.linesRemove([
+          cartMockWithLine.lines.edges[0].node.id ?? '',
+        ]);
       });
 
       expect(result.current.status).toEqual('updating');
@@ -1334,7 +1336,7 @@ describe('<CartProvider />', () => {
       act(() => {
         result.current.linesUpdate([
           {
-            id: cartMockWithLine.lines.edges[0].node.id,
+            id: cartMockWithLine.lines.edges[0].node.id ?? '',
             quantity: mockQuantity,
           },
         ]);
@@ -1392,7 +1394,7 @@ describe('<CartProvider />', () => {
       act(() => {
         result.current.linesUpdate([
           {
-            id: cartMockWithLine.lines.edges[0].node.id,
+            id: cartMockWithLine.lines.edges[0].node.id ?? '',
             quantity: mockQuantity,
           },
         ]);
@@ -1425,7 +1427,7 @@ describe('<CartProvider />', () => {
     mockUseCartFetch.mockReturnValue(fetchCartSpy);
 
     const cartActions = await vi.importActual<{useCartActions: () => void}>(
-      '../CartActions.client.js'
+      './CartActions.js'
     );
 
     mockUseCartActions.mockImplementation(cartActions.useCartActions);

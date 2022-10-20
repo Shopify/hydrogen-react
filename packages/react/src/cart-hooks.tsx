@@ -1,13 +1,9 @@
-import React, {useState} from 'react';
-import {useShop} from '../ShopifyProvider.js';
-import {flattenConnection} from '../flatten-connection.js';
-import {CartInput} from '../storefront-api-types.js';
+import {useState, useCallback} from 'react';
+import {useShop} from './ShopifyProvider.js';
+import {flattenConnection} from './flatten-connection.js';
+import {CartInput, Cart as CartType} from './storefront-api-types.js';
 import {CartCreate, defaultCartFragment} from './cart-queries.js';
-import {
-  CartCreateMutation,
-  CartCreateMutationVariables,
-} from './graphql/CartCreateMutation.js';
-import {Cart} from './types.js';
+import {Cart} from './cart-types.js';
 import {
   SHOPIFY_STOREFRONT_ID_HEADER,
   STOREFRONT_API_PUBLIC_TOKEN_HEADER,
@@ -15,21 +11,22 @@ import {
   SHOPIFY_STOREFRONT_S_HEADER,
   SHOPIFY_Y,
   SHOPIFY_S,
-} from './constants.js';
+} from './cart-constants.js';
 import {parse} from 'worktop/cookie';
+import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
 
 export function useCartFetch() {
   const {storeDomain, storefrontApiVersion, storefrontToken, storefrontId} =
     useShop();
 
-  return React.useCallback(
-    <T, K>({
+  return useCallback(
+    <ReturnDataGeneric,>({
       query,
       variables,
     }: {
       query: string;
-      variables: T;
-    }): Promise<{data: K | undefined; errors: any}> => {
+      variables: Record<string, unknown>;
+    }): Promise<StorefrontApiResponseOkPartial<ReturnDataGeneric>> => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
         'X-SDK-Variant': 'hydrogen',
@@ -78,12 +75,11 @@ export function useInstantCheckout() {
 
   const fetch = useCartFetch();
 
-  const createInstantCheckout = React.useCallback(
+  const createInstantCheckout = useCallback(
     async (cartInput: CartInput) => {
-      const {data, errors} = await fetch<
-        CartCreateMutationVariables,
-        CartCreateMutation
-      >({
+      const {data, errors} = await fetch<{
+        cartCreate: {cart: CartType};
+      }>({
         query: CartCreate(defaultCartFragment),
         variables: {
           input: cartInput,
@@ -91,7 +87,7 @@ export function useInstantCheckout() {
       });
 
       if (errors) {
-        updateError(errors);
+        updateError(errors.toString());
         updateCart(undefined);
         updateCheckoutUrl(undefined);
       }
@@ -100,7 +96,6 @@ export function useInstantCheckout() {
         const dataCart = data.cartCreate.cart;
         updateCart({
           ...dataCart,
-          // @ts-expect-error While the cart still uses fragments, there will be a TS error here until we remove those fragments and get the type in-line
           lines: flattenConnection(dataCart.lines),
           note: dataCart.note ?? undefined,
         });
