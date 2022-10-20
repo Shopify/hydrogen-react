@@ -214,3 +214,7 @@ The following will help you troubleshoot common problems in this version of Hydr
 If you can't get [GraphQL autocompletion](<(#storefront-api-graphql-autocompletion)>) to work, then try restarting the GraphQL server in your IDE.
 
 For example, in VSCode do the following:
+
+1. Open the [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
+1. Type `graphql`.
+1. Select `VSCode GraphQL: Manual Restart`.
