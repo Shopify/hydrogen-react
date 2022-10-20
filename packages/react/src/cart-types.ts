@@ -199,8 +199,7 @@ export type CartMachineFetchResultEvent =
     }
   | {
       type: 'ERROR';
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: {cartActionEvent: CartMachineActionEvent; errors: any};
+      payload: {cartActionEvent: CartMachineActionEvent; errors: unknown};
     };
 
 export type CartMachineEvent =
@@ -214,8 +213,7 @@ export type CartMachineTypeState =
         cart: undefined;
         lastValidCart: undefined;
         prevCart: undefined;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors?: any;
+        errors?: unknown;
       };
     }
   | {
@@ -224,8 +222,7 @@ export type CartMachineTypeState =
         cart: undefined;
         lastValidCart: undefined;
         prevCart: undefined;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors: any;
+        errors: unknown;
       };
     }
   | {
@@ -234,8 +231,7 @@ export type CartMachineTypeState =
         cart: undefined;
         prevCart?: Cart;
         lastValidCart: undefined;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors: any;
+        errors: unknown;
       };
     }
   | {
@@ -244,8 +240,7 @@ export type CartMachineTypeState =
         cart: Cart;
         prevCart?: Cart;
         lastValidCart?: Cart;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors?: any;
+        errors?: unknown;
       };
     }
   | {
@@ -254,8 +249,7 @@ export type CartMachineTypeState =
         cart?: Cart;
         prevCart?: Cart;
         lastValidCart?: Cart;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors: any;
+        errors: unknown;
       };
     }
   | {value: 'cartFetching'; context: CartMachineContext}
