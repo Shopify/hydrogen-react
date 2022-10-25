@@ -1,4 +1,4 @@
-name: Changesets
+name: Releases
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
       - '[0-9]+-[0-9]+'
 
 jobs:
-  changelog:
+  Releases:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'shopify'
-    name: Changelog PR or Release
+    name: Releases and PR for changesets
     outputs:
       published: ${{ steps.changesets.outputs.published }}
       latest: ${{ steps.flags.outputs.latest }}
@@ -18,8 +18,8 @@ jobs:
         id: flags
         run: |
           # IMPORTANT: Update this variable whenever we move to a new major version:
-          latest_branch=2022-7
-          echo "::set-output name=latest::${{ github.ref_name == '2022-7' }}"
+          latest_branch=2022-10
+          echo "::set-output name=latest::${{ github.ref_name == '2022-10' }}"
 
       - name: Checkout the code
         uses: actions/checkout@v3
@@ -62,7 +62,10 @@ jobs:
 
       # note that this runs on every PR that's merged.
       - name: (next) Create Release Pull Request or Publish
-        id: changesets_next
-        run: cd packages/react/scripts && node prepare-next.js
+        id: release_next
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          cd packages/react/scripts
+          node prepare-next.mjs
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

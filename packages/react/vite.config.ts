@@ -49,7 +49,7 @@ export default defineConfig(({mode}) => {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
         name: 'hydrogen-react',
-        fileName: (format) => `[name].${format === 'cjs' ? 'c' : ''}js`,
+        fileName: (format) => `[name].${format === 'cjs' ? '' : 'm'}js`,
         formats: ['es', 'cjs'],
       },
       sourcemap: true,
@@ -60,6 +60,7 @@ export default defineConfig(({mode}) => {
         output: {
           // keep the folder structure of the components in the dist folder
           preserveModules: true,
+          preserveModulesRoot: 'src',
         },
       },
     },
