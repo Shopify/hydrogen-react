@@ -57,8 +57,13 @@ export default defineConfig(({mode}) => {
       minify: false,
       rollupOptions: {
         external: (id, parentId) => {
-          // don't bundle these packages into our lib
-          // this creates a better build for node esm environments, but if we wanted a browser esm build, we would either have to tell devs to use "import maps" or to create a new bundle that doesn't use these as externals
+          /**
+           * Don't bundle these packages into our lib
+           *
+           * This creates a better build for node esm environments,
+           * but if we wanted a browser esm build, we would either have to tell devs to use "import maps"
+           * or to create a new bundle that doesn't use these as externals
+           * */
           if (parentId?.includes('@xstate') || id.includes('@xstate')) {
             return true;
           }
