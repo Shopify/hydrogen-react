@@ -1,5 +1,11 @@
 # @shopify/hydrogen-react
 
+## 2022.10.2
+
+### Patch Changes
+
+- 2250b0d: Improve build output by externalizing more dependencies in the Vite config.
+
 ## 2022.10.1
 
 ### Patch Changes
