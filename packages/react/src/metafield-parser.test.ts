@@ -1,6 +1,19 @@
-import {metafieldParser, type ParsedMetafields} from './metafield-parser.js';
+import {
+  metafieldParser,
+  type ParsedMetafields,
+  type Measurement,
+  type Rating,
+} from './metafield-parser.js';
 import {getRawMetafield} from './Metafield.test.helpers.js';
 import {expectType} from 'ts-expect';
+import type {
+  Collection,
+  GenericFile,
+  MoneyV2,
+  Page,
+  Product,
+  ProductVariant,
+} from './storefront-api-types.js';
 
 /**
  * The tests in this file are written in the format `parsed.parsedValue === ''` instead of `(parsed.parsedValue).toEqual()`
@@ -26,7 +39,7 @@ describe(`metafieldParser`, () => {
       },
     });
     expect(parsed?.parsedValue?.__typename === 'Collection').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Collection>(parsed?.parsedValue);
   });
 
   it(`color`, () => {
@@ -35,7 +48,7 @@ describe(`metafieldParser`, () => {
       value: '#f0f0f0',
     });
     expect(parsed?.parsedValue === '#f0f0f0').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<string>(parsed?.parsedValue);
   });
 
   it(`date`, () => {
@@ -47,7 +60,7 @@ describe(`metafieldParser`, () => {
     expect(
       parsed?.parsedValue?.toString() === new Date(dateStamp).toString()
     ).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Date>(parsed?.parsedValue);
   });
 
   it(`date_time`, () => {
@@ -59,7 +72,7 @@ describe(`metafieldParser`, () => {
     expect(
       parsed?.parsedValue?.toString() === new Date(dateStamp).toString()
     ).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Date>(parsed?.parsedValue);
   });
 
   it(`dimension`, () => {
@@ -68,10 +81,8 @@ describe(`metafieldParser`, () => {
       value: JSON.stringify({unit: 'mm', value: 2}),
     });
     expect(parsed?.parsedValue?.unit === 'mm').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.value === 2).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Measurement>(parsed?.parsedValue);
   });
 
   it(`volume`, () => {
@@ -80,10 +91,8 @@ describe(`metafieldParser`, () => {
       value: JSON.stringify({unit: 'us_pt', value: 2}),
     });
     expect(parsed?.parsedValue?.unit === 'us_pt').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.value === 2).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Measurement>(parsed?.parsedValue);
   });
 
   it(`weight`, () => {
@@ -92,10 +101,8 @@ describe(`metafieldParser`, () => {
       value: JSON.stringify({unit: 'lbs', value: 2}),
     });
     expect(parsed?.parsedValue?.unit === 'lbs').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.value === 2).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Measurement>(parsed?.parsedValue);
   });
 
   it(`file_reference`, () => {
@@ -106,22 +113,42 @@ describe(`metafieldParser`, () => {
       },
     });
     expect(parsed.parsedValue?.__typename === 'GenericFile').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<GenericFile>(parsed?.parsedValue);
   });
 
   it(`json`, () => {
-    const parsed = metafieldParser<ParsedMetafields['json']>({
-      type: 'json',
+    type MyJson = {
+      top: string;
+      value: {
+        test: string;
+        bool: boolean;
+        deep: {
+          numb: number;
+        };
+      };
+    };
+
+    const myJson = {
+      top: 'json',
       value: JSON.stringify({test: 'testing', bool: false, deep: {numb: 7}}),
-    });
-    expect(parsed?.parsedValue?.test === 'testing').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    };
 
-    expect(parsed?.parsedValue?.bool === false).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    // without an extra generic, we just mark it as "unknown"
+    const parsed = metafieldParser<ParsedMetafields['json']>(myJson);
+    // note that with "unknown", you have to cast it as something
+    expect((parsed?.parsedValue as {test: string})?.test === 'testing').toBe(
+      true
+    );
+    expectType<unknown>(parsed?.parsedValue);
 
-    expect(parsed?.parsedValue?.deep?.numb === 7).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    // with an extra generic, we use can use that as the type instead
+    const parsedOtherType =
+      metafieldParser<ParsedMetafields<MyJson>['json']>(myJson);
+    expect(parsedOtherType.parsedValue?.top === 'json').toBe(true);
+    expect(parsedOtherType.parsedValue?.value?.test === 'testing').toBe(true);
+    expect(parsedOtherType.parsedValue?.value?.bool === false).toBe(true);
+    expect(parsedOtherType.parsedValue?.value?.deep?.numb === 7).toBe(true);
+    expectType<MyJson>(parsedOtherType.parsedValue);
   });
 
   it(`money`, () => {
@@ -131,10 +158,8 @@ describe(`metafieldParser`, () => {
     });
     // TODO: amount should be a number, not a string
     expect(parsed?.parsedValue?.amount === '12').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.currencyCode === 'USD').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<MoneyV2>(parsed?.parsedValue);
   });
 
   it(`multi_line_text_field`, () => {
@@ -143,7 +168,7 @@ describe(`metafieldParser`, () => {
       value: 'blah\nblah\nblah',
     });
     expect(parsed?.parsedValue === 'blah\nblah\nblah').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<string>(parsed?.parsedValue);
   });
 
   it(`single_line_text_field`, () => {
@@ -152,7 +177,7 @@ describe(`metafieldParser`, () => {
       value: 'blah',
     });
     expect(parsed?.parsedValue === 'blah').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<string>(parsed?.parsedValue);
   });
 
   it(`url`, () => {
@@ -161,25 +186,25 @@ describe(`metafieldParser`, () => {
       value: 'https://www.shopify.com',
     });
     expect(parsed?.parsedValue === 'https://www.shopify.com').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<string>(parsed?.parsedValue);
   });
 
   it(`number_decimal`, () => {
     const parsed = metafieldParser<ParsedMetafields['number_decimal']>({
       type: 'number_decimal',
-      value: 2.2,
+      value: '2.2',
     });
     expect(parsed?.parsedValue === 2.2).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<number>(parsed?.parsedValue);
   });
 
   it(`number_integer`, () => {
     const parsed = metafieldParser<ParsedMetafields['number_integer']>({
       type: 'number_integer',
-      value: 2,
+      value: '2',
     });
     expect(parsed?.parsedValue === 2).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<number>(parsed?.parsedValue);
   });
 
   it(`page_reference`, () => {
@@ -190,7 +215,7 @@ describe(`metafieldParser`, () => {
       },
     });
     expect(parsed.parsedValue?.__typename === 'Page').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Page>(parsed?.parsedValue);
   });
 
   it(`product_reference`, () => {
@@ -201,7 +226,7 @@ describe(`metafieldParser`, () => {
       },
     });
     expect(parsed.parsedValue?.__typename === 'Product').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Product>(parsed?.parsedValue);
   });
 
   it(`rating`, () => {
@@ -210,13 +235,9 @@ describe(`metafieldParser`, () => {
       value: JSON.stringify({value: 3, scale_min: 1, scale_max: 5}),
     });
     expect(parsed?.parsedValue?.value === 3).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.scale_min === 1).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
-
     expect(parsed?.parsedValue?.scale_max === 5).toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<Rating>(parsed?.parsedValue);
   });
 
   it(`variant_reference`, () => {
@@ -227,6 +248,6 @@ describe(`metafieldParser`, () => {
       },
     });
     expect(parsed.parsedValue?.__typename === 'ProductVariant').toBe(true);
-    expectType<boolean>(parsed?.parsedValue);
+    expectType<ProductVariant>(parsed?.parsedValue);
   });
 });

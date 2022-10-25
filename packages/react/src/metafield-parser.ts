@@ -157,27 +157,61 @@ export const allMetafieldTypesArray = [
 /** A union of all the supported `metafield.type`s */
 export type MetafieldTypeTypes = typeof allMetafieldTypesArray[number];
 
-/** A mapping of a Metafield's `type` to the TypeScript type that is returned from `metafieldParser()` */
-export type ParsedMetafields = {
+/**
+ * A mapping of a Metafield's `type` to the TypeScript type that is returned from `metafieldParser()`
+ * For example, when using `metafieldParser()`, the type will be correctly returned when used like the following:
+ *
+ * ```
+ * const parsedMetafield = metafieldParser<ParsedMetafields['boolean']>(metafield);`
+ * ```
+ * `parsedMetafield.parsedValue`'s type is now `boolean`
+ */
+export type ParsedMetafields<ExtraTypeGeneric = void> = {
+  /** A Metafield that's been parsed, with a `parsedValue` of `boolean` */
   boolean: Simplify<BooleanParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of a `Collection` object (as defined by the Storefront API) */
   collection_reference: Simplify<CollectionParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `string` */
   color: Simplify<ColorParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Date` */
   date: Simplify<DatesParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Date` */
   date_time: Simplify<DatesParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Measurement` */
   dimension: Simplify<MeasurementParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of a `GenericFile` object (as defined by the Storefront API) */
   file_reference: Simplify<FileRefParsedMetafield>;
-  json: Simplify<JsonParsedMetafield>;
+  /**
+   * A Metafield that's been parsed, with a `parsedValue` of type `unknown`, unless you pass in the type as a generic. For example:
+   *
+   * ```
+   * ParsedMetafields<MyJsonType>['json']
+   * ```
+   */
+  json: Simplify<JsonParsedMetafield<ExtraTypeGeneric>>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Money` */
   money: Simplify<MoneyParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `string` */
   multi_line_text_field: Simplify<TextParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `number` */
   number_decimal: Simplify<NumberParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `number` */
   number_integer: Simplify<NumberParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of a `Page` object (as defined by the Storefront API) */
   page_reference: Simplify<PageParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of a `Product` object (as defined by the Storefront API) */
   product_reference: Simplify<ProductParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Rating` */
   rating: Simplify<RatingParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `string` */
   single_line_text_field: Simplify<TextParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `string` */
   url: Simplify<TextParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of a `ProductVariant` object (as defined by the Storefront API) */
   variant_reference: Simplify<VariantParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Measurement` */
   volume: Simplify<MeasurementParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of type `Measurement` */
   weight: Simplify<MeasurementParsedMetafield>;
   // list metafields
   'list.collection_reference': Simplify<CollectionListParsedRefMetafield>;
@@ -233,9 +267,9 @@ type FileRefParsedMetafield = MetafieldBaseType & {
   parsedValue: GenericFile;
 };
 
-type JsonParsedMetafield = MetafieldBaseType & {
+type JsonParsedMetafield<JsonTypeGeneric = void> = MetafieldBaseType & {
   type: 'json';
-  parsedValue: unknown;
+  parsedValue: JsonTypeGeneric extends void ? unknown : JsonTypeGeneric;
 };
 
 type MoneyParsedMetafield = MetafieldBaseType & {
@@ -328,12 +362,12 @@ type VariantListParsedRefMetafield = MetafieldBaseType & {
   parsedValue: Array<ProductVariant>;
 };
 
-type Measurement = {
+export type Measurement = {
   unit: string;
   value: number;
 };
 
-interface Rating {
+export interface Rating {
   value: number;
   scale_min: number;
   scale_max: number;
