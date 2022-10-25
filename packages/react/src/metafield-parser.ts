@@ -22,7 +22,16 @@ export function metafieldParser<ReturnGeneric>(
   metafield: PartialDeep<MetafieldBaseType, {recurseIntoArrays: true}>
 ): ReturnGeneric {
   if (!metafield.type) {
-    throw new Error('error');
+    const noTypeError = `metafieldParser(): The 'type' field is required in order to parse the Metafield.`;
+    if (__HYDROGEN_DEV__) {
+      throw new Error(noTypeError);
+    } else {
+      console.error(`${noTypeError} Returning 'parsedValue' of 'null'`);
+      return {
+        ...metafield,
+        parsedValue: null,
+      } as ReturnGeneric;
+    }
   }
 
   switch (metafield.type) {
