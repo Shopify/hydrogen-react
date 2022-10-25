@@ -10,6 +10,7 @@ import type {
 import type {PartialDeep, Simplify} from 'type-fest';
 import {parseJSON} from './Metafield.js';
 import {TypeEqual, expectType} from 'ts-expect';
+import {flattenConnection} from './flatten-connection.js';
 
 /**
  * A function that uses `metafield.type` to parse the Metafield's `value` or `reference` or `references` (depending on the `type`) and put it in `metafield.parsedValue`
@@ -67,10 +68,27 @@ export function metafieldParser<ReturnGeneric>(
     case 'rating':
     case 'volume':
     case 'weight':
+    case 'list.color':
+    case 'list.dimension':
+    case 'list.number_integer':
+    case 'list.number_decimal': {
+      let parsedValue = null;
+      try {
+        parsedValue = parseJSON(metafield.value ?? '');
+      } catch (err) {
+        const parseError = `metafieldParser(): attempted to JSON.parse the 'metafield.value' property, but failed.`;
+        if (__HYDROGEN_DEV__) {
+          throw new Error(parseError);
+        } else {
+          console.error(`${parseError} Returning 'null' for 'parsedValue'`);
+        }
+        parsedValue = null;
+      }
       return {
         ...metafield,
-        parsedValue: parseJSON(metafield.value ?? ''),
+        parsedValue,
       } as ReturnGeneric;
+    }
 
     case 'date':
     case 'date_time':
@@ -78,6 +96,15 @@ export function metafieldParser<ReturnGeneric>(
         ...metafield,
         parsedValue: new Date(metafield.value ?? ''),
       } as ReturnGeneric;
+
+    case 'list.date':
+    case 'list.date_time': {
+      const jsonParseValue = parseJSON(metafield?.value ?? '') as string[];
+      return {
+        ...metafield,
+        parsedValue: jsonParseValue.map((dateString) => new Date(dateString)),
+      } as ReturnGeneric;
+    }
 
     case 'number_decimal':
     case 'number_integer':
@@ -87,13 +114,7 @@ export function metafieldParser<ReturnGeneric>(
       } as ReturnGeneric;
 
     case 'list.collection_reference':
-    case 'list.color':
-    case 'list.date':
-    case 'list.date_time':
-    case 'list.dimension':
     case 'list.file_reference':
-    case 'list.number_integer':
-    case 'list.number_decimal':
     case 'list.page_reference':
     case 'list.product_reference':
     case 'list.rating':
@@ -104,7 +125,7 @@ export function metafieldParser<ReturnGeneric>(
     case 'list.weight':
       return {
         ...metafield,
-        parsedValue: metafield.references,
+        parsedValue: flattenConnection(metafield.references ?? undefined),
       } as ReturnGeneric;
 
     default: {
@@ -251,124 +272,124 @@ interface ParsedBase extends MetafieldBaseType {
 
 interface BooleanParsedMetafield extends ParsedBase {
   type: 'boolean';
-  parsedValue: boolean;
+  parsedValue: boolean | null;
 }
 type CollectionParsedRefMetafield = MetafieldBaseType & {
   type: 'collection_reference';
-  parsedValue: Collection;
+  parsedValue: Collection | null;
 };
 type ColorParsedMetafield = MetafieldBaseType & {
   type: 'color';
-  parsedValue: string;
+  parsedValue: string | null;
 };
 type DatesParsedMetafield = MetafieldBaseType & {
   type: 'date' | 'date_time';
-  parsedValue: Date;
+  parsedValue: Date | null;
 };
 
 type MeasurementParsedMetafield = MetafieldBaseType & {
   type: 'dimension' | 'weight' | 'volume';
-  parsedValue: Measurement;
+  parsedValue: Measurement | null;
 };
 
 type FileRefParsedMetafield = MetafieldBaseType & {
   type: 'file_reference';
-  parsedValue: GenericFile;
+  parsedValue: GenericFile | null;
 };
 
 type JsonParsedMetafield<JsonTypeGeneric = void> = MetafieldBaseType & {
   type: 'json';
-  parsedValue: JsonTypeGeneric extends void ? unknown : JsonTypeGeneric;
+  parsedValue: JsonTypeGeneric extends void ? unknown : JsonTypeGeneric | null;
 };
 
 type MoneyParsedMetafield = MetafieldBaseType & {
   type: 'money';
-  parsedValue: MoneyV2;
+  parsedValue: MoneyV2 | null;
 };
 
 type TextParsedMetafield = MetafieldBaseType & {
   type: 'single_line_text_field' | 'multi_line_text_field' | 'url';
-  parsedValue: string;
+  parsedValue: string | null;
 };
 
 type NumberParsedMetafield = MetafieldBaseType & {
   type: 'number_decimal' | 'number_integer';
-  parsedValue: number;
+  parsedValue: number | null;
 };
 
 type PageParsedRefMetafield = MetafieldBaseType & {
   type: 'page_reference';
-  parsedValue: Page;
+  parsedValue: Page | null;
 };
 
 type ProductParsedRefMetafield = MetafieldBaseType & {
   type: 'product_reference';
-  parsedValue: Product;
+  parsedValue: Product | null;
 };
 
 type RatingParsedMetafield = MetafieldBaseType & {
   type: 'rating';
-  parsedValue: Rating;
+  parsedValue: Rating | null;
 };
 
 type VariantParsedRefMetafield = MetafieldBaseType & {
   type: 'variant_reference';
-  parsedValue: ProductVariant;
+  parsedValue: ProductVariant | null;
 };
 
 type CollectionListParsedRefMetafield = MetafieldBaseType & {
   type: 'list.collection_reference';
-  parsedValue: Array<Collection>;
+  parsedValue: Array<Collection> | null;
 };
 
 type ColorListParsedMetafield = MetafieldBaseType & {
   type: 'list.color';
-  parsedValue: Array<string>;
+  parsedValue: Array<string> | null;
 };
 
 type DatesListParsedMetafield = MetafieldBaseType & {
   type: 'list.date' | 'list.date_time';
-  parsedValue: Array<Date>;
+  parsedValue: Array<Date> | null;
 };
 
 type MeasurementListParsedMetafield = MetafieldBaseType & {
   type: 'list.dimension' | 'list.weight' | 'list.volume';
-  parsedValue: Array<Measurement>;
+  parsedValue: Array<Measurement> | null;
 };
 
 type FileListParsedRefMetafield = MetafieldBaseType & {
   type: 'list.file_reference';
-  parsedValue: Array<GenericFile>;
+  parsedValue: Array<GenericFile> | null;
 };
 
 type TextListParsedMetafield = MetafieldBaseType & {
   type: 'list.single_line_text_field' | 'list.url';
-  parsedValue: Array<string>;
+  parsedValue: Array<string> | null;
 };
 
 type NumberListParsedMetafield = MetafieldBaseType & {
   type: 'list.number_decimal' | 'list.number_integer';
-  parsedValue: Array<number>;
+  parsedValue: Array<number> | null;
 };
 
 type PageListParsedRefMetafield = MetafieldBaseType & {
   type: 'list.page_reference';
-  parsedValue: Array<Page>;
+  parsedValue: Array<Page> | null;
 };
 
 type ProductListParsedRefMetafield = MetafieldBaseType & {
   type: 'list.product_reference';
-  parsedValue: Array<Product>;
+  parsedValue: Array<Product> | null;
 };
 
 type RatingListParsedMetafield = MetafieldBaseType & {
   type: 'list.rating';
-  parsedValue: Array<Rating>;
+  parsedValue: Array<Rating> | null;
 };
 
 type VariantListParsedRefMetafield = MetafieldBaseType & {
   type: 'list.variant_reference';
-  parsedValue: Array<ProductVariant>;
+  parsedValue: Array<ProductVariant> | null;
 };
 
 export type Measurement = {

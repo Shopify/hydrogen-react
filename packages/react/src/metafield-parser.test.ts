@@ -16,7 +16,7 @@ import type {
 } from './storefront-api-types.js';
 
 /**
- * The tests in this file are written in the format `parsed.parsedValue === ''` instead of `(parsed.parsedValue).toEqual()`
+ * The tests in this file are written in the format `parsed.parsedValue? === ''` instead of `(parsed.parsedValue).toEqual()`
  * The advantage of doing it this way for this test suite is that it helps ensure that the TS types are correct for the returned value
  * In most other situations, the second way is probably better though
  */
@@ -29,7 +29,7 @@ describe(`metafieldParser`, () => {
       });
       const parsed = metafieldParser<ParsedMetafields['boolean']>(meta);
       expect(parsed.parsedValue === false).toBe(true);
-      expectType<boolean>(parsed?.parsedValue);
+      expectType<null | boolean>(parsed?.parsedValue);
     });
 
     it(`collection_reference`, () => {
@@ -40,7 +40,7 @@ describe(`metafieldParser`, () => {
         },
       });
       expect(parsed?.parsedValue?.__typename === 'Collection').toBe(true);
-      expectType<Collection>(parsed?.parsedValue);
+      expectType<null | Collection>(parsed?.parsedValue);
     });
 
     it(`color`, () => {
@@ -49,7 +49,7 @@ describe(`metafieldParser`, () => {
         value: '#f0f0f0',
       });
       expect(parsed?.parsedValue === '#f0f0f0').toBe(true);
-      expectType<string>(parsed?.parsedValue);
+      expectType<null | string>(parsed?.parsedValue);
     });
 
     it(`date`, () => {
@@ -61,7 +61,7 @@ describe(`metafieldParser`, () => {
       expect(
         parsed?.parsedValue?.toString() === new Date(dateStamp).toString()
       ).toBe(true);
-      expectType<Date>(parsed?.parsedValue);
+      expectType<null | Date>(parsed?.parsedValue);
     });
 
     it(`date_time`, () => {
@@ -73,7 +73,7 @@ describe(`metafieldParser`, () => {
       expect(
         parsed?.parsedValue?.toString() === new Date(dateStamp).toString()
       ).toBe(true);
-      expectType<Date>(parsed?.parsedValue);
+      expectType<null | Date>(parsed?.parsedValue);
     });
 
     it(`dimension`, () => {
@@ -83,7 +83,7 @@ describe(`metafieldParser`, () => {
       });
       expect(parsed?.parsedValue?.unit === 'mm').toBe(true);
       expect(parsed?.parsedValue?.value === 2).toBe(true);
-      expectType<Measurement>(parsed?.parsedValue);
+      expectType<null | Measurement>(parsed?.parsedValue);
     });
 
     it(`file_reference`, () => {
@@ -94,7 +94,7 @@ describe(`metafieldParser`, () => {
         },
       });
       expect(parsed.parsedValue?.__typename === 'GenericFile').toBe(true);
-      expectType<GenericFile>(parsed?.parsedValue);
+      expectType<null | GenericFile>(parsed?.parsedValue);
     });
 
     it(`json`, () => {
@@ -117,7 +117,7 @@ describe(`metafieldParser`, () => {
       expect((parsed?.parsedValue as {test: string})?.test === 'testing').toBe(
         true
       );
-      expectType<unknown>(parsed?.parsedValue);
+      expectType<null | unknown>(parsed?.parsedValue);
 
       // with an extra generic, we use can use that as the type instead
       const parsedOtherType =
@@ -126,7 +126,7 @@ describe(`metafieldParser`, () => {
       expect(parsedOtherType.parsedValue?.test === 'testing').toBe(true);
       expect(parsedOtherType.parsedValue?.bool === false).toBe(true);
       expect(parsedOtherType.parsedValue?.deep?.numb === 7).toBe(true);
-      expectType<MyJson>(parsedOtherType.parsedValue);
+      expectType<null | MyJson>(parsedOtherType.parsedValue);
     });
 
     it(`money`, () => {
@@ -137,7 +137,7 @@ describe(`metafieldParser`, () => {
       // TODO: amount should be a number, not a string
       expect(parsed?.parsedValue?.amount === '12').toBe(true);
       expect(parsed?.parsedValue?.currencyCode === 'USD').toBe(true);
-      expectType<MoneyV2>(parsed?.parsedValue);
+      expectType<null | MoneyV2>(parsed?.parsedValue);
     });
 
     it(`multi_line_text_field`, () => {
@@ -148,7 +148,7 @@ describe(`metafieldParser`, () => {
         }
       );
       expect(parsed?.parsedValue === 'blah\nblah\nblah').toBe(true);
-      expectType<string>(parsed?.parsedValue);
+      expectType<null | string>(parsed?.parsedValue);
     });
 
     it(`single_line_text_field`, () => {
@@ -159,7 +159,7 @@ describe(`metafieldParser`, () => {
         value: 'blah',
       });
       expect(parsed?.parsedValue === 'blah').toBe(true);
-      expectType<string>(parsed?.parsedValue);
+      expectType<null | string>(parsed?.parsedValue);
     });
 
     it(`url`, () => {
@@ -168,7 +168,7 @@ describe(`metafieldParser`, () => {
         value: 'https://www.shopify.com',
       });
       expect(parsed?.parsedValue === 'https://www.shopify.com').toBe(true);
-      expectType<string>(parsed?.parsedValue);
+      expectType<null | string>(parsed?.parsedValue);
     });
 
     it(`number_decimal`, () => {
@@ -177,7 +177,7 @@ describe(`metafieldParser`, () => {
         value: '2.2',
       });
       expect(parsed?.parsedValue === 2.2).toBe(true);
-      expectType<number>(parsed?.parsedValue);
+      expectType<null | number>(parsed?.parsedValue);
     });
 
     it(`number_integer`, () => {
@@ -186,7 +186,7 @@ describe(`metafieldParser`, () => {
         value: '2',
       });
       expect(parsed?.parsedValue === 2).toBe(true);
-      expectType<number>(parsed?.parsedValue);
+      expectType<null | number>(parsed?.parsedValue);
     });
 
     it(`page_reference`, () => {
@@ -197,7 +197,7 @@ describe(`metafieldParser`, () => {
         },
       });
       expect(parsed.parsedValue?.__typename === 'Page').toBe(true);
-      expectType<Page>(parsed?.parsedValue);
+      expectType<null | Page>(parsed?.parsedValue);
     });
 
     it(`product_reference`, () => {
@@ -208,7 +208,7 @@ describe(`metafieldParser`, () => {
         },
       });
       expect(parsed.parsedValue?.__typename === 'Product').toBe(true);
-      expectType<Product>(parsed?.parsedValue);
+      expectType<null | Product>(parsed?.parsedValue);
     });
 
     it(`rating`, () => {
@@ -219,7 +219,7 @@ describe(`metafieldParser`, () => {
       expect(parsed?.parsedValue?.value === 3).toBe(true);
       expect(parsed?.parsedValue?.scale_min === 1).toBe(true);
       expect(parsed?.parsedValue?.scale_max === 5).toBe(true);
-      expectType<Rating>(parsed?.parsedValue);
+      expectType<null | Rating>(parsed?.parsedValue);
     });
 
     it(`variant_reference`, () => {
@@ -230,7 +230,7 @@ describe(`metafieldParser`, () => {
         },
       });
       expect(parsed.parsedValue?.__typename === 'ProductVariant').toBe(true);
-      expectType<ProductVariant>(parsed?.parsedValue);
+      expectType<null | ProductVariant>(parsed?.parsedValue);
     });
 
     it(`volume`, () => {
@@ -240,7 +240,7 @@ describe(`metafieldParser`, () => {
       });
       expect(parsed?.parsedValue?.unit === 'us_pt').toBe(true);
       expect(parsed?.parsedValue?.value === 2).toBe(true);
-      expectType<Measurement>(parsed?.parsedValue);
+      expectType<null | Measurement>(parsed?.parsedValue);
     });
 
     it(`weight`, () => {
@@ -250,7 +250,189 @@ describe(`metafieldParser`, () => {
       });
       expect(parsed?.parsedValue?.unit === 'lbs').toBe(true);
       expect(parsed?.parsedValue?.value === 2).toBe(true);
-      expectType<Measurement>(parsed?.parsedValue);
+      expectType<null | Measurement>(parsed?.parsedValue);
+    });
+  });
+
+  describe(`list metafields`, () => {
+    it(`list.collection_reference`, () => {
+      const parsed = metafieldParser<
+        ParsedMetafields['list.collection_reference']
+      >({
+        type: 'list.collection_reference',
+        references: {
+          nodes: [
+            {
+              __typename: 'Collection',
+              id: '0',
+            },
+            {
+              __typename: 'Collection',
+              id: '1',
+            },
+          ],
+        },
+      });
+      parsed.parsedValue?.forEach((coll, index) => {
+        expect(coll.__typename === 'Collection').toBe(true);
+        expect(index.toString() === coll.id).toBe(true);
+      });
+      expectType<null | Collection[]>(parsed?.parsedValue);
+    });
+
+    it(`list.color`, () => {
+      const listOfColors = ['blue', 'green'];
+      const parsed = metafieldParser<ParsedMetafields['list.color']>({
+        type: 'list.color',
+        value: JSON.stringify(listOfColors),
+      });
+      parsed.parsedValue?.forEach((color, index) => {
+        expect(color === listOfColors[index]).toBe(true);
+      });
+      expectType<null | string[]>(parsed?.parsedValue);
+    });
+
+    it(`list.date`, () => {
+      const listOfDates = ['2022-10-24', '2022-10-25'];
+      const listOfParsedDates = listOfDates.map((date) => new Date(date));
+      const parsed = metafieldParser<ParsedMetafields['list.date']>({
+        type: 'list.date',
+        value: JSON.stringify(listOfDates),
+      });
+      parsed.parsedValue?.forEach((date, index) => {
+        // worried about flakiness here with comparing dates, and having that be consistent in tests
+        expect(
+          date.getUTCDate() === listOfParsedDates[index].getUTCDate()
+        ).toBe(true);
+      });
+      expectType<null | Date[]>(parsed?.parsedValue);
+    });
+
+    it(`list.date_time`, () => {
+      const listOfDates = ['2022-10-04T22:30:00Z', '2022-10-05T22:30:00Z'];
+      const listOfParsedDates = listOfDates.map((date) => new Date(date));
+      const parsed = metafieldParser<ParsedMetafields['list.date']>({
+        type: 'list.date',
+        value: JSON.stringify(listOfDates),
+      });
+      parsed.parsedValue?.forEach((date, index) => {
+        // worried about flakiness here with comparing dates, and having that be consistent in tests
+        expect(
+          date.toISOString() === listOfParsedDates[index].toISOString()
+        ).toBe(true);
+      });
+      expectType<null | Date[]>(parsed?.parsedValue);
+    });
+
+    it(`list.dimension`, () => {
+      const listDimensions = [
+        {unit: 'mm', value: 2},
+        {unit: 'mm', value: 3},
+      ];
+      const parsed = metafieldParser<ParsedMetafields['list.dimension']>({
+        type: 'list.dimension',
+        value: JSON.stringify(listDimensions),
+      });
+      parsed.parsedValue?.forEach((dimension, index) => {
+        expect(dimension.unit === listDimensions[index].unit).toBe(true);
+        expect(dimension.value === listDimensions[index].value).toBe(true);
+      });
+      expectType<null | Measurement[]>(parsed?.parsedValue);
+    });
+
+    it(`list.file_reference`, () => {
+      const parsed = metafieldParser<ParsedMetafields['list.file_reference']>({
+        type: 'list.file_reference',
+        references: {
+          nodes: [
+            {
+              __typename: 'GenericFile',
+              id: '0',
+            },
+            {
+              __typename: 'GenericFile',
+              id: '1',
+            },
+          ],
+        },
+      });
+      parsed.parsedValue?.forEach((coll, index) => {
+        expect(coll.__typename === 'GenericFile').toBe(true);
+        expect(index.toString() === coll.id).toBe(true);
+      });
+      expectType<null | GenericFile[]>(parsed?.parsedValue);
+    });
+
+    it(`list.number_integer`, () => {
+      const listOfNumbers = [1, 2];
+      const parsed = metafieldParser<ParsedMetafields['list.number_integer']>({
+        type: 'list.number_integer',
+        value: JSON.stringify(listOfNumbers),
+      });
+      parsed.parsedValue?.forEach((number, index) => {
+        expect(number === listOfNumbers[index]).toBe(true);
+      });
+      expectType<null | number[]>(parsed?.parsedValue);
+    });
+
+    it(`list.number_decimal`, () => {
+      const listOfNumbers = [1.1, 2.2];
+      const parsed = metafieldParser<ParsedMetafields['list.number_decimal']>({
+        type: 'list.number_decimal',
+        value: JSON.stringify(listOfNumbers),
+      });
+      parsed.parsedValue?.forEach((number, index) => {
+        expect(number === listOfNumbers[index]).toBe(true);
+      });
+      expectType<null | number[]>(parsed?.parsedValue);
+    });
+
+    it(`list.page_reference`, () => {
+      const parsed = metafieldParser<ParsedMetafields['list.page_reference']>({
+        type: 'list.page_reference',
+        references: {
+          nodes: [
+            {
+              __typename: 'Page',
+              id: '0',
+            },
+            {
+              __typename: 'Page',
+              id: '1',
+            },
+          ],
+        },
+      });
+      parsed.parsedValue?.forEach((coll, index) => {
+        expect(coll.__typename === 'Page').toBe(true);
+        expect(index.toString() === coll.id).toBe(true);
+      });
+      expectType<null | Page[]>(parsed?.parsedValue);
+    });
+
+    it(`list.product_reference`, () => {
+      const parsed = metafieldParser<
+        ParsedMetafields['list.product_reference']
+      >({
+        type: 'list.product_reference',
+        references: {
+          nodes: [
+            {
+              __typename: 'Product',
+              id: '0',
+            },
+            {
+              __typename: 'Product',
+              id: '1',
+            },
+          ],
+        },
+      });
+      parsed.parsedValue?.forEach((coll, index) => {
+        expect(coll.__typename === 'Product').toBe(true);
+        expect(index.toString() === coll.id).toBe(true);
+      });
+      expectType<null | Product[]>(parsed?.parsedValue);
     });
   });
 });
