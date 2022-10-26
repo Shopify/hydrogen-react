@@ -14,6 +14,7 @@ import type {
   Product,
   ProductVariant,
 } from './storefront-api-types.js';
+import {faker} from '@faker-js/faker';
 
 /**
  * The tests in this file are written in the format `parsed.parsedValue? === ''` instead of `(parsed.parsedValue).toEqual()`
@@ -281,7 +282,7 @@ describe(`metafieldParser`, () => {
     });
 
     it(`list.color`, () => {
-      const listOfColors = ['blue', 'green'];
+      const listOfColors = [faker.color.rgb(), faker.color.rgb()];
       const parsed = metafieldParser<ParsedMetafields['list.color']>({
         type: 'list.color',
         value: JSON.stringify(listOfColors),
@@ -326,8 +327,8 @@ describe(`metafieldParser`, () => {
 
     it(`list.dimension`, () => {
       const listDimensions = [
-        {unit: 'mm', value: 2},
-        {unit: 'mm', value: 3},
+        {unit: 'mm', value: faker.datatype.number()},
+        {unit: 'mm', value: faker.datatype.number()},
       ];
       const parsed = metafieldParser<ParsedMetafields['list.dimension']>({
         type: 'list.dimension',
@@ -364,7 +365,7 @@ describe(`metafieldParser`, () => {
     });
 
     it(`list.number_integer`, () => {
-      const listOfNumbers = [1, 2];
+      const listOfNumbers = [faker.datatype.number(), faker.datatype.number()];
       const parsed = metafieldParser<ParsedMetafields['list.number_integer']>({
         type: 'list.number_integer',
         value: JSON.stringify(listOfNumbers),
@@ -376,7 +377,7 @@ describe(`metafieldParser`, () => {
     });
 
     it(`list.number_decimal`, () => {
-      const listOfNumbers = [1.1, 2.2];
+      const listOfNumbers = [faker.datatype.float(), faker.datatype.float()];
       const parsed = metafieldParser<ParsedMetafields['list.number_decimal']>({
         type: 'list.number_decimal',
         value: JSON.stringify(listOfNumbers),
@@ -433,6 +434,106 @@ describe(`metafieldParser`, () => {
         expect(index.toString() === coll.id).toBe(true);
       });
       expectType<null | Product[]>(parsed?.parsedValue);
+    });
+
+    it(`list.rating`, () => {
+      const listOfRatings: Rating[] = [
+        {scale_min: 0, scale_max: 5, value: faker.datatype.number()},
+        {scale_min: 0, scale_max: 5, value: faker.datatype.number()},
+      ];
+      const parsed = metafieldParser<ParsedMetafields['list.rating']>({
+        type: 'list.rating',
+        value: JSON.stringify(listOfRatings),
+      });
+      parsed.parsedValue?.forEach((rating, index) => {
+        expect(rating.value === listOfRatings[index].value).toBe(true);
+      });
+      expectType<null | Rating[]>(parsed?.parsedValue);
+    });
+
+    it(`list.single_line_text_field`, () => {
+      const listOfStrings = [faker.random.words(), faker.random.words()];
+      const parsed = metafieldParser<
+        ParsedMetafields['list.single_line_text_field']
+      >({
+        type: 'list.single_line_text_field',
+        value: JSON.stringify(listOfStrings),
+      });
+      parsed.parsedValue?.forEach((strng, index) => {
+        expect(strng === listOfStrings[index]).toBe(true);
+      });
+      expectType<null | string[]>(parsed?.parsedValue);
+    });
+
+    it(`list.url`, () => {
+      const listOfStrings = [faker.internet.url(), faker.internet.url()];
+      const parsed = metafieldParser<ParsedMetafields['list.url']>({
+        type: 'list.url',
+        value: JSON.stringify(listOfStrings),
+      });
+      parsed.parsedValue?.forEach((strng, index) => {
+        expect(strng === listOfStrings[index]).toBe(true);
+      });
+      expectType<null | string[]>(parsed?.parsedValue);
+    });
+
+    it(`list.variant_reference`, () => {
+      const parsed = metafieldParser<
+        ParsedMetafields['list.variant_reference']
+      >({
+        type: 'list.variant_reference',
+        references: {
+          nodes: [
+            {
+              __typename: 'ProductVariant',
+              id: '0',
+            },
+            {
+              __typename: 'ProductVariant',
+              id: '1',
+            },
+          ],
+        },
+      });
+      parsed.parsedValue?.forEach((coll, index) => {
+        expect(coll.__typename === 'ProductVariant').toBe(true);
+        expect(index.toString() === coll.id).toBe(true);
+      });
+      expectType<null | ProductVariant[]>(parsed?.parsedValue);
+    });
+
+    it(`list.volume`, () => {
+      const volumes: Measurement[] = [
+        {unit: 'us_pt', value: 2},
+        {unit: 'us_pt', value: 2},
+      ];
+      const parsed = metafieldParser<ParsedMetafields['list.volume']>({
+        type: 'volume',
+        value: JSON.stringify(volumes),
+      });
+
+      parsed.parsedValue?.forEach((vol, index) => {
+        expect(vol?.unit === volumes[index].unit).toBe(true);
+        expect(vol?.value === volumes[index].value).toBe(true);
+      });
+      expectType<null | Measurement[]>(parsed?.parsedValue);
+    });
+
+    it(`list.weight`, () => {
+      const weights: Measurement[] = [
+        {unit: 'lbs', value: 2},
+        {unit: 'lbs', value: 2},
+      ];
+      const parsed = metafieldParser<ParsedMetafields['list.weight']>({
+        type: 'volume',
+        value: JSON.stringify(weights),
+      });
+
+      parsed.parsedValue?.forEach((vol, index) => {
+        expect(vol?.unit === weights[index].unit).toBe(true);
+        expect(vol?.value === weights[index].value).toBe(true);
+      });
+      expectType<null | Measurement[]>(parsed?.parsedValue);
     });
   });
 });

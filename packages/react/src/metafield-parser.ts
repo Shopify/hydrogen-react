@@ -71,7 +71,12 @@ export function metafieldParser<ReturnGeneric>(
     case 'list.color':
     case 'list.dimension':
     case 'list.number_integer':
-    case 'list.number_decimal': {
+    case 'list.number_decimal':
+    case 'list.rating':
+    case 'list.single_line_text_field':
+    case 'list.url':
+    case 'list.volume':
+    case 'list.weight': {
       let parsedValue = null;
       try {
         parsedValue = parseJSON(metafield.value ?? '');
@@ -117,23 +122,20 @@ export function metafieldParser<ReturnGeneric>(
     case 'list.file_reference':
     case 'list.page_reference':
     case 'list.product_reference':
-    case 'list.rating':
-    case 'list.single_line_text_field':
-    case 'list.url':
     case 'list.variant_reference':
-    case 'list.volume':
-    case 'list.weight':
       return {
         ...metafield,
         parsedValue: flattenConnection(metafield.references ?? undefined),
       } as ReturnGeneric;
 
     default: {
-      const typeNotFoundError = `metafieldParser(): the 'metafield.type' you passed in is not supported. Your type: "${metafield.type}". If you believe this is an error, please open an issue on GitHub. Returning 'parsedValue' of 'null'`;
+      const typeNotFoundError = `metafieldParser(): the 'metafield.type' you passed in is not supported. Your type: "${metafield.type}". If you believe this is an error, please open an issue on GitHub.`;
       if (__HYDROGEN_DEV__) {
         throw new Error(typeNotFoundError);
       } else {
-        console.error(typeNotFoundError);
+        console.error(
+          `${typeNotFoundError}  Returning 'parsedValue' of 'null'`
+        );
         return {
           ...metafield,
           parsedValue: null,
@@ -244,21 +246,37 @@ export type ParsedMetafields<ExtraTypeGeneric = void> = {
   /** A Metafield that's been parsed, with a `parsedValue` of type `Measurement` */
   weight: Simplify<MeasurementParsedMetafield>;
   // list metafields
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Collection` objects (as defined by the Storefront API) */
   'list.collection_reference': Simplify<CollectionListParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of strings */
   'list.color': Simplify<ColorListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of Date objects */
   'list.date': Simplify<DatesListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of Date objects */
   'list.date_time': Simplify<DatesListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Measurement` objects */
   'list.dimension': Simplify<MeasurementListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `GenericFile` objects (as defined by the Storefront API) */
   'list.file_reference': Simplify<FileListParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of numbers */
   'list.number_integer': Simplify<NumberListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of numbers */
   'list.number_decimal': Simplify<NumberListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Page` objects (as defined by the Storefront API) */
   'list.page_reference': Simplify<PageListParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Product` objects (as defined by the Storefront API) */
   'list.product_reference': Simplify<ProductListParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Rating`s */
   'list.rating': Simplify<RatingListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of strings */
   'list.single_line_text_field': Simplify<TextListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of strings */
   'list.url': Simplify<TextListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `ProductVariant` objects (as defined by the Storefront API) */
   'list.variant_reference': Simplify<VariantListParsedRefMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Measurement`s */
   'list.volume': Simplify<MeasurementListParsedMetafield>;
+  /** A Metafield that's been parsed, with a `parsedValue` of an array of `Measurement`s */
   'list.weight': Simplify<MeasurementListParsedMetafield>;
 };
 
