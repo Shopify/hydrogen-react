@@ -43,7 +43,7 @@ or
 
 ```ts
 const parsed = metafieldParser<ParsedMetafield['list.collection']>(
-  listVariantReferenceMetafield
+  listCollectionMetafield
 );
 
 // type of `parsedValue` is `Array<Collection> | null`
