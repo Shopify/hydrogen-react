@@ -190,6 +190,7 @@ export function Metafield<ComponentGeneric extends ElementType>(
  * The `parseMetafield` utility transforms a [Metafield](https://shopify.dev/api/storefront/reference/common-objects/Metafield)
  * into a new object whose `values` have been parsed according to the metafield `type`.
  * If the metafield is `null`, then it returns `null` back.
+ * @deprecated `parseMetafield()` is unsupported and will be removed in a future version. Use `metafieldParser()` instead
  */
 export function parseMetafield(
   /** A [Metafield](https://shopify.dev/api/storefront/reference/common-objects/Metafield) or null */
@@ -220,6 +221,7 @@ export function parseMetafield(
 
 /**
  * The `parseMetafieldValue` function parses a [Metafield](https://shopify.dev/api/storefront/reference/common-objects/metafield)'s `value` from a string into a sensible type corresponding to the [Metafield](https://shopify.dev/api/storefront/reference/common-objects/metafield)'s `type`.
+ * @deprecated `parseMetafieldValue()` is unsupported and will be removed in a future version. Use `metafieldParser()` instead
  */
 export function parseMetafieldValue(
   metafield: PartialDeep<MetafieldType, {recurseIntoArrays: true}> | null
