@@ -2,3 +2,4 @@
 **/dist/**
 packages/react/storefront.schema.json
 **/coverage/
+**/.next/**

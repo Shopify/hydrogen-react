@@ -1,10 +1,14 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import {TypedDocumentNode as DocumentNode} from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -117,55 +121,56 @@ export type AppliedGiftCard = Node & {
 };
 
 /** An article in an online store blog. */
-export type Article = HasMetafields & Node & OnlineStorePublishable & {
-  __typename?: 'Article';
-  /**
-   * The article's author.
-   * @deprecated Use `authorV2` instead.
-   */
-  author: ArticleAuthor;
-  /** The article's author. */
-  authorV2?: Maybe<ArticleAuthor>;
-  /** The blog that the article belongs to. */
-  blog: Blog;
-  /** List of comments posted on the article. */
-  comments: CommentConnection;
-  /** Stripped content of the article, single line with HTML tags removed. */
-  content: Scalars['String'];
-  /** The content of the article, complete with HTML formatting. */
-  contentHtml: Scalars['HTML'];
-  /** Stripped excerpt of the article, single line with HTML tags removed. */
-  excerpt?: Maybe<Scalars['String']>;
-  /** The excerpt of the article, complete with HTML formatting. */
-  excerptHtml?: Maybe<Scalars['HTML']>;
-  /**
-   * A human-friendly unique string for the Article automatically generated from its title.
-   *
-   */
-  handle: Scalars['String'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** The image associated with the article. */
-  image?: Maybe<Image>;
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-  onlineStoreUrl?: Maybe<Scalars['URL']>;
-  /** The date and time when the article was published. */
-  publishedAt: Scalars['DateTime'];
-  /** The article’s SEO information. */
-  seo?: Maybe<Seo>;
-  /** A categorization that a article can be tagged with. */
-  tags: Array<Scalars['String']>;
-  /** The article’s name. */
-  title: Scalars['String'];
-};
-
+export type Article = HasMetafields &
+  Node &
+  OnlineStorePublishable & {
+    __typename?: 'Article';
+    /**
+     * The article's author.
+     * @deprecated Use `authorV2` instead.
+     */
+    author: ArticleAuthor;
+    /** The article's author. */
+    authorV2?: Maybe<ArticleAuthor>;
+    /** The blog that the article belongs to. */
+    blog: Blog;
+    /** List of comments posted on the article. */
+    comments: CommentConnection;
+    /** Stripped content of the article, single line with HTML tags removed. */
+    content: Scalars['String'];
+    /** The content of the article, complete with HTML formatting. */
+    contentHtml: Scalars['HTML'];
+    /** Stripped excerpt of the article, single line with HTML tags removed. */
+    excerpt?: Maybe<Scalars['String']>;
+    /** The excerpt of the article, complete with HTML formatting. */
+    excerptHtml?: Maybe<Scalars['HTML']>;
+    /**
+     * A human-friendly unique string for the Article automatically generated from its title.
+     *
+     */
+    handle: Scalars['String'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** The image associated with the article. */
+    image?: Maybe<Image>;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
+    onlineStoreUrl?: Maybe<Scalars['URL']>;
+    /** The date and time when the article was published. */
+    publishedAt: Scalars['DateTime'];
+    /** The article’s SEO information. */
+    seo?: Maybe<Seo>;
+    /** A categorization that a article can be tagged with. */
+    tags: Array<Scalars['String']>;
+    /** The article’s name. */
+    title: Scalars['String'];
+  };
 
 /** An article in an online store blog. */
 export type ArticleCommentsArgs = {
@@ -176,25 +181,21 @@ export type ArticleCommentsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /** An article in an online store blog. */
 export type ArticleContentArgs = {
   truncateAt?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** An article in an online store blog. */
 export type ArticleExcerptArgs = {
   truncateAt?: InputMaybe<Scalars['Int']>;
 };
 
-
 /** An article in an online store blog. */
 export type ArticleMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
-
 
 /** An article in an online store blog. */
 export type ArticleMetafieldsArgs = {
@@ -261,7 +262,7 @@ export enum ArticleSortKeys {
   /** Sort by the `title` value. */
   Title = 'TITLE',
   /** Sort by the `updated_at` value. */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 /** Represents a generic custom attribute. */
@@ -314,42 +315,42 @@ export type AvailableShippingRates = {
 };
 
 /** An online store blog. */
-export type Blog = HasMetafields & Node & OnlineStorePublishable & {
-  __typename?: 'Blog';
-  /** Find an article by its handle. */
-  articleByHandle?: Maybe<Article>;
-  /** List of the blog's articles. */
-  articles: ArticleConnection;
-  /** The authors who have contributed to the blog. */
-  authors: Array<ArticleAuthor>;
-  /**
-   * A human-friendly unique string for the Blog automatically generated from its title.
-   *
-   */
-  handle: Scalars['String'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-  onlineStoreUrl?: Maybe<Scalars['URL']>;
-  /** The blog's SEO information. */
-  seo?: Maybe<Seo>;
-  /** The blogs’s title. */
-  title: Scalars['String'];
-};
-
+export type Blog = HasMetafields &
+  Node &
+  OnlineStorePublishable & {
+    __typename?: 'Blog';
+    /** Find an article by its handle. */
+    articleByHandle?: Maybe<Article>;
+    /** List of the blog's articles. */
+    articles: ArticleConnection;
+    /** The authors who have contributed to the blog. */
+    authors: Array<ArticleAuthor>;
+    /**
+     * A human-friendly unique string for the Blog automatically generated from its title.
+     *
+     */
+    handle: Scalars['String'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
+    onlineStoreUrl?: Maybe<Scalars['URL']>;
+    /** The blog's SEO information. */
+    seo?: Maybe<Seo>;
+    /** The blogs’s title. */
+    title: Scalars['String'];
+  };
 
 /** An online store blog. */
 export type BlogArticleByHandleArgs = {
   handle: Scalars['String'];
 };
-
 
 /** An online store blog. */
 export type BlogArticlesArgs = {
@@ -362,13 +363,11 @@ export type BlogArticlesArgs = {
   sortKey?: InputMaybe<ArticleSortKeys>;
 };
 
-
 /** An online store blog. */
 export type BlogMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
-
 
 /** An online store blog. */
 export type BlogMetafieldsArgs = {
@@ -414,7 +413,7 @@ export enum BlogSortKeys {
    */
   Relevance = 'RELEVANCE',
   /** Sort by the `title` value. */
-  Title = 'TITLE'
+  Title = 'TITLE',
 }
 
 /**
@@ -474,7 +473,7 @@ export enum CardBrand {
   /** Mastercard. */
   Mastercard = 'MASTERCARD',
   /** Visa. */
-  Visa = 'VISA'
+  Visa = 'VISA',
 }
 
 /**
@@ -532,7 +531,6 @@ export type Cart = Node & {
   updatedAt: Scalars['DateTime'];
 };
 
-
 /**
  * A cart represents the merchandise that a buyer intends to purchase,
  * and the estimated cost associated with the cart. Learn how to
@@ -543,7 +541,6 @@ export type Cart = Node & {
 export type CartAttributeArgs = {
   key: Scalars['String'];
 };
-
 
 /**
  * A cart represents the merchandise that a buyer intends to purchase,
@@ -559,7 +556,6 @@ export type CartDeliveryGroupsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 /**
  * A cart represents the merchandise that a buyer intends to purchase,
@@ -718,7 +714,6 @@ export type CartDeliveryGroup = {
   selectedDeliveryOption?: Maybe<CartDeliveryOption>;
 };
 
-
 /** Information about the options available for one or more line items to be delivered to a specific address. */
 export type CartDeliveryGroupCartLinesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -806,7 +801,7 @@ export enum CartErrorCode {
   /** Missing discount code. */
   MissingDiscountCode = 'MISSING_DISCOUNT_CODE',
   /** Missing note. */
-  MissingNote = 'MISSING_NOTE'
+  MissingNote = 'MISSING_NOTE',
 }
 
 /**
@@ -878,7 +873,6 @@ export type CartLine = Node & {
   /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
   sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
 };
-
 
 /** Represents information about the merchandise in the cart. */
 export type CartLineAttributeArgs = {
@@ -1127,7 +1121,6 @@ export type Checkout = Node & {
   webUrl: Scalars['URL'];
 };
 
-
 /** A container for all the information required to checkout items and pay. */
 export type CheckoutDiscountApplicationsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1136,7 +1129,6 @@ export type CheckoutDiscountApplicationsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 /** A container for all the information required to checkout items and pay. */
 export type CheckoutLineItemsArgs = {
@@ -1441,7 +1433,7 @@ export enum CheckoutErrorCode {
   /** The amount of the payment does not match the value to be paid. */
   TotalPriceMismatch = 'TOTAL_PRICE_MISMATCH',
   /** Unable to apply discount. */
-  UnableToApply = 'UNABLE_TO_APPLY'
+  UnableToApply = 'UNABLE_TO_APPLY',
 }
 
 /** Return type for `checkoutGiftCardRemoveV2` mutation. */
@@ -1630,47 +1622,47 @@ export type CheckoutUserError = DisplayableError & {
 };
 
 /** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
-export type Collection = HasMetafields & Node & OnlineStorePublishable & {
-  __typename?: 'Collection';
-  /** Stripped description of the collection, single line with HTML tags removed. */
-  description: Scalars['String'];
-  /** The description of the collection, complete with HTML formatting. */
-  descriptionHtml: Scalars['HTML'];
-  /**
-   * A human-friendly unique string for the collection automatically generated from its title.
-   * Limit of 255 characters.
-   *
-   */
-  handle: Scalars['String'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** Image associated with the collection. */
-  image?: Maybe<Image>;
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-  onlineStoreUrl?: Maybe<Scalars['URL']>;
-  /** List of products in the collection. */
-  products: ProductConnection;
-  /** The collection's SEO information. */
-  seo: Seo;
-  /** The collection’s name. Limit of 255 characters. */
-  title: Scalars['String'];
-  /** The date and time when the collection was last modified. */
-  updatedAt: Scalars['DateTime'];
-};
-
+export type Collection = HasMetafields &
+  Node &
+  OnlineStorePublishable & {
+    __typename?: 'Collection';
+    /** Stripped description of the collection, single line with HTML tags removed. */
+    description: Scalars['String'];
+    /** The description of the collection, complete with HTML formatting. */
+    descriptionHtml: Scalars['HTML'];
+    /**
+     * A human-friendly unique string for the collection automatically generated from its title.
+     * Limit of 255 characters.
+     *
+     */
+    handle: Scalars['String'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** Image associated with the collection. */
+    image?: Maybe<Image>;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
+    onlineStoreUrl?: Maybe<Scalars['URL']>;
+    /** List of products in the collection. */
+    products: ProductConnection;
+    /** The collection's SEO information. */
+    seo: Seo;
+    /** The collection’s name. Limit of 255 characters. */
+    title: Scalars['String'];
+    /** The date and time when the collection was last modified. */
+    updatedAt: Scalars['DateTime'];
+  };
 
 /** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
 export type CollectionDescriptionArgs = {
   truncateAt?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
 export type CollectionMetafieldArgs = {
@@ -1678,12 +1670,10 @@ export type CollectionMetafieldArgs = {
   namespace: Scalars['String'];
 };
 
-
 /** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
 export type CollectionMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
-
 
 /** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
 export type CollectionProductsArgs = {
@@ -1735,7 +1725,7 @@ export enum CollectionSortKeys {
   /** Sort by the `title` value. */
   Title = 'TITLE',
   /** Sort by the `updated_at` value. */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 /** A comment on an article. */
@@ -1750,7 +1740,6 @@ export type Comment = Node & {
   /** A globally-unique identifier. */
   id: Scalars['ID'];
 };
-
 
 /** A comment on an article. */
 export type CommentContentArgs = {
@@ -2304,7 +2293,7 @@ export enum CountryCode {
   /** Zimbabwe. */
   Zw = 'ZW',
   /** Unknown Region. */
-  Zz = 'ZZ'
+  Zz = 'ZZ',
 }
 
 /** Credit card information used for a payment. */
@@ -2357,7 +2346,7 @@ export enum CropRegion {
   /** Keep the right of the image. */
   Right = 'RIGHT',
   /** Keep the top of the image. */
-  Top = 'TOP'
+  Top = 'TOP',
 }
 
 /** A currency. */
@@ -2707,7 +2696,7 @@ export enum CurrencyCode {
   /** South African Rand (ZAR). */
   Zar = 'ZAR',
   /** Zambian Kwacha (ZMW). */
-  Zmw = 'ZMW'
+  Zmw = 'ZMW',
 }
 
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
@@ -2756,7 +2745,6 @@ export type Customer = HasMetafields & {
   updatedAt: Scalars['DateTime'];
 };
 
-
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
 export type CustomerAddressesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2766,19 +2754,16 @@ export type CustomerAddressesArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
 export type CustomerMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
 
-
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
 export type CustomerMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
-
 
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
 export type CustomerOrdersArgs = {
@@ -3008,7 +2993,7 @@ export enum CustomerErrorCode {
   /** The input value is too short. */
   TooShort = 'TOO_SHORT',
   /** Unidentified customer. */
-  UnidentifiedCustomer = 'UNIDENTIFIED_CUSTOMER'
+  UnidentifiedCustomer = 'UNIDENTIFIED_CUSTOMER',
 }
 
 /** Return type for `customerRecover` mutation. */
@@ -3140,7 +3125,7 @@ export enum DeliveryMethodType {
   /** Retail. */
   Retail = 'RETAIL',
   /** Shipping. */
-  Shipping = 'SHIPPING'
+  Shipping = 'SHIPPING',
 }
 
 /** Digital wallet, such as Apple Pay, which can be used for accelerated checkouts. */
@@ -3152,7 +3137,7 @@ export enum DigitalWallet {
   /** Google Pay. */
   GooglePay = 'GOOGLE_PAY',
   /** Shopify Pay. */
-  ShopifyPay = 'SHOPIFY_PAY'
+  ShopifyPay = 'SHOPIFY_PAY',
 }
 
 /**
@@ -3193,7 +3178,7 @@ export enum DiscountApplicationAllocationMethod {
    * The value is specifically applied onto a particular line.
    * @deprecated Use ACROSS instead.
    */
-  One = 'ONE'
+  One = 'ONE',
 }
 
 /**
@@ -3235,7 +3220,7 @@ export enum DiscountApplicationTargetSelection {
   /** The discount is allocated onto only the lines that it's entitled for. */
   Entitled = 'ENTITLED',
   /** The discount is allocated onto explicitly chosen lines. */
-  Explicit = 'EXPLICIT'
+  Explicit = 'EXPLICIT',
 }
 
 /**
@@ -3246,7 +3231,7 @@ export enum DiscountApplicationTargetType {
   /** The discount applies onto line items. */
   LineItem = 'LINE_ITEM',
   /** The discount applies onto shipping lines. */
-  ShippingLine = 'SHIPPING_LINE'
+  ShippingLine = 'SHIPPING_LINE',
 }
 
 /**
@@ -3290,28 +3275,29 @@ export type Domain = {
 };
 
 /** Represents a video hosted outside of Shopify. */
-export type ExternalVideo = Media & Node & {
-  __typename?: 'ExternalVideo';
-  /** A word or phrase to share the nature or contents of a media. */
-  alt?: Maybe<Scalars['String']>;
-  /** The embed URL of the video for the respective host. */
-  embedUrl: Scalars['URL'];
-  /**
-   * The URL.
-   * @deprecated Use `originUrl` instead.
-   */
-  embeddedUrl: Scalars['URL'];
-  /** The host of the external video. */
-  host: MediaHost;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** The media content type. */
-  mediaContentType: MediaContentType;
-  /** The origin URL of the video on the respective host. */
-  originUrl: Scalars['URL'];
-  /** The preview image for the media. */
-  previewImage?: Maybe<Image>;
-};
+export type ExternalVideo = Media &
+  Node & {
+    __typename?: 'ExternalVideo';
+    /** A word or phrase to share the nature or contents of a media. */
+    alt?: Maybe<Scalars['String']>;
+    /** The embed URL of the video for the respective host. */
+    embedUrl: Scalars['URL'];
+    /**
+     * The URL.
+     * @deprecated Use `originUrl` instead.
+     */
+    embeddedUrl: Scalars['URL'];
+    /** The host of the external video. */
+    host: MediaHost;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** The media content type. */
+    mediaContentType: MediaContentType;
+    /** The origin URL of the video on the respective host. */
+    originUrl: Scalars['URL'];
+    /** The preview image for the media. */
+    previewImage?: Maybe<Image>;
+  };
 
 /** A filter that is supported on the parent field. */
 export type Filter = {
@@ -3339,7 +3325,7 @@ export enum FilterType {
   /** A list of selectable values. */
   List = 'LIST',
   /** A range of prices. */
-  PriceRange = 'PRICE_RANGE'
+  PriceRange = 'PRICE_RANGE',
 }
 
 /** A selectable value within a filter. */
@@ -3375,7 +3361,6 @@ export type Fulfillment = {
   trackingInfo: Array<FulfillmentTrackingInfo>;
 };
 
-
 /** Represents a single fulfillment in an order. */
 export type FulfillmentFulfillmentLineItemsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3384,7 +3369,6 @@ export type FulfillmentFulfillmentLineItemsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 /** Represents a single fulfillment in an order. */
 export type FulfillmentTrackingInfoArgs = {
@@ -3471,13 +3455,11 @@ export type HasMetafields = {
   metafields: Array<Maybe<Metafield>>;
 };
 
-
 /** Represents information about the metafields associated to the specified resource. */
 export type HasMetafieldsMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
-
 
 /** Represents information about the metafields associated to the specified resource. */
 export type HasMetafieldsMetafieldsArgs = {
@@ -3538,7 +3520,6 @@ export type Image = {
   width?: Maybe<Scalars['Int']>;
 };
 
-
 /** Represents an image resource. */
 export type ImageTransformedSrcArgs = {
   crop?: InputMaybe<CropRegion>;
@@ -3547,7 +3528,6 @@ export type ImageTransformedSrcArgs = {
   preferredContentType?: InputMaybe<ImageContentType>;
   scale?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** Represents an image resource. */
 export type ImageUrlArgs = {
@@ -3575,7 +3555,7 @@ export enum ImageContentType {
   /** A PNG image. */
   Png = 'PNG',
   /** A WEBP image. */
-  Webp = 'WEBP'
+  Webp = 'WEBP',
 }
 
 /**
@@ -3915,7 +3895,7 @@ export enum LanguageCode {
   /** Chinese (Traditional). */
   ZhTw = 'ZH_TW',
   /** Zulu. */
-  Zu = 'ZU'
+  Zu = 'ZU',
 }
 
 /** Information about the localized experiences configured for the shop. */
@@ -4012,7 +3992,7 @@ export enum LocationSortKeys {
   /** Sort by the `id` value. */
   Id = 'ID',
   /** Sort by the `name` value. */
-  Name = 'NAME'
+  Name = 'NAME',
 }
 
 /** Represents a mailing address for customers and shipping. */
@@ -4093,7 +4073,6 @@ export type MailingAddress = Node & {
   /** The zip or postal code of the address. */
   zip?: Maybe<Scalars['String']>;
 };
-
 
 /** Represents a mailing address for customers and shipping. */
 export type MailingAddressFormattedArgs = {
@@ -4221,7 +4200,7 @@ export enum MediaContentType {
   /** A 3d model. */
   Model_3D = 'MODEL_3D',
   /** A Shopify hosted video. */
-  Video = 'VIDEO'
+  Video = 'VIDEO',
 }
 
 /**
@@ -4241,23 +4220,24 @@ export enum MediaHost {
   /** Host for Vimeo embedded videos. */
   Vimeo = 'VIMEO',
   /** Host for YouTube embedded videos. */
-  Youtube = 'YOUTUBE'
+  Youtube = 'YOUTUBE',
 }
 
 /** Represents a Shopify hosted image. */
-export type MediaImage = Media & Node & {
-  __typename?: 'MediaImage';
-  /** A word or phrase to share the nature or contents of a media. */
-  alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** The image for the media. */
-  image?: Maybe<Image>;
-  /** The media content type. */
-  mediaContentType: MediaContentType;
-  /** The preview image for the media. */
-  previewImage?: Maybe<Image>;
-};
+export type MediaImage = Media &
+  Node & {
+    __typename?: 'MediaImage';
+    /** A word or phrase to share the nature or contents of a media. */
+    alt?: Maybe<Scalars['String']>;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** The image for the media. */
+    image?: Maybe<Image>;
+    /** The media content type. */
+    mediaContentType: MediaContentType;
+    /** The preview image for the media. */
+    previewImage?: Maybe<Image>;
+  };
 
 /**
  * A menu used for navigation within a storefront.
@@ -4322,7 +4302,7 @@ export enum MenuItemType {
   /** A search link. */
   Search = 'SEARCH',
   /** A shop policy link. */
-  ShopPolicy = 'SHOP_POLICY'
+  ShopPolicy = 'SHOP_POLICY',
 }
 
 /** The merchandise to be purchased at checkout. */
@@ -4363,7 +4343,6 @@ export type Metafield = Node & {
   value: Scalars['String'];
 };
 
-
 /**
  * Metafields represent custom metadata attached to a resource. Metafields can be sorted into namespaces and are
  * comprised of keys, values, and value types.
@@ -4396,13 +4375,29 @@ export type MetafieldFilter = {
 };
 
 /** A resource that the metafield belongs to. */
-export type MetafieldParentResource = Article | Blog | Collection | Customer | Order | Page | Product | ProductVariant | Shop;
+export type MetafieldParentResource =
+  | Article
+  | Blog
+  | Collection
+  | Customer
+  | Order
+  | Page
+  | Product
+  | ProductVariant
+  | Shop;
 
 /**
  * Returns the resource which is being referred to by a metafield.
  *
  */
-export type MetafieldReference = Collection | GenericFile | MediaImage | Page | Product | ProductVariant | Video;
+export type MetafieldReference =
+  | Collection
+  | GenericFile
+  | MediaImage
+  | Page
+  | Product
+  | ProductVariant
+  | Video;
 
 /**
  * An auto-generated type for paginating through multiple MetafieldReferences.
@@ -4431,19 +4426,20 @@ export type MetafieldReferenceEdge = {
 };
 
 /** Represents a Shopify hosted 3D model. */
-export type Model3d = Media & Node & {
-  __typename?: 'Model3d';
-  /** A word or phrase to share the nature or contents of a media. */
-  alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** The media content type. */
-  mediaContentType: MediaContentType;
-  /** The preview image for the media. */
-  previewImage?: Maybe<Image>;
-  /** The sources for a 3d model. */
-  sources: Array<Model3dSource>;
-};
+export type Model3d = Media &
+  Node & {
+    __typename?: 'Model3d';
+    /** A word or phrase to share the nature or contents of a media. */
+    alt?: Maybe<Scalars['String']>;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** The media content type. */
+    mediaContentType: MediaContentType;
+    /** The preview image for the media. */
+    previewImage?: Maybe<Image>;
+    /** The sources for a 3d model. */
+    sources: Array<Model3dSource>;
+  };
 
 /** Represents a source for a Shopify hosted 3d model. */
 export type Model3dSource = {
@@ -4608,13 +4604,11 @@ export type Mutation = {
   customerUpdate?: Maybe<CustomerUpdatePayload>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartAttributesUpdateArgs = {
   attributes: Array<AttributeInput>;
   cartId: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartBuyerIdentityUpdateArgs = {
@@ -4622,12 +4616,10 @@ export type MutationCartBuyerIdentityUpdateArgs = {
   cartId: Scalars['ID'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartCreateArgs = {
   input?: InputMaybe<CartInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartDiscountCodesUpdateArgs = {
@@ -4635,13 +4627,11 @@ export type MutationCartDiscountCodesUpdateArgs = {
   discountCodes?: InputMaybe<Array<Scalars['String']>>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartLinesAddArgs = {
   cartId: Scalars['ID'];
   lines: Array<CartLineInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartLinesRemoveArgs = {
@@ -4649,13 +4639,11 @@ export type MutationCartLinesRemoveArgs = {
   lineIds: Array<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartLinesUpdateArgs = {
   cartId: Scalars['ID'];
   lines: Array<CartLineUpdateInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartNoteUpdateArgs = {
@@ -4663,13 +4651,11 @@ export type MutationCartNoteUpdateArgs = {
   note?: InputMaybe<Scalars['String']>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartSelectedDeliveryOptionsUpdateArgs = {
   cartId: Scalars['ID'];
   selectedDeliveryOptions: Array<CartSelectedDeliveryOptionInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutAttributesUpdateV2Args = {
@@ -4677,12 +4663,10 @@ export type MutationCheckoutAttributesUpdateV2Args = {
   input: CheckoutAttributesUpdateV2Input;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCompleteFreeArgs = {
   checkoutId: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCompleteWithCreditCardV2Args = {
@@ -4690,13 +4674,11 @@ export type MutationCheckoutCompleteWithCreditCardV2Args = {
   payment: CreditCardPaymentInputV2;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCompleteWithTokenizedPaymentV3Args = {
   checkoutId: Scalars['ID'];
   payment: TokenizedPaymentInputV3;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCreateArgs = {
@@ -4704,19 +4686,16 @@ export type MutationCheckoutCreateArgs = {
   queueToken?: InputMaybe<Scalars['String']>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCustomerAssociateV2Args = {
   checkoutId: Scalars['ID'];
   customerAccessToken: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutCustomerDisassociateV2Args = {
   checkoutId: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutDiscountCodeApplyV2Args = {
@@ -4724,12 +4703,10 @@ export type MutationCheckoutDiscountCodeApplyV2Args = {
   discountCode: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutDiscountCodeRemoveArgs = {
   checkoutId: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutEmailUpdateV2Args = {
@@ -4737,13 +4714,11 @@ export type MutationCheckoutEmailUpdateV2Args = {
   email: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutGiftCardRemoveV2Args = {
   appliedGiftCardId: Scalars['ID'];
   checkoutId: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutGiftCardsAppendArgs = {
@@ -4751,13 +4726,11 @@ export type MutationCheckoutGiftCardsAppendArgs = {
   giftCardCodes: Array<Scalars['String']>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutLineItemsAddArgs = {
   checkoutId: Scalars['ID'];
   lineItems: Array<CheckoutLineItemInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutLineItemsRemoveArgs = {
@@ -4765,13 +4738,11 @@ export type MutationCheckoutLineItemsRemoveArgs = {
   lineItemIds: Array<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutLineItemsReplaceArgs = {
   checkoutId: Scalars['ID'];
   lineItems: Array<CheckoutLineItemInput>;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutLineItemsUpdateArgs = {
@@ -4779,13 +4750,11 @@ export type MutationCheckoutLineItemsUpdateArgs = {
   lineItems: Array<CheckoutLineItemUpdateInput>;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutShippingAddressUpdateV2Args = {
   checkoutId: Scalars['ID'];
   shippingAddress: MailingAddressInput;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCheckoutShippingLineUpdateArgs = {
@@ -4793,30 +4762,25 @@ export type MutationCheckoutShippingLineUpdateArgs = {
   shippingRateHandle: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAccessTokenCreateArgs = {
   input: CustomerAccessTokenCreateInput;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAccessTokenCreateWithMultipassArgs = {
   multipassToken: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAccessTokenDeleteArgs = {
   customerAccessToken: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAccessTokenRenewArgs = {
   customerAccessToken: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerActivateArgs = {
@@ -4824,13 +4788,11 @@ export type MutationCustomerActivateArgs = {
   input: CustomerActivateInput;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerActivateByUrlArgs = {
   activationUrl: Scalars['URL'];
   password: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAddressCreateArgs = {
@@ -4838,13 +4800,11 @@ export type MutationCustomerAddressCreateArgs = {
   customerAccessToken: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAddressDeleteArgs = {
   customerAccessToken: Scalars['String'];
   id: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerAddressUpdateArgs = {
@@ -4853,12 +4813,10 @@ export type MutationCustomerAddressUpdateArgs = {
   id: Scalars['ID'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerCreateArgs = {
   input: CustomerCreateInput;
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerDefaultAddressUpdateArgs = {
@@ -4866,12 +4824,10 @@ export type MutationCustomerDefaultAddressUpdateArgs = {
   customerAccessToken: Scalars['String'];
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerRecoverArgs = {
   email: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerResetArgs = {
@@ -4879,13 +4835,11 @@ export type MutationCustomerResetArgs = {
   input: CustomerResetInput;
 };
 
-
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerResetByUrlArgs = {
   password: Scalars['String'];
   resetUrl: Scalars['URL'];
 };
-
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCustomerUpdateArgs = {
@@ -4912,116 +4866,116 @@ export type OnlineStorePublishable = {
 };
 
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
-export type Order = HasMetafields & Node & {
-  __typename?: 'Order';
-  /** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
-  cancelReason?: Maybe<OrderCancelReason>;
-  /** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
-  canceledAt?: Maybe<Scalars['DateTime']>;
-  /** The code of the currency used for the payment. */
-  currencyCode: CurrencyCode;
-  /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
-  currentSubtotalPrice: MoneyV2;
-  /** The total cost of duties for the order, including refunds. */
-  currentTotalDuties?: Maybe<MoneyV2>;
-  /** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
-  currentTotalPrice: MoneyV2;
-  /** The total of all taxes applied to the order, excluding taxes for returned line items. */
-  currentTotalTax: MoneyV2;
-  /** The locale code in which this specific order happened. */
-  customerLocale?: Maybe<Scalars['String']>;
-  /** The unique URL that the customer can use to access the order. */
-  customerUrl?: Maybe<Scalars['URL']>;
-  /** Discounts that have been applied on the order. */
-  discountApplications: DiscountApplicationConnection;
-  /** Whether the order has had any edits applied or not. */
-  edited: Scalars['Boolean'];
-  /** The customer's email address. */
-  email?: Maybe<Scalars['String']>;
-  /** The financial status of the order. */
-  financialStatus?: Maybe<OrderFinancialStatus>;
-  /** The fulfillment status for the order. */
-  fulfillmentStatus: OrderFulfillmentStatus;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** List of the order’s line items. */
-  lineItems: OrderLineItemConnection;
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /**
-   * Unique identifier for the order that appears on the order.
-   * For example, _#1000_ or _Store1001.
-   *
-   */
-  name: Scalars['String'];
-  /** A unique numeric identifier for the order for use by shop owner and customer. */
-  orderNumber: Scalars['Int'];
-  /** The total cost of duties charged at checkout. */
-  originalTotalDuties?: Maybe<MoneyV2>;
-  /** The total price of the order before any applied edits. */
-  originalTotalPrice: MoneyV2;
-  /** The customer's phone number for receiving SMS notifications. */
-  phone?: Maybe<Scalars['String']>;
-  /**
-   * The date and time when the order was imported.
-   * This value can be set to dates in the past when importing from other systems.
-   * If no value is provided, it will be auto-generated based on current date and time.
-   *
-   */
-  processedAt: Scalars['DateTime'];
-  /** The address to where the order will be shipped. */
-  shippingAddress?: Maybe<MailingAddress>;
-  /**
-   * The discounts that have been allocated onto the shipping line by discount applications.
-   *
-   */
-  shippingDiscountAllocations: Array<DiscountAllocation>;
-  /** The unique URL for the order's status page. */
-  statusUrl: Scalars['URL'];
-  /** Price of the order before shipping and taxes. */
-  subtotalPrice?: Maybe<MoneyV2>;
-  /**
-   * Price of the order before duties, shipping and taxes.
-   * @deprecated Use `subtotalPrice` instead.
-   */
-  subtotalPriceV2?: Maybe<MoneyV2>;
-  /** List of the order’s successful fulfillments. */
-  successfulFulfillments?: Maybe<Array<Fulfillment>>;
-  /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
-  totalPrice: MoneyV2;
-  /**
-   * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
-   * @deprecated Use `totalPrice` instead.
-   */
-  totalPriceV2: MoneyV2;
-  /** The total amount that has been refunded. */
-  totalRefunded: MoneyV2;
-  /**
-   * The total amount that has been refunded.
-   * @deprecated Use `totalRefunded` instead.
-   */
-  totalRefundedV2: MoneyV2;
-  /** The total cost of shipping. */
-  totalShippingPrice: MoneyV2;
-  /**
-   * The total cost of shipping.
-   * @deprecated Use `totalShippingPrice` instead.
-   */
-  totalShippingPriceV2: MoneyV2;
-  /** The total cost of taxes. */
-  totalTax?: Maybe<MoneyV2>;
-  /**
-   * The total cost of taxes.
-   * @deprecated Use `totalTax` instead.
-   */
-  totalTaxV2?: Maybe<MoneyV2>;
-};
-
+export type Order = HasMetafields &
+  Node & {
+    __typename?: 'Order';
+    /** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
+    cancelReason?: Maybe<OrderCancelReason>;
+    /** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
+    canceledAt?: Maybe<Scalars['DateTime']>;
+    /** The code of the currency used for the payment. */
+    currencyCode: CurrencyCode;
+    /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
+    currentSubtotalPrice: MoneyV2;
+    /** The total cost of duties for the order, including refunds. */
+    currentTotalDuties?: Maybe<MoneyV2>;
+    /** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
+    currentTotalPrice: MoneyV2;
+    /** The total of all taxes applied to the order, excluding taxes for returned line items. */
+    currentTotalTax: MoneyV2;
+    /** The locale code in which this specific order happened. */
+    customerLocale?: Maybe<Scalars['String']>;
+    /** The unique URL that the customer can use to access the order. */
+    customerUrl?: Maybe<Scalars['URL']>;
+    /** Discounts that have been applied on the order. */
+    discountApplications: DiscountApplicationConnection;
+    /** Whether the order has had any edits applied or not. */
+    edited: Scalars['Boolean'];
+    /** The customer's email address. */
+    email?: Maybe<Scalars['String']>;
+    /** The financial status of the order. */
+    financialStatus?: Maybe<OrderFinancialStatus>;
+    /** The fulfillment status for the order. */
+    fulfillmentStatus: OrderFulfillmentStatus;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** List of the order’s line items. */
+    lineItems: OrderLineItemConnection;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /**
+     * Unique identifier for the order that appears on the order.
+     * For example, _#1000_ or _Store1001.
+     *
+     */
+    name: Scalars['String'];
+    /** A unique numeric identifier for the order for use by shop owner and customer. */
+    orderNumber: Scalars['Int'];
+    /** The total cost of duties charged at checkout. */
+    originalTotalDuties?: Maybe<MoneyV2>;
+    /** The total price of the order before any applied edits. */
+    originalTotalPrice: MoneyV2;
+    /** The customer's phone number for receiving SMS notifications. */
+    phone?: Maybe<Scalars['String']>;
+    /**
+     * The date and time when the order was imported.
+     * This value can be set to dates in the past when importing from other systems.
+     * If no value is provided, it will be auto-generated based on current date and time.
+     *
+     */
+    processedAt: Scalars['DateTime'];
+    /** The address to where the order will be shipped. */
+    shippingAddress?: Maybe<MailingAddress>;
+    /**
+     * The discounts that have been allocated onto the shipping line by discount applications.
+     *
+     */
+    shippingDiscountAllocations: Array<DiscountAllocation>;
+    /** The unique URL for the order's status page. */
+    statusUrl: Scalars['URL'];
+    /** Price of the order before shipping and taxes. */
+    subtotalPrice?: Maybe<MoneyV2>;
+    /**
+     * Price of the order before duties, shipping and taxes.
+     * @deprecated Use `subtotalPrice` instead.
+     */
+    subtotalPriceV2?: Maybe<MoneyV2>;
+    /** List of the order’s successful fulfillments. */
+    successfulFulfillments?: Maybe<Array<Fulfillment>>;
+    /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+    totalPrice: MoneyV2;
+    /**
+     * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+     * @deprecated Use `totalPrice` instead.
+     */
+    totalPriceV2: MoneyV2;
+    /** The total amount that has been refunded. */
+    totalRefunded: MoneyV2;
+    /**
+     * The total amount that has been refunded.
+     * @deprecated Use `totalRefunded` instead.
+     */
+    totalRefundedV2: MoneyV2;
+    /** The total cost of shipping. */
+    totalShippingPrice: MoneyV2;
+    /**
+     * The total cost of shipping.
+     * @deprecated Use `totalShippingPrice` instead.
+     */
+    totalShippingPriceV2: MoneyV2;
+    /** The total cost of taxes. */
+    totalTax?: Maybe<MoneyV2>;
+    /**
+     * The total cost of taxes.
+     * @deprecated Use `totalTax` instead.
+     */
+    totalTaxV2?: Maybe<MoneyV2>;
+  };
 
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderDiscountApplicationsArgs = {
@@ -5032,7 +4986,6 @@ export type OrderDiscountApplicationsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderLineItemsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -5042,19 +4995,16 @@ export type OrderLineItemsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
 
-
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
-
 
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderSuccessfulFulfillmentsArgs = {
@@ -5072,7 +5022,7 @@ export enum OrderCancelReason {
   /** There was insufficient inventory. */
   Inventory = 'INVENTORY',
   /** The order was canceled for an unlisted reason. */
-  Other = 'OTHER'
+  Other = 'OTHER',
 }
 
 /**
@@ -5118,7 +5068,7 @@ export enum OrderFinancialStatus {
   /** Displayed as **Refunded**. */
   Refunded = 'REFUNDED',
   /** Displayed as **Voided**. */
-  Voided = 'VOIDED'
+  Voided = 'VOIDED',
 }
 
 /** Represents the order's aggregated fulfillment status for display purposes. */
@@ -5140,7 +5090,7 @@ export enum OrderFulfillmentStatus {
   /** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
   Scheduled = 'SCHEDULED',
   /** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
-  Unfulfilled = 'UNFULFILLED'
+  Unfulfilled = 'UNFULFILLED',
 }
 
 /** Represents a single line in an order. There is one line item for each distinct product variant. */
@@ -5203,46 +5153,46 @@ export enum OrderSortKeys {
    */
   Relevance = 'RELEVANCE',
   /** Sort by the `total_price` value. */
-  TotalPrice = 'TOTAL_PRICE'
+  TotalPrice = 'TOTAL_PRICE',
 }
 
 /** Shopify merchants can create pages to hold static HTML content. Each Page object represents a custom page on the online store. */
-export type Page = HasMetafields & Node & OnlineStorePublishable & {
-  __typename?: 'Page';
-  /** The description of the page, complete with HTML formatting. */
-  body: Scalars['HTML'];
-  /** Summary of the page body. */
-  bodySummary: Scalars['String'];
-  /** The timestamp of the page creation. */
-  createdAt: Scalars['DateTime'];
-  /** A human-friendly unique string for the page automatically generated from its title. */
-  handle: Scalars['String'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-  onlineStoreUrl?: Maybe<Scalars['URL']>;
-  /** The page's SEO information. */
-  seo?: Maybe<Seo>;
-  /** The title of the page. */
-  title: Scalars['String'];
-  /** The timestamp of the latest page update. */
-  updatedAt: Scalars['DateTime'];
-};
-
+export type Page = HasMetafields &
+  Node &
+  OnlineStorePublishable & {
+    __typename?: 'Page';
+    /** The description of the page, complete with HTML formatting. */
+    body: Scalars['HTML'];
+    /** Summary of the page body. */
+    bodySummary: Scalars['String'];
+    /** The timestamp of the page creation. */
+    createdAt: Scalars['DateTime'];
+    /** A human-friendly unique string for the page automatically generated from its title. */
+    handle: Scalars['String'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
+    onlineStoreUrl?: Maybe<Scalars['URL']>;
+    /** The page's SEO information. */
+    seo?: Maybe<Seo>;
+    /** The title of the page. */
+    title: Scalars['String'];
+    /** The timestamp of the latest page update. */
+    updatedAt: Scalars['DateTime'];
+  };
 
 /** Shopify merchants can create pages to hold static HTML content. Each Page object represents a custom page on the online store. */
 export type PageMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
-
 
 /** Shopify merchants can create pages to hold static HTML content. Each Page object represents a custom page on the online store. */
 export type PageMetafieldsArgs = {
@@ -5305,7 +5255,7 @@ export enum PageSortKeys {
   /** Sort by the `title` value. */
   Title = 'TITLE',
   /** Sort by the `updated_at` value. */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 /** A payment applied to a checkout. */
@@ -5375,7 +5325,7 @@ export enum PaymentTokenType {
   /** Stripe token type. */
   StripeVaultToken = 'STRIPE_VAULT_TOKEN',
   /** Vault payment token type. */
-  Vault = 'VAULT'
+  Vault = 'VAULT',
 }
 
 /** A filter used to view a subset of products in a collection matching a specific price range. */
@@ -5400,95 +5350,96 @@ export type PricingValue = MoneyV2 | PricingPercentageValue;
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
  */
-export type Product = HasMetafields & Node & OnlineStorePublishable & {
-  __typename?: 'Product';
-  /** Indicates if at least one product variant is available for sale. */
-  availableForSale: Scalars['Boolean'];
-  /** List of collections a product belongs to. */
-  collections: CollectionConnection;
-  /** The compare at price of the product across all variants. */
-  compareAtPriceRange: ProductPriceRange;
-  /** The date and time when the product was created. */
-  createdAt: Scalars['DateTime'];
-  /** Stripped description of the product, single line with HTML tags removed. */
-  description: Scalars['String'];
-  /** The description of the product, complete with HTML formatting. */
-  descriptionHtml: Scalars['HTML'];
-  /**
-   * The featured image for the product.
-   *
-   * This field is functionally equivalent to `images(first: 1)`.
-   *
-   */
-  featuredImage?: Maybe<Image>;
-  /**
-   * A human-friendly unique string for the Product automatically generated from its title.
-   * They are used by the Liquid templating language to refer to objects.
-   *
-   */
-  handle: Scalars['String'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** List of images associated with the product. */
-  images: ImageConnection;
-  /** Whether the product is a gift card. */
-  isGiftCard: Scalars['Boolean'];
-  /** The media associated with the product. */
-  media: MediaConnection;
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-  onlineStoreUrl?: Maybe<Scalars['URL']>;
-  /** List of product options. */
-  options: Array<ProductOption>;
-  /** The price range. */
-  priceRange: ProductPriceRange;
-  /** A categorization that a product can be tagged with, commonly used for filtering and searching. */
-  productType: Scalars['String'];
-  /** The date and time when the product was published to the channel. */
-  publishedAt: Scalars['DateTime'];
-  /** Whether the product can only be purchased with a selling plan. */
-  requiresSellingPlan: Scalars['Boolean'];
-  /** A list of a product's available selling plan groups. A selling plan group represents a selling method. For example, 'Subscribe and save' is a selling method where customers pay for goods or services per delivery. A selling plan group contains individual selling plans. */
-  sellingPlanGroups: SellingPlanGroupConnection;
-  /** The product's SEO information. */
-  seo: Seo;
-  /**
-   * A comma separated list of tags that have been added to the product.
-   * Additional access scope required for private apps: unauthenticated_read_product_tags.
-   *
-   */
-  tags: Array<Scalars['String']>;
-  /** The product’s title. */
-  title: Scalars['String'];
-  /** The total quantity of inventory in stock for this Product. */
-  totalInventory?: Maybe<Scalars['Int']>;
-  /**
-   * The date and time when the product was last modified.
-   * A product's `updatedAt` value can change for different reasons. For example, if an order
-   * is placed for a product that has inventory tracking set up, then the inventory adjustment
-   * is counted as an update.
-   *
-   */
-  updatedAt: Scalars['DateTime'];
-  /**
-   * Find a product’s variant based on its selected options.
-   * This is useful for converting a user’s selection of product options into a single matching variant.
-   * If there is not a variant for the selected options, `null` will be returned.
-   *
-   */
-  variantBySelectedOptions?: Maybe<ProductVariant>;
-  /** List of the product’s variants. */
-  variants: ProductVariantConnection;
-  /** The product’s vendor name. */
-  vendor: Scalars['String'];
-};
-
+export type Product = HasMetafields &
+  Node &
+  OnlineStorePublishable & {
+    __typename?: 'Product';
+    /** Indicates if at least one product variant is available for sale. */
+    availableForSale: Scalars['Boolean'];
+    /** List of collections a product belongs to. */
+    collections: CollectionConnection;
+    /** The compare at price of the product across all variants. */
+    compareAtPriceRange: ProductPriceRange;
+    /** The date and time when the product was created. */
+    createdAt: Scalars['DateTime'];
+    /** Stripped description of the product, single line with HTML tags removed. */
+    description: Scalars['String'];
+    /** The description of the product, complete with HTML formatting. */
+    descriptionHtml: Scalars['HTML'];
+    /**
+     * The featured image for the product.
+     *
+     * This field is functionally equivalent to `images(first: 1)`.
+     *
+     */
+    featuredImage?: Maybe<Image>;
+    /**
+     * A human-friendly unique string for the Product automatically generated from its title.
+     * They are used by the Liquid templating language to refer to objects.
+     *
+     */
+    handle: Scalars['String'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** List of images associated with the product. */
+    images: ImageConnection;
+    /** Whether the product is a gift card. */
+    isGiftCard: Scalars['Boolean'];
+    /** The media associated with the product. */
+    media: MediaConnection;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
+    onlineStoreUrl?: Maybe<Scalars['URL']>;
+    /** List of product options. */
+    options: Array<ProductOption>;
+    /** The price range. */
+    priceRange: ProductPriceRange;
+    /** A categorization that a product can be tagged with, commonly used for filtering and searching. */
+    productType: Scalars['String'];
+    /** The date and time when the product was published to the channel. */
+    publishedAt: Scalars['DateTime'];
+    /** Whether the product can only be purchased with a selling plan. */
+    requiresSellingPlan: Scalars['Boolean'];
+    /** A list of a product's available selling plan groups. A selling plan group represents a selling method. For example, 'Subscribe and save' is a selling method where customers pay for goods or services per delivery. A selling plan group contains individual selling plans. */
+    sellingPlanGroups: SellingPlanGroupConnection;
+    /** The product's SEO information. */
+    seo: Seo;
+    /**
+     * A comma separated list of tags that have been added to the product.
+     * Additional access scope required for private apps: unauthenticated_read_product_tags.
+     *
+     */
+    tags: Array<Scalars['String']>;
+    /** The product’s title. */
+    title: Scalars['String'];
+    /** The total quantity of inventory in stock for this Product. */
+    totalInventory?: Maybe<Scalars['Int']>;
+    /**
+     * The date and time when the product was last modified.
+     * A product's `updatedAt` value can change for different reasons. For example, if an order
+     * is placed for a product that has inventory tracking set up, then the inventory adjustment
+     * is counted as an update.
+     *
+     */
+    updatedAt: Scalars['DateTime'];
+    /**
+     * Find a product’s variant based on its selected options.
+     * This is useful for converting a user’s selection of product options into a single matching variant.
+     * If there is not a variant for the selected options, `null` will be returned.
+     *
+     */
+    variantBySelectedOptions?: Maybe<ProductVariant>;
+    /** List of the product’s variants. */
+    variants: ProductVariantConnection;
+    /** The product’s vendor name. */
+    vendor: Scalars['String'];
+  };
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
@@ -5502,7 +5453,6 @@ export type ProductCollectionsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5510,7 +5460,6 @@ export type ProductCollectionsArgs = {
 export type ProductDescriptionArgs = {
   truncateAt?: InputMaybe<Scalars['Int']>;
 };
-
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
@@ -5525,7 +5474,6 @@ export type ProductImagesArgs = {
   sortKey?: InputMaybe<ProductImageSortKeys>;
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5539,7 +5487,6 @@ export type ProductMediaArgs = {
   sortKey?: InputMaybe<ProductMediaSortKeys>;
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5549,7 +5496,6 @@ export type ProductMetafieldArgs = {
   namespace: Scalars['String'];
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5558,7 +5504,6 @@ export type ProductMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5566,7 +5511,6 @@ export type ProductMetafieldsArgs = {
 export type ProductOptionsArgs = {
   first?: InputMaybe<Scalars['Int']>;
 };
-
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
@@ -5580,7 +5524,6 @@ export type ProductSellingPlanGroupsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
  * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
@@ -5588,7 +5531,6 @@ export type ProductSellingPlanGroupsArgs = {
 export type ProductVariantBySelectedOptionsArgs = {
   selectedOptions: Array<SelectedOptionInput>;
 };
-
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
@@ -5624,7 +5566,7 @@ export enum ProductCollectionSortKeys {
    */
   Relevance = 'RELEVANCE',
   /** Sort by the `title` value. */
-  Title = 'TITLE'
+  Title = 'TITLE',
 }
 
 /**
@@ -5686,7 +5628,7 @@ export enum ProductImageSortKeys {
    * Don't use this sort key when no search query is specified.
    *
    */
-  Relevance = 'RELEVANCE'
+  Relevance = 'RELEVANCE',
 }
 
 /** The set of valid sort keys for the ProductMedia query. */
@@ -5700,7 +5642,7 @@ export enum ProductMediaSortKeys {
    * Don't use this sort key when no search query is specified.
    *
    */
-  Relevance = 'RELEVANCE'
+  Relevance = 'RELEVANCE',
 }
 
 /**
@@ -5751,72 +5693,72 @@ export enum ProductSortKeys {
   /** Sort by the `updated_at` value. */
   UpdatedAt = 'UPDATED_AT',
   /** Sort by the `vendor` value. */
-  Vendor = 'VENDOR'
+  Vendor = 'VENDOR',
 }
 
 /** A product variant represents a different version of a product, such as differing sizes or differing colors. */
-export type ProductVariant = HasMetafields & Node & {
-  __typename?: 'ProductVariant';
-  /** Indicates if the product variant is available for sale. */
-  availableForSale: Scalars['Boolean'];
-  /** The barcode (for example, ISBN, UPC, or GTIN) associated with the variant. */
-  barcode?: Maybe<Scalars['String']>;
-  /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`. */
-  compareAtPrice?: Maybe<MoneyV2>;
-  /**
-   * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`.
-   * @deprecated Use `compareAtPrice` instead.
-   */
-  compareAtPriceV2?: Maybe<MoneyV2>;
-  /** Whether a product is out of stock but still available for purchase (used for backorders). */
-  currentlyNotInStock: Scalars['Boolean'];
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /**
-   * Image associated with the product variant. This field falls back to the product image if no image is available.
-   *
-   */
-  image?: Maybe<Image>;
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** The product variant’s price. */
-  price: MoneyV2;
-  /**
-   * The product variant’s price.
-   * @deprecated Use `price` instead.
-   */
-  priceV2: MoneyV2;
-  /** The product object that the product variant belongs to. */
-  product: Product;
-  /** The total sellable quantity of the variant for online sales channels. */
-  quantityAvailable?: Maybe<Scalars['Int']>;
-  /** Whether a customer needs to provide a shipping address when placing an order for the product variant. */
-  requiresShipping: Scalars['Boolean'];
-  /** List of product options applied to the variant. */
-  selectedOptions: Array<SelectedOption>;
-  /** Represents an association between a variant and a selling plan. Selling plan allocations describe which selling plans are available for each variant, and what their impact is on pricing. */
-  sellingPlanAllocations: SellingPlanAllocationConnection;
-  /** The SKU (stock keeping unit) associated with the variant. */
-  sku?: Maybe<Scalars['String']>;
-  /** The in-store pickup availability of this variant by location. */
-  storeAvailability: StoreAvailabilityConnection;
-  /** The product variant’s title. */
-  title: Scalars['String'];
-  /** The unit price value for the variant based on the variant's measurement. */
-  unitPrice?: Maybe<MoneyV2>;
-  /** The unit price measurement for the variant. */
-  unitPriceMeasurement?: Maybe<UnitPriceMeasurement>;
-  /** The weight of the product variant in the unit system specified with `weight_unit`. */
-  weight?: Maybe<Scalars['Float']>;
-  /** Unit of measurement for weight. */
-  weightUnit: WeightUnit;
-};
-
+export type ProductVariant = HasMetafields &
+  Node & {
+    __typename?: 'ProductVariant';
+    /** Indicates if the product variant is available for sale. */
+    availableForSale: Scalars['Boolean'];
+    /** The barcode (for example, ISBN, UPC, or GTIN) associated with the variant. */
+    barcode?: Maybe<Scalars['String']>;
+    /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`. */
+    compareAtPrice?: Maybe<MoneyV2>;
+    /**
+     * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`.
+     * @deprecated Use `compareAtPrice` instead.
+     */
+    compareAtPriceV2?: Maybe<MoneyV2>;
+    /** Whether a product is out of stock but still available for purchase (used for backorders). */
+    currentlyNotInStock: Scalars['Boolean'];
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /**
+     * Image associated with the product variant. This field falls back to the product image if no image is available.
+     *
+     */
+    image?: Maybe<Image>;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The product variant’s price. */
+    price: MoneyV2;
+    /**
+     * The product variant’s price.
+     * @deprecated Use `price` instead.
+     */
+    priceV2: MoneyV2;
+    /** The product object that the product variant belongs to. */
+    product: Product;
+    /** The total sellable quantity of the variant for online sales channels. */
+    quantityAvailable?: Maybe<Scalars['Int']>;
+    /** Whether a customer needs to provide a shipping address when placing an order for the product variant. */
+    requiresShipping: Scalars['Boolean'];
+    /** List of product options applied to the variant. */
+    selectedOptions: Array<SelectedOption>;
+    /** Represents an association between a variant and a selling plan. Selling plan allocations describe which selling plans are available for each variant, and what their impact is on pricing. */
+    sellingPlanAllocations: SellingPlanAllocationConnection;
+    /** The SKU (stock keeping unit) associated with the variant. */
+    sku?: Maybe<Scalars['String']>;
+    /** The in-store pickup availability of this variant by location. */
+    storeAvailability: StoreAvailabilityConnection;
+    /** The product variant’s title. */
+    title: Scalars['String'];
+    /** The unit price value for the variant based on the variant's measurement. */
+    unitPrice?: Maybe<MoneyV2>;
+    /** The unit price measurement for the variant. */
+    unitPriceMeasurement?: Maybe<UnitPriceMeasurement>;
+    /** The weight of the product variant in the unit system specified with `weight_unit`. */
+    weight?: Maybe<Scalars['Float']>;
+    /** Unit of measurement for weight. */
+    weightUnit: WeightUnit;
+  };
 
 /** A product variant represents a different version of a product, such as differing sizes or differing colors. */
 export type ProductVariantMetafieldArgs = {
@@ -5824,12 +5766,10 @@ export type ProductVariantMetafieldArgs = {
   namespace: Scalars['String'];
 };
 
-
 /** A product variant represents a different version of a product, such as differing sizes or differing colors. */
 export type ProductVariantMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
-
 
 /** A product variant represents a different version of a product, such as differing sizes or differing colors. */
 export type ProductVariantSellingPlanAllocationsArgs = {
@@ -5839,7 +5779,6 @@ export type ProductVariantSellingPlanAllocationsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 /** A product variant represents a different version of a product, such as differing sizes or differing colors. */
 export type ProductVariantStoreAvailabilityArgs = {
@@ -5891,7 +5830,7 @@ export enum ProductVariantSortKeys {
   /** Sort by the `sku` value. */
   Sku = 'SKU',
   /** Sort by the `title` value. */
-  Title = 'TITLE'
+  Title = 'TITLE',
 }
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
@@ -5981,7 +5920,6 @@ export type QueryRoot = {
   urlRedirects: UrlRedirectConnection;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootArticlesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -5993,19 +5931,16 @@ export type QueryRootArticlesArgs = {
   sortKey?: InputMaybe<ArticleSortKeys>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootBlogArgs = {
   handle?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootBlogByHandleArgs = {
   handle: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootBlogsArgs = {
@@ -6018,12 +5953,10 @@ export type QueryRootBlogsArgs = {
   sortKey?: InputMaybe<BlogSortKeys>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCartArgs = {
   id: Scalars['ID'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCollectionArgs = {
@@ -6031,12 +5964,10 @@ export type QueryRootCollectionArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCollectionByHandleArgs = {
   handle: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCollectionsArgs = {
@@ -6049,12 +5980,10 @@ export type QueryRootCollectionsArgs = {
   sortKey?: InputMaybe<CollectionSortKeys>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCustomerArgs = {
   customerAccessToken: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootLocationsArgs = {
@@ -6067,24 +5996,20 @@ export type QueryRootLocationsArgs = {
   sortKey?: InputMaybe<LocationSortKeys>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootMenuArgs = {
   handle: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootNodeArgs = {
   id: Scalars['ID'];
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootNodesArgs = {
   ids: Array<Scalars['ID']>;
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootPageArgs = {
@@ -6092,12 +6017,10 @@ export type QueryRootPageArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootPageByHandleArgs = {
   handle: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootPagesArgs = {
@@ -6110,37 +6033,31 @@ export type QueryRootPagesArgs = {
   sortKey?: InputMaybe<PageSortKeys>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductArgs = {
   handle?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductByHandleArgs = {
   handle: Scalars['String'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductRecommendationsArgs = {
   productId: Scalars['ID'];
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductTagsArgs = {
   first: Scalars['Int'];
 };
 
-
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductTypesArgs = {
   first: Scalars['Int'];
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductsArgs = {
@@ -6152,7 +6069,6 @@ export type QueryRootProductsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
   sortKey?: InputMaybe<ProductSortKeys>;
 };
-
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootUrlRedirectsArgs = {
@@ -6304,11 +6220,13 @@ export enum SellingPlanCheckoutChargeType {
   /** The checkout charge is a percentage of the product or variant price. */
   Percentage = 'PERCENTAGE',
   /** The checkout charge is a fixed price amount. */
-  Price = 'PRICE'
+  Price = 'PRICE',
 }
 
 /** The portion of the price to be charged at checkout. */
-export type SellingPlanCheckoutChargeValue = MoneyV2 | SellingPlanCheckoutChargePercentageValue;
+export type SellingPlanCheckoutChargeValue =
+  | MoneyV2
+  | SellingPlanCheckoutChargePercentageValue;
 
 /**
  * An auto-generated type for paginating through multiple SellingPlans.
@@ -6362,7 +6280,6 @@ export type SellingPlanGroup = {
   /** A list of selling plans in a selling plan group. A selling plan is a representation of how products and variants can be sold and purchased. For example, an individual selling plan could be '6 weeks of prepaid granola, delivered weekly'. */
   sellingPlans: SellingPlanConnection;
 };
-
 
 /** Represents a selling method. For example, 'Subscribe and save' is a selling method where customers pay for goods or services per delivery. A selling plan group contains individual selling plans. */
 export type SellingPlanGroupSellingPlansArgs = {
@@ -6438,7 +6355,10 @@ export type SellingPlanPriceAdjustment = {
 };
 
 /** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. */
-export type SellingPlanPriceAdjustmentValue = SellingPlanFixedAmountPriceAdjustment | SellingPlanFixedPriceAdjustment | SellingPlanPercentagePriceAdjustment;
+export type SellingPlanPriceAdjustmentValue =
+  | SellingPlanFixedAmountPriceAdjustment
+  | SellingPlanFixedPriceAdjustment
+  | SellingPlanPercentagePriceAdjustment;
 
 /** A shipping rate to be applied to a checkout. */
 export type ShippingRate = {
@@ -6457,50 +6377,49 @@ export type ShippingRate = {
 };
 
 /** Shop represents a collection of the general settings and information about the shop. */
-export type Shop = HasMetafields & Node & {
-  __typename?: 'Shop';
-  /** The shop's branding configuration. */
-  brand?: Maybe<Brand>;
-  /** A description of the shop. */
-  description?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** Returns a metafield found by namespace and key. */
-  metafield?: Maybe<Metafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
-  metafields: Array<Maybe<Metafield>>;
-  /** A string representing the way currency is formatted when the currency isn’t specified. */
-  moneyFormat: Scalars['String'];
-  /** The shop’s name. */
-  name: Scalars['String'];
-  /** Settings related to payments. */
-  paymentSettings: PaymentSettings;
-  /** The primary domain of the shop’s Online Store. */
-  primaryDomain: Domain;
-  /** The shop’s privacy policy. */
-  privacyPolicy?: Maybe<ShopPolicy>;
-  /** The shop’s refund policy. */
-  refundPolicy?: Maybe<ShopPolicy>;
-  /** The shop’s shipping policy. */
-  shippingPolicy?: Maybe<ShopPolicy>;
-  /** Countries that the shop ships to. */
-  shipsToCountries: Array<CountryCode>;
-  /** The shop’s subscription policy. */
-  subscriptionPolicy?: Maybe<ShopPolicyWithDefault>;
-  /** The shop’s terms of service. */
-  termsOfService?: Maybe<ShopPolicy>;
-};
-
+export type Shop = HasMetafields &
+  Node & {
+    __typename?: 'Shop';
+    /** The shop's branding configuration. */
+    brand?: Maybe<Brand>;
+    /** A description of the shop. */
+    description?: Maybe<Scalars['String']>;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** A string representing the way currency is formatted when the currency isn’t specified. */
+    moneyFormat: Scalars['String'];
+    /** The shop’s name. */
+    name: Scalars['String'];
+    /** Settings related to payments. */
+    paymentSettings: PaymentSettings;
+    /** The primary domain of the shop’s Online Store. */
+    primaryDomain: Domain;
+    /** The shop’s privacy policy. */
+    privacyPolicy?: Maybe<ShopPolicy>;
+    /** The shop’s refund policy. */
+    refundPolicy?: Maybe<ShopPolicy>;
+    /** The shop’s shipping policy. */
+    shippingPolicy?: Maybe<ShopPolicy>;
+    /** Countries that the shop ships to. */
+    shipsToCountries: Array<CountryCode>;
+    /** The shop’s subscription policy. */
+    subscriptionPolicy?: Maybe<ShopPolicyWithDefault>;
+    /** The shop’s terms of service. */
+    termsOfService?: Maybe<ShopPolicy>;
+  };
 
 /** Shop represents a collection of the general settings and information about the shop. */
 export type ShopMetafieldArgs = {
   key: Scalars['String'];
   namespace: Scalars['String'];
 };
-
 
 /** Shop represents a collection of the general settings and information about the shop. */
 export type ShopMetafieldsArgs = {
@@ -6667,7 +6586,7 @@ export enum TransactionKind {
   /** An authorization for a payment taken with an EMV credit card reader. */
   EmvAuthorization = 'EMV_AUTHORIZATION',
   /** An authorization and capture performed together in a single step. */
-  Sale = 'SALE'
+  Sale = 'SALE',
 }
 
 /** Transaction statuses describe the status of a transaction. */
@@ -6679,7 +6598,7 @@ export enum TransactionStatus {
   /** The transaction is pending. */
   Pending = 'PENDING',
   /** The transaction succeeded. */
-  Success = 'SUCCESS'
+  Success = 'SUCCESS',
 }
 
 /**
@@ -6709,7 +6628,7 @@ export enum UnitPriceMeasurementMeasuredType {
   /** Unit of measurements representing volumes. */
   Volume = 'VOLUME',
   /** Unit of measurements representing weights. */
-  Weight = 'WEIGHT'
+  Weight = 'WEIGHT',
 }
 
 /** The valid units of measurement for a unit price measurement. */
@@ -6735,7 +6654,7 @@ export enum UnitPriceMeasurementMeasuredUnit {
   /** 1000 milliliters equals 1 liter. */
   Ml = 'ML',
   /** 1000 millimeters equals 1 meter. */
-  Mm = 'MM'
+  Mm = 'MM',
 }
 
 /** Systems of weights and measures. */
@@ -6743,7 +6662,7 @@ export enum UnitSystem {
   /** Imperial system of weights and measures. */
   ImperialSystem = 'IMPERIAL_SYSTEM',
   /** Metric system of weights and measures. */
-  MetricSystem = 'METRIC_SYSTEM'
+  MetricSystem = 'METRIC_SYSTEM',
 }
 
 /** A redirect on the online store. */
@@ -6801,19 +6720,20 @@ export type VariantOptionFilter = {
 };
 
 /** Represents a Shopify hosted video. */
-export type Video = Media & Node & {
-  __typename?: 'Video';
-  /** A word or phrase to share the nature or contents of a media. */
-  alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
-  id: Scalars['ID'];
-  /** The media content type. */
-  mediaContentType: MediaContentType;
-  /** The preview image for the media. */
-  previewImage?: Maybe<Image>;
-  /** The sources for a video. */
-  sources: Array<VideoSource>;
-};
+export type Video = Media &
+  Node & {
+    __typename?: 'Video';
+    /** A word or phrase to share the nature or contents of a media. */
+    alt?: Maybe<Scalars['String']>;
+    /** A globally-unique identifier. */
+    id: Scalars['ID'];
+    /** The media content type. */
+    mediaContentType: MediaContentType;
+    /** The preview image for the media. */
+    previewImage?: Maybe<Image>;
+    /** The sources for a video. */
+    sources: Array<VideoSource>;
+  };
 
 /** Represents a source for a Shopify hosted video. */
 export type VideoSource = {
@@ -6839,13 +6759,151 @@ export enum WeightUnit {
   /** Imperial system unit of mass. */
   Ounces = 'OUNCES',
   /** 1 pound equals 16 ounces. */
-  Pounds = 'POUNDS'
+  Pounds = 'POUNDS',
 }
 
-export type IndexQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type IndexQueryQueryVariables = Exact<{[key: string]: never}>;
 
+export type IndexQueryQuery = {
+  __typename?: 'QueryRoot';
+  shop: {__typename?: 'Shop'; name: string};
+  products: {
+    __typename?: 'ProductConnection';
+    nodes: Array<{
+      __typename?: 'Product';
+      id: string;
+      title: string;
+      publishedAt: any;
+      handle: string;
+      variants: {
+        __typename?: 'ProductVariantConnection';
+        nodes: Array<{
+          __typename?: 'ProductVariant';
+          id: string;
+          image?: {
+            __typename?: 'Image';
+            url: any;
+            altText?: string | null;
+            width?: number | null;
+            height?: number | null;
+          } | null;
+        }>;
+      };
+    }>;
+  };
+};
 
-export type IndexQueryQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', name: string }, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, title: string, publishedAt: any, handle: string, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null } | null }> } }> } };
-
-
-export const IndexQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"IndexQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"products"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}},{"kind":"Field","name":{"kind":"Name","value":"variants"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<IndexQueryQuery, IndexQueryQueryVariables>;
+export const IndexQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: {kind: 'Name', value: 'IndexQuery'},
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: {kind: 'Name', value: 'shop'},
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {kind: 'Field', name: {kind: 'Name', value: 'name'}},
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: {kind: 'Name', value: 'products'},
+            arguments: [
+              {
+                kind: 'Argument',
+                name: {kind: 'Name', value: 'first'},
+                value: {kind: 'IntValue', value: '1'},
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {kind: 'Name', value: 'nodes'},
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {kind: 'Field', name: {kind: 'Name', value: 'id'}},
+                      {kind: 'Field', name: {kind: 'Name', value: 'title'}},
+                      {
+                        kind: 'Field',
+                        name: {kind: 'Name', value: 'publishedAt'},
+                      },
+                      {kind: 'Field', name: {kind: 'Name', value: 'handle'}},
+                      {
+                        kind: 'Field',
+                        name: {kind: 'Name', value: 'variants'},
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: {kind: 'Name', value: 'first'},
+                            value: {kind: 'IntValue', value: '1'},
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: {kind: 'Name', value: 'nodes'},
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: {kind: 'Name', value: 'id'},
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: {kind: 'Name', value: 'image'},
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {kind: 'Name', value: 'url'},
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'altText',
+                                          },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {kind: 'Name', value: 'width'},
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {kind: 'Name', value: 'height'},
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<IndexQueryQuery, IndexQueryQueryVariables>;
