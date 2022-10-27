@@ -120,7 +120,7 @@ describe(`metafieldParser`, () => {
       );
       expectType<null | unknown>(parsed?.parsedValue);
 
-      // with an extra generic, we use can use that as the type instead
+      // with an extra generic, we can use that as the type instead
       const parsedOtherType =
         metafieldParser<ParsedMetafields<MyJson>['json']>(myJson);
       expect(parsedOtherType.type === 'json').toBe(true);
