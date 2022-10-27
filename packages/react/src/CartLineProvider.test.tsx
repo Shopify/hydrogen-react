@@ -1,9 +1,11 @@
 import {render} from '@testing-library/react';
+import {CartLine} from './storefront-api-types.js';
 import {useCartLine, CartLineProvider} from './CartLineProvider.js';
-import {getCartLineMock} from './CartLineProvider.test.helpers.js';
+import {getCartLineMock} from './CartProvider.test.helpers.js';
 
 it('provides a hook to access cart line data', () => {
   const cartLine = getCartLineMock();
+
   function Data() {
     const line = useCartLine();
 
@@ -11,7 +13,7 @@ it('provides a hook to access cart line data', () => {
   }
 
   const {container} = render(
-    <CartLineProvider line={cartLine}>
+    <CartLineProvider line={cartLine as CartLine}>
       <Data />
     </CartLineProvider>
   );

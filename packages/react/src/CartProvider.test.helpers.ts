@@ -1,6 +1,10 @@
 import {flattenConnection} from './flatten-connection.js';
 import {getPrice} from './Money.test.helpers.js';
-import type {Cart, CartLine} from './storefront-api-types.js';
+import type {
+  Cart,
+  CartLine,
+  CartLineConnection,
+} from './storefront-api-types.js';
 import type {PartialDeep} from 'type-fest';
 
 export const CART_LINE: PartialDeep<CartLine, {recurseIntoArrays: true}> = {
@@ -80,4 +84,23 @@ export function getCartLineMock(
   options?: Partial<CartLine>
 ): PartialDeep<CartLine, {recurseIntoArrays: true}> {
   return {...CART_LINE, ...options};
+}
+
+export function getCartLinesMock(
+  getOptions?: ((index: number) => Partial<CartLine>) | Partial<CartLine>,
+  count?: number
+): CartLineConnection {
+  const nodes = Array.from({length: count ?? 1}, (_, index) => {
+    const options =
+      typeof getOptions === 'function' ? getOptions(index) : getOptions;
+
+    console.log(options);
+    return {
+      node: getCartLineMock(options),
+    };
+  });
+
+  return {
+    edges: nodes,
+  } as CartLineConnection;
 }
