@@ -1,7 +1,5 @@
 import {vi} from 'vitest';
 import {render, screen} from '@testing-library/react';
-
-// TODO: Fix up these imports
 import {CartLines} from './CartLines.js';
 import {getCartMock, getCartLineMock} from './CartProvider.test.helpers.js';
 import {CartProvider} from './CartProvider.js';
