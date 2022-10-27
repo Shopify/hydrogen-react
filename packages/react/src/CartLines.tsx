@@ -24,7 +24,7 @@ export type CartLinesProps<ComponentGeneric extends ElementType> =
  * The `CartLines` component iterates over each cart line and renders its `children` within
  * a `CartLineProvider` for each cart line.
  */
-export function CartLine<ComponentGeneric extends ElementType>(
+export function CartLines<ComponentGeneric extends ElementType>(
   props: CartLinesProps<ComponentGeneric>
 ) {
   const {lines} = useCart();
