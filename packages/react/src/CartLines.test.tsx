@@ -2,12 +2,18 @@ import {vi} from 'vitest';
 import {render, screen} from '@testing-library/react';
 
 // TODO: Fix up these imports
-import {CartLines} from '../CartLines.client.js';
-import {CART_LINE} from '../../CartLineProvider/tests/fixtures.js';
-import {CartLineProductTitle} from '../../CartLineProductTitle/index.js';
-import {CART} from '../../CartProvider/tests/fixtures.js';
-import {CartProvider} from '../../CartProvider/index.js';
-import {ShopifyTestProviders} from '../../../utilities/tests/provider-helpers.js';
+import {CartLines} from './CartLines.js';
+import {getCartMock, getCartLineMock} from './CartProvider.test.helpers.js';
+import {CartProvider} from './CartProvider.js';
+import {ShopifyProvider} from './ShopifyProvider.js';
+import {getShopifyConfig} from './ShopifyProvider.test.js';
+import {useCartLine} from './CartLineProvider.js';
+
+function Component() {
+  const cartLine = useCartLine();
+
+  return <div>{cartLine.merchandise.product.title}</div>;
+}
 
 describe('CartLines', () => {
   const fetch = global.fetch;
@@ -33,11 +39,15 @@ describe('CartLines', () => {
     render(
       <CartProvider data={cart}>
         <CartLines>
-          <CartLineProductTitle />
+          <Component />
         </CartLines>
       </CartProvider>,
       {
-        wrapper: ShopifyTestProviders,
+        wrapper: ({children}) => (
+          <ShopifyProvider shopifyConfig={getShopifyConfig()}>
+            {children}
+          </ShopifyProvider>
+        ),
       }
     );
 
@@ -49,11 +59,15 @@ describe('CartLines', () => {
     const {container} = render(
       <CartProvider data={cart}>
         <CartLines as="ul">
-          <CartLineProductTitle />
+          <Component />
         </CartLines>
       </CartProvider>,
       {
-        wrapper: ShopifyTestProviders,
+        wrapper: ({children}) => (
+          <ShopifyProvider shopifyConfig={getShopifyConfig()}>
+            {children}
+          </ShopifyProvider>
+        ),
       }
     );
 
@@ -62,18 +76,20 @@ describe('CartLines', () => {
   });
 });
 
+const cartLine = getCartLineMock();
+
 const cart = {
-  ...CART,
+  ...getCartMock(),
   lines: {
     edges: [
       {
         node: {
-          ...CART_LINE,
+          ...cartLine,
           id: 'abc',
           merchandise: {
-            ...CART_LINE.merchandise,
+            ...cartLine.merchandise,
             product: {
-              ...CART_LINE.merchandise.product,
+              ...(cartLine?.merchandise?.product ?? {}),
               title: 'Product 1',
             },
           },
@@ -81,12 +97,12 @@ const cart = {
       },
       {
         node: {
-          ...CART_LINE,
+          ...cartLine,
           id: 'def',
           merchandise: {
-            ...CART_LINE.merchandise,
+            ...cartLine.merchandise,
             product: {
-              ...CART_LINE.merchandise.product,
+              ...cartLine.merchandise.product,
               title: 'Product 2',
             },
           },
