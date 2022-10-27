@@ -4,9 +4,12 @@ import styles from '../styles/Home.module.css';
 import {graphql} from '../gql/gql';
 import {request} from 'graphql-request';
 import type {GetServerSideProps} from 'next';
-import {shopClient} from './shopify-client';
+import {shopClient} from '../src/shopify-client';
 import type {IndexQueryQuery} from '../gql/graphql';
-import type {StorefrontApiResponseOk} from '@shopify/hydrogen-react';
+import {
+  Image as ShopifyImage,
+  type StorefrontApiResponseOk,
+} from '@shopify/hydrogen-react';
 
 export const getServerSideProps: GetServerSideProps = async ({req}) => {
   // @TODO figure out how to get the client's IP address correctly and accurately.
@@ -35,7 +38,7 @@ export default function Home({
   data,
   errors,
 }: StorefrontApiResponseOk<IndexQueryQuery>) {
-  if (errors) {
+  if (!data || errors) {
     console.error(errors);
     return <div>Whoops there was an error! Pleasea refresh and try again.</div>;
   }
@@ -48,51 +51,19 @@ export default function Home({
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1>Welcome to {data?.shop.name} on NextJS</h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {/* @TODO Using hydrogen-react's <Image/> is nice, but we should also provide our 'loader' so you can used NextJS' Image component as well */}
+        <ShopifyImage
+          data={data.products.nodes[0].variants.nodes[0].image ?? {}}
+          width={500}
+          loading="eager"
+        />
       </main>
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://vercel.com?utm_source=hydrogen-react-monorepo"
           target="_blank"
           rel="noopener noreferrer"
         >
