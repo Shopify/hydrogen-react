@@ -41,6 +41,6 @@ const CART_LINE = {
   },
 };
 
-export function getCartLine(options?: PartialDeep<CartLine>) {
+export function getCartLineMock(options?: PartialDeep<CartLine>) {
   return {...CART_LINE, ...options} as CartLine;
 }

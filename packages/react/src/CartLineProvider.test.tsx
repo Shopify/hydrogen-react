@@ -1,9 +1,9 @@
 import {render} from '@testing-library/react';
 import {useCartLine, CartLineProvider} from './CartLineProvider.js';
-import {getCartLine} from './CartLineProvider.test.helpers.js';
+import {getCartLineMock} from './CartLineProvider.test.helpers.js';
 
 it('provides a hook to access cart line data', () => {
-  const cartLine = getCartLine();
+  const cartLine = getCartLineMock();
   function Data() {
     const line = useCartLine();
 
