@@ -135,7 +135,6 @@ describe(`metafieldParser`, () => {
         type: 'money',
         value: JSON.stringify({amount: '12', currencyCode: 'USD'}),
       });
-      // TODO: amount should be a number, not a string
       expect(parsed?.parsedValue?.amount === '12').toBe(true);
       expect(parsed?.parsedValue?.currencyCode === 'USD').toBe(true);
       expectType<null | MoneyV2>(parsed?.parsedValue);
