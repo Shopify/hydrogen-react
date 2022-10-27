@@ -63,7 +63,7 @@ export function getCartMock(
 
 export const CART_WITH_LINES: PartialDeep<Cart, {recurseIntoArrays: true}> = {
   ...CART,
-  lines: {edges: [{node: CART_LINE}]},
+  lines: {edges: [{node: CART_LINE}, {node: CART_LINE}]},
 };
 
 export const CART_WITH_LINES_FLATTENED: PartialDeep<
