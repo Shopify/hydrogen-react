@@ -190,12 +190,19 @@ export function Metafield<ComponentGeneric extends ElementType>(
  * The `parseMetafield` utility transforms a [Metafield](https://shopify.dev/api/storefront/reference/common-objects/Metafield)
  * into a new object whose `values` have been parsed according to the metafield `type`.
  * If the metafield is `null`, then it returns `null` back.
- * @deprecated `parseMetafield()` is unsupported and will be removed in a future version. Use `metafieldParser()` instead
+ *
+ * Note that `parseMetafield()` will have a breaking change in a future version; it will change to behave like `metafieldParser()`.
  */
 export function parseMetafield(
   /** A [Metafield](https://shopify.dev/api/storefront/reference/common-objects/Metafield) or null */
   metafield: PartialDeep<MetafieldType, {recurseIntoArrays: true}> | null
 ): PartialDeep<ParsedMetafield, {recurseIntoArrays: true}> | null {
+  if (__HYDROGEN_DEV__) {
+    console.info(
+      `'parseMetafield()' will have a breaking change in a future version; its behavior will match that of 'metafieldParser()'`
+    );
+  }
+
   if (!metafield) {
     if (__HYDROGEN_DEV__) {
       console.warn(
@@ -221,11 +228,15 @@ export function parseMetafield(
 
 /**
  * The `parseMetafieldValue` function parses a [Metafield](https://shopify.dev/api/storefront/reference/common-objects/metafield)'s `value` from a string into a sensible type corresponding to the [Metafield](https://shopify.dev/api/storefront/reference/common-objects/metafield)'s `type`.
- * @deprecated `parseMetafieldValue()` is unsupported and will be removed in a future version. Use `metafieldParser()` instead
+ * @deprecated `parseMetafieldValue()` is unsupported and will be removed in a future version.
  */
 export function parseMetafieldValue(
   metafield: PartialDeep<MetafieldType, {recurseIntoArrays: true}> | null
 ): ParsedMetafield['value'] {
+  if (__HYDROGEN_DEV__) {
+    console.info(`'parseMetafieldValue()' will be removed in a future version`);
+  }
+
   if (!metafield) {
     return null;
   }

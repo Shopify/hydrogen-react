@@ -6,7 +6,9 @@ Introducing the new `metafieldParser()` function and `ParsedMetafield` type.
 
 ## `metafieldParser()`
 
-The new `metafieldParser()` function is an improvement and enhancement upon the existing `parseMetafield()` and `parseMetafieldValue()` functions. `metafieldParser()` now supports all Metafield types as outlined in the [Storefront API](https://shopify.dev/apps/metafields/types) documentation, including the list types!
+`metafieldParser()` is a temporary name; it will be renamed to `parseMetafield()` in a future release.
+
+The `metafieldParser()` function is an improvement and enhancement upon the existing `parseMetafield()` and `parseMetafieldValue()` functions. `metafieldParser()` now supports all Metafield types as outlined in the [Storefront API](https://shopify.dev/apps/metafields/types) documentation, including the list types!
 
 The parsed value can be found on the newly-added `parsedValue` property of the returned object from `metafieldParser()`. For example:
 
@@ -16,7 +18,7 @@ const parsed = metafieldParser(metafield);
 console.log(parsed.parsedValue);
 ```
 
-`parseMetafiled()` and `parseMetafieldValue()` have been marked as deprecated and will be removed in a future version of Hydrogen-UI.
+`parseMetafieldValue()` has been marked as deprecated and will be removed in a future version of Hydrogen-UI.
 
 ## The `ParsedMetafield` type
 
