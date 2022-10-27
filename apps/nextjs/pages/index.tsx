@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}) => {
     return {props: {data: response, errors: null}};
   } catch (err) {
     console.error(err);
-    return {props: {data: null, errors: [err]}};
+    return {props: {data: null, errors: [(err as Error).toString()]}};
   }
 };
 
@@ -40,7 +40,7 @@ export default function Home({
 }: StorefrontApiResponseOk<IndexQueryQuery>) {
   if (!data || errors) {
     console.error(errors);
-    return <div>Whoops there was an error! Pleasea refresh and try again.</div>;
+    return <div>Whoops there was an error! Please refresh and try again.</div>;
   }
   return (
     <div className={styles.container}>

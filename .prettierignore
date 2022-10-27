@@ -2,4 +2,7 @@
 **/dist/**
 packages/react/storefront.schema.json
 **/coverage/
-**/.next/**
+
+# apps/nextjs ignored files/folders
+apps/nextjs/.next/**
+apps/nextjs/gql/**

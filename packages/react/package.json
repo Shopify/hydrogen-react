@@ -56,7 +56,7 @@
   "jsdelivr": "./dist/umd/hydrogen-react.prod.js",
   "sideEffects": false,
   "scripts": {
-    "dev": "yarn dev:story",
+    "dev": "yarn dev:demo",
     "dev:story": "ladle serve",
     "dev:demo": "run-p dev:demo:*",
     "dev:demo:vite": "vite build --watch --emptyOutDir false --clearScreen false --mode devbuild",
