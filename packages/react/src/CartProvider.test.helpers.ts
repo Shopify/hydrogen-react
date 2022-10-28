@@ -6,6 +6,7 @@ import type {
   CartLineConnection,
 } from './storefront-api-types.js';
 import type {PartialDeep} from 'type-fest';
+import * as merge from 'deepmerge';
 
 export const CART_LINE: PartialDeep<CartLine, {recurseIntoArrays: true}> = {
   attributes: [{key: 'color', value: 'red'}],
@@ -60,9 +61,9 @@ export const CART: PartialDeep<Cart, {recurseIntoArrays: true}> = {
 };
 
 export function getCartMock(
-  options?: Partial<Cart>
+  options?: PartialDeep<Cart>
 ): PartialDeep<Cart, {recurseIntoArrays: true}> {
-  return {...CART, ...options};
+  return options ? merge(CART, options) : CART;
 }
 
 export const CART_WITH_LINES: PartialDeep<Cart, {recurseIntoArrays: true}> = {
@@ -81,13 +82,15 @@ export const CART_WITH_LINES_FLATTENED: PartialDeep<
 };
 
 export function getCartLineMock(
-  options?: Partial<CartLine>
+  options?: PartialDeep<CartLine>
 ): PartialDeep<CartLine, {recurseIntoArrays: true}> {
-  return {...CART_LINE, ...options};
+  return options ? merge(CART_LINE, options) : CART_LINE;
 }
 
 export function getCartLinesMock(
-  getOptions?: ((index: number) => Partial<CartLine>) | Partial<CartLine>,
+  getOptions?:
+    | ((index: number) => PartialDeep<CartLine>)
+    | PartialDeep<CartLine>,
   count?: number
 ): CartLineConnection {
   const nodes = Array.from({length: count ?? 1}, (_, index) => {
