@@ -11,7 +11,7 @@ export interface CartCostProps {
 /**
  * The `CartCost` component renders a `Money` component with the
  * cost associated with the `amountType` prop. If no `amountType` prop is specified, then it defaults to `totalAmount`.
- * If `children` is a function, then it will pass down the render props provided by the parent component.
+Depends on `useCart()` and must be a child of `<CartProvider/>`
  */
 export function CartCost(
   props: Omit<React.ComponentProps<typeof Money>, 'data'> & CartCostProps
