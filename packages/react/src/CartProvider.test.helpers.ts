@@ -114,11 +114,11 @@ export function getCartLinesMock(
 function mergeDeep(
   target: Partial<Record<string, unknown>>,
   source: Partial<Record<string, unknown>>
-) {
+): Partial<Record<string, unknown>> {
   const isObject = (obj: unknown) => obj && typeof obj === 'object';
 
   if (!isObject(target) || !isObject(source)) {
-    return null;
+    return {...source};
   }
 
   const newTarget = {...target};
