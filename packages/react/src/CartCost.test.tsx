@@ -5,7 +5,6 @@ import {CartCost} from './CartCost.js';
 import {ComponentProps, PropsWithChildren} from 'react';
 import {ShopifyProvider} from './ShopifyProvider.js';
 import {getShopifyConfig} from './ShopifyProvider.test.js';
-import {vi} from 'vitest';
 
 const testId = 'cart-cost';
 
