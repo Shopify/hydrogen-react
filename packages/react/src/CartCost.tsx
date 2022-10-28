@@ -4,7 +4,7 @@ import {useCart} from './CartProvider.js';
 export interface CartCostProps {
   /** A string type that defines the type of cost needed. Valid values: `total`, `subtotal`, `tax`, or `duty`. */
   amountType?: 'total' | 'subtotal' | 'tax' | 'duty';
-  /** A function that takes an object return by the `useMoney` hook and returns a `ReactNode`. */
+   /** Any `ReactNode` elements. */
   children?: React.ReactNode;
 }
 
