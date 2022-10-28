@@ -11,7 +11,7 @@ import {
   type StorefrontApiResponseOk,
 } from '@shopify/hydrogen-react';
 
-export const getServerSideProps: GetServerSideProps = async ({req}) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   // @TODO figure out how to get the client's IP address correctly and accurately.
   // const buyerIp =
   //   req.headers["x-real-ip"] ??
