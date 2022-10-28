@@ -60,9 +60,9 @@ export const CART: PartialDeep<Cart, {recurseIntoArrays: true}> = {
 };
 
 export function getCartMock(
-  options?: Partial<Cart>
+  options?: PartialDeep<Cart>
 ): PartialDeep<Cart, {recurseIntoArrays: true}> {
-  return {...CART, ...options};
+  return mergeDeep({...CART}, {...options});
 }
 
 export const CART_WITH_LINES: PartialDeep<Cart, {recurseIntoArrays: true}> = {
@@ -81,13 +81,15 @@ export const CART_WITH_LINES_FLATTENED: PartialDeep<
 };
 
 export function getCartLineMock(
-  options?: Partial<CartLine>
+  options?: PartialDeep<CartLine>
 ): PartialDeep<CartLine, {recurseIntoArrays: true}> {
-  return {...CART_LINE, ...options};
+  return mergeDeep({...CART_LINE}, {...options});
 }
 
 export function getCartLinesMock(
-  getOptions?: ((index: number) => Partial<CartLine>) | Partial<CartLine>,
+  getOptions?:
+    | ((index: number) => PartialDeep<CartLine>)
+    | PartialDeep<CartLine>,
   count?: number
 ): CartLineConnection {
   const nodes = Array.from({length: count ?? 1}, (_, index) => {
@@ -102,4 +104,45 @@ export function getCartLinesMock(
   return {
     edges: nodes,
   } as CartLineConnection;
+}
+
+/**
+ * Performs a deep merge of `source` into `target`.
+ * creating a new object
+ *
+ */
+function mergeDeep(
+  target: Partial<Record<string, unknown>>,
+  source: Partial<Record<string, unknown>>
+) {
+  const isObject = (obj: unknown) => obj && typeof obj === 'object';
+
+  if (!isObject(target) || !isObject(source)) {
+    return null;
+  }
+
+  const newTarget = {...target};
+  const newSource = {...source};
+
+  Object.keys(newSource).forEach((key) => {
+    const newTargetValue = newTarget[key];
+    const newSourceValue = newSource[key];
+
+    if (Array.isArray(newTargetValue) && Array.isArray(newSourceValue)) {
+      newTarget[key] = [...newTargetValue, ...newSourceValue];
+    } else if (
+      isObject(newTargetValue) &&
+      isObject(newSourceValue) &&
+      newSourceValue
+    ) {
+      newTarget[key] = mergeDeep(
+        Object.assign({}, newTargetValue),
+        newSourceValue
+      );
+    } else {
+      newTarget[key] = newSourceValue;
+    }
+  });
+
+  return newTarget;
 }
