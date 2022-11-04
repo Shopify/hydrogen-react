@@ -74,7 +74,9 @@
     "prepack": "yarn build",
     "test": "vitest",
     "test:ci": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "transpile-docs": "yarn tsc src/*.doc.ts --types react --moduleResolution node  --target esNext  --module CommonJS",
+    "build-docs": "yarn transpile-docs && generate-docs --input ./src --output ./src && rm -rf src/**/*.doc.js src/*doc.js"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -83,6 +85,7 @@
     "@graphql-codegen/introspection": "2.2.1",
     "@graphql-codegen/typescript": "^2.7.5",
     "@ladle/react": "^2.4.5",
+    "@shopify/generate-docs": "^0.2.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
