@@ -21,7 +21,8 @@
       {
         "title": "props",
         "description": "interface description",
-        "type": {
+        "type": "ExternalVideoProps",
+        "typeDefinitions": {
           "ExternalVideoProps": {
             "filePath": "/ExternalVideo.tsx",
             "syntaxKind": "TypeAliasDeclaration",
@@ -431,7 +432,8 @@
       {
         "title": "props",
         "description": "interface description",
-        "type": {
+        "type": "ShopifyImageProps",
+        "typeDefinitions": {
           "ShopifyImageProps": {
             "filePath": "/Image.tsx",
             "syntaxKind": "TypeAliasDeclaration",
