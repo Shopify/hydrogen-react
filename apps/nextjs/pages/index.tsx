@@ -9,6 +9,7 @@ import type {IndexQueryQuery} from '../gql/graphql';
 import {
   Image as ShopifyImage,
   type StorefrontApiResponseOk,
+  useShop,
 } from '@shopify/hydrogen-react';
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -38,6 +39,8 @@ export default function Home({
   data,
   errors,
 }: StorefrontApiResponseOk<IndexQueryQuery>) {
+  const {storeDomain} = useShop();
+
   if (!data || errors) {
     console.error(errors);
     return <div>Whoops there was an error! Please refresh and try again.</div>;
@@ -59,6 +62,7 @@ export default function Home({
           width={500}
           loading="eager"
         />
+        <div>Storefront API Domain: {storeDomain}</div>
       </main>
 
       <footer className={styles.footer}>
