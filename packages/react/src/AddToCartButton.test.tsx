@@ -94,7 +94,7 @@ describe('<AddToCartButton/>', () => {
     });
   });
 
-  describe('when inside a ProductOptionsProvider', () => {
+  describe('when inside a ProductProvider', () => {
     describe('and an initialVariantId is present', () => {
       it('calls linesAdd with the initialVariantId', async () => {
         const product = getProduct();
