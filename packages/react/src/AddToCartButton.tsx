@@ -113,8 +113,6 @@ export interface CustomBaseButtonProps<AsType> {
   ) => void | boolean;
   /** A ref to the underlying button */
   buttonRef?: Ref<HTMLButtonElement>;
-
-  disabled?: boolean;
 }
 
 export type BaseButtonProps<AsType extends React.ElementType> =
