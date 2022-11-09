@@ -1,6 +1,7 @@
 import {useCallback, useEffect, Ref, ReactNode, useState} from 'react';
 
 import {useCart} from './CartProvider.js';
+import {useProduct} from './ProductProvider.js';
 
 interface AddToCartButtonProps {
   /** An array of cart line attributes that belong to the item being added to the cart. */
@@ -27,7 +28,7 @@ export function AddToCartButton<AsType extends React.ElementType = 'button'>(
 ) {
   const [addingItem, setAddingItem] = useState<boolean>(false);
   const {
-    variantId = '',
+    variantId: explicitVariantId,
     quantity = 1,
     attributes,
     sellingPlanId,
@@ -37,9 +38,12 @@ export function AddToCartButton<AsType extends React.ElementType = 'button'>(
     ...passthroughProps
   } = props;
   const {status, linesAdd} = useCart();
+  const {selectedVariant} = useProduct();
+  const variantId = explicitVariantId ?? selectedVariant?.id ?? '';
   const disabled =
-    variantId === null ||
+    explicitVariantId === null ||
     variantId === '' ||
+    selectedVariant === null ||
     addingItem ||
     passthroughProps.disabled;
 
