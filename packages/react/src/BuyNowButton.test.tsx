@@ -31,7 +31,7 @@ describe('<BuyNowButton/>', () => {
 
   it('can optionally disable the button', () => {
     render(
-      <BuyNowButton disabled={true} variantId="1">
+      <BuyNowButton disabled variantId="1">
         Buy now
       </BuyNowButton>,
       {
@@ -135,7 +135,6 @@ describe('<BuyNowButton/>', () => {
     it('redirects to checkout', () => {
       vi.mocked(useCart).mockImplementation(() => ({
         ...defaultCart,
-        cartCreate: vi.fn(),
         checkoutUrl: '/checkout?id=123',
       }));
 
