@@ -1,9 +1,8 @@
 import {CartShopPayButton} from './CartShopPayButton.js';
 import {CartProvider, useCart} from './CartProvider.js';
 import {render, screen} from '@testing-library/react';
-import {getCartMock} from './CartProvider.test.helpers.js';
 import {vi} from 'vitest';
-import {Cart} from './storefront-api-types.js';
+import {getCartActionsMock} from './CartProvider.test.helpers.js';
 
 vi.mock('./CartProvider.js');
 
@@ -16,6 +15,7 @@ vi.mock('./ShopPayButton.js', () => ({
 describe('CartShopPayButton', () => {
   it('renders a ShopPayButton with the cart data', () => {
     vi.mocked(useCart).mockImplementation(() => ({
+      ...getCartActionsMock(),
       lines: [{quantity: 2, merchandise: {id: '123'}}],
     }));
 
