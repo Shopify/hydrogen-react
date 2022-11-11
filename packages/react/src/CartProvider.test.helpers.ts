@@ -81,18 +81,3 @@ export function getCartLineMock(
 ): PartialDeep<CartLine, {recurseIntoArrays: true}> {
   return {...CART_LINE, ...options};
 }
-
-export const getCartActionsMock = () => ({
-  buyerIdentityUpdate: vi.fn(),
-  cartAttributesUpdate: vi.fn(),
-  cartCreate: vi.fn(),
-  cartFragment: '',
-  checkoutUrl: '',
-  discountCodesUpdate: vi.fn(),
-  linesAdd: vi.fn(),
-  linesRemove: vi.fn(),
-  linesUpdate: vi.fn(),
-  noteUpdate: vi.fn(),
-  status: 'idle' as const,
-  totalQuantity: 0,
-});
