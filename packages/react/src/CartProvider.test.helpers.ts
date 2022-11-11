@@ -94,7 +94,6 @@ export function getCartLinesMock(
     const options =
       typeof getOptions === 'function' ? getOptions(index) : getOptions;
 
-    console.log(options);
     return {
       node: getCartLineMock(options),
     };
