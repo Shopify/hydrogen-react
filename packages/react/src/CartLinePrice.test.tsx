@@ -1,8 +1,6 @@
 import {render, screen} from '@testing-library/react';
-import {CartLineProvider} from './CartLineProvider.js';
 import {CartLinePrice} from './CartLinePrice.js';
 import {getCartLineMock} from './CartProvider.test.helpers.js';
-import {CartLine} from './storefront-api-types.js';
 
 describe('<CartLinePrice />', () => {
   it('renders <Money /> with the regular price by default', () => {
@@ -13,13 +11,9 @@ describe('<CartLinePrice />', () => {
           currencyCode: 'USD',
         },
       },
-    }) as CartLine;
+    });
 
-    render(
-      <CartLineProvider line={line}>
-        <CartLinePrice />
-      </CartLineProvider>
-    );
+    render(<CartLinePrice data={line} />);
 
     expect(screen.getByText('50', {exact: false})).toBeInTheDocument();
   });
@@ -32,13 +26,9 @@ describe('<CartLinePrice />', () => {
           currencyCode: 'USD',
         },
       },
-    }) as CartLine;
+    });
 
-    render(
-      <CartLineProvider line={line}>
-        <CartLinePrice priceType="compareAt" />
-      </CartLineProvider>
-    );
+    render(<CartLinePrice data={line} priceType="compareAt" />);
 
     expect(screen.getByText('60', {exact: false})).toBeInTheDocument();
   });
@@ -51,13 +41,9 @@ describe('<CartLinePrice />', () => {
           currencyCode: 'USD',
         },
       },
-    }) as CartLine;
+    });
 
-    render(
-      <CartLineProvider line={line}>
-        <CartLinePrice className="underline" />
-      </CartLineProvider>
-    );
+    render(<CartLinePrice data={line} className="underline" />);
 
     const money = screen.getByText('50', {exact: false});
 

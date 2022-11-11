@@ -80,12 +80,23 @@ export const CART_WITH_LINES_FLATTENED: PartialDeep<
   lines: flattenConnection(CART_WITH_LINES.lines),
 };
 
+/**
+ * Creates a `CartLine` mock
+ * @param options - The options to override the default cart line values
+ */
 export function getCartLineMock(
   options?: PartialDeep<CartLine>
 ): PartialDeep<CartLine, {recurseIntoArrays: true}> {
   return mergeDeep({...CART_LINE}, {...options});
 }
 
+/**
+ * Creates a `CartLine[]` array mock.
+ * @param options - The options to override the default cart line mock
+ * @param count - The number of cart lines to create
+ *
+ * are the number of cart lines to create.
+ */
 export function getCartLinesMock(
   getOptions?:
     | ((index: number) => PartialDeep<CartLine>)
@@ -108,8 +119,12 @@ export function getCartLinesMock(
 
 /**
  * Performs a deep merge of `source` into `target`.
- * creating a new object
+ * creating a new object.
+ * @param target - The target object to merge into
+ * @param source - The source object to merge from
  *
+ * @remarks Modified from [enten](https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6)
+ * and [jhildenbiddle](https://stackoverflow.com/a/48218209).
  */
 function mergeDeep(
   target: Partial<Record<string, unknown>>,

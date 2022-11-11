@@ -1,39 +1,26 @@
 import * as React from 'react';
 import type {Story} from '@ladle/react';
 import {CartLinePrice} from './CartLinePrice.js';
-import {CartProvider} from './CartProvider.js';
-import {getCartLinesMock, getCartMock} from './CartProvider.test.helpers.js';
-import {CartLines} from './CartLines.js';
+import {getCartLineMock} from './CartProvider.test.helpers.js';
 
 type CartLinePriceProps = React.ComponentPropsWithoutRef<typeof CartLinePrice>;
 
-const cartMock = getCartMock({
-  lines: getCartLinesMock(
-    {
-      cost: {
-        totalAmount: {
-          amount: '100',
-          currencyCode: 'USD',
-        },
-        compareAtAmountPerQuantity: {
-          amount: '200',
-          currencyCode: 'USD',
-        },
-      },
+const cartLineMock = getCartLineMock({
+  cost: {
+    totalAmount: {
+      amount: '100',
+      currencyCode: 'USD',
     },
-    1
-  ),
+    compareAtAmountPerQuantity: {
+      amount: '200',
+      currencyCode: 'USD',
+    },
+  },
 });
 
 const Template: Story<{priceType: CartLinePriceProps['priceType']}> = (
   props
-) => (
-  <CartProvider data={cartMock}>
-    <CartLines>
-      <CartLinePrice {...props} />
-    </CartLines>
-  </CartProvider>
-);
+) => <CartLinePrice data={cartLineMock} {...props} />;
 
 export const Default = Template.bind({});
 Default.argTypes = {
