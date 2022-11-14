@@ -71,7 +71,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             For example, `import {} from '@xstate/react/fsm'` doesn't actually exist in the file path, so we need Vite to process it so it does
             Hypothetically, if they update their package to do so, then we can externalize it at that point.
 
-            Note that this has no effect on the ssr builds; if we need to mark xstate as "not external" there, then we need to use 'ssr.noExternal' https://vitejs.dev/config/ssr-options.html#ssr-noexternal
+            Note that this has no effect on the ssr builds; we need to mark xstate as "not external" in 'ssr.noExternal' https://vitejs.dev/config/ssr-options.html#ssr-noexternal
            */
           if (id.includes('xstate')) {
             return false;
