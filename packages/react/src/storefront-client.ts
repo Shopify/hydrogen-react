@@ -136,7 +136,7 @@ type StorefrontClientReturn = {
   /**
    * Creates the fully-qualified URL to your myshopify.com domain.
    *
-   * By default, it will use the config you passed in when calling `createStorefrontClient()`. However, you can override the following settings on each invocation of `getStorefrontApiUrl({...})`:
+   * By default, it will use the config you passed in when calling `createStorefrontClient()`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:
    *
    * - `storeDomain`
    */
