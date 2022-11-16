@@ -42,7 +42,7 @@ const config: CodegenConfig = {
         },
       ],
     },
-    // the schema file, which is the local representation of the graphql endpoint
+    // The schema file, which is the local representation of the GraphQL endpoint
     './storefront.schema.json': {
       plugins: [
         {
