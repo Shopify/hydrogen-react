@@ -1,5 +1,5 @@
 import type {CodegenConfig} from '@graphql-codegen/cli';
-// due to issues with TurboRepo and dev dependencies, we can't use this in the monorepo. But if we could, then it would look like this import, and then used below in "scalars"
+// Due to issues with TurboRepo and dev dependencies, we can't use this in the monorepo. But if we could, then it would look like this import, and then used below in "scalars"
 // import {storefrontApiCustomScalars} from '@shopify/hydrogen-react';
 
 const config: CodegenConfig = {
