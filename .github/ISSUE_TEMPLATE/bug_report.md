@@ -10,7 +10,10 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
+
+Please use our NextJS issue template here: [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/shopify/hydrogen-ui/tree/main/apps/nextjs?file=pages%2Findex.tsx)
+
+and write the steps to reproduce the behavior:
 
 1. Go to '...'
 2. Click on '....'
