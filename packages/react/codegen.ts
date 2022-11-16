@@ -36,7 +36,7 @@ const config: CodegenConfig = {
             defaultScalarType: 'unknown',
             useImplementingTypes: true,
             enumsAsTypes: true,
-            // Define how the SFAPI's custom scalars map to TS types
+            // Define how the Storefront API's custom scalars map to TypeScript types
             scalars: storefrontApiCustomScalars,
           },
         },
