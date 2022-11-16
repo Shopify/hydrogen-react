@@ -14,7 +14,7 @@ const config: CodegenConfig = {
       config: {
         // scalars: storefrontApiCustomScalars,
         scalars: {
-          // because of the limitations outlined above, these need to be kept in sync with the original definitions in the @shopify/hydrogen-react repo!
+          // Because of the limitations outlined above, these need to be kept in sync with the original definitions in the @shopify/hydrogen-react repo!
           DateTime: 'string',
           Decimal: 'string',
           HTML: 'string',
