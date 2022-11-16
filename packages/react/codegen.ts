@@ -14,7 +14,7 @@ const config: CodegenConfig = {
     },
   },
   generates: {
-    // the base types that are generated
+    // The generated base types
     'src/storefront-api-types.d.ts': {
       plugins: [
         {
