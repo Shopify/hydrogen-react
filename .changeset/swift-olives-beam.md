@@ -10,7 +10,7 @@ For example:
 import {storefrontApiCustomScalars} from '@shopify/hydrogen-react';
 
 const config: CodegenConfig = {
-  // use the schema that's bundled with @shopify/hydrogen-react
+  // Use the schema that's bundled with @shopify/hydrogen-react
   schema: './node_modules/@shopify/hydrogen-react/storefront.schema.json',
   generates: {
     './gql/': {
