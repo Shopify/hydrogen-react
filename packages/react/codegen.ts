@@ -1,5 +1,5 @@
 import {CodegenConfig} from '@graphql-codegen/cli';
-// as this file is processed only in TS, then we can make one exception for not using an extension here.
+// Because this file is processed only in TypeScript, we can make one exception for not using an extension here.
 // eslint-disable-next-line import/extensions
 import {storefrontApiCustomScalars} from './src/codegen.helpers';
 
