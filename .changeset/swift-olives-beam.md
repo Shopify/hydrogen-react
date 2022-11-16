@@ -17,7 +17,7 @@ const config: CodegenConfig = {
       preset: 'client',
       plugins: [],
       config: {
-        // use the custom scalar definitions that @shopify/hydrogen-react provides to improve the custom scalar types
+        // Use the custom scalar definitions that @shopify/hydrogen-react provides to improve the custom scalar types
         scalars: storefrontApiCustomScalars,
       },
     },
