@@ -32,7 +32,7 @@ const config: CodegenConfig = {
         {
           typescript: {
             useTypeImports: true,
-            // If a default type for a scalar isn't set, then instead of 'any' let's set to 'unknown' for better type safety.
+            // If a default type for a scalar isn't set, then instead of 'any' we set to 'unknown' for better type safety.
             defaultScalarType: 'unknown',
             useImplementingTypes: true,
             enumsAsTypes: true,
