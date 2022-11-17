@@ -1126,5 +1126,80 @@
         }
       }
     ]
-  }
+  },
+  {
+    "name": "product provider",
+    "category": "components",
+    "related": [
+      {
+        "name": "ProductPrice",
+        "type": "component",
+        "url": "/api/hydrogen/components/product-variant/productprice"
+      },
+      {
+        "name": "ProductOptionsProvider",
+        "type": "component",
+        "url": "api/hydrogen/components/product-variant/productoptionsprovider"
+      },
+      {
+        "name": "useProductOptions",
+        "type": "hook",
+        "url": "/api/hydrogen/hooks/product-variant/useproductoptions"
+      }
+    ],
+    "description": "> Note:\n> `ProductProvider` is only available as part of the [Hydrogen UI](/custom-storefronts/hydrogen/alternate-frameworks) package, which is in beta. If you're building with Hydrogen, then use [`ProductOptionsProvider`](https://shopify.dev/api/hydrogen/components/product-variant/productoptionsprovider)\nThe `ProductProvider` component sets up a context with state that tracks the selected variant and options. Descendants of this component can use the [`useProductOptions`](https://shopify.dev/api/hydrogen/hooks/product-variant useproductoptions) hook.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "export function Product() {\n  const data: any = {};\n\n  return (\n    <ProductProvider data={data.product} initialVariantId=\"some-id\">{/* Your JSX */}</ProductProvider>\n  );\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "ProductProviderProps",
+        "typeDefinitions": {
+          "ProductProviderProps": {
+            "filePath": "/ProductProvider.tsx",
+            "name": "ProductProviderProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ProductProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Product, { recurseIntoArrays: true; }>",
+                "description": "A [Product object](https://shopify.dev/api/storefront/reference/products/product)."
+              },
+              {
+                "filePath": "/ProductProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "children",
+                "value": "ReactNode",
+                "description": "A `ReactNode` element."
+              },
+              {
+                "filePath": "/ProductProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "initialVariantId",
+                "value": "string",
+                "description": "The initially selected variant.\nThe following logic applies to `initialVariantId`:\n1. If `initialVariantId` is provided, then it's used even if it's out of stock.\n2. If `initialVariantId` is provided but is `null`, then no variant is used.\n3. If nothing is passed to `initialVariantId` then the first available / in-stock variant is used.\n4. If nothing is passed to `initialVariantId` and no variants are in stock, then the first variant is used.",
+                "isOptional": true
+              }
+            ],
+            "value": "interface ProductProviderProps {\n  /** A [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** A `ReactNode` element. */\n  children: React.ReactNode;\n  /**\n   * The initially selected variant.\n   * The following logic applies to `initialVariantId`:\n   * 1. If `initialVariantId` is provided, then it's used even if it's out of stock.\n   * 2. If `initialVariantId` is provided but is `null`, then no variant is used.\n   * 3. If nothing is passed to `initialVariantId` then the first available / in-stock variant is used.\n   * 4. If nothing is passed to `initialVariantId` and no variants are in stock, then the first variant is used.\n   */\n  initialVariantId?: InitialVariantId;\n}"
+          }
+        }
+      }
+    ]
+  },
+  {}
 ]
