@@ -3,7 +3,7 @@
     "name": "external video",
     "category": "components",
     "related": [],
-    "description": "The `ExternalVideo` component renders an embedded video for the Storefront. API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
+    "description": "The `ExternalVideo` component renders an embedded video for the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
@@ -460,6 +460,667 @@
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyLoaderOptions",
             "value": "{\n  crop?: 'top' | 'bottom' | 'left' | 'right' | 'center';\n  scale?: 2 | 3;\n  width?: HtmlImageProps['width'] | ImageType['width'];\n  height?: HtmlImageProps['height'] | ImageType['height'];\n}",
+            "description": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "media file",
+    "category": "components",
+    "related": [],
+    "description": "The `MediaFile` component renders the media for the Storefront API's\n[Media object](https://shopify.dev/api/storefront/reference/products/media). It renders an `Image `Video`, an `ExternalVideo`, or a `ModelViewer` depending on the `__typename` of the `data` prop.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { MediaFile } from \"./MediaFile\";\n\nexport function MyComponent() {\n  const data: any = {};\n\n  return (\n    <ul>\n      {data?.products?.map((product) => {\n        return <MediaFile data={product.node.media.edges[0].node} />;\n      })}\n    </ul>\n  );\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "MediaFileProps",
+        "typeDefinitions": {
+          "MediaFileProps": {
+            "filePath": "/MediaFile.tsx",
+            "name": "MediaFileProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<ExternalVideo, { recurseIntoArrays: true; }> | PartialObjectDeep<MediaImage, { recurseIntoArrays: true; }> | PartialObjectDeep<...> | PartialObjectDeep<...>",
+                "description": "An object with fields that correspond to the Storefront API's [Media object](https://shopify.dev/api/storefront/reference/products/media)."
+              },
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "mediaOptions",
+                "value": "{ image: Omit<ShopifyImageProps, \"data\">; video: Omit<ClassAttributes<HTMLVideoElement> & VideoHTMLAttributes<HTMLVideoElement> & VideoProps, \"data\">; externalVideo: Omit<...>; modelViewer: Omit<...>; }",
+                "description": "The options for the `Image`, `Video`, or `ExternalVideo` components.",
+                "isOptional": true
+              }
+            ],
+            "value": "interface MediaFileProps {\n  /** An object with fields that correspond to the Storefront API's [Media object](https://shopify.dev/api/storefront/reference/products/media). */\n  data: PartialDeep<MediaEdgeType['node'], {recurseIntoArrays: true}>;\n  /** The options for the `Image`, `Video`, or `ExternalVideo` components. */\n  mediaOptions?: {\n    /** Props that will only apply when an `<Image />` is rendered */\n    image: Omit<ShopifyImageProps, 'data'>;\n    /** Props that will only apply when a `<Video />` is rendered */\n    video: Omit<React.ComponentProps<typeof Video>, 'data'>;\n    /** Props that will only apply when an `<ExternalVideo />` is rendered */\n    externalVideo: Omit<\n      React.ComponentProps<typeof ExternalVideo>['options'],\n      'data'\n    >;\n    /** Props that will only apply when a `<ModelViewer />` is rendered */\n    modelViewer: Omit<typeof ModelViewer, 'data'>;\n  };\n}"
+          },
+          "ShopifyImageProps": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyImageProps",
+            "value": "Omit<HtmlImageProps, 'src'> & {\n  /** An object with fields that correspond to the Storefront API's\n   * [Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\n   * The `data` prop is required.\n   */\n  data: PartialDeep<ImageType, {recurseIntoArrays: true}>;\n  /** A custom function that generates the image URL. Parameters passed in\n   * are `ShopifyLoaderParams`\n   */\n  loader?: (params: ShopifyLoaderParams) => string;\n  /** An object of `loader` function options. For example, if the `loader` function\n   * requires a `scale` option, then the value can be a property of the\n   * `loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.\n   */\n  loaderOptions?: ShopifyLoaderOptions;\n  /**\n   * `src` isn't used, and should instead be passed as part of the `data` object\n   */\n  src?: never;\n  /**\n   * An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.\n   */\n  widths?: (HtmlImageProps['width'] | ImageType['width'])[];\n}",
+            "description": ""
+          },
+          "HtmlImageProps": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "HtmlImageProps",
+            "value": "React.ImgHTMLAttributes<HTMLImageElement>",
+            "description": ""
+          },
+          "ShopifyLoaderParams": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyLoaderParams",
+            "value": "Simplify<\n  ShopifyLoaderOptions & {\n    src: ImageType['url'];\n  }\n>",
+            "description": ""
+          },
+          "ShopifyLoaderOptions": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyLoaderOptions",
+            "value": "{\n  crop?: 'top' | 'bottom' | 'left' | 'right' | 'center';\n  scale?: 2 | 3;\n  width?: HtmlImageProps['width'] | ImageType['width'];\n  height?: HtmlImageProps['height'] | ImageType['height'];\n}",
+            "description": ""
+          },
+          "VideoProps": {
+            "filePath": "/Video.tsx",
+            "name": "VideoProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Video, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [Video object](https://shopify.dev/api/storefront/latest/objects/video)."
+              },
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "previewImageOptions",
+                "value": "Simplify<ShopifyLoaderOptions & { src: string; }>",
+                "description": "An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "sourceProps",
+                "value": "HTMLAttributes<HTMLSourceElement> & { 'data-testid'?: string; }",
+                "description": "Props that will be passed to the `video` element's `source` children elements.",
+                "isOptional": true
+              }
+            ],
+            "value": "export interface VideoProps {\n  /** An object with fields that correspond to the Storefront API's [Video object](https://shopify.dev/api/storefront/latest/objects/video). */\n  data: PartialDeep<VideoType, {recurseIntoArrays: true}>;\n  /** An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL. */\n  previewImageOptions?: Parameters<typeof shopifyImageLoader>[0];\n  /** Props that will be passed to the `video` element's `source` children elements. */\n  sourceProps?: HTMLAttributes<HTMLSourceElement> & {\n    'data-testid'?: string;\n  };\n}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "metafield",
+    "category": "components",
+    "related": [
+      {
+        "name": "parseMetafield",
+        "type": "utility",
+        "url": "api/hydrogen/utilities/parsemetafield"
+      },
+      {
+        "name": "parseMetafieldValue",
+        "type": "utility",
+        "url": "api/hydrogen/utilities/parsemetafieldvalue"
+      }
+    ],
+    "description": "The `Metafield` component renders the value of a Storefront API's\n[Metafield object](https://shopify.dev/api/storefront/referenc common-objects/metafield). Relies on the `locale` property of the `useShop()` hook, so it must be a desendent of `<ShopifyProvider/>`.\nRenders a smart default of the Metafield's `value`. For more information, refer to the [Default output](#default-output) section.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { Metafield } from \"./Metafield\";\n\nexport function Product({product}) {\n  const metafield = product.metafield;\n\n  return <Metafield data={metafield} />;\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "BaseProps",
+        "description": "interface description",
+        "type": "MetafieldProps",
+        "typeDefinitions": {
+          "MetafieldProps": {
+            "filePath": "/Metafield.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "MetafieldProps",
+            "value": "ComponentPropsWithoutRef<ComponentGeneric> & BaseProps<ComponentGeneric>",
+            "description": ""
+          },
+          "BaseProps": {
+            "filePath": "/Metafield.tsx",
+            "name": "BaseProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Metafield.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Metafield, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [Metafield object](https://shopify.dev/api/storefront/reference/common-objects/metafield)."
+              },
+              {
+                "filePath": "/Metafield.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "as",
+                "value": "ComponentGeneric",
+                "description": "An HTML tag or React component to be rendered as the base element wrapper. The default value varies depending on [metafield.type](https://shopify.dev/apps/metafields/types).",
+                "isOptional": true
+              }
+            ],
+            "value": "interface BaseProps<ComponentGeneric extends ElementType> {\n  /** An object with fields that correspond to the Storefront API's [Metafield object](https://shopify.dev/api/storefront/reference/common-objects/metafield). */\n  data: PartialDeep<MetafieldType, {recurseIntoArrays: true}> | null;\n  /** An HTML tag or React component to be rendered as the base element wrapper. The default value varies depending on [metafield.type](https://shopify.dev/apps/metafields/types). */\n  as?: ComponentGeneric;\n}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "model viewer",
+    "category": "components",
+    "related": [
+      {
+        "name": "MediaFile",
+        "type": "component",
+        "url": "api/hydrogen/components/primitive/mediafile"
+      }
+    ],
+    "description": "The `ModelViewer` component renders a 3D model for the Storefront API's\n[Model3d object](https://shopify.dev/api/storefront/reference/products/model3d).\nThe component outputs a `<model-viewer>` tag. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { ModelViewer } from \"./ModelViewer\";\n\nexport default function MyProductModel() {\n  const data: any = {};\n\n  const firstMediaElement = data.products.edges[0].node.media.edges[0].node;\n  if (firstMediaElement.mediaContentType === 'MODEL_3D') {\n    return <ModelViewer data={firstMediaElement} />;\n  }\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "ModelViewerProps",
+        "typeDefinitions": {
+          "ModelViewerProps": {
+            "filePath": "/ModelViewer.stories.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ModelViewerProps",
+            "value": "React.ComponentPropsWithoutRef<typeof ModelViewer>",
+            "description": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "money",
+    "category": "components",
+    "related": [
+      {
+        "name": "useMoney",
+        "type": "hook",
+        "url": "api/hydrogen/hooks/primitive/usemoney"
+      }
+    ],
+    "description": "The `Money` component renders a string of the Storefront API's[MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) according to the `locale` in the [`ShopifyProvider` component](/api/hydrogen/components/global/shopifyprovider).\nThe component outputs a `<div>`. You can [customize this component](https://api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { Money } from \"./Money\";\n\nexport default function Product() {\n  const data: any = {};\n\n  return <Money data={data.product.variants.edges[0].node.priceV2} />;\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "MoneyProps",
+        "typeDefinitions": {
+          "MoneyProps": {
+            "filePath": "/Money.stories.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "MoneyProps",
+            "value": "React.ComponentPropsWithRef<typeof Money>",
+            "description": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "product price",
+    "category": "components",
+    "related": [],
+    "description": "The `ProductPrice` component renders a `Money` component with the product [`priceRange`](https://shopify.dev/api/storefront/reference/products/productpricerange)'s `maxVariantPrice` or `minVariantPrice`, for either the regular price or compare at price range.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { ProductPrice } from \"./ProductPrice\";\n\nexport function Product() {\n  const data: any = {};\n\n  return (\n    <ProductPrice data={Product} priceType=\"compareAt\" valueType=\"max\" />\n  );\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "ExternalVideoProps",
+        "typeDefinitions": {
+          "ExternalVideoProps": {
+            "filePath": "/ExternalVideo.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ExternalVideoProps",
+            "value": "Omit<\n  JSX.IntrinsicElements['iframe'],\n  PropsWeControl\n> & BaseProps",
+            "description": ""
+          },
+          "PropsWeControl": {
+            "filePath": "/ExternalVideo.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "PropsWeControl",
+            "value": "'src'",
+            "description": ""
+          },
+          "BaseProps": {
+            "filePath": "/ExternalVideo.tsx",
+            "name": "BaseProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<ExternalVideo, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo)."
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "options",
+                "value": "YouTube | Vimeo",
+                "description": "An object containing the options available for either\n[YouTube](https://developers.google.com/youtube/player_parameters#Parameters) or\n[Vimeo](https://vimeo.zendesk.com/hc/en-us/articles/360001494447-Using-Player-Parameters).",
+                "isOptional": true
+              }
+            ],
+            "value": "interface BaseProps {\n  /**\n   * An object with fields that correspond to the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).\n   */\n  data: PartialDeep<ExternalVideoType, {recurseIntoArrays: true}>;\n  /** An object containing the options available for either\n   * [YouTube](https://developers.google.com/youtube/player_parameters#Parameters) or\n   * [Vimeo](https://vimeo.zendesk.com/hc/en-us/articles/360001494447-Using-Player-Parameters).\n   */\n  options?: YouTube | Vimeo;\n}"
+          },
+          "YouTube": {
+            "filePath": "/ExternalVideo.tsx",
+            "name": "YouTube",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "autoplay",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "cc_lang_pref",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "cc_load_policy",
+                "value": "1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "color",
+                "value": "\"red\" | \"white\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "controls",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "disablekb",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "enablejsapi",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "end",
+                "value": "number",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "fs",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "hl",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "iv_load_policy",
+                "value": "1 | 3",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "list",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "list_type",
+                "value": "\"playlist\" | \"user_uploads\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loop",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "modest_branding",
+                "value": "1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "origin",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "playlist",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "plays_inline",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "rel",
+                "value": "0 | 1",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "start",
+                "value": "number",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "widget_referrer",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              }
+            ],
+            "value": "interface YouTube {\n  autoplay?: 0 | 1;\n  cc_lang_pref?: string;\n  cc_load_policy?: 1;\n  color?: 'red' | 'white';\n  controls?: 0 | 1;\n  disablekb?: 0 | 1;\n  enablejsapi?: 0 | 1;\n  end?: number;\n  fs?: 0 | 1;\n  hl?: string;\n  iv_load_policy?: 1 | 3;\n  list?: string;\n  list_type?: 'playlist' | 'user_uploads';\n  loop?: 0 | 1;\n  modest_branding?: 1;\n  origin?: string;\n  playlist?: string;\n  plays_inline?: 0 | 1;\n  rel?: 0 | 1;\n  start?: number;\n  widget_referrer?: string;\n}"
+          },
+          "Vimeo": {
+            "filePath": "/ExternalVideo.tsx",
+            "name": "Vimeo",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "autopause",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "autoplay",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "background",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "byline",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "color",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "controls",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "dnt",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loop",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "muted",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "pip",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "playsinline",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "portrait",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "quality",
+                "value": "\"240p\" | \"360p\" | \"540p\" | \"720p\" | \"1080p\" | \"2k\" | \"4k\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "speed",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "#t",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "texttrack",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "title",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ExternalVideo.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "transparent",
+                "value": "VimeoBoolean",
+                "description": "",
+                "isOptional": true
+              }
+            ],
+            "value": "interface Vimeo {\n  autopause?: VimeoBoolean;\n  autoplay?: VimeoBoolean;\n  background?: VimeoBoolean;\n  byline?: VimeoBoolean;\n  color?: string;\n  controls?: VimeoBoolean;\n  dnt?: VimeoBoolean;\n  loop?: VimeoBoolean;\n  muted?: VimeoBoolean;\n  pip?: VimeoBoolean;\n  playsinline?: VimeoBoolean;\n  portrait?: VimeoBoolean;\n  quality?: '240p' | '360p' | '540p' | '720p' | '1080p' | '2k' | '4k';\n  speed?: VimeoBoolean;\n  '#t'?: string;\n  texttrack?: string;\n  title?: VimeoBoolean;\n  transparent?: VimeoBoolean;\n}"
+          },
+          "VimeoBoolean": {
+            "filePath": "/ExternalVideo.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "VimeoBoolean",
+            "value": "0 | 1 | boolean",
             "description": ""
           }
         }

@@ -27,8 +27,8 @@ const data: ReferenceEntityTemplateSchema = {
     }
   },
   definitions: [{
-    title: "props",
-    type: "Metafield",
+    title: "BaseProps",
+    type: "MetafieldProps",
     description: "interface description"
   }],
 };
