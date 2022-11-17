@@ -4,7 +4,7 @@ const data: ReferenceEntityTemplateSchema = {
     name: 'external video',
     category: 'components',
     related: [],
-    description: "The `ExternalVideo` component renders an embedded video for the Storefront. API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
+    description: "The `ExternalVideo` component renders an embedded video for the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
     type: "component",
     defaultExample: {
         description: "I am the default example",
