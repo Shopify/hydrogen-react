@@ -21,11 +21,12 @@ const data: ReferenceEntityTemplateSchema = {
       title: "codeblock title",
     }
   },
-  definitions: [{
-    title: "props",
-    type: "ShopifyProvider",/* Ren note: I don't know if this is correct */
-    description: "interface description"
-  }]
+  // Need to refactor type in hydrogen ui so we can populate the type value here. Otherwise, build fails.
+  // definitions: [{
+  //   title: "props",
+  //   type: "",
+  //   description: "interface description"
+  // }]
 };
 
 export default data;
