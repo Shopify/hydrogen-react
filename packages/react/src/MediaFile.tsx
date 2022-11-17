@@ -83,7 +83,7 @@ export function MediaFile({
       );
     }
     default: {
-      const typenameMissingMessage = `<MediaFile /> requires the '__typename' property to exist on the 'data' prop in order to correctly render the correct component for this media.`;
+      const typenameMissingMessage = `<MediaFile /> requires the '__typename' property to exist on the 'data' prop in order to render the matching sub-component for this type of media.`;
       if (__HYDROGEN_DEV__) {
         throw new Error(typenameMissingMessage);
       } else {
