@@ -1212,7 +1212,7 @@
       }
     ],
     "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
-    "type": "primitive",
+    "type": "component",
     "defaultExample": {
       "description": "I am the default example",
       "codeblock": {
@@ -1260,5 +1260,89 @@
         "title": "codeblock title"
       }
     }
+  },
+  {
+    "name": "video",
+    "category": "components",
+    "related": [
+      {
+        "name": "MediaFile",
+        "type": "component",
+        "url": "/api/hydrogen/components/primitive/video"
+      },
+      {
+        "name": "Image",
+        "type": "component",
+        "url": "/api/hydrogen/components/primitive/image"
+      }
+    ],
+    "description": "The `Video` component renders a video for the Storefront API's [Video object](https://shopify.dev/api/storefront/reference/products/video).\nThe component outputs a `video` element. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { Video } from \"./Video\";\n\nexport default function MyProductVideo() {\n  const data: any = {};\n\n  const firstMediaElement = data.products.edges[0].node.media.edges[0].node;\n  if (firstMediaElement.mediaContentType === 'VIDEO') {\n    return <Video data={firstMediaElement} />;\n  }\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "VideoProps",
+        "typeDefinitions": {
+          "VideoProps": {
+            "filePath": "/Video.tsx",
+            "name": "VideoProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Video, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [Video object](https://shopify.dev/api/storefront/latest/objects/video)."
+              },
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "previewImageOptions",
+                "value": "Simplify<ShopifyLoaderOptions & { src: string; }>",
+                "description": "An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Video.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "sourceProps",
+                "value": "HTMLAttributes<HTMLSourceElement> & { 'data-testid'?: string; }",
+                "description": "Props that will be passed to the `video` element's `source` children elements.",
+                "isOptional": true
+              }
+            ],
+            "value": "export interface VideoProps {\n  /** An object with fields that correspond to the Storefront API's [Video object](https://shopify.dev/api/storefront/latest/objects/video). */\n  data: PartialDeep<VideoType, {recurseIntoArrays: true}>;\n  /** An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL. */\n  previewImageOptions?: Parameters<typeof shopifyImageLoader>[0];\n  /** Props that will be passed to the `video` element's `source` children elements. */\n  sourceProps?: HTMLAttributes<HTMLSourceElement> & {\n    'data-testid'?: string;\n  };\n}"
+          },
+          "ShopifyLoaderOptions": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyLoaderOptions",
+            "value": "{\n  crop?: 'top' | 'bottom' | 'left' | 'right' | 'center';\n  scale?: 2 | 3;\n  width?: HtmlImageProps['width'] | ImageType['width'];\n  height?: HtmlImageProps['height'] | ImageType['height'];\n}",
+            "description": ""
+          },
+          "HtmlImageProps": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "HtmlImageProps",
+            "value": "React.ImgHTMLAttributes<HTMLImageElement>",
+            "description": ""
+          }
+        }
+      }
+    ]
   }
 ]
