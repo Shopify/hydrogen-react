@@ -18,12 +18,12 @@ const data: ReferenceEntityTemplateSchema = {
         language: 'jsx',
       }
       ],
-      title: "codeblock title",
+      title: "Example code",
     }
   },
-  // Need to refactor type in hydrogen ui so we can populate the type value here. Otherwise, build fails.
+  // Ren/John note: Need to refactor type in hydrogen ui so we can set this for ShopifyProvider. Otherwise, build fails.
   // definitions: [{
-  //   title: "props",
+  //   title: "Props",
   //   type: "",
   //   description: "interface description"
   // }]

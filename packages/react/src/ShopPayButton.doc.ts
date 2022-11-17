@@ -6,7 +6,7 @@ const data: ReferenceEntityTemplateSchema = {
   related: [{
     name: "CartShopPayButton",
     type: "component",
-    url: "api/hydrogen/components/primitive/shoppaybutton"
+    url: "api/hydrogen/components/cart/cartshoppaybutton"
   }],
   description: "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
   type: "component",
@@ -18,11 +18,11 @@ const data: ReferenceEntityTemplateSchema = {
         language: 'jsx',
       }
       ],
-      title: "codeblock title",
+      title: "Example code",
     }
   },
   definitions: [{
-    title: "props",
+    title: "Props",
     type: "ShopPayButtonProps",
     description: "interface description"
   }]

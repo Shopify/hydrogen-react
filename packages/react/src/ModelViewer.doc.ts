@@ -18,7 +18,7 @@ const data: ReferenceEntityTemplateSchema = {
         language: 'jsx'
       }
       ],
-      title: "codeblock title",
+      title: "Example code",
     }
   },
   definitions: [{

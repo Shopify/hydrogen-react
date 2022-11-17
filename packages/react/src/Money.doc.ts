@@ -18,11 +18,11 @@ const data: ReferenceEntityTemplateSchema = {
         language: 'jsx'
       }
       ],
-      title: "codeblock title",
+      title: "Example code",
     }
   },
   definitions: [{
-    title: "props",
+    title: "Props",
     type: "MoneyProps",
     description: "interface description",
   }]

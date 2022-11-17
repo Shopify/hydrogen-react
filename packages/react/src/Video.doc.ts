@@ -6,12 +6,12 @@ const data: ReferenceEntityTemplateSchema = {
   related: [{
     name: "MediaFile",
     type: "component",
-    url: "/api/hydrogen/components/primitive/video",
+    url: "api/hydrogen/components/primitive/mediafile",
   },
   {
     name: "Image",
     type: "component",
-    url: "/api/hydrogen/components/primitive/image"
+    url: "api/hydrogen/components/primitive/image"
   },],
   description: "The `Video` component renders a video for the Storefront API's [Video object](https://shopify.dev/api/storefront/reference/products/video).\nThe component outputs a `video` element. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
   type: "component",
@@ -23,11 +23,11 @@ const data: ReferenceEntityTemplateSchema = {
         language: 'jsx',
       }
       ],
-      title: "codeblock title",
+      title: "Example code",
     }
   },
   definitions: [{
-    title: "props",
+    title: "Props",
     type: "VideoProps",
     description: "interface description"
   }]
