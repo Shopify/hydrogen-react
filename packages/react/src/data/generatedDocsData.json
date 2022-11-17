@@ -1201,5 +1201,64 @@
       }
     ]
   },
-  {}
+  {
+    "name": "shop pay button",
+    "category": "components",
+    "related": [
+      {
+        "name": "CartShopPayButton",
+        "type": "component",
+        "url": "api/hydrogen/components/primitive/shoppaybutton"
+      }
+    ],
+    "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "type": "primitive",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { ShopPayButton } from \"./ShopPayButton\";\n\nexport function MyProduct({variantId}) {\n  return <ShopPayButton variantIds={[variantId]} />;\n}\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    },
+    "definitions": [
+      {
+        "title": "props",
+        "description": "interface description",
+        "type": "ShopPayButtonProps",
+        "typeDefinitions": {
+          "ShopPayButtonProps": {
+            "filePath": "/ShopPayButton.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopPayButtonProps",
+            "value": "{\n  /** A string of classes to apply to the `div` that wraps the Shop Pay button. */\n  className?: string;\n  /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */\n  width?: string;\n} & (\n  | {\n      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */\n      variantIds: string[];\n      /** An array of variant IDs and quantities to purchase with Shop Pay. */\n      variantIdsAndQuantities?: never;\n    }\n  | {\n      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */\n      variantIds?: never;\n      /** An array of variant IDs and quantities to purchase with Shop Pay. */\n      variantIdsAndQuantities: Array<{\n        id: string;\n        quantity: number;\n      }>;\n    }\n)",
+            "description": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "shopify provider",
+    "category": "components",
+    "related": [],
+    "description": "The `ShopifyProvider` component wraps your entire app and provides functionality for many components, hooks, and utilities. The `ShopifyProvider` component also provides localization data for the app. You should place it in your app's entry point component.",
+    "type": "component",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "code": "import { ShopifyProvider } from \"./ShopifyProvider\";\n\nexport default function App() {\n  return <ShopifyProvider>{/* Routes, Pages, etc */}</ShopifyProvider>;\n}\n/* Ren note: it doesn't like that we're not providing shopifyConfig*/\n",
+            "language": "jsx"
+          }
+        ],
+        "title": "codeblock title"
+      }
+    }
+  }
 ]

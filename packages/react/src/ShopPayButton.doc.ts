@@ -9,7 +9,7 @@ const data: ReferenceEntityTemplateSchema = {
     url: "api/hydrogen/components/primitive/shoppaybutton"
   }],
   description: "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
-  type: "primitive",
+  type: "component",
   defaultExample: {
     description: "I am the default example",
     codeblock: {
