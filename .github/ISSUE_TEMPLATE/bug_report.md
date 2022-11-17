@@ -11,7 +11,8 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 
-Please use our NextJS issue template here: [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/shopify/hydrogen-ui/tree/main/apps/nextjs?file=pages%2Findex.tsx)
+Please use our NextJS StackBlitz template to create a [minimal, reproducible example](https://stackoverflow.com/help/minimal-reproducible-example). Get started by clicking the button below:
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/shopify/hydrogen-ui/tree/main/apps/nextjs?file=pages%2Findex.tsx)
 
 and write the steps to reproduce the behavior:
 
