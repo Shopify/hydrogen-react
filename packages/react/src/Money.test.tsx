@@ -57,11 +57,11 @@ describe('<Money />', () => {
       ),
     });
 
-    const element = screen.getByRole('link', {
+    const element = screen.getByRole('button', {
       name: new RegExp(money.amount),
     });
 
-    expect(element).toHaveAttribute('href', '/test');
+    expect(element).toHaveAttribute('disabled');
   });
 
   it(`removes trailing zeros when the prop is passed`, () => {
