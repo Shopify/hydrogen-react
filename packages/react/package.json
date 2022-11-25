@@ -75,8 +75,7 @@
     "test": "vitest",
     "test:ci": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "transpile-docs": "yarn tsc src/*.doc.ts --types react --moduleResolution node  --target esNext  --module CommonJS",
-    "build-docs": "yarn transpile-docs && generate-docs --input ./src --output ./src && rm -rf src/**/*.doc.js src/*doc.js"
+    "build-docs": "sh ./build-docs.sh"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
