@@ -19,15 +19,15 @@ const data: ReferenceEntityTemplateSchema = {
         description: "I am the default example",
         codeblock: {
             tabs: [{
-                code: './ExternalVideoExample.tsx',
+                code: './ImageExample.tsx',
                 language: 'jsx'
             }
             ],
-            title: "codeblock title",
+            title: "Example code",
         }
     },
     definitions: [{
-        title: "props",
+        title: "Props",
         type: "ShopifyImageProps",
         description: "interface description"
     }]
