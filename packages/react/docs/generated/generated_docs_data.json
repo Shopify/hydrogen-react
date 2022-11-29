@@ -697,10 +697,17 @@
         "type": "ModelViewerProps",
         "typeDefinitions": {
           "ModelViewerProps": {
-            "filePath": "/ModelViewer.stories.tsx",
+            "filePath": "/ModelViewer.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ModelViewerProps",
-            "value": "React.ComponentPropsWithoutRef<typeof ModelViewer>",
+            "value": "Omit<\n  PartialDeep<JSX.IntrinsicElements['model-viewer'], {recurseIntoArrays: true}>,\n  PropsWeControl\n> & {\n  /** An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d). */\n  data: PartialDeep<Model3d, {recurseIntoArrays: true}>;\n  /** The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error). */\n  onError?: (event: Event) => void;\n  /** The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load). */\n  onLoad?: (event: Event) => void;\n  /** The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload). */\n  onPreload?: (event: Event) => void;\n  /** The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility). */\n  onModelVisibility?: (event: Event) => void;\n  /** The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress). */\n  onProgress?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus). */\n  onArStatus?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking). */\n  onArTracking?: (event: Event) => void;\n  /** The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped). */\n  onQuickLookButtonTapped?: (event: Event) => void;\n  /** The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange). */\n  onCameraChange?: (event: Event) => void;\n  /** The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).  */\n  onEnvironmentChange?: (event: Event) => void;\n  /**  The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play). */\n  onPlay?: (event: Event) => void;\n  /**  The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause). */\n  onPause?: (event: Event) => void;\n  /** The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady). */\n  onSceneGraphReady?: (event: Event) => void;\n}",
+            "description": ""
+          },
+          "PropsWeControl": {
+            "filePath": "/ModelViewer.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "PropsWeControl",
+            "value": "'src'",
             "description": ""
           }
         }
@@ -738,11 +745,66 @@
         "type": "MoneyProps",
         "typeDefinitions": {
           "MoneyProps": {
-            "filePath": "/Money.stories.tsx",
+            "filePath": "/Money.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "MoneyProps",
-            "value": "React.ComponentPropsWithRef<typeof Money>",
+            "value": "CustomProps<ComponentGeneric> & Omit<\n      React.ComponentPropsWithoutRef<ComponentGeneric>,\n      keyof CustomProps<ComponentGeneric>\n    >",
             "description": ""
+          },
+          "CustomProps": {
+            "filePath": "/Money.tsx",
+            "name": "CustomProps",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "as",
+                "value": "ComponentGeneric",
+                "description": "An HTML tag or React Component to be rendered as the base element wrapper. The default is `div`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<MoneyV2, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2)."
+              },
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "withoutCurrency",
+                "value": "boolean",
+                "description": "Whether to remove the currency symbol from the output.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "withoutTrailingZeros",
+                "value": "boolean",
+                "description": "Whether to remove trailing zeros (fractional money) from the output.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "measurement",
+                "value": "PartialObjectDeep<UnitPriceMeasurement, { recurseIntoArrays: true; }>",
+                "description": "A [UnitPriceMeasurement object](https://shopify.dev/api/storefront/latest/objects/unitpricemeasurement).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Money.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "measurementSeparator",
+                "value": "ReactNode",
+                "description": "Customizes the separator between the money output and the measurement output. Used with the `measurement` prop. Defaults to `'/'`.",
+                "isOptional": true
+              }
+            ],
+            "value": "interface CustomProps<ComponentGeneric extends React.ElementType> {\n  /** An HTML tag or React Component to be rendered as the base element wrapper. The default is `div`. */\n  as?: ComponentGeneric;\n  /** An object with fields that correspond to the Storefront API's [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2). */\n  data: PartialDeep<MoneyV2, {recurseIntoArrays: true}>;\n  /** Whether to remove the currency symbol from the output. */\n  withoutCurrency?: boolean;\n  /** Whether to remove trailing zeros (fractional money) from the output. */\n  withoutTrailingZeros?: boolean;\n  /** A [UnitPriceMeasurement object](https://shopify.dev/api/storefront/latest/objects/unitpricemeasurement). */\n  measurement?: PartialDeep<UnitPriceMeasurement, {recurseIntoArrays: true}>;\n  /** Customizes the separator between the money output and the measurement output. Used with the `measurement` prop. Defaults to `'/'`. */\n  measurementSeparator?: ReactNode;\n}"
           }
         }
       }
@@ -784,11 +846,43 @@
         "type": "ProductPriceProps",
         "typeDefinitions": {
           "ProductPriceProps": {
-            "filePath": "/ProductPrice.stories.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
+            "filePath": "/ProductPrice.tsx",
             "name": "ProductPriceProps",
-            "value": "React.ComponentPropsWithoutRef<typeof ProductPrice>",
-            "description": ""
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ProductPrice.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Product, { recurseIntoArrays: true; }>",
+                "description": "A [Product object](https://shopify.dev/api/storefront/reference/products/product)."
+              },
+              {
+                "filePath": "/ProductPrice.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "priceType",
+                "value": "\"regular\" | \"compareAt\"",
+                "description": "The type of price. Valid values: `regular` (default) or `compareAt`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ProductPrice.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "valueType",
+                "value": "\"max\" | \"min\" | \"unit\"",
+                "description": "The type of value. Valid values: `min` (default), `max` or `unit`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ProductPrice.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "variantId",
+                "value": "string",
+                "description": "The ID of the variant.",
+                "isOptional": true
+              }
+            ],
+            "value": "interface ProductPriceProps {\n  /** A [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** The type of price. Valid values: `regular` (default) or `compareAt`. */\n  priceType?: 'regular' | 'compareAt';\n  /** The type of value. Valid values: `min` (default), `max` or `unit`. */\n  valueType?: 'max' | 'min' | 'unit';\n  /** The ID of the variant. */\n  variantId?: string;\n}"
           }
         }
       }
