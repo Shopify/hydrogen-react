@@ -29,7 +29,7 @@ export function createStorefrontClient({
   // only warn if not in a browser environment
   if (__HYDROGEN_DEV__ && !privateStorefrontToken && !globalThis.document) {
     warnOnce(
-      `StorefrontClient: Using a private storefront token is recommended for server environments.  Refer to the authentication https://shopify.dev/api/storefront#authentication documentation for more details. `
+      `StorefrontClient: Using a private storefront token is recommended for server environments. Refer to the authentication https://shopify.dev/api/storefront#authentication documentation for more details.`
     );
   }
 
