@@ -1907,10 +1907,10 @@
     tslib "^2.4.0"
     webcrypto-core "^1.7.4"
 
-"@shopify/generate-docs@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@shopify/generate-docs/-/generate-docs-0.3.2.tgz#494c7b972235e6664112ffc3454e23ada9f4e34a"
-  integrity sha512-Q4JgaKMGTSjWrQN02nQ+7NEXfqtC9tZ5pZzd7HoD1ePmNyHqHiymEwnDgYRWRTUGnujmBB0deqgyvOb+xD0aDw==
+"@shopify/generate-docs@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@shopify/generate-docs/-/generate-docs-0.3.5.tgz#a1eb480b3e847617c62d5ca058a4e0be2079e3d0"
+  integrity sha512-Yi82tnGx/aYR4elAKTjZ44dZmEFceTeIc1GyKFP1xmW6YfFk14DfS+iGXL2r9zRI3JSA5DhtkUvkO5I6jksioA==
   dependencies:
     "@types/react" "^18.0.21"
     globby "^11.1.0"
