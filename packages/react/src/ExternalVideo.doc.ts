@@ -12,7 +12,7 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './ExternalVideoExample.tsx',
+          code: './ExternalVideo.example.tsx',
           language: 'jsx',
         },
       ],

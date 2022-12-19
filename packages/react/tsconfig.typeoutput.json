@@ -6,6 +6,8 @@
     "src/**/*.test.tsx",
     "src/**/*.test.ts",
     "src/**/*.stories.tsx",
-    "src/**/*.test.helpers.ts"
+    "src/**/*.test.helpers.ts",
+    "src/**/*.doc.ts",
+    "src/**/*.example.tsx"
   ]
 }

@@ -23,7 +23,7 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './MetafieldExample.tsx',
+          code: './Metafield.example.tsx',
           language: 'jsx',
         },
       ],

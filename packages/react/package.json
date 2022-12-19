@@ -91,7 +91,9 @@
     "prepack": "yarn build",
     "test": "vitest",
     "test:ci": "vitest run --coverage",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "run-p typecheck:*",
+    "typecheck:code": "tsc --noEmit",
+    "typecheck:examples": "tsc --noEmit --project tsconfig.examples.json",
     "build-docs": "sh ./docs/build-docs.sh"
   },
   "devDependencies": {
