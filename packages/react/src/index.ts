@@ -1,3 +1,5 @@
+export {AddToCartButton} from './AddToCartButton.js';
+export {BuyNowButton} from './BuyNowButton.js';
 export type {
   CartState,
   CartStatus,
@@ -5,11 +7,14 @@ export type {
   CartWithActions,
   CartAction,
 } from './cart-types.js';
+export {CartCheckoutButton} from './CartCheckoutButton.js';
 export {CartProvider, useCart} from './CartProvider.js';
+export {storefrontApiCustomScalars} from './codegen.helpers.js';
 export {ExternalVideo} from './ExternalVideo.js';
 export {flattenConnection} from './flatten-connection.js';
 export {Image} from './Image.js';
 export {MediaFile} from './MediaFile.js';
+export {metafieldParser, type ParsedMetafields} from './metafield-parser.js';
 export {Metafield, parseMetafield, parseMetafieldValue} from './Metafield.js';
 export {ModelViewer} from './ModelViewer.js';
 export {Money} from './Money.js';

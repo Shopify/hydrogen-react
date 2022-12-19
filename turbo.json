@@ -6,11 +6,15 @@
       "outputs": ["dist/**"]
     },
     "dev": {
+      "dependsOn": ["^dev"],
       "cache": false
     },
     "//#lint": {},
     "//#format:check": {},
-    "typecheck": {},
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
     "test:ci": {}
   }
 }

@@ -1,5 +1,13 @@
 import {SFAPI_VERSION} from './storefront-api-constants.js';
 
+const warnings = new Set<string>();
+const warnOnce = (string: string) => {
+  if (!warnings.has(string)) {
+    console.warn(string);
+    warnings.add(string);
+  }
+};
+
 /**
  * The `createStorefrontClient()` function creates helpers that enable you to quickly query the Shopify Storefront API.
  *
@@ -13,26 +21,31 @@ export function createStorefrontClient({
   contentType,
 }: StorefrontClientProps): StorefrontClientReturn {
   if (storefrontApiVersion !== SFAPI_VERSION) {
-    console.warn(
+    warnOnce(
       `StorefrontClient: The Storefront API version that you're using is different than the version this build of Hydrogen-UI is targeting. You may run into unexpected errors if these versions don't match. Received verion: "${storefrontApiVersion}"; expected version "${SFAPI_VERSION}"`
     );
   }
 
   // only warn if not in a browser environment
   if (__HYDROGEN_DEV__ && !privateStorefrontToken && !globalThis.document) {
-    console.warn(
-      `StorefrontClient: Using a private storefront token is recommended for server environments.  Refer to the authentication https://shopify.dev/api/storefront#authentication documentation for more details. `
+    warnOnce(
+      `StorefrontClient: Using a private storefront token is recommended for server environments. Refer to the authentication https://shopify.dev/api/storefront#authentication documentation for more details.`
     );
   }
 
   // only warn if in a browser environment and you're using the privateStorefrontToken
   if (__HYDROGEN_DEV__ && privateStorefrontToken && globalThis) {
-    console.warn(
+    warnOnce(
       `StorefrontClient: You are attempting to use a private token in an environment where it can be easily accessed by anyone. This is a security risk; please use the public token and the 'publicStorefrontToken' prop`
     );
   }
 
   return {
+    getShopifyDomain(overrideProps) {
+      return `https://${
+        overrideProps?.storeDomain ?? storeDomain
+      }.myshopify.com`;
+    },
     getStorefrontApiUrl(overrideProps) {
       return `https://${
         overrideProps?.storeDomain ?? storeDomain
@@ -48,7 +61,7 @@ export function createStorefrontClient({
       }
 
       if (__HYDROGEN_DEV__ && !overrideProps?.buyerIp) {
-        console.warn(
+        warnOnce(
           `StorefrontClient: it is recommended to pass in the 'buyerIp' property which improves analytics and data in the admin.`
         );
       }
@@ -78,21 +91,31 @@ export function createStorefrontClient({
         );
       }
 
-      const finalContentType = overrideProps?.contentType ?? contentType;
+      const finalContentType =
+        overrideProps?.contentType ?? contentType ?? 'json';
 
-      return {
-        // default to json
-        'content-type':
-          finalContentType === 'graphql'
-            ? 'application/graphql'
-            : 'application/json',
-        'X-SDK-Variant': 'hydrogen-ui',
-        'X-SDK-Variant-Source': 'react',
-        'X-SDK-Version': storefrontApiVersion,
-        'X-Shopify-Storefront-Access-Token':
-          overrideProps?.publicStorefrontToken ?? publicStorefrontToken ?? '',
-      };
+      return getPublicTokenHeadersRaw(
+        finalContentType,
+        storefrontApiVersion,
+        overrideProps?.publicStorefrontToken ?? publicStorefrontToken ?? ''
+      );
     },
+  };
+}
+
+export function getPublicTokenHeadersRaw(
+  contentType: 'graphql' | 'json',
+  storefrontApiVersion: string,
+  accessToken: string
+) {
+  return {
+    // default to json
+    'content-type':
+      contentType === 'graphql' ? 'application/graphql' : 'application/json',
+    'X-SDK-Variant': 'hydrogen-ui',
+    'X-SDK-Variant-Source': 'react',
+    'X-SDK-Version': storefrontApiVersion,
+    'X-Shopify-Storefront-Access-Token': accessToken,
   };
 }
 
@@ -118,6 +141,16 @@ type OverrideTokenHeaderProps = Partial<
 >;
 
 type StorefrontClientReturn = {
+  /**
+   * Creates the fully-qualified URL to your myshopify.com domain.
+   *
+   * By default, it will use the config you passed in when calling `createStorefrontClient()`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:
+   *
+   * - `storeDomain`
+   */
+  getShopifyDomain: (
+    props?: Partial<Pick<StorefrontClientProps, 'storeDomain'>>
+  ) => string;
   /**
    * Creates the fully-qualified URL to your store's GraphQL endpoint.
    *
@@ -152,9 +185,9 @@ type StorefrontClientReturn = {
       }
   ) => Record<string, string>;
   /**
-   * Returns an object that contains headers that are needed for each query to Storefront API GraphQL endpoint. This method uses the private Server-to-Server token which reduces the chance of throttling but must not be exposed to clients. Server-side calls should prefer using this over `getPublicTokenHeaders()`.
+   * Returns an object that contains headers that are needed for each query to Storefront API GraphQL endpoint. This method uses the public token which increases the chance of throttling but also can be exposed to clients. Server-side calls should prefer using `getPublicTokenHeaders()`.
    *
-   * By default, it will use the config you passed in when calling `createStorefrontClient()`. However, you can override the following settings on each invocation of `getPrivateTokenHeaders({...})`:
+   * By default, it will use the config you passed in when calling `createStorefrontClient()`. However, you can override the following settings on each invocation of `getPublicTokenHeaders({...})`:
    *
    * - `contentType`
    * - `publicStorefrontToken`

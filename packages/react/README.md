@@ -59,6 +59,7 @@ const client = createStorefrontClient({
 
 export const getStorefrontApiUrl = client.getStorefrontApiUrl;
 export const getPrivateTokenHeaders = client.getPrivateTokenHeaders;
+export const getShopifyDomain = client.getShopifyDomain;
 ```
 
 You can then use this in your server-side queries. Here's an example of using it for [NextJS's `getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props):
@@ -81,6 +82,31 @@ export async function getServerSideProps() {
   const json = await response.json();
 
   return {props: json};
+}
+```
+
+You can also use this to proxy the liquid online store:
+
+```ts
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import {getShopifyDomain} from '../shopify-client.js';
+
+export default function handler(req, res) {
+  fetch(getShopifyDomain() + '/products', {
+    headers: {
+      /** forward some of the headers from the original request **/
+    },
+  })
+    .then((resp) => resp.text())
+    .then((text) => res.status(200).send(text))
+    .catch((error) => {
+      console.error(
+        `Error proxying the online store: ${
+          error instanceof Error ? error.stack : error
+        }`
+      );
+      res.status(500).send('Server error occurred');
+    });
 }
 ```
 
@@ -153,6 +179,29 @@ If you're having trouble getting it to work, then consult our [troubleshooting s
 ## Set TypeScript types
 
 Improve your development experience by adding strong typing to Storefront API responses. The following are some options for doing this.
+
+## GraphQL CodeGen
+
+To use GraphQL CodeGen, follow [their guide](https://the-guild.dev/graphql/codegen/docs/getting-started/installation) to get started. Then, when you have a `codegen.ts` file, you can modify the following lines in the codegen object to improve the CodgeGen experience:
+
+```ts
+import {storefrontApiCustomScalars} from '@shopify/hydrogen-react';
+
+const config: CodegenConfig = {
+  // Use the schema that's bundled with @shopify/hydrogen-react
+  schema: './node_modules/@shopify/hydrogen-react/storefront.schema.json',
+  generates: {
+    './gql/': {
+      preset: 'client',
+      plugins: [],
+      config: {
+        // Use the custom scalar definitions that @shopify/hydrogen-react provides to improve the types
+        scalars: storefrontApiCustomScalars,
+      },
+    },
+  },
+};
+```
 
 ### Use the `StorefrontApiResponseError` and `StorefrontApiResponseOk` helpers
 

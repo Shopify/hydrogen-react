@@ -28,6 +28,7 @@ import {
 import {useCartAPIStateMachine} from './useCartAPIStateMachine.js';
 import {CART_ID_STORAGE_KEY} from './cart-constants.js';
 import {PartialDeep} from 'type-fest';
+import {defaultCartFragment} from './cart-queries.js';
 
 export const CartContext = createContext<CartWithActions | null>(null);
 
@@ -133,7 +134,7 @@ export function CartProvider({
     data: cart,
     cartFragment,
     countryCode,
-    onCartActionEntry(context, event) {
+    onCartActionEntry(_, event) {
       try {
         switch (event.type) {
           case 'CART_CREATE':
@@ -158,12 +159,11 @@ export function CartProvider({
       }
     },
     onCartActionOptimisticUI(context, event) {
-      if (!context?.cart) return {cart: undefined};
+      if (!context.cart) return {...context};
       switch (event.type) {
         case 'CARTLINE_REMOVE':
           return {
             ...context,
-            lastValidCart: context.cart,
             cart: {
               ...context.cart,
               lines: context?.cart?.lines?.filter(
@@ -174,7 +174,6 @@ export function CartProvider({
         case 'CARTLINE_UPDATE':
           return {
             ...context,
-            lastValidCart: context.cart,
             cart: {
               ...context.cart,
               lines: context?.cart?.lines?.map((line) => {
@@ -194,7 +193,7 @@ export function CartProvider({
             },
           };
       }
-      return {cart: context.cart ? {...context.cart} : undefined};
+      return {...context};
     },
     onCartActionComplete(context, event) {
       const cartActionEvent = event.payload.cartActionEvent;
@@ -525,104 +524,3 @@ function countryCodeNotUpdated(
       event.payload.buyerIdentity.countryCode
   );
 }
-
-export const defaultCartFragment = `
-fragment CartFragment on Cart {
-  id
-  checkoutUrl
-  totalQuantity
-  buyerIdentity {
-    countryCode
-    customer {
-      id
-      email
-      firstName
-      lastName
-      displayName
-    }
-    email
-    phone
-  }
-  lines(first: $numCartLines) {
-    edges {
-      node {
-        id
-        quantity
-        attributes {
-          key
-          value
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-          compareAtAmountPerQuantity {
-            amount
-            currencyCode
-          }
-        }
-        merchandise {
-          ... on ProductVariant {
-            id
-            availableForSale
-            compareAtPriceV2 {
-              ...MoneyFragment
-            }
-            priceV2 {
-              ...MoneyFragment
-            }
-            requiresShipping
-            title
-            image {
-              ...ImageFragment
-            }
-            product {
-              handle
-              title
-            }
-            selectedOptions {
-              name
-              value
-            }
-          }
-        }
-      }
-    }
-  }
-  cost {
-    subtotalAmount {
-      ...MoneyFragment
-    }
-    totalAmount {
-      ...MoneyFragment
-    }
-    totalDutyAmount {
-      ...MoneyFragment
-    }
-    totalTaxAmount {
-      ...MoneyFragment
-    }
-  }
-  note
-  attributes {
-    key
-    value
-  }
-  discountCodes {
-    code
-  }
-}
-
-fragment MoneyFragment on MoneyV2 {
-  currencyCode
-  amount
-}
-fragment ImageFragment on Image {
-  id
-  url
-  altText
-  width
-  height
-}
-`;
