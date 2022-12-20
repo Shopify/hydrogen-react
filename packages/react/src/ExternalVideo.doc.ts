@@ -1,7 +1,7 @@
 import { ReferenceEntityTemplateSchema } from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-    name: 'external video',
+    name: 'external video component',
     category: 'components',
     isVisualComponent: false,
     related: [],
