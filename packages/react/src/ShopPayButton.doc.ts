@@ -3,6 +3,7 @@ import { ReferenceEntityTemplateSchema } from "@shopify/generate-docs";
 const data: ReferenceEntityTemplateSchema = {
   name: 'shop pay button',
   category: 'components',
+  isVisualComponent: true,
   related: [{
     name: "CartShopPayButton",
     type: "component",

@@ -3,6 +3,7 @@ import { ReferenceEntityTemplateSchema } from '@shopify/generate-docs';
 const data: ReferenceEntityTemplateSchema = {
   name: 'product price',
   category: 'components',
+  isVisualComponent: true,
   related: [{
     name: "ProductOptionsProvider",
     type: "component",
@@ -19,8 +20,8 @@ const data: ReferenceEntityTemplateSchema = {
     description: "I am the default example",
     codeblock: {
       tabs: [{
-          code: './ProductPriceExample.tsx',
-          language: 'jsx'
+        code: './ProductPriceExample.tsx',
+        language: 'jsx'
       }
       ],
       title: "Example code",

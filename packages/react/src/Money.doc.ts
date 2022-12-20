@@ -3,6 +3,7 @@ import { ReferenceEntityTemplateSchema } from "@shopify/generate-docs";
 const data: ReferenceEntityTemplateSchema = {
   name: 'money',
   category: 'components',
+  isVisualComponent: true,
   related: [{
     name: "useMoney",
     type: "hook",

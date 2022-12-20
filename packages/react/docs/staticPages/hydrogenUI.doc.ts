@@ -14,7 +14,7 @@ const data: LandingTemplateSchema = {
         codeSamples: [{
             tabs: [{
                 title: "hydrogen-ui setup",
-                code: "yarn add @shopify/hydrogen-react"
+                code: "./test.ts"
             }],
         }],
         codeLanguages: ["typescript"],
@@ -35,7 +35,7 @@ const data: LandingTemplateSchema = {
         codeblock: {
             tabs: [{
                 title: "generic section",
-                code: "I am code!"
+                code: "./test.ts"
             }]
         },
         initialLanguage: "typescript",

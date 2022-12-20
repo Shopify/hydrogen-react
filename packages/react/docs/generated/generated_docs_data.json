@@ -2,6 +2,7 @@
   {
     "name": "external video",
     "category": "components",
+    "isVisualComponent": true,
     "related": [],
     "description": "The `ExternalVideo` component renders an embedded video for the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
     "type": "component",
@@ -409,6 +410,7 @@
   {
     "name": "image",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "CartLines",
@@ -505,11 +507,41 @@
           }
         }
       }
-    ]
+    ],
+    "examples": {
+      "description": "Exmaples for the Image component",
+      "examples": [
+        {
+          "description": "Use of the Image component with external images.",
+          "codeblock": {
+            "tabs": [
+              {
+                "code": "import { Image } from '@shopify/hydrogen';\nexport default function ExternalImage() {\n    return <Image src=\"https://foo.com/logo.png\" width={500} height={500} />;\n}",
+                "language": "tsx"
+              }
+            ],
+            "title": "External images"
+          }
+        },
+        {
+          "description": "Use of the Image component with an external loader.",
+          "codeblock": {
+            "tabs": [
+              {
+                "code": "import { Image } from '@shopify/hydrogen';\nconst imageLoader = ({ src, width, height, scale }) => {\n    return `https://foo.com/${src}?w=${width}&h=${height}&scale=${scale}`;\n};\nexport default function ExternalImageWithLoader() {\n    return (\n        <Image\n            src=\"fancyImage.png\"\n            width={500}\n            height={500}\n            loader={imageLoader}\n            loaderOptions={{ scale: 2 }}\n        />\n    );\n}",
+                "language": "jsx"
+              }
+            ],
+            "title": "Image with an external loader"
+          }
+        }
+      ]
+    }
   },
   {
     "name": "media file",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "Image",
@@ -1031,6 +1063,7 @@
   {
     "name": "metafield",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "parseMetafield",
@@ -1107,6 +1140,7 @@
   {
     "name": "model viewer",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "MediaFile",
@@ -1155,6 +1189,7 @@
   {
     "name": "money",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "useMoney",
@@ -1258,6 +1293,7 @@
   {
     "name": "product price",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "ProductOptionsProvider",
@@ -1343,6 +1379,7 @@
   {
     "name": "product provider",
     "category": "components",
+    "isVisualComponent": false,
     "related": [
       {
         "name": "ProductPrice",
@@ -1424,6 +1461,7 @@
   {
     "name": "shop pay button",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "CartShopPayButton",
@@ -1465,6 +1503,7 @@
   {
     "name": "shopify provider",
     "category": "components",
+    "isVisualComponent": false,
     "related": [],
     "description": "The `ShopifyProvider` component wraps your entire app and provides functionality for many components, hooks, and utilities. The `ShopifyProvider` component also provides localization data for the app. You should place it in your app's entry point component.",
     "type": "component",
@@ -1484,6 +1523,7 @@
   {
     "name": "video",
     "category": "components",
+    "isVisualComponent": true,
     "related": [
       {
         "name": "MediaFile",

@@ -3,6 +3,7 @@ import { ReferenceEntityTemplateSchema } from '@shopify/generate-docs';
 const data: ReferenceEntityTemplateSchema = {
   name: 'metafield',
   category: 'components',
+  isVisualComponent: true,
   related: [{
     name: "parseMetafield",
     type: "utility",

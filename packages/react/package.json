@@ -75,7 +75,8 @@
     "test": "vitest",
     "test:ci": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "build-docs": "sh ./docs/build-docs.sh"
+    "build-docs": "sh ./docs/build-docs.sh",
+    "docs-test": "sh ./docs/build-docs.sh isTest && yarn compare-docs"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -105,6 +106,7 @@
   },
   "dependencies": {
     "@google/model-viewer": "^1.12.1",
+    "@shopify/generate-docs": "^0.4.2",
     "@xstate/fsm": "^2.0.0",
     "@xstate/react": "^3.0.1",
     "graphql": "^16.6.0",

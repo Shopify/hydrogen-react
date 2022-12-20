@@ -16,7 +16,7 @@
             "tabs": [
               {
                 "title": "hydrogen-ui setup",
-                "code": "yarn add @shopify/hydrogen-react"
+                "code": "const myVariable = \"test!\";"
               }
             ]
           }
@@ -42,7 +42,7 @@
           "tabs": [
             {
               "title": "generic section",
-              "code": "I am code!"
+              "code": "const myVariable = \"test!\";"
             }
           ]
         },

@@ -3,6 +3,7 @@ import { ReferenceEntityTemplateSchema } from "@shopify/generate-docs";
 const data: ReferenceEntityTemplateSchema = {
   name: 'product provider',
   category: 'components',
+  isVisualComponent: false,
   related: [{
     name: "ProductPrice",
     type: "component",
