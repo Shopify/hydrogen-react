@@ -69,6 +69,7 @@
     "dist/*/node_modules/use-sync-external-store/shim/with-selector.*js"
   ],
   "scripts": {
+    "build-docs": "sh ./docs/build-docs.sh && yarn format",
     "clean-dist": "rimraf ./dist",
     "dev": "run-s clean-dist dev:demo",
     "dev:story": "ladle serve",
@@ -93,8 +94,7 @@
     "test:ci": "vitest run --coverage",
     "typecheck": "run-p typecheck:*",
     "typecheck:code": "tsc --noEmit",
-    "typecheck:examples": "tsc --noEmit --project tsconfig.examples.json",
-    "build-docs": "sh ./docs/build-docs.sh"
+    "typecheck:examples": "tsc --noEmit --project tsconfig.examples.json"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -103,7 +103,7 @@
     "@graphql-codegen/introspection": "2.2.1",
     "@graphql-codegen/typescript": "^2.8.3",
     "@ladle/react": "^2.4.5",
-    "@shopify/generate-docs": "^0.3.5",
+    "@shopify/generate-docs": "0.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",

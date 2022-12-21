@@ -8,6 +8,15 @@ const data: LandingTemplateSchema = {
   id: 'react-storefront-kit',
   sections: [
     {
+      type: 'Libraries',
+      anchorLink: '',
+      sectionContent: '',
+      title: '',
+      codeSamples: [],
+      codeLanguages: [],
+      accordionContent: {},
+    },
+    {
       type: 'Generic',
       anchorLink: 'objects-and-functions',
       title: 'Objects and functions',
@@ -33,17 +42,17 @@ const data: LandingTemplateSchema = {
         tabs: [
           {
             title: 'Primitive Component',
-            code: 'example code goes here',
+            code: './homepage.example.tsx',
             language: 'javascript',
           },
           {
             title: 'Hook Example',
-            code: 'example hook code goes here',
+            code: './homepage.example.tsx',
             language: 'javascript',
           },
           {
             title: 'Utility Function Example',
-            code: 'example hook utility goes here',
+            code: './homepage.example.tsx',
             language: 'javascript',
           },
         ],

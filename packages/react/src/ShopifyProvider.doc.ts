@@ -3,6 +3,7 @@ import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 const data: ReferenceEntityTemplateSchema = {
   name: 'shopify provider',
   category: 'components',
+  isVisualComponent: true,
   related: [],
   /* Ren note: In this topic, the related items are pages to /custom-storefronts/hydrogen, so they don't have a type. */
 
