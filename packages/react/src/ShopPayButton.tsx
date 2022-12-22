@@ -2,12 +2,15 @@ import {useShop} from './ShopifyProvider.js';
 import {useLoadScript} from './load-script.js';
 
 // By using 'never' in the "or" cases below, it makes these props "exclusive" and means that you cannot pass both of them; you must pass either one OR the other.
-type ShopPayButtonProps = {
+type ShopPayButtonProps = ShopPayButtonStyleProps &
+  (ShopPayVariantIds | ShopPayVariantAndQuantities);
+
+type ShopPayButtonStyleProps = {
   /** A string of classes to apply to the `div` that wraps the Shop Pay button. */
   className?: string;
   /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */
   width?: string;
-} & (ShopPayVariantIds | ShopPayVariantAndQuantities);
+};
 
 type ShopPayVariantIds = {
   /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`. */

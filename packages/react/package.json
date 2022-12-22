@@ -87,7 +87,7 @@
     "build:tsc:cjs": "cpy ./dist/types/index.d.ts ./dist/types/ --rename='index.d.cts' --flat",
     "build:tsc:es": "tsc --emitDeclarationOnly --project tsconfig.typeoutput.json",
     "copy-storefront-types": "cpy ./src/storefront-api-types.d.ts ./dist/types/ --flat",
-    "format": "prettier --write \"src/**/*\"",
+    "format": "prettier --write \"{src,docs}/**/*\" --ignore-unknown",
     "graphql-types": "graphql-codegen --config codegen.ts && yarn format",
     "prepack": "yarn build",
     "test": "vitest",

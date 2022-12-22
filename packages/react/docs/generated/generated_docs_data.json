@@ -3890,8 +3890,33 @@
             "filePath": "/ShopPayButton.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopPayButtonProps",
-            "value": "{\n  /** A string of classes to apply to the `div` that wraps the Shop Pay button. */\n  className?: string;\n  /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */\n  width?: string;\n} & (ShopPayVariantIds | ShopPayVariantAndQuantities)",
+            "value": "ShopPayButtonStyleProps & (ShopPayVariantIds | ShopPayVariantAndQuantities)",
             "description": ""
+          },
+          "ShopPayButtonStyleProps": {
+            "filePath": "/ShopPayButton.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopPayButtonStyleProps",
+            "value": "{\n  /** A string of classes to apply to the `div` that wraps the Shop Pay button. */\n  className?: string;\n  /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */\n  width?: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "className",
+                "value": "string",
+                "description": "A string of classes to apply to the `div` that wraps the Shop Pay button.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "width",
+                "value": "string",
+                "description": "A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component).",
+                "isOptional": true
+              }
+            ]
           },
           "ShopPayVariantIds": {
             "filePath": "/ShopPayButton.tsx",
