@@ -1,7 +1,7 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'shopify provider',
+  name: 'ShopifyProvider',
   category: 'components',
   isVisualComponent: true,
   related: [],
@@ -17,19 +17,26 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './ShopifyProvider.example.tsx',
+          title: 'JavaScript',
+          code: './ShopifyProvider.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './ShopifyProvider.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',
     },
   },
-  // Ren/John note: Need to refactor type in hydrogen ui so we can set this for ShopifyProvider. Otherwise, build fails.
-  // definitions: [{
-  //   title: "Props",
-  //   type: "",
-  //   description: "interface description"
-  // }]
+  definitions: [
+    {
+      title: 'Props',
+      type: 'ShopifyProviderProps',
+      description: 'interface description',
+    },
+  ],
 };
 
 export default data;

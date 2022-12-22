@@ -1,46 +1,47 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'product provider',
+  name: 'ProductProvider',
   category: 'components',
   isVisualComponent: true,
   related: [
-    {
-      name: 'ProductPrice',
-      type: 'component',
-      url: 'api/hydrogen/components/product-variant/productprice',
-    },
-    {
-      name: 'ProductOptionsProvider',
-      type: 'component',
-      url: 'api/hydrogen/components/product-variant/productoptionsprovider',
-    },
     {
       name: 'useProductOptions',
       type: 'hook',
       url: 'api/hydrogen/hooks/product-variant/useproductoptions',
     },
+    {
+      name: 'ProductPrice',
+      type: 'component',
+      url: 'api/hydrogen/components/product-variant/productprice',
+    },
   ],
   description:
-    "> Note:\n> `ProductProvider` is only available as part of the [Hydrogen UI](/custom-storefronts/hydrogen/alternate-frameworks) package, which is in beta. If you're building with Hydrogen, then use [`ProductOptionsProvider`](https://shopify.dev/api/hydrogen/components/product-variant/productoptionsprovider)\nThe `ProductProvider` component sets up a context with state that tracks the selected variant and options. Descendants of this component can use the [`useProductOptions`](https://shopify.dev/api/hydrogen/hooks/product-variant useproductoptions) hook.",
+    '`<ProductProvider />` is a context provider that enables use of the `useProduct()` hook. It helps manage selected options and variants for a product.',
   type: 'component',
   defaultExample: {
     description: 'I am the default example',
     codeblock: {
       tabs: [
         {
-          code: './ProductProvider.example.tsx',
+          title: 'JavaScript',
+          code: './ProductProvider.example.jsx',
           language: 'jsx',
         },
+        {
+          title: 'TypeScript',
+          code: './ProductProvider.example.tsx',
+          language: 'tsx',
+        },
       ],
-      title: 'Example code',
+      title: 'ProductProvider example',
     },
   },
   definitions: [
     {
       title: 'Props',
       type: 'ProductProviderProps',
-      description: 'interface description',
+      description: '',
     },
   ],
 };

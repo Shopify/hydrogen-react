@@ -19,8 +19,14 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './Money.example.tsx',
+          title: 'JavaScript',
+          code: './Money.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './Money.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',
@@ -30,7 +36,7 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'Props',
       type: 'MoneyProps',
-      description: 'interface description',
+      description: '',
     },
   ],
 };

@@ -1,9 +1,15 @@
 [
   {
-    "name": "external video",
+    "name": "ExternalVideo",
     "category": "components",
     "isVisualComponent": true,
-    "related": [],
+    "related": [
+      {
+        "name": "MediaFile",
+        "type": "component",
+        "url": "api/hydrogen/components/product-variant/mediafile"
+      }
+    ],
     "description": "The `ExternalVideo` component renders an embedded video for the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
     "type": "component",
     "defaultExample": {
@@ -11,31 +17,30 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {ExternalVideo} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductVideo({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n  if (firstMediaElement.__typename === 'ExternalVideo') {\n    return <ExternalVideo data={firstMediaElement} />;\n  }\n}\n",
+            "title": "JavaScript",
+            "code": "import {ExternalVideo} from '@shopify/hydrogen-react';\n\nexport default function MyProductVideo({products}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n\n  if (firstMediaElement.__typename === 'ExternalVideo') {\n    return <ExternalVideo data={firstMediaElement} />;\n  }\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ExternalVideo} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductVideo({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n  if (firstMediaElement.__typename === 'ExternalVideo') {\n    return <ExternalVideo data={firstMediaElement} />;\n  }\n}\n",
+            "language": "tsx"
           }
         ],
-        "title": "Example code"
+        "title": "ExternalVideo example"
       }
     },
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "Takes in the same props as a native `<iframe>` element, except for `src`.",
         "type": "ExternalVideoProps",
         "typeDefinitions": {
           "ExternalVideoProps": {
             "filePath": "/ExternalVideo.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ExternalVideoProps",
-            "value": "Omit<\n  JSX.IntrinsicElements['iframe'],\n  PropsWeControl\n> & BaseProps",
-            "description": ""
-          },
-          "PropsWeControl": {
-            "filePath": "/ExternalVideo.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
-            "name": "PropsWeControl",
-            "value": "'src'",
+            "value": "Omit<JSX.IntrinsicElements['iframe'], 'src'> & BaseProps",
             "description": ""
           },
           "BaseProps": {
@@ -401,30 +406,31 @@
     ]
   },
   {
-    "name": "image",
+    "name": "Image",
     "category": "components",
     "isVisualComponent": true,
     "related": [
       {
-        "name": "CartLines",
+        "name": "MediaFile",
         "type": "component",
-        "url": "api/hydrogen/components/CartLines"
-      },
-      {
-        "name": "Url.com",
-        "type": "external",
-        "url": "http://www.url.com"
+        "url": "api/hydrogen/components/product-variant/mediafile"
       }
     ],
-    "description": "The `Image` component renders an image for the Storefront API's\n[Image object](https://shopify.dev/api/storefront/reference/common-objects/image) by using the `data` prop. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.\n\nAn image's width and height are determined using the following priority list:\n1. The width and height values for the `loaderOptions` prop\n2. The width and height values for bare props\n3. The width and height values for the `data` prop\n\nIf only one of `width` or `height` are defined, then the other will attempt to be calculated based on the image's aspect ratio,\nprovided that both `data.width` and `data.height` are available. If `data.width` and `data.height` aren't available, then the aspect ratio cannot be determined and the missing\nvalue will remain as `null`",
+    "description": "The `Image` component renders an image for the Storefront API's\n[Image object](https://shopify.dev/api/storefront/reference/common-objects/image) by using the `data` prop. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.\n\nAn image's width and height are determined using the following priority list:\n1. The width and height values for the `loaderOptions` prop\n2. The width and height values for bare props\n3. The width and height values for the `data` prop\n\nIf only one of `width` or `height` are defined, then the other will attempt to be calculated based on the image's aspect ratio,\nprovided that both `data.width` and `data.height` are available. If `data.width` and `data.height` aren't available, then the aspect ratio cannot be determined and the missing value will remain as `null`",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
       "codeblock": {
         "tabs": [
           {
-            "code": "import {Image} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function ProductImage({product}: {product: Product}) {\n  const image = product.featuredImage;\n\n  if (!image) {\n    return null;\n  }\n\n  return <Image data={image} />;\n}\n",
+            "title": "JavaScript",
+            "code": "import {Image} from '@shopify/hydrogen-react';\n\nexport default function ProductImage({product}) {\n  const image = product.featuredImage;\n\n  if (!image) {\n    return null;\n  }\n\n  return <Image data={image} />;\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {Image} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function ProductImage({product}: {product: Product}) {\n  const image = product.featuredImage;\n\n  if (!image) {\n    return null;\n  }\n\n  return <Image data={image} />;\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -433,14 +439,14 @@
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "ShopifyImageProps",
         "typeDefinitions": {
           "ShopifyImageProps": {
             "filePath": "/Image.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyImageProps",
-            "value": "Omit<HtmlImageProps, 'src'> & {\n  /** An object with fields that correspond to the Storefront API's\n   * [Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\n   * The `data` prop is required.\n   */\n  data: PartialDeep<ImageType, {recurseIntoArrays: true}>;\n  /** A custom function that generates the image URL. Parameters passed in\n   * are `ShopifyLoaderParams`\n   */\n  loader?: (params: ShopifyLoaderParams) => string;\n  /** An object of `loader` function options. For example, if the `loader` function\n   * requires a `scale` option, then the value can be a property of the\n   * `loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.\n   */\n  loaderOptions?: ShopifyLoaderOptions;\n  /**\n   * `src` isn't used, and should instead be passed as part of the `data` object\n   */\n  src?: never;\n  /**\n   * An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.\n   */\n  widths?: (HtmlImageProps['width'] | ImageType['width'])[];\n}",
+            "value": "Omit<HtmlImageProps, 'src'> & ShopifyImageBaseProps",
             "description": ""
           },
           "HtmlImageProps": {
@@ -450,12 +456,53 @@
             "value": "React.ImgHTMLAttributes<HTMLImageElement>",
             "description": ""
           },
-          "ShopifyLoaderParams": {
+          "ShopifyImageBaseProps": {
             "filePath": "/Image.tsx",
             "syntaxKind": "TypeAliasDeclaration",
-            "name": "ShopifyLoaderParams",
-            "value": "Simplify<\n  ShopifyLoaderOptions & {\n    src: ImageType['url'];\n  }\n>",
-            "description": ""
+            "name": "ShopifyImageBaseProps",
+            "value": "{\n  /** An object with fields that correspond to the Storefront API's\n   * [Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\n   * The `data` prop is required.\n   */\n  data: PartialDeep<ImageType, {recurseIntoArrays: true}>;\n  /** A custom function that generates the image URL. Parameters passed in\n   * are `ShopifyLoaderParams`\n   */\n  loader?: (params: ShopifyLoaderParams) => string;\n  /** An object of `loader` function options. For example, if the `loader` function\n   * requires a `scale` option, then the value can be a property of the\n   * `loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.\n   */\n  loaderOptions?: ShopifyLoaderOptions;\n  /**\n   * `src` isn't used, and should instead be passed as part of the `data` object\n   */\n  src?: never;\n  /**\n   * An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.\n   */\n  widths?: (HtmlImageProps['width'] | ImageType['width'])[];\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Image, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's\n[Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\nThe `data` prop is required."
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loader",
+                "value": "(params: Simplify<ShopifyLoaderOptions & ImageSrc>) => string",
+                "description": "A custom function that generates the image URL. Parameters passed in\nare `ShopifyLoaderParams`",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loaderOptions",
+                "value": "ShopifyLoaderOptions",
+                "description": "An object of `loader` function options. For example, if the `loader` function\nrequires a `scale` option, then the value can be a property of the\n`loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "src",
+                "value": "never",
+                "description": "`src` isn't used, and should instead be passed as part of the `data` object",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "widths",
+                "value": "(string | number)[]",
+                "description": "An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.",
+                "isOptional": true
+              }
+            ]
           },
           "ShopifyLoaderOptions": {
             "filePath": "/Image.tsx",
@@ -497,13 +544,29 @@
                 "isOptional": true
               }
             ]
+          },
+          "ImageSrc": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ImageSrc",
+            "value": "{\n  src: ImageType['url'];\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "src",
+                "value": "string",
+                "description": ""
+              }
+            ]
           }
         }
       }
     ]
   },
   {
-    "name": "media file",
+    "name": "MediaFile",
     "category": "components",
     "isVisualComponent": true,
     "related": [
@@ -535,8 +598,14 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {MediaFile} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function ProductsMediaFiles({products}: {products: ProductConnection}) {\n  return (\n    <ul>\n      {products.nodes.map((product) => {\n        return <MediaFile data={product.media.nodes[0]} key={product.id} />;\n      })}\n    </ul>\n  );\n}\n",
+            "title": "JavaScript",
+            "code": "import {MediaFile} from '@shopify/hydrogen-react';\n\nexport function ProductsMediaFiles({products}) {\n  return (\n    <ul>\n      {products.nodes.map((product) => {\n        return <MediaFile data={product.media.nodes[0]} key={product.id} />;\n      })}\n    </ul>\n  );\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {MediaFile} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function ProductsMediaFiles({products}: {products: ProductConnection}) {\n  return (\n    <ul>\n      {products.nodes.map((product) => {\n        return <MediaFile data={product.media.nodes[0]} key={product.id} />;\n      })}\n    </ul>\n  );\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -544,8 +613,8 @@
     },
     "definitions": [
       {
-        "title": "props",
-        "description": "interface description",
+        "title": "Props",
+        "description": "MediaFile renders an `Image`, `Video`, `ExternalVideo`, or `ModelViewer` component. Use the `mediaOptions` prop to customize the props sent to each of these components.",
         "type": "MediaFileProps",
         "typeDefinitions": {
           "MediaFileProps": {
@@ -564,8 +633,8 @@
                 "filePath": "/MediaFile.tsx",
                 "syntaxKind": "PropertySignature",
                 "name": "mediaOptions",
-                "value": "{ image?: Omit<ShopifyImageProps, \"data\">; video?: Omit<ClassAttributes<HTMLVideoElement> & VideoHTMLAttributes<HTMLVideoElement> & VideoProps, \"data\">; externalVideo?: Omit<YouTube | Vimeo, \"data\">; modelViewer?: Omit<(props: ModelViewerProps) => Element, \"data\">; }",
-                "description": "The options for the `Image`, `Video`, or `ExternalVideo` components.",
+                "value": "MediaOptions",
+                "description": "The options for the `Image`, `Video`, `ExternalVideo`, or `ModelViewer` components.",
                 "isOptional": true
               },
               {
@@ -2613,13 +2682,54 @@
                 "isOptional": true
               }
             ],
-            "value": "export interface MediaFileProps extends BaseProps {\n  /** An object with fields that correspond to the Storefront API's [Media object](https://shopify.dev/api/storefront/reference/products/media). */\n  data: PartialDeep<MediaEdgeType['node'], {recurseIntoArrays: true}>;\n  /** The options for the `Image`, `Video`, or `ExternalVideo` components. */\n  mediaOptions?: {\n    /** Props that will only apply when an `<Image />` is rendered */\n    image?: Omit<ShopifyImageProps, 'data'>;\n    /** Props that will only apply when a `<Video />` is rendered */\n    video?: Omit<React.ComponentProps<typeof Video>, 'data'>;\n    /** Props that will only apply when an `<ExternalVideo />` is rendered */\n    externalVideo?: Omit<\n      React.ComponentProps<typeof ExternalVideo>['options'],\n      'data'\n    >;\n    /** Props that will only apply when a `<ModelViewer />` is rendered */\n    modelViewer?: Omit<typeof ModelViewer, 'data'>;\n  };\n}"
+            "value": "export interface MediaFileProps extends BaseProps {\n  /** An object with fields that correspond to the Storefront API's [Media object](https://shopify.dev/api/storefront/reference/products/media). */\n  data: PartialDeep<MediaEdgeType['node'], {recurseIntoArrays: true}>;\n  /** The options for the `Image`, `Video`, `ExternalVideo`, or `ModelViewer` components. */\n  mediaOptions?: MediaOptions;\n}"
+          },
+          "MediaOptions": {
+            "filePath": "/MediaFile.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "MediaOptions",
+            "value": "{\n  /** Props that will only apply when an `<Image />` is rendered */\n  image?: Omit<ShopifyImageProps, 'data'>;\n  /** Props that will only apply when a `<Video />` is rendered */\n  video?: Omit<React.ComponentProps<typeof Video>, 'data'>;\n  /** Props that will only apply when an `<ExternalVideo />` is rendered */\n  externalVideo?: Omit<\n    React.ComponentProps<typeof ExternalVideo>['options'],\n    'data'\n  >;\n  /** Props that will only apply when a `<ModelViewer />` is rendered */\n  modelViewer?: Omit<typeof ModelViewer, 'data'>;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "image",
+                "value": "Omit<ShopifyImageProps, \"data\">",
+                "description": "Props that will only apply when an `<Image />` is rendered",
+                "isOptional": true
+              },
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "video",
+                "value": "Omit<ClassAttributes<HTMLVideoElement> & VideoHTMLAttributes<HTMLVideoElement> & VideoProps, \"data\">",
+                "description": "Props that will only apply when a `<Video />` is rendered",
+                "isOptional": true
+              },
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "externalVideo",
+                "value": "Omit<YouTube | Vimeo, \"data\">",
+                "description": "Props that will only apply when an `<ExternalVideo />` is rendered",
+                "isOptional": true
+              },
+              {
+                "filePath": "/MediaFile.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "modelViewer",
+                "value": "Omit<(props: ModelViewerProps) => Element, \"data\">",
+                "description": "Props that will only apply when a `<ModelViewer />` is rendered",
+                "isOptional": true
+              }
+            ]
           },
           "ShopifyImageProps": {
             "filePath": "/Image.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyImageProps",
-            "value": "Omit<HtmlImageProps, 'src'> & {\n  /** An object with fields that correspond to the Storefront API's\n   * [Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\n   * The `data` prop is required.\n   */\n  data: PartialDeep<ImageType, {recurseIntoArrays: true}>;\n  /** A custom function that generates the image URL. Parameters passed in\n   * are `ShopifyLoaderParams`\n   */\n  loader?: (params: ShopifyLoaderParams) => string;\n  /** An object of `loader` function options. For example, if the `loader` function\n   * requires a `scale` option, then the value can be a property of the\n   * `loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.\n   */\n  loaderOptions?: ShopifyLoaderOptions;\n  /**\n   * `src` isn't used, and should instead be passed as part of the `data` object\n   */\n  src?: never;\n  /**\n   * An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.\n   */\n  widths?: (HtmlImageProps['width'] | ImageType['width'])[];\n}",
+            "value": "Omit<HtmlImageProps, 'src'> & ShopifyImageBaseProps",
             "description": ""
           },
           "HtmlImageProps": {
@@ -2629,12 +2739,53 @@
             "value": "React.ImgHTMLAttributes<HTMLImageElement>",
             "description": ""
           },
-          "ShopifyLoaderParams": {
+          "ShopifyImageBaseProps": {
             "filePath": "/Image.tsx",
             "syntaxKind": "TypeAliasDeclaration",
-            "name": "ShopifyLoaderParams",
-            "value": "Simplify<\n  ShopifyLoaderOptions & {\n    src: ImageType['url'];\n  }\n>",
-            "description": ""
+            "name": "ShopifyImageBaseProps",
+            "value": "{\n  /** An object with fields that correspond to the Storefront API's\n   * [Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\n   * The `data` prop is required.\n   */\n  data: PartialDeep<ImageType, {recurseIntoArrays: true}>;\n  /** A custom function that generates the image URL. Parameters passed in\n   * are `ShopifyLoaderParams`\n   */\n  loader?: (params: ShopifyLoaderParams) => string;\n  /** An object of `loader` function options. For example, if the `loader` function\n   * requires a `scale` option, then the value can be a property of the\n   * `loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.\n   */\n  loaderOptions?: ShopifyLoaderOptions;\n  /**\n   * `src` isn't used, and should instead be passed as part of the `data` object\n   */\n  src?: never;\n  /**\n   * An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.\n   */\n  widths?: (HtmlImageProps['width'] | ImageType['width'])[];\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Image, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's\n[Image object](https://shopify.dev/api/storefront/reference/common-objects/image).\nThe `data` prop is required."
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loader",
+                "value": "(params: Simplify<ShopifyLoaderOptions & ImageSrc>) => string",
+                "description": "A custom function that generates the image URL. Parameters passed in\nare `ShopifyLoaderParams`",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "loaderOptions",
+                "value": "ShopifyLoaderOptions",
+                "description": "An object of `loader` function options. For example, if the `loader` function\nrequires a `scale` option, then the value can be a property of the\n`loaderOptions` object (for example, `{scale: 2}`). The object shape is `ShopifyLoaderOptions`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "src",
+                "value": "never",
+                "description": "`src` isn't used, and should instead be passed as part of the `data` object",
+                "isOptional": true
+              },
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "widths",
+                "value": "(string | number)[]",
+                "description": "An array of pixel widths to overwrite the default generated srcset. For example, `[300, 600, 800]`.",
+                "isOptional": true
+              }
+            ]
           },
           "ShopifyLoaderOptions": {
             "filePath": "/Image.tsx",
@@ -2677,6 +2828,22 @@
               }
             ]
           },
+          "ImageSrc": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ImageSrc",
+            "value": "{\n  src: ImageType['url'];\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "src",
+                "value": "string",
+                "description": ""
+              }
+            ]
+          },
           "VideoProps": {
             "filePath": "/Video.tsx",
             "name": "VideoProps",
@@ -2693,7 +2860,7 @@
                 "filePath": "/Video.tsx",
                 "syntaxKind": "PropertySignature",
                 "name": "previewImageOptions",
-                "value": "Simplify<ShopifyLoaderOptions & { src: string; }>",
+                "value": "Simplify<ShopifyLoaderOptions & ImageSrc>",
                 "description": "An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL.",
                 "isOptional": true
               },
@@ -3047,22 +3214,135 @@
             "filePath": "/ModelViewer.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ModelViewerProps",
-            "value": "Omit<\n  PartialDeep<JSX.IntrinsicElements['model-viewer'], {recurseIntoArrays: true}>,\n  PropsWeControl\n> & {\n  /** An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d). */\n  data: PartialDeep<Model3d, {recurseIntoArrays: true}>;\n  /** The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error). */\n  onError?: (event: Event) => void;\n  /** The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load). */\n  onLoad?: (event: Event) => void;\n  /** The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload). */\n  onPreload?: (event: Event) => void;\n  /** The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility). */\n  onModelVisibility?: (event: Event) => void;\n  /** The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress). */\n  onProgress?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus). */\n  onArStatus?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking). */\n  onArTracking?: (event: Event) => void;\n  /** The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped). */\n  onQuickLookButtonTapped?: (event: Event) => void;\n  /** The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange). */\n  onCameraChange?: (event: Event) => void;\n  /** The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).  */\n  onEnvironmentChange?: (event: Event) => void;\n  /**  The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play). */\n  onPlay?: (event: Event) => void;\n  /**  The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause). */\n  onPause?: (event: Event) => void;\n  /** The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady). */\n  onSceneGraphReady?: (event: Event) => void;\n}",
+            "value": "Omit<\n  PartialDeep<JSX.IntrinsicElements['model-viewer'], {recurseIntoArrays: true}>,\n  'src'\n> & ModelViewerBaseProps",
             "description": ""
           },
-          "PropsWeControl": {
+          "ModelViewerBaseProps": {
             "filePath": "/ModelViewer.tsx",
             "syntaxKind": "TypeAliasDeclaration",
-            "name": "PropsWeControl",
-            "value": "'src'",
-            "description": ""
+            "name": "ModelViewerBaseProps",
+            "value": "{\n  /** An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d). */\n  data: PartialDeep<Model3d, {recurseIntoArrays: true}>;\n  /** The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error). */\n  onError?: (event: Event) => void;\n  /** The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load). */\n  onLoad?: (event: Event) => void;\n  /** The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload). */\n  onPreload?: (event: Event) => void;\n  /** The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility). */\n  onModelVisibility?: (event: Event) => void;\n  /** The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress). */\n  onProgress?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus). */\n  onArStatus?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking). */\n  onArTracking?: (event: Event) => void;\n  /** The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped). */\n  onQuickLookButtonTapped?: (event: Event) => void;\n  /** The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange). */\n  onCameraChange?: (event: Event) => void;\n  /** The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).  */\n  onEnvironmentChange?: (event: Event) => void;\n  /**  The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play). */\n  onPlay?: (event: Event) => void;\n  /**  The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause). */\n  onPause?: (event: Event) => void;\n  /** The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady). */\n  onSceneGraphReady?: (event: Event) => void;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Model3d, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d)."
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onError",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onLoad",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPreload",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onModelVisibility",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onProgress",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onArStatus",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onArTracking",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onQuickLookButtonTapped",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onCameraChange",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onEnvironmentChange",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPlay",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPause",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onSceneGraphReady",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady).",
+                "isOptional": true
+              }
+            ]
           }
         }
       }
     ]
   },
   {
-    "name": "metafield",
+    "name": "Metafield",
     "category": "components",
     "isVisualComponent": true,
     "related": [
@@ -3084,8 +3364,14 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {Metafield} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function Product({product}: {product: Product}) {\n  const metafield = product.metafield;\n\n  if (!metafield) {\n    return null;\n  }\n\n  return <Metafield data={metafield} />;\n}\n",
+            "title": "JavaScript",
+            "code": "import {Metafield} from '@shopify/hydrogen-react';\n\nexport function Product({product}) {\n  const metafield = product.metafield;\n\n  if (!metafield) {\n    return null;\n  }\n\n  return <Metafield data={metafield} />;\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {Metafield} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function Product({product}: {product: Product}) {\n  const metafield = product.metafield;\n\n  if (!metafield) {\n    return null;\n  }\n\n  return <Metafield data={metafield} />;\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3094,7 +3380,7 @@
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "MetafieldProps",
         "typeDefinitions": {
           "MetafieldProps": {
@@ -3132,7 +3418,7 @@
     ]
   },
   {
-    "name": "model viewer",
+    "name": "ModelViewer",
     "category": "components",
     "isVisualComponent": true,
     "related": [
@@ -3142,15 +3428,21 @@
         "url": "api/hydrogen/components/primitive/mediafile"
       }
     ],
-    "description": "The `ModelViewer` component renders a 3D model for the Storefront API's\n[Model3d object](https://shopify.dev/api/storefront/reference/products/model3d).\nThe component outputs a `<model-viewer>` tag. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "description": "The `ModelViewer` component renders a 3D model (with the `model-viewer` custom element) for the Storefront API's [Model3d object](https://shopify.dev/api/storefront/reference/products/model3d). The `model-viewer` custom element is lazily downloaded through a dynamically-injected `<script type='module'>` tag when the `<ModelViewer />` component is rendered. ModelViewer is using version `1.21.1` of the `@google/model-viewer` library.",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
       "codeblock": {
         "tabs": [
           {
-            "code": "import {ModelViewer} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductModel({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n  if (firstMediaElement.__typename === 'Model3d') {\n    return <ModelViewer data={firstMediaElement} />;\n  }\n}\n",
+            "title": "JavaScript",
+            "code": "import {ModelViewer} from '@shopify/hydrogen-react';\n\nexport default function MyProductModel({products}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n\n  if (firstMediaElement.__typename === 'Model3d') {\n    return <ModelViewer data={firstMediaElement} />;\n  }\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ModelViewer} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductModel({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.nodes[0].media.nodes[0];\n  if (firstMediaElement.__typename === 'Model3d') {\n    return <ModelViewer data={firstMediaElement} />;\n  }\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3158,23 +3450,136 @@
     },
     "definitions": [
       {
-        "title": "props",
-        "description": "interface description",
+        "title": "Props",
+        "description": "",
         "type": "ModelViewerProps",
         "typeDefinitions": {
           "ModelViewerProps": {
             "filePath": "/ModelViewer.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ModelViewerProps",
-            "value": "Omit<\n  PartialDeep<JSX.IntrinsicElements['model-viewer'], {recurseIntoArrays: true}>,\n  PropsWeControl\n> & {\n  /** An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d). */\n  data: PartialDeep<Model3d, {recurseIntoArrays: true}>;\n  /** The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error). */\n  onError?: (event: Event) => void;\n  /** The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load). */\n  onLoad?: (event: Event) => void;\n  /** The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload). */\n  onPreload?: (event: Event) => void;\n  /** The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility). */\n  onModelVisibility?: (event: Event) => void;\n  /** The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress). */\n  onProgress?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus). */\n  onArStatus?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking). */\n  onArTracking?: (event: Event) => void;\n  /** The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped). */\n  onQuickLookButtonTapped?: (event: Event) => void;\n  /** The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange). */\n  onCameraChange?: (event: Event) => void;\n  /** The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).  */\n  onEnvironmentChange?: (event: Event) => void;\n  /**  The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play). */\n  onPlay?: (event: Event) => void;\n  /**  The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause). */\n  onPause?: (event: Event) => void;\n  /** The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady). */\n  onSceneGraphReady?: (event: Event) => void;\n}",
+            "value": "Omit<\n  PartialDeep<JSX.IntrinsicElements['model-viewer'], {recurseIntoArrays: true}>,\n  'src'\n> & ModelViewerBaseProps",
             "description": ""
           },
-          "PropsWeControl": {
+          "ModelViewerBaseProps": {
             "filePath": "/ModelViewer.tsx",
             "syntaxKind": "TypeAliasDeclaration",
-            "name": "PropsWeControl",
-            "value": "'src'",
-            "description": ""
+            "name": "ModelViewerBaseProps",
+            "value": "{\n  /** An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d). */\n  data: PartialDeep<Model3d, {recurseIntoArrays: true}>;\n  /** The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error). */\n  onError?: (event: Event) => void;\n  /** The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load). */\n  onLoad?: (event: Event) => void;\n  /** The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload). */\n  onPreload?: (event: Event) => void;\n  /** The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility). */\n  onModelVisibility?: (event: Event) => void;\n  /** The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress). */\n  onProgress?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus). */\n  onArStatus?: (event: Event) => void;\n  /** The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking). */\n  onArTracking?: (event: Event) => void;\n  /** The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped). */\n  onQuickLookButtonTapped?: (event: Event) => void;\n  /** The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange). */\n  onCameraChange?: (event: Event) => void;\n  /** The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).  */\n  onEnvironmentChange?: (event: Event) => void;\n  /**  The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play). */\n  onPlay?: (event: Event) => void;\n  /**  The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause). */\n  onPause?: (event: Event) => void;\n  /** The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady). */\n  onSceneGraphReady?: (event: Event) => void;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "data",
+                "value": "PartialObjectDeep<Model3d, { recurseIntoArrays: true; }>",
+                "description": "An object with fields that correspond to the Storefront API's [Model3D object](https://shopify.dev/api/storefront/latest/objects/model3d)."
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onError",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'error' event is triggered. Refer to [error in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-error).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onLoad",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the `load` event is triggered. Refer to [load in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-load).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPreload",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'preload' event is triggered. Refer to [preload in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-preload).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onModelVisibility",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'model-visibility' event is triggered. Refer to [model-visibility in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-modelVisibility).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onProgress",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'progress' event is triggered. Refer to [progress in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-loading-events-progress).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onArStatus",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'ar-status' event is triggered. Refer to [ar-status in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arStatus).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onArTracking",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'ar-tracking' event is triggered. Refer to [ar-tracking in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-arTracking).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onQuickLookButtonTapped",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'quick-look-button-tapped' event is triggered. Refer to [quick-look-button-tapped in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-events-quickLookButtonTapped).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onCameraChange",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'camera-change' event is triggered. Refer to [camera-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-events-cameraChange).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onEnvironmentChange",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'environment-change' event is triggered. Refer to [environment-change in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-lightingandenv-events-environmentChange).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPlay",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'play' event is triggered. Refer to [play in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-play).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onPause",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'pause' event is triggered. Refer to [pause in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-animation-events-pause).",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ModelViewer.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "onSceneGraphReady",
+                "value": "(event: Event) => void",
+                "description": "The callback to invoke when the 'scene-graph-ready' event is triggered. Refer to [scene-graph-ready in the <model-viewer> documentation](https://modelviewer.dev/docs/index.html#entrydocs-scenegraph-events-sceneGraphReady).",
+                "isOptional": true
+              }
+            ]
           }
         }
       }
@@ -3198,8 +3603,14 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {Money} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function ProductMoney({product}: {product: Product}) {\n  return <Money data={product.variants.nodes[0].priceV2} />;\n}\n",
+            "title": "JavaScript",
+            "code": "import {Money} from '@shopify/hydrogen-react';\n\nexport default function ProductMoney({product}) {\n  const price = product.variants.nodes[0].price;\n\n  return <Money data={price} />;\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {Money} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function ProductMoney({product}: {product: Product}) {\n  const price = product.variants.nodes[0].price;\n\n  return <Money data={price} />;\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3208,7 +3619,7 @@
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "MoneyProps",
         "typeDefinitions": {
           "MoneyProps": {
@@ -3278,12 +3689,12 @@
     ]
   },
   {
-    "name": "product price",
+    "name": "ProductPrice",
     "category": "components",
     "isVisualComponent": true,
     "related": [
       {
-        "name": "ProductOptionsProvider",
+        "name": "ProductProvider",
         "type": "component",
         "url": "api/hydrogen/components/product-variant/productoptionsprovider"
       },
@@ -3300,8 +3711,14 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {ProductPrice} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function ProductPricing({product}: {product: Product}) {\n  return <ProductPrice data={product} priceType=\"compareAt\" valueType=\"max\" />;\n}\n",
+            "title": "JavaScript",
+            "code": "import {ProductPrice} from '@shopify/hydrogen-react';\n\nexport function ProductPricing({product}) {\n  return <ProductPrice data={product} priceType=\"compareAt\" valueType=\"max\" />;\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ProductPrice} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function ProductPricing({product}: {product: Product}) {\n  return <ProductPrice data={product} priceType=\"compareAt\" valueType=\"max\" />;\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3309,8 +3726,8 @@
     },
     "definitions": [
       {
-        "title": "props",
-        "description": "interface description",
+        "title": "Props",
+        "description": "",
         "type": "ProductPriceProps",
         "typeDefinitions": {
           "ProductPriceProps": {
@@ -3323,7 +3740,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "data",
                 "value": "PartialObjectDeep<Product, { recurseIntoArrays: true; }>",
-                "description": "A [Product object](https://shopify.dev/api/storefront/reference/products/product)."
+                "description": "A Storefront API [Product object](https://shopify.dev/api/storefront/reference/products/product)."
               },
               {
                 "filePath": "/ProductPrice.tsx",
@@ -3350,51 +3767,52 @@
                 "isOptional": true
               }
             ],
-            "value": "export interface ProductPriceProps {\n  /** A [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** The type of price. Valid values: `regular` (default) or `compareAt`. */\n  priceType?: 'regular' | 'compareAt';\n  /** The type of value. Valid values: `min` (default), `max` or `unit`. */\n  valueType?: 'max' | 'min' | 'unit';\n  /** The ID of the variant. */\n  variantId?: string;\n}"
+            "value": "export interface ProductPriceProps {\n  /** A Storefront API [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** The type of price. Valid values: `regular` (default) or `compareAt`. */\n  priceType?: 'regular' | 'compareAt';\n  /** The type of value. Valid values: `min` (default), `max` or `unit`. */\n  valueType?: 'max' | 'min' | 'unit';\n  /** The ID of the variant. */\n  variantId?: string;\n}"
           }
         }
       }
     ]
   },
   {
-    "name": "product provider",
+    "name": "ProductProvider",
     "category": "components",
     "isVisualComponent": true,
     "related": [
       {
-        "name": "ProductPrice",
-        "type": "component",
-        "url": "api/hydrogen/components/product-variant/productprice"
-      },
-      {
-        "name": "ProductOptionsProvider",
-        "type": "component",
-        "url": "api/hydrogen/components/product-variant/productoptionsprovider"
-      },
-      {
         "name": "useProductOptions",
         "type": "hook",
         "url": "api/hydrogen/hooks/product-variant/useproductoptions"
+      },
+      {
+        "name": "ProductPrice",
+        "type": "component",
+        "url": "api/hydrogen/components/product-variant/productprice"
       }
     ],
-    "description": "> Note:\n> `ProductProvider` is only available as part of the [Hydrogen UI](/custom-storefronts/hydrogen/alternate-frameworks) package, which is in beta. If you're building with Hydrogen, then use [`ProductOptionsProvider`](https://shopify.dev/api/hydrogen/components/product-variant/productoptionsprovider)\nThe `ProductProvider` component sets up a context with state that tracks the selected variant and options. Descendants of this component can use the [`useProductOptions`](https://shopify.dev/api/hydrogen/hooks/product-variant useproductoptions) hook.",
+    "description": "`<ProductProvider />` is a context provider that enables use of the `useProduct()` hook. It helps manage selected options and variants for a product.",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
       "codeblock": {
         "tabs": [
           {
-            "code": "import {ProductProvider} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function Product({product}: {product: Product}) {\n  return (\n    <ProductProvider data={product} initialVariantId=\"some-id\">\n      {/* Your JSX */}\n    </ProductProvider>\n  );\n}\n",
+            "title": "JavaScript",
+            "code": "import {ProductProvider} from '@shopify/hydrogen-react';\n\nexport function Product({product}) {\n  return (\n    <ProductProvider data={product} initialVariantId=\"some-id\">\n      {/* Your JSX */}\n    </ProductProvider>\n  );\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ProductProvider} from '@shopify/hydrogen-react';\nimport type {Product} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport function Product({product}: {product: Product}) {\n  return (\n    <ProductProvider data={product} initialVariantId=\"some-id\">\n      {/* Your JSX */}\n    </ProductProvider>\n  );\n}\n",
+            "language": "tsx"
           }
         ],
-        "title": "Example code"
+        "title": "ProductProvider example"
       }
     },
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "ProductProviderProps",
         "typeDefinitions": {
           "ProductProviderProps": {
@@ -3407,7 +3825,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "data",
                 "value": "PartialObjectDeep<Product, { recurseIntoArrays: true; }>",
-                "description": "A [Product object](https://shopify.dev/api/storefront/reference/products/product)."
+                "description": "A Storefront API [Product object](https://shopify.dev/api/storefront/reference/products/product)."
               },
               {
                 "filePath": "/ProductProvider.tsx",
@@ -3425,14 +3843,14 @@
                 "isOptional": true
               }
             ],
-            "value": "interface ProductProviderProps {\n  /** A [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** A `ReactNode` element. */\n  children: React.ReactNode;\n  /**\n   * The initially selected variant.\n   * The following logic applies to `initialVariantId`:\n   * 1. If `initialVariantId` is provided, then it's used even if it's out of stock.\n   * 2. If `initialVariantId` is provided but is `null`, then no variant is used.\n   * 3. If nothing is passed to `initialVariantId` then the first available / in-stock variant is used.\n   * 4. If nothing is passed to `initialVariantId` and no variants are in stock, then the first variant is used.\n   */\n  initialVariantId?: InitialVariantId;\n}"
+            "value": "interface ProductProviderProps {\n  /** A Storefront API [Product object](https://shopify.dev/api/storefront/reference/products/product). */\n  data: PartialDeep<Product, {recurseIntoArrays: true}>;\n  /** A `ReactNode` element. */\n  children: React.ReactNode;\n  /**\n   * The initially selected variant.\n   * The following logic applies to `initialVariantId`:\n   * 1. If `initialVariantId` is provided, then it's used even if it's out of stock.\n   * 2. If `initialVariantId` is provided but is `null`, then no variant is used.\n   * 3. If nothing is passed to `initialVariantId` then the first available / in-stock variant is used.\n   * 4. If nothing is passed to `initialVariantId` and no variants are in stock, then the first variant is used.\n   */\n  initialVariantId?: InitialVariantId;\n}"
           }
         }
       }
     ]
   },
   {
-    "name": "shop pay button",
+    "name": "ShopPayButton",
     "category": "components",
     "isVisualComponent": true,
     "related": [
@@ -3442,15 +3860,21 @@
         "url": "api/hydrogen/components/cart/cartshoppaybutton"
       }
     ],
-    "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
       "codeblock": {
         "tabs": [
           {
-            "code": "import {ShopPayButton} from '@shopify/hydrogen-react';\n\nexport function AddVariantQuantity1({variantId}: {variantId: string}) {\n  return <ShopPayButton variantIds={[variantId]} />;\n}\n\nexport function AddVariantQuantityMultiple({\n  variantId,\n  quantity,\n}: {\n  variantId: string;\n  quantity: number;\n}) {\n  return (\n    <ShopPayButton variantIdsAndQuantities={[{id: variantId, quantity}]} />\n  );\n}\n",
+            "title": "JavaScript",
+            "code": "import {ShopPayButton} from '@shopify/hydrogen-react';\n\nexport function AddVariantQuantity1({variantId}) {\n  return <ShopPayButton variantIds={[variantId]} />;\n}\n\nexport function AddVariantQuantityMultiple({variantId, quantity}) {\n  return (\n    <ShopPayButton variantIdsAndQuantities={[{id: variantId, quantity}]} />\n  );\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ShopPayButton} from '@shopify/hydrogen-react';\n\nexport function AddVariantQuantity1({variantId}: {variantId: string}) {\n  return <ShopPayButton variantIds={[variantId]} />;\n}\n\nexport function AddVariantQuantityMultiple({\n  variantId,\n  quantity,\n}: {\n  variantId: string;\n  quantity: number;\n}) {\n  return (\n    <ShopPayButton variantIdsAndQuantities={[{id: variantId, quantity}]} />\n  );\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3466,15 +3890,63 @@
             "filePath": "/ShopPayButton.tsx",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopPayButtonProps",
-            "value": "{\n  /** A string of classes to apply to the `div` that wraps the Shop Pay button. */\n  className?: string;\n  /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */\n  width?: string;\n} & (\n  | {\n      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */\n      variantIds: string[];\n      /** An array of variant IDs and quantities to purchase with Shop Pay. */\n      variantIdsAndQuantities?: never;\n    }\n  | {\n      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */\n      variantIds?: never;\n      /** An array of variant IDs and quantities to purchase with Shop Pay. */\n      variantIdsAndQuantities: Array<{\n        id: string;\n        quantity: number;\n      }>;\n    }\n)",
+            "value": "{\n  /** A string of classes to apply to the `div` that wraps the Shop Pay button. */\n  className?: string;\n  /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */\n  width?: string;\n} & (ShopPayVariantIds | ShopPayVariantAndQuantities)",
             "description": ""
+          },
+          "ShopPayVariantIds": {
+            "filePath": "/ShopPayButton.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopPayVariantIds",
+            "value": "{\n  /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`. */\n  variantIds: string[];\n  /** An array of variant IDs and quantities to purchase with Shop Pay. */\n  variantIdsAndQuantities?: never;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "variantIds",
+                "value": "string[]",
+                "description": "An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`."
+              },
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "variantIdsAndQuantities",
+                "value": "never",
+                "description": "An array of variant IDs and quantities to purchase with Shop Pay.",
+                "isOptional": true
+              }
+            ]
+          },
+          "ShopPayVariantAndQuantities": {
+            "filePath": "/ShopPayButton.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopPayVariantAndQuantities",
+            "value": "{\n  /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`. */\n  variantIds?: never;\n  /** An array of variant IDs and quantities to purchase with Shop Pay. */\n  variantIdsAndQuantities: Array<{\n    id: string;\n    quantity: number;\n  }>;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "variantIds",
+                "value": "never",
+                "description": "An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ShopPayButton.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "variantIdsAndQuantities",
+                "value": "{ id: string; quantity: number; }[]",
+                "description": "An array of variant IDs and quantities to purchase with Shop Pay."
+              }
+            ]
           }
         }
       }
     ]
   },
   {
-    "name": "shopify provider",
+    "name": "ShopifyProvider",
     "category": "components",
     "isVisualComponent": true,
     "related": [],
@@ -3485,13 +3957,145 @@
       "codeblock": {
         "tabs": [
           {
+            "title": "JavaScript",
             "code": "import {ShopifyProvider} from '@shopify/hydrogen-react';\n\nexport default function App() {\n  return (\n    <ShopifyProvider\n      shopifyConfig={{\n        storeDomain: 'my-store',\n        storefrontToken: 'abc123',\n        storefrontApiVersion: '2022-10',\n      }}\n    >\n      {/* rest of your client-side app */}\n    </ShopifyProvider>\n  );\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {ShopifyProvider} from '@shopify/hydrogen-react';\n\nexport default function App() {\n  return (\n    <ShopifyProvider\n      shopifyConfig={{\n        storeDomain: 'my-store',\n        storefrontToken: 'abc123',\n        storefrontApiVersion: '2022-10',\n      }}\n    >\n      {/* rest of your client-side app */}\n    </ShopifyProvider>\n  );\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
       }
-    }
+    },
+    "definitions": [
+      {
+        "title": "Props",
+        "description": "interface description",
+        "type": "ShopifyProviderProps",
+        "typeDefinitions": {
+          "ShopifyProviderProps": {
+            "filePath": "/ShopifyProvider.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyProviderProps",
+            "value": "{\n  children: ReactNode;\n  shopifyConfig: ShopifyContextProps;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "children",
+                "value": "ReactNode",
+                "description": ""
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "shopifyConfig",
+                "value": "ShopifyContextProps",
+                "description": ""
+              }
+            ]
+          },
+          "ShopifyContextProps": {
+            "filePath": "/ShopifyProvider.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyContextProps",
+            "value": "{\n  /** The globally-unique identifier for the Shop */\n  storefrontId?: string;\n  /** The subdomain of your Shopify storefront URL (eg: `{subdomain}.myshopify.com`). */\n  storeDomain: string;\n  /** The Storefront API public access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */\n  storefrontToken: string;\n  /** The Storefront API version. This should almost always be the same as the version Hydrogen-UI was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details.  */\n  storefrontApiVersion: string;\n  country?: ContextCountry;\n  language?: ContextLanguage;\n  /**\n   * The locale string based on `country` and `language`.\n   */\n  locale?: string;\n}",
+            "description": "Shopify-specific values that are used in various Hydrogen-UI components and hooks.",
+            "members": [
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "storefrontId",
+                "value": "string",
+                "description": "The globally-unique identifier for the Shop",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "storeDomain",
+                "value": "string",
+                "description": "The subdomain of your Shopify storefront URL (eg: `{subdomain}.myshopify.com`)."
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "storefrontToken",
+                "value": "string",
+                "description": "The Storefront API public access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details."
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "storefrontApiVersion",
+                "value": "string",
+                "description": "The Storefront API version. This should almost always be the same as the version Hydrogen-UI was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details."
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "country",
+                "value": "ContextCountry",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "language",
+                "value": "ContextLanguage",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "locale",
+                "value": "string",
+                "description": "The locale string based on `country` and `language`.",
+                "isOptional": true
+              }
+            ]
+          },
+          "ContextCountry": {
+            "filePath": "/ShopifyProvider.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ContextCountry",
+            "value": "{\n  /**\n   * The code designating a country, which generally follows ISO 3166-1 alpha-2 guidelines. If a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision of another country. For example, the territories associated with Spain are represented by the country code `ES`, and the territories associated with the United States of America are represented by the country code `US`.\n   */\n  isoCode: CountryCode;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "isoCode",
+                "value": "CountryCode",
+                "description": "The code designating a country, which generally follows ISO 3166-1 alpha-2 guidelines. If a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision of another country. For example, the territories associated with Spain are represented by the country code `ES`, and the territories associated with the United States of America are represented by the country code `US`."
+              }
+            ]
+          },
+          "ContextLanguage": {
+            "filePath": "/ShopifyProvider.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ContextLanguage",
+            "value": "{\n  /**\n   * `ISO 369` language codes supported by Shopify.\n   */\n  isoCode: LanguageCode;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "isoCode",
+                "value": "LanguageCode",
+                "description": "`ISO 369` language codes supported by Shopify."
+              }
+            ]
+          }
+        }
+      }
+    ]
   },
   {
     "name": "video",
@@ -3516,8 +4120,14 @@
       "codeblock": {
         "tabs": [
           {
-            "code": "import {Video} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductVideo({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.edges[0].node.media.edges[0].node;\n  if (firstMediaElement.__typename === 'Video') {\n    return <Video data={firstMediaElement} />;\n  }\n}\n",
+            "title": "JavaScript",
+            "code": "import {Video} from '@shopify/hydrogen-react';\n\nexport default function MyProductVideo({products}) {\n  const firstMediaElement = products.edges[0].node.media.edges[0].node;\n\n  if (firstMediaElement.__typename === 'Video') {\n    return <Video data={firstMediaElement} />;\n  }\n}\n",
             "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {Video} from '@shopify/hydrogen-react';\nimport type {ProductConnection} from '@shopify/hydrogen-react/storefront-api-types';\n\nexport default function MyProductVideo({\n  products,\n}: {\n  products: ProductConnection;\n}) {\n  const firstMediaElement = products.edges[0].node.media.edges[0].node;\n\n  if (firstMediaElement.__typename === 'Video') {\n    return <Video data={firstMediaElement} />;\n  }\n}\n",
+            "language": "tsx"
           }
         ],
         "title": "Example code"
@@ -3526,7 +4136,7 @@
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "VideoProps",
         "typeDefinitions": {
           "VideoProps": {
@@ -3545,7 +4155,7 @@
                 "filePath": "/Video.tsx",
                 "syntaxKind": "PropertySignature",
                 "name": "previewImageOptions",
-                "value": "Simplify<ShopifyLoaderOptions & { src: string; }>",
+                "value": "Simplify<ShopifyLoaderOptions & ImageSrc>",
                 "description": "An object of image size options for the video's `previewImage`. Uses `shopifyImageLoader` to generate the `poster` URL.",
                 "isOptional": true
               },
@@ -3598,6 +4208,22 @@
                 "value": "string | number",
                 "description": "",
                 "isOptional": true
+              }
+            ]
+          },
+          "ImageSrc": {
+            "filePath": "/Image.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ImageSrc",
+            "value": "{\n  src: ImageType['url'];\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/Image.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "src",
+                "value": "string",
+                "description": ""
               }
             ]
           }

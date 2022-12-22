@@ -1,12 +1,12 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'product price',
+  name: 'ProductPrice',
   category: 'components',
   isVisualComponent: true,
   related: [
     {
-      name: 'ProductOptionsProvider',
+      name: 'ProductProvider',
       type: 'component',
       url: 'api/hydrogen/components/product-variant/productoptionsprovider',
     },
@@ -24,8 +24,14 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './ProductPrice.example.tsx',
+          title: 'JavaScript',
+          code: './ProductPrice.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './ProductPrice.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',
@@ -33,9 +39,9 @@ const data: ReferenceEntityTemplateSchema = {
   },
   definitions: [
     {
-      title: 'props',
+      title: 'Props',
       type: 'ProductPriceProps',
-      description: 'interface description',
+      description: '',
     },
   ],
 };

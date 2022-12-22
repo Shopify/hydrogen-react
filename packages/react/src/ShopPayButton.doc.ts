@@ -1,7 +1,7 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'shop pay button',
+  name: 'ShopPayButton',
   category: 'components',
   isVisualComponent: true,
   related: [
@@ -12,15 +12,21 @@ const data: ReferenceEntityTemplateSchema = {
     },
   ],
   description:
-    'The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can[customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.',
+    'The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.',
   type: 'component',
   defaultExample: {
     description: 'I am the default example',
     codeblock: {
       tabs: [
         {
-          code: './ShopPayButton.example.tsx',
+          title: 'JavaScript',
+          code: './ShopPayButton.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './ShopPayButton.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',

@@ -1,7 +1,7 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'metafield',
+  name: 'Metafield',
   category: 'components',
   isVisualComponent: true,
   related: [
@@ -24,8 +24,14 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './Metafield.example.tsx',
+          title: 'JavaScript',
+          code: './Metafield.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './Metafield.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',
@@ -35,7 +41,7 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'Props',
       type: 'MetafieldProps',
-      description: 'interface description',
+      description: '',
     },
   ],
 };

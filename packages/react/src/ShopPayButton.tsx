@@ -7,23 +7,24 @@ type ShopPayButtonProps = {
   className?: string;
   /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */
   width?: string;
-} & (
-  | {
-      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */
-      variantIds: string[];
-      /** An array of variant IDs and quantities to purchase with Shop Pay. */
-      variantIdsAndQuantities?: never;
-    }
-  | {
-      /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */
-      variantIds?: never;
-      /** An array of variant IDs and quantities to purchase with Shop Pay. */
-      variantIdsAndQuantities: Array<{
-        id: string;
-        quantity: number;
-      }>;
-    }
-);
+} & (ShopPayVariantIds | ShopPayVariantAndQuantities);
+
+type ShopPayVariantIds = {
+  /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`. */
+  variantIds: string[];
+  /** An array of variant IDs and quantities to purchase with Shop Pay. */
+  variantIdsAndQuantities?: never;
+};
+
+type ShopPayVariantAndQuantities = {
+  /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use `variantIdsAndQuantities`. */
+  variantIds?: never;
+  /** An array of variant IDs and quantities to purchase with Shop Pay. */
+  variantIdsAndQuantities: Array<{
+    id: string;
+    quantity: number;
+  }>;
+};
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

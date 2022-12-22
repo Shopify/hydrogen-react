@@ -24,8 +24,14 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          code: './Video.example.tsx',
+          title: 'JavaScript',
+          code: './Video.example.jsx',
           language: 'jsx',
+        },
+        {
+          title: 'TypeScript',
+          code: './Video.example.tsx',
+          language: 'tsx',
         },
       ],
       title: 'Example code',
@@ -35,7 +41,7 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'Props',
       type: 'VideoProps',
-      description: 'interface description',
+      description: '',
     },
   ],
 };
