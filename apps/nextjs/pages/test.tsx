@@ -7,10 +7,8 @@ import type {GetServerSideProps} from 'next';
 import {shopClient} from '../src/shopify-client';
 import type {IndexQueryQuery} from '../gql/graphql';
 import {
-  Image as ShopifyImage,
   type StorefrontApiResponseOk,
   useShop,
-  AnalyticsPageType,
 } from '@shopify/hydrogen-react';
 import Link from 'next/link';
 
@@ -30,10 +28,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     });
 
     // @TODO I don't love how we do this with 'errors' and 'data'
-    return {props: {data: {
-      pageType: AnalyticsPageType.home,
-      ...response
-    }, errors: null}};
+    return {props: {data: response, errors: null}};
   } catch (err) {
     console.error(err);
     return {props: {data: null, errors: [(err as Error).toString()]}};
@@ -59,16 +54,9 @@ export default function Home({
       </Head>
 
       <main className={styles.main}>
-        <h1>Welcome to {data?.shop.name} on NextJS</h1>
-
-        {/* @TODO Using hydrogen-react's <Image/> is nice, but we should also provide our 'loader' so you can used NextJS' Image component as well */}
-        <ShopifyImage
-          data={data.products.nodes[0].variants.nodes[0].image ?? {}}
-          width={500}
-          loading="eager"
-        />
+        <h1>Test Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
-        <Link href="/test">Go to Test</Link>
+        <Link href="/">Back to Home</Link>
       </main>
 
       <footer className={styles.footer}>
