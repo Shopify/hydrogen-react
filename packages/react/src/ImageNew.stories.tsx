@@ -41,15 +41,13 @@ Default.args = {
   as: 'img',
   src: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg',
   width: '100%',
-  height: undefined,
   config: {
     intervals: 10,
     startingWidth: 300,
     incrementSize: 300,
     placeholderWidth: 100,
   },
-  sizes: '100vw',
-  aspectRatio: '1/1',
   crop: 'center',
+  loading: 'lazy',
   loader: shopifyLoader,
 };
