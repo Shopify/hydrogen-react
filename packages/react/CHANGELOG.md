@@ -1,5 +1,19 @@
 # @shopify/hydrogen-react
 
+## 2022.10.8
+
+### Patch Changes
+
+- c1359eb: Actually add content to the READMEs so that they're seen when published to NPM.
+
+## 2022.10.7
+
+### Patch Changes
+
+- 3d3d123: This is the final release of the package called "Hydrogen-UI." This package will be renamed to "storefront-kit", and will be published as `@shopify/storefront-kit-react`.
+
+  See you in the new package!
+
 ## 2022.10.6
 
 ### Patch Changes
