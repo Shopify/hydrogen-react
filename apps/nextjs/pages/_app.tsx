@@ -8,6 +8,7 @@ import {
   getClientBrowserParameters,
   AnalyticsEventName,
   type ShopifyPageViewPayload,
+  type ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen-react';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
@@ -15,7 +16,7 @@ import {useEffect} from 'react';
 const analyticsShopData = {
   shopId: 55145660472,
   currency: 'USD',
-  storefrontId: '9928760',
+  acceptedLanguage: 'en',
 };
 let isInit = false;
 
@@ -24,7 +25,7 @@ export default function App({Component, pageProps}: AppProps) {
   const hasUserConsent = true;
   const analyticsPageData = {
     hasUserConsent,
-    pageType: pageProps.data.pageType,
+    pageType: pageProps.data?.pageType,
   }
 
   useEffect(() => {
@@ -70,5 +71,5 @@ function sendPageView(analyticsPageData: Partial<ShopifyPageViewPayload>) {
       ...analyticsShopData,
       ...analyticsPageData,
     } as ShopifyPageViewPayload
-  })
+  });
 }

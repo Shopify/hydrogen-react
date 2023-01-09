@@ -44,6 +44,7 @@ export type {
   ShopifyAddToCart,
   ShopifyAnalyticsPayload,
   ShopifyAnalytics,
+  ShopifyAnalyticsProduct,
 } from './shopify-analytics-types.js'
 export {ShopifyCookies} from './ShopifyCookies.js'
 export {

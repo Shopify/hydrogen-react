@@ -3,6 +3,7 @@ import {
   ShopifyPageViewPayload,
   ShopifyAddToCartPayload,
   ShopifyMonorailPayload,
+  ShopifyAnalyticsProduct,
 } from "../../shopify-analytics-types";
 import { AnalyticsPageType } from "../shopify-analytics-constants";
 import {addDataIf, schemaWrapper, stripGId, stripId} from "../shopify-analytics-utils";
@@ -42,7 +43,7 @@ export function pageView(payload: ShopifyAnalyticsPayload): ShopifyMonorailPaylo
       event_name: PRODUCT_PAGE_RENDERED_EVENT_NAME,
       ...additionalPayload,
       collection_name: pageViewPayload.collectionHandle,
-      products: pageViewPayload.products,
+      products: formatProductPayload(pageViewPayload.products),
       total_value: pageViewPayload.totalValue,
     }, formatPayload(pageViewPayload))));
   }
@@ -63,9 +64,9 @@ export function addToCart(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayl
   return [schemaWrapper(SCHEMA_ID, addDataIf({
     event_name: PRODUCT_ADDED_TO_CART_EVENT_NAME,
     customerId: addToCartPayload.customerId,
-    cart_token: stripId(addToCartPayload.cartToken),
+    cart_token: stripId(addToCartPayload.cartId),
     total_value: addToCartPayload.totalValue,
-    products: addToCartPayload.products
+    products: formatProductPayload(addToCartPayload.products),
   }, formatPayload(addToCartPayload)))];
 }
 
@@ -90,4 +91,26 @@ function formatPayload(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload
     shop_id: stripGId(payload.shopId),
     currency: payload.currency,
   };
+}
+
+function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
+  return products ? products.map((p: ShopifyAnalyticsProduct) => {
+    const p2 = p as ShopifyAnalyticsProduct;
+    console.log(p2);
+    const product = addDataIf({
+      variant_gid: p.variant_gid,
+      category: p.category,
+      sku: p.sku,
+      product_id: stripGId(p.product_gid),
+      variant_id: stripGId(p.variant_gid),
+    }, {
+      product_gid: p.product_gid,
+      name: p.name,
+      variant: p.variantName || '',
+      brand: p.brand,
+      price: p.price,
+      quantity: Number(p.quantity || 0),
+    })
+    return JSON.stringify(product as ShopifyAnalyticsProduct);
+  }) : [];
 }

@@ -9,8 +9,20 @@ import type {IndexQueryQuery} from '../gql/graphql';
 import {
   type StorefrontApiResponseOk,
   useShop,
+  AnalyticsPageType,
+  sendShopifyAnalytics,
+  AnalyticsEventName,
+  getClientBrowserParameters,
+  type ShopifyAddToCartPayload,
+  ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen-react';
 import Link from 'next/link';
+
+const analyticsShopData = {
+  shopId: 55145660472,
+  currency: 'USD',
+  acceptedLanguage: 'en',
+};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // @TODO figure out how to get the client's IP address correctly and accurately.
@@ -28,7 +40,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
     });
 
     // @TODO I don't love how we do this with 'errors' and 'data'
-    return {props: {data: response, errors: null}};
+    return {props: {data: {
+      pageType: AnalyticsPageType.product,
+      ...response
+    }, errors: null}};
   } catch (err) {
     console.error(err);
     return {props: {data: null, errors: [(err as Error).toString()]}};
@@ -45,6 +60,22 @@ export default function Home({
     console.error(errors);
     return <div>Whoops there was an error! Please refresh and try again.</div>;
   }
+
+  const product = data.products.nodes[0];
+  const variant = product.variants.nodes[0];
+
+  console.log(product, variant)
+
+  const productAnalytics: ShopifyAnalyticsProduct = {
+    product_gid: product.id,
+    // variant_gid: variant.id,
+    name: product.title,
+    // variantName: variant.title,
+    brand: product.vendor,
+    price: variant.price.amount,
+    quantity: 1,
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -56,6 +87,20 @@ export default function Home({
       <main className={styles.main}>
         <h1>Test Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
+        <br/>
+        <button onClick={() => {
+          sendShopifyAnalytics({
+            eventName: AnalyticsEventName.ADD_TO_CART,
+            payload: {
+              ...getClientBrowserParameters(),
+              ...analyticsShopData,
+              hasUserConsent: true,
+              cartId: '123',
+              products: [productAnalytics],
+            } as ShopifyAddToCartPayload
+          });
+        }}>Analytics - Add to cart</button>
+        <br/>
         <Link href="/">Back to Home</Link>
       </main>
 
@@ -76,7 +121,7 @@ export default function Home({
 }
 
 const query = graphql(`
-  query IndexQuery {
+  query TestQuery {
     shop {
       name
     }
@@ -86,11 +131,16 @@ const query = graphql(`
         # blah
         id
         title
+        vendor
         publishedAt
         handle
         variants(first: 1) {
           nodes {
             id
+            title
+            price {
+              amount
+            }
             image {
               url
               altText

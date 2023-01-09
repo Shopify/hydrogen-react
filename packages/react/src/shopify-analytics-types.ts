@@ -1,3 +1,7 @@
+import type {
+  Product,
+  ProductVariant,
+} from './storefront-api-types.js';
 import {AnalyticsEventName} from "./shopify-analytics/shopify-analytics-constants";
 
 export type ClientBrowserParameters = {
@@ -13,6 +17,18 @@ export type ClientBrowserParameters = {
   navigationApi: string;
 };
 
+export type ShopifyAnalyticsProduct = {
+  product_gid: Product['id'];
+  variant_gid?: ProductVariant['id'];
+  name: Product['title'];
+  variantName?: ProductVariant['title'];
+  brand: Product['vendor'];
+  category?: Product['productType'];
+  price: ProductVariant['price']['amount'];
+  sku?: ProductVariant['sku'];
+  quantity: number;
+}
+
 export type ShopifyCommonPayload = ClientBrowserParameters & {
   hasUserConsent: boolean;
   shopId: string | number;
@@ -21,7 +37,7 @@ export type ShopifyCommonPayload = ClientBrowserParameters & {
   acceptedLanguage?: string;
   customerId?: string;
   totalValue?: string;
-  products?: [];
+  products?: ShopifyAnalyticsProduct[];
 };
 
 export type ShopifyPageViewPayload = ShopifyCommonPayload & {
@@ -38,7 +54,8 @@ export type ShopifyPageView = {
 }
 
 export type ShopifyAddToCartPayload = ShopifyCommonPayload & {
-  cartToken: string;
+  /** The cart's ID if it has been created through the Storefront API. */
+  cartId: string;
 };
 
 export type ShopifyAddToCart = {
