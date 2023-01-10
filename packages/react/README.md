@@ -1,4 +1,6 @@
-<div align="center">
+**IMPORTANT** This package is being renamed to `@shopify/storefront-kit-react`. All future updates will be published to that package.
+
+<div style="text-align:center">
 
 # Hydrogen UI React
 
@@ -54,7 +56,7 @@ import {createStorefrontClient} from '@shopify/hydrogen-react';
 const client = createStorefrontClient({
   privateStorefrontToken: '...',
   storeDomain: 'myshop',
-  storefrontApiVersion: '2022-10',
+  storefrontApiVersion: '2023-01',
 });
 
 export const getStorefrontApiUrl = client.getStorefrontApiUrl;
