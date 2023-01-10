@@ -4,10 +4,10 @@ import {
   ShopifyAddToCartPayload,
   ShopifyMonorailPayload,
   ShopifyAnalyticsProduct,
-} from "../../shopify-analytics-types";
-import { AnalyticsPageType } from "../shopify-analytics-constants";
-import {addDataIf, schemaWrapper, stripGId, stripId} from "../shopify-analytics-utils";
-import {buildUUID} from "../shopify-cookies-utils";
+} from "./analytics-types";
+import { AnalyticsPageType, ShopifyAppSource } from "./analytics-constants";
+import {addDataIf, schemaWrapper, stripGId, stripId} from "./analytics-utils";
+import {buildUUID} from "./cookies-utils";
 
 const SCHEMA_ID = 'custom_storefront_customer_tracking/1.0';
 const PAGE_RENDERED_EVENT_NAME = 'page_rendered';
@@ -72,7 +72,7 @@ export function addToCart(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayl
 
 function formatPayload(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload {
   return {
-    source: 'hydrogen',
+    source: payload.shopifyAppSource || ShopifyAppSource.headless,
     hydrogenSubchannelId: payload.storefrontId || '0',
 
     is_persistent_cookie: payload.hasUserConsent,

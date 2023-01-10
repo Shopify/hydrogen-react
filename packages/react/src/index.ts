@@ -34,7 +34,7 @@ export {Video} from './Video.js';
 export {
   AnalyticsEventName,
   AnalyticsPageType,
-} from './shopify-analytics/shopify-analytics-constants'
+} from './analytics-constants'
 export type {
   ClientBrowserParameters,
   ShopifyPageViewPayload,
@@ -44,9 +44,9 @@ export type {
   ShopifyAnalyticsPayload,
   ShopifyAnalytics,
   ShopifyAnalyticsProduct,
-} from './shopify-analytics-types.js'
+} from './analytics-types.js'
 export {ShopifyCookies} from './ShopifyCookies.js'
 export {
   sendShopifyAnalytics,
   getClientBrowserParameters,
-} from './shopify-analytics.js';
+} from './analytics.js';

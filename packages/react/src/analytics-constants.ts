@@ -27,3 +27,13 @@ export enum AnalyticsPageType {
   policy = 'policy',
   search = 'search',
 }
+
+export enum ShopifyAppSource {
+  hydrogen = 'hydrogen',
+  headless = 'headless',
+}
+
+export const ShopifyAppId = {
+  hydrogen: '6167201',
+  headless: '12875497473',
+}

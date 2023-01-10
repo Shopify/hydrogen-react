@@ -2,7 +2,7 @@ import type {
   Product,
   ProductVariant,
 } from './storefront-api-types.js';
-import {AnalyticsEventName} from "./shopify-analytics/shopify-analytics-constants";
+import {AnalyticsEventName, ShopifyAppSource} from "./analytics-constants";
 
 export type ClientBrowserParameters = {
   uniqueToken: string;
@@ -29,7 +29,10 @@ export type ShopifyAnalyticsProduct = {
   quantity?: number;
 }
 
+export type ShopifyAppSources = keyof typeof ShopifyAppSource;
+
 export type ShopifyCommonPayload = ClientBrowserParameters & {
+  shopifyAppSource?: ShopifyAppSources;
   hasUserConsent: boolean;
   shopId: string | number;
   currency: string;

@@ -3,13 +3,13 @@ import type {
   ClientBrowserParameters,
   ShopifyAnalytics,
   ShopifyMonorailPayload,
-} from "./shopify-analytics-types";
-import {AnalyticsEventName} from "./shopify-analytics/shopify-analytics-constants";
-import {errorIfServer} from "./shopify-analytics/analytics-errors-utils";
-import {getShopifyCookies} from "./shopify-analytics/shopify-cookies-utils";
+} from "./analytics-types";
+import {AnalyticsEventName} from "./analytics-constants";
+import {errorIfServer} from "./analytics-errors-utils";
+import {getShopifyCookies} from "./cookies-utils";
 
-import * as TrekkieStorefrontPageView from './shopify-analytics/schemas/trekkie-storefront-page-view';
-import * as CustomStorefrontCustomerTracking from './shopify-analytics/schemas/custom-storefront-customer-tracking';
+import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view';
+import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking';
 
 export function sendShopifyAnalytics({
   eventName,

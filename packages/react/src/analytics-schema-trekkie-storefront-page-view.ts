@@ -2,9 +2,10 @@ import {
   ShopifyAnalyticsPayload,
   ShopifyPageViewPayload,
   ShopifyMonorailPayload,
-} from "../../shopify-analytics-types";
-import {addDataIf, schemaWrapper, stripGId, getResourceType} from "../shopify-analytics-utils";
-import {buildUUID} from "../shopify-cookies-utils";
+} from "./analytics-types";
+import { ShopifyAppId } from "./analytics-constants";
+import {addDataIf, schemaWrapper, stripGId, getResourceType} from "./analytics-utils";
+import {buildUUID} from "./cookies-utils";
 
 const SCHEMA_ID = 'trekkie_storefront_page_view/1.4';
 const oxygenDomain = 'myshopify.dev';
@@ -21,7 +22,7 @@ export function pageView(payload: ShopifyAnalyticsPayload): ShopifyMonorailPaylo
 
 function formatPayload(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload {
   return {
-    appClientId: '6167201',
+    appClientId: payload.shopifyAppSource ? ShopifyAppId[payload.shopifyAppSource] : ShopifyAppId.headless,
     isMerchantRequest: isMerchantRequest(payload.url),
     hydrogenSubchannelId: payload.storefrontId || '0',
 

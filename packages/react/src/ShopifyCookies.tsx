@@ -7,7 +7,7 @@ import {
 import {
   buildUUID,
   getShopifyCookies,
-} from './shopify-analytics/shopify-cookies-utils';
+} from './shopify-analytics/cookies-utils';
 
 const longTermLength = 60 * 60 * 24 * 360 * 1; // ~1 year expiry
 const shortTermLength = 60 * 30; // 30 mins
