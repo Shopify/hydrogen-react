@@ -5,24 +5,13 @@ import {graphql} from '../gql/gql';
 import {request} from 'graphql-request';
 import type {GetServerSideProps} from 'next';
 import {shopClient} from '../src/shopify-client';
-import type {IndexQueryQuery} from '../gql/graphql';
+import type {SearchQuery} from '../gql/graphql';
 import {
   type StorefrontApiResponseOk,
   useShop,
   AnalyticsPageType,
-  sendShopifyAnalytics,
-  AnalyticsEventName,
-  getClientBrowserParameters,
-  type ShopifyAddToCartPayload,
-  ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen-react';
 import Link from 'next/link';
-
-const analyticsShopData = {
-  shopId: 55145660472,
-  currency: 'USD',
-  acceptedLanguage: 'en',
-};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // @TODO figure out how to get the client's IP address correctly and accurately.
@@ -32,49 +21,44 @@ export const getServerSideProps: GetServerSideProps = async () => {
   //   req.socket.remoteAddress;
 
   try {
+    const searchTerm = 'liquid';
     const response = await request({
       url: shopClient.getStorefrontApiUrl(),
       document: query,
+      variables: {
+        searchTerm,
+      },
       // @TODO: convert to 'getPrivateTokenHeaders({buyerIp})'
       requestHeaders: shopClient.getPublicTokenHeaders(),
     });
 
     // @TODO I don't love how we do this with 'errors' and 'data'
-    return {props: {data: {
-      pageType: AnalyticsPageType.product,
-      ...response
-    }, errors: null}};
+    return {
+      props: {
+        data: response,
+        errors: null,
+        analytics: {
+          pageType: AnalyticsPageType.search,
+          searchString: searchTerm,
+        }
+      }
+    };
   } catch (err) {
     console.error(err);
     return {props: {data: null, errors: [(err as Error).toString()]}};
   }
 };
 
-export default function Home({
+export default function Search({
   data,
   errors,
-}: StorefrontApiResponseOk<IndexQueryQuery>) {
+}: StorefrontApiResponseOk<SearchQuery>) {
   const {storeDomain} = useShop();
 
   if (!data || errors) {
     console.error(errors);
     return <div>Whoops there was an error! Please refresh and try again.</div>;
   }
-
-  const product = data.products.nodes[0];
-  const variant = product.variants.nodes[0];
-
-  console.log(product, variant)
-
-  const productAnalytics: ShopifyAnalyticsProduct = {
-    product_gid: product.id,
-    // variant_gid: variant.id,
-    name: product.title,
-    // variantName: variant.title,
-    brand: product.vendor,
-    price: variant.price.amount,
-    quantity: 1,
-  };
 
   return (
     <div className={styles.container}>
@@ -85,23 +69,12 @@ export default function Home({
       </Head>
 
       <main className={styles.main}>
-        <h1>Test Page</h1>
+        <h1>Search Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
         <br/>
-        <button onClick={() => {
-          sendShopifyAnalytics({
-            eventName: AnalyticsEventName.ADD_TO_CART,
-            payload: {
-              ...getClientBrowserParameters(),
-              ...analyticsShopData,
-              hasUserConsent: true,
-              cartId: '123',
-              products: [productAnalytics],
-            } as ShopifyAddToCartPayload
-          });
-        }}>Analytics - Add to cart</button>
-        <br/>
         <Link href="/">Back to Home</Link>
+        <Link href="/collection">Go to Collection</Link>
+        <Link href="/product">Go to Product</Link>
       </main>
 
       <footer className={styles.footer}>
@@ -121,34 +94,19 @@ export default function Home({
 }
 
 const query = graphql(`
-  query TestQuery {
-    shop {
-      name
-    }
-    products(first: 1) {
-      nodes {
-        # if you uncomment 'blah', it should have a GraphQL validation error in your IDE if you have a GraphQL plugin. It should also give an error during 'npm run dev'
-        # blah
-        id
-        title
-        vendor
-        publishedAt
-        handle
-        variants(first: 1) {
-          nodes {
-            id
-            title
-            price {
-              amount
-            }
-            image {
-              url
-              altText
-              width
-              height
-            }
-          }
-        }
+  query Search (
+    $searchTerm: String
+  ) {
+    products(
+      first: 1
+      sortKey: RELEVANCE
+      query: $searchTerm
+    ) {
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
       }
     }
   }

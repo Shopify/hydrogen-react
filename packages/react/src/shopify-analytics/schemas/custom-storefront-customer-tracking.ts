@@ -95,8 +95,6 @@ function formatPayload(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload
 
 function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
   return products ? products.map((p: ShopifyAnalyticsProduct) => {
-    const p2 = p as ShopifyAnalyticsProduct;
-    console.log(p2);
     const product = addDataIf({
       variant_gid: p.variant_gid,
       category: p.category,

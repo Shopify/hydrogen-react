@@ -27,7 +27,6 @@ export function sendShopifyAnalytics({
       break;
   }
 
-  console.log(events);
   sendToShopify(events);
 }
 

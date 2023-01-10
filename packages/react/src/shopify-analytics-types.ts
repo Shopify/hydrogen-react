@@ -26,7 +26,7 @@ export type ShopifyAnalyticsProduct = {
   category?: Product['productType'];
   price: ProductVariant['price']['amount'];
   sku?: ProductVariant['sku'];
-  quantity: number;
+  quantity?: number;
 }
 
 export type ShopifyCommonPayload = ClientBrowserParameters & {
