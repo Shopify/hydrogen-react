@@ -10,7 +10,7 @@ React Storefront Kit is a library of reusable components and utilities for build
 
 **Note:** React Storefront Kit is currently available as an experimental (beta) feature and functionality is subject to change.
 
-📚 [Docs](https://shopify.dev/custom-storefronts/hydrogen/alternate-frameworks) | 🗣 [Discord](https://discord.gg/Hefq6w5c5d) | 📝 [Changelog](https://github.com/Shopify/storefront-kit/blob/main/packages/react/CHANGELOG.md) | 🖼 [Hydrogen Framework](https://github.com/Shopify/hydrogen)
+📚 [Docs](https://shopify.dev/custom-storefronts/react-storefront-kit) | 🗣 [Discord](https://discord.gg/Hefq6w5c5d) | 📝 [Changelog](https://github.com/Shopify/storefront-kit/blob/main/packages/react/CHANGELOG.md) | 🖼 [Hydrogen Framework](https://github.com/Shopify/hydrogen)
 
 </div>
 
