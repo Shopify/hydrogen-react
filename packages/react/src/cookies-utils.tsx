@@ -15,7 +15,7 @@ export function buildUUID(): string {
     // Generate a strong UUID
     let i = 0;
     hash = tokenHash
-      .replace(/[x]/g, (c: string, ...args: any[]): string => {
+      .replace(/[x]/g, (c: string): string => {
         const r = randomValuesArray[i] % 16;
         const v = c === 'x' ? r : (r & 0x3) | 0x8;
         i++;
@@ -25,7 +25,7 @@ export function buildUUID(): string {
   } catch (err) {
     // crypto not available, generate weak UUID
     hash = tokenHash
-      .replace(/[x]/g, (c: string, ...args: any[]): string => {
+      .replace(/[x]/g, (c: string): string => {
         const r = (Math.random() * 16) | 0;
         const v = c === 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);

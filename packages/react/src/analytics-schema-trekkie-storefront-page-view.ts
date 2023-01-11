@@ -63,7 +63,7 @@ function formatPayload(
   };
 }
 
-function isMerchantRequest(url: string): Boolean {
+function isMerchantRequest(url: string): boolean {
   const hostname = new URL(url).hostname;
   if (hostname.indexOf(oxygenDomain) !== -1 || hostname === 'localhost') {
     return true;

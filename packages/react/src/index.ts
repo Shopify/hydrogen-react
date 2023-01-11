@@ -31,7 +31,7 @@ export type {
 export {createStorefrontClient} from './storefront-client.js';
 export {useMoney} from './useMoney.js';
 export {Video} from './Video.js';
-export {AnalyticsEventName, AnalyticsPageType} from './analytics-constants';
+export {AnalyticsEventName, AnalyticsPageType} from './analytics-constants.js';
 export type {
   ClientBrowserParameters,
   ShopifyPageViewPayload,

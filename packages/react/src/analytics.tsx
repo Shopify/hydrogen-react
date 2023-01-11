@@ -1,10 +1,10 @@
-import {SHOPIFY_S, SHOPIFY_Y} from './cart-constants';
+import {SHOPIFY_S, SHOPIFY_Y} from './cart-constants.js';
 import type {
   ClientBrowserParameters,
   ShopifyAnalytics,
   ShopifyMonorailPayload,
-} from './analytics-types';
-import {AnalyticsEventName} from './analytics-constants';
+} from './analytics-types.js';
+import {AnalyticsEventName} from './analytics-constants.js';
 import {errorIfServer} from './analytics-errors-utils.js';
 import {getShopifyCookies} from './cookies-utils.js';
 
@@ -73,7 +73,9 @@ function sendToShopify(events: ShopifyMonorailPayload[]) {
   }
 }
 
-export function getClientBrowserParameters(): ClientBrowserParameters | {} {
+export function getClientBrowserParameters():
+  | ClientBrowserParameters
+  | Record<string, never> {
   if (errorIfServer('getClientBrowserParameters')) {
     return {};
   }
@@ -104,7 +106,9 @@ function getNavigationTypeExperimental() {
     if (navigationEntries && navigationEntries[0]) {
       //  https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming
       const rawType = (
-        window.performance.getEntriesByType('navigation')[0] as any
+        window.performance.getEntriesByType(
+          'navigation'
+        )[0] as PerformanceNavigationTiming
       )['type'];
       const navType = rawType && rawType.toString();
 
