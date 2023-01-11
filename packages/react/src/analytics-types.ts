@@ -1,8 +1,5 @@
-import type {
-  Product,
-  ProductVariant,
-} from './storefront-api-types.js';
-import {AnalyticsEventName, ShopifyAppSource} from "./analytics-constants.js";
+import type {Product, ProductVariant} from './storefront-api-types.js';
+import {AnalyticsEventName, ShopifyAppSource} from './analytics-constants.js';
 
 export type ClientBrowserParameters = {
   uniqueToken: string;
@@ -27,7 +24,7 @@ export type ShopifyAnalyticsProduct = {
   price: ProductVariant['price']['amount'];
   sku?: ProductVariant['sku'];
   quantity?: number;
-}
+};
 
 export type ShopifyAppSources = keyof typeof ShopifyAppSource;
 
@@ -52,9 +49,9 @@ export type ShopifyPageViewPayload = ShopifyCommonPayload & {
 };
 
 export type ShopifyPageView = {
-  eventName: AnalyticsEventName.PAGE_VIEW,
-  payload: ShopifyPageViewPayload
-}
+  eventName: AnalyticsEventName.PAGE_VIEW;
+  payload: ShopifyPageViewPayload;
+};
 
 export type ShopifyAddToCartPayload = ShopifyCommonPayload & {
   /** The cart's ID if it has been created through the Storefront API. */
@@ -62,10 +59,12 @@ export type ShopifyAddToCartPayload = ShopifyCommonPayload & {
 };
 
 export type ShopifyAddToCart = {
-  eventName: AnalyticsEventName.ADD_TO_CART,
-  payload: ShopifyAddToCartPayload,
-}
+  eventName: AnalyticsEventName.ADD_TO_CART;
+  payload: ShopifyAddToCartPayload;
+};
 
 export type ShopifyMonorailPayload = Record<string, unknown>;
-export type ShopifyAnalyticsPayload = ShopifyPageViewPayload | ShopifyAddToCartPayload;
+export type ShopifyAnalyticsPayload =
+  | ShopifyPageViewPayload
+  | ShopifyAddToCartPayload;
 export type ShopifyAnalytics = ShopifyPageView | ShopifyAddToCart;

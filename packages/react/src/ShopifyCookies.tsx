@@ -1,13 +1,7 @@
 import {useEffect} from 'react';
 import {stringify} from 'worktop/cookie';
-import {
-  SHOPIFY_Y,
-  SHOPIFY_S,
-} from './cart-constants.js';
-import {
-  buildUUID,
-  getShopifyCookies,
-} from './cookies-utils.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
+import {buildUUID, getShopifyCookies} from './cookies-utils.js';
 
 const longTermLength = 60 * 60 * 24 * 360 * 1; // ~1 year expiry
 const shortTermLength = 60 * 30; // 30 mins
@@ -23,10 +17,7 @@ interface ShopifyCookiesProps {
 }
 
 export function ShopifyCookies(props: ShopifyCookiesProps) {
-  const {
-    domain = '',
-    hasUserConsent = false,
-  } = props;
+  const {domain = '', hasUserConsent = false} = props;
 
   useEffect(() => {
     const cookies = getShopifyCookies(document.cookie);

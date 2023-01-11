@@ -1,29 +1,30 @@
-import {SHOPIFY_S, SHOPIFY_Y} from "./cart-constants";
+import {SHOPIFY_S, SHOPIFY_Y} from './cart-constants';
 import type {
   ClientBrowserParameters,
   ShopifyAnalytics,
   ShopifyMonorailPayload,
-} from "./analytics-types";
-import {AnalyticsEventName} from "./analytics-constants";
-import {errorIfServer} from "./analytics-errors-utils.js";
-import {getShopifyCookies} from "./cookies-utils.js";
+} from './analytics-types';
+import {AnalyticsEventName} from './analytics-constants';
+import {errorIfServer} from './analytics-errors-utils.js';
+import {getShopifyCookies} from './cookies-utils.js';
 
 import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view.js';
 import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking.js';
 
-export function sendShopifyAnalytics({
-  eventName,
-  payload
-}: ShopifyAnalytics) {
+export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
   let events: ShopifyMonorailPayload[] = [];
 
-  switch(eventName) {
+  switch (eventName) {
     case AnalyticsEventName.PAGE_VIEW:
       events = events.concat(TrekkieStorefrontPageView.pageView(payload));
-      events = events.concat(CustomStorefrontCustomerTracking.pageView(payload));
+      events = events.concat(
+        CustomStorefrontCustomerTracking.pageView(payload)
+      );
       break;
     case AnalyticsEventName.ADD_TO_CART:
-      events = events.concat(CustomStorefrontCustomerTracking.addToCart(payload));
+      events = events.concat(
+        CustomStorefrontCustomerTracking.addToCart(payload)
+      );
       break;
   }
 
@@ -33,7 +34,7 @@ export function sendShopifyAnalytics({
 type MonorailResponse = {
   status: number;
   message: string;
-}
+};
 
 const ERROR_MESSAGE = 'sendShopifyAnalytics request is unsuccessful';
 
@@ -53,19 +54,20 @@ function sendToShopify(events: ShopifyMonorailPayload[]) {
       },
       body: JSON.stringify(eventsToBeSent),
     })
-    .then(response => response.text())
-    .then(data => {
-      if (data) {
-        const jsonResponse = JSON.parse(data);
-        jsonResponse.result.forEach(((eventResponse: MonorailResponse) => {
-          if(eventResponse.status !== 200) {
-            console.error(ERROR_MESSAGE, '\n\n' , eventResponse.message);
-          }
-        }))
-      }
-    }).catch(err => {
-      console.error(ERROR_MESSAGE, err)
-    });
+      .then((response) => response.text())
+      .then((data) => {
+        if (data) {
+          const jsonResponse = JSON.parse(data);
+          jsonResponse.result.forEach((eventResponse: MonorailResponse) => {
+            if (eventResponse.status !== 200) {
+              console.error(ERROR_MESSAGE, '\n\n', eventResponse.message);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(ERROR_MESSAGE, err);
+      });
   } catch (error) {
     // Do nothing
   }

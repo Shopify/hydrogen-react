@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       url: shopClient.getStorefrontApiUrl(),
       document: query,
       variables: {
-        handle: 'freestyle'
+        handle: 'freestyle',
       },
       // @TODO: convert to 'getPrivateTokenHeaders({buyerIp})'
       requestHeaders: shopClient.getPublicTokenHeaders(),
@@ -46,8 +46,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
           pageType: AnalyticsPageType.collection,
           resourceId: collection.id,
           collectionHandle: collection.handle,
-        }
-      }
+        },
+      },
     };
   } catch (err) {
     console.error(err);
@@ -77,9 +77,9 @@ export default function Collection({
       <main className={styles.main}>
         <h1>Collection Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
-        <br/>
+        <br />
 
-        <br/>
+        <br />
         <Link href="/">Back to Home</Link>
         <Link href="/product">Go to Product</Link>
         <Link href="/search">Go to Search</Link>
@@ -102,9 +102,7 @@ export default function Collection({
 }
 
 const query = graphql(`
-  query Collection (
-    $handle: String!
-  ) {
+  query Collection($handle: String!) {
     collection(handle: $handle) {
       id
       handle

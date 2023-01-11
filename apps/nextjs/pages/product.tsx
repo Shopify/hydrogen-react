@@ -54,9 +54,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
         analytics: {
           pageType: AnalyticsPageType.product,
           resourceId: product.id,
-          products: [productAnalytics]
-        }
-      }
+          products: [productAnalytics],
+        },
+      },
     };
   } catch (err) {
     console.error(err);
@@ -67,8 +67,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function Product({
   data,
   errors,
-  analytics
-}: StorefrontApiResponseOk<ProductQuery> & {analytics: ShopifyAnalyticsPayload}) {
+  analytics,
+}: StorefrontApiResponseOk<ProductQuery> & {
+  analytics: ShopifyAnalyticsPayload;
+}) {
   const {storeDomain} = useShop();
 
   if (!data || errors) {
@@ -87,24 +89,30 @@ export default function Product({
       <main className={styles.main}>
         <h1>Product Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
-        <br/>
-        <button onClick={() => {
-          if (analytics.products) {
-            const product = analytics.products[0];
-            sendShopifyAnalytics({
-              eventName: AnalyticsEventName.ADD_TO_CART,
-              payload: {
-                ...getClientBrowserParameters(),
-                ...analytics,
-                products: [{
-                  ...product,
-                  quantity: 1,
-                }]
-              } as ShopifyAddToCartPayload
-            });
-          }
-        }}>Analytics - Add to cart</button>
-        <br/>
+        <br />
+        <button
+          onClick={() => {
+            if (analytics.products) {
+              const product = analytics.products[0];
+              sendShopifyAnalytics({
+                eventName: AnalyticsEventName.ADD_TO_CART,
+                payload: {
+                  ...getClientBrowserParameters(),
+                  ...analytics,
+                  products: [
+                    {
+                      ...product,
+                      quantity: 1,
+                    },
+                  ],
+                } as ShopifyAddToCartPayload,
+              });
+            }
+          }}
+        >
+          Analytics - Add to cart
+        </button>
+        <br />
         <Link href="/">Back to Home</Link>
         <Link href="/collection">Go to Collection</Link>
         <Link href="/search">Go to Search</Link>

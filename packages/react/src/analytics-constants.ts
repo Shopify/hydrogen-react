@@ -36,4 +36,4 @@ export enum ShopifyAppSource {
 export const ShopifyAppId = {
   hydrogen: '6167201',
   headless: '12875497473',
-}
+};

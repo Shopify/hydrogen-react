@@ -20,7 +20,7 @@ const analyticsShopData = {
 let isInit = false;
 
 export default function App({Component, pageProps}: AppProps) {
-  const router = useRouter()
+  const router = useRouter();
   const hasUserConsent = true;
   const analytics = {
     hasUserConsent,
@@ -35,7 +35,7 @@ export default function App({Component, pageProps}: AppProps) {
   useEffect(() => {
     const handleRouteChange = () => {
       sendPageView(analytics);
-    }
+    };
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
@@ -46,9 +46,9 @@ export default function App({Component, pageProps}: AppProps) {
     }
 
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [analytics])
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [analytics]);
 
   return (
     <ShopifyProvider
@@ -62,7 +62,7 @@ export default function App({Component, pageProps}: AppProps) {
       <CartProvider>
         <Component {...pagePropsWithAppAnalytics} />
       </CartProvider>
-      <ShopifyCookies domain='' hasUserConsent={hasUserConsent}/>
+      <ShopifyCookies domain="" hasUserConsent={hasUserConsent} />
     </ShopifyProvider>
   );
 }
@@ -73,6 +73,6 @@ function sendPageView(analyticsPageData: Partial<ShopifyPageViewPayload>) {
     payload: {
       ...getClientBrowserParameters(),
       ...analyticsPageData,
-    } as ShopifyPageViewPayload
+    } as ShopifyPageViewPayload,
   });
 }

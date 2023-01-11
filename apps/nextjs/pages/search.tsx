@@ -40,8 +40,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
         analytics: {
           pageType: AnalyticsPageType.search,
           searchString: searchTerm,
-        }
-      }
+        },
+      },
     };
   } catch (err) {
     console.error(err);
@@ -71,7 +71,7 @@ export default function Search({
       <main className={styles.main}>
         <h1>Search Page</h1>
         <div>Storefront API Domain: {storeDomain}</div>
-        <br/>
+        <br />
         <Link href="/">Back to Home</Link>
         <Link href="/collection">Go to Collection</Link>
         <Link href="/product">Go to Product</Link>
@@ -94,14 +94,8 @@ export default function Search({
 }
 
 const query = graphql(`
-  query Search (
-    $searchTerm: String
-  ) {
-    products(
-      first: 1
-      sortKey: RELEVANCE
-      query: $searchTerm
-    ) {
+  query Search($searchTerm: String) {
+    products(first: 1, sortKey: RELEVANCE, query: $searchTerm) {
       pageInfo {
         startCursor
         endCursor

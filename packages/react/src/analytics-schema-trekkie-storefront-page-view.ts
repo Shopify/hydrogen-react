@@ -2,27 +2,46 @@ import {
   ShopifyAnalyticsPayload,
   ShopifyPageViewPayload,
   ShopifyMonorailPayload,
-} from "./analytics-types.js";
-import { ShopifyAppId } from "./analytics-constants.js";
-import {addDataIf, schemaWrapper, stripGId, getResourceType} from "./analytics-utils.js";
-import {buildUUID} from "./cookies-utils.js";
+} from './analytics-types.js';
+import {ShopifyAppId} from './analytics-constants.js';
+import {
+  addDataIf,
+  schemaWrapper,
+  stripGId,
+  getResourceType,
+} from './analytics-utils.js';
+import {buildUUID} from './cookies-utils.js';
 
 const SCHEMA_ID = 'trekkie_storefront_page_view/1.4';
 const oxygenDomain = 'myshopify.dev';
 
-export function pageView(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload[] {
+export function pageView(
+  payload: ShopifyAnalyticsPayload
+): ShopifyMonorailPayload[] {
   const pageViewPayload = payload as ShopifyPageViewPayload;
-  return [schemaWrapper(SCHEMA_ID, addDataIf({
-    pageType: pageViewPayload.pageType,
-    customerId: pageViewPayload.customerId,
-    resourceType: getResourceType(pageViewPayload.resourceId),
-    resourceId: stripGId(pageViewPayload.resourceId),
-  }, formatPayload(pageViewPayload)))];
+  return [
+    schemaWrapper(
+      SCHEMA_ID,
+      addDataIf(
+        {
+          pageType: pageViewPayload.pageType,
+          customerId: pageViewPayload.customerId,
+          resourceType: getResourceType(pageViewPayload.resourceId),
+          resourceId: stripGId(pageViewPayload.resourceId),
+        },
+        formatPayload(pageViewPayload)
+      )
+    ),
+  ];
 }
 
-function formatPayload(payload: ShopifyAnalyticsPayload): ShopifyMonorailPayload {
+function formatPayload(
+  payload: ShopifyAnalyticsPayload
+): ShopifyMonorailPayload {
   return {
-    appClientId: payload.shopifyAppSource ? ShopifyAppId[payload.shopifyAppSource] : ShopifyAppId.headless,
+    appClientId: payload.shopifyAppSource
+      ? ShopifyAppId[payload.shopifyAppSource]
+      : ShopifyAppId.headless,
     isMerchantRequest: isMerchantRequest(payload.url),
     hydrogenSubchannelId: payload.storefrontId || '0',
 

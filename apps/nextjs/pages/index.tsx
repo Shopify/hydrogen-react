@@ -36,8 +36,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
         errors: null,
         analytics: {
           pageType: AnalyticsPageType.home,
-        }
-      }
+        },
+      },
     };
   } catch (err) {
     console.error(err);
@@ -73,11 +73,10 @@ export default function Home({
           loading="eager"
         />
         <div>Storefront API Domain: {storeDomain}</div>
-        <br/>
+        <br />
         <Link href="/collection">Go to Collection</Link>
         <Link href="/product">Go to Product</Link>
         <Link href="/search">Go to Search</Link>
-
       </main>
 
       <footer className={styles.footer}>

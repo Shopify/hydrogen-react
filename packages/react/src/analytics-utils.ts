@@ -1,4 +1,4 @@
-import type {ShopifyMonorailPayload} from "./analytics-types.js";
+import type {ShopifyMonorailPayload} from './analytics-types.js';
 
 export function schemaWrapper(schemaId: string, payload: unknown) {
   return {

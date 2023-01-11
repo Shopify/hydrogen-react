@@ -1,8 +1,5 @@
-import {parse} from "worktop/cookie";
-import {
-  SHOPIFY_Y,
-  SHOPIFY_S,
-} from "./cart-constants.js";
+import {parse} from 'worktop/cookie';
+import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
 
 const zeros = '00000000';
 const tokenHash = 'xxxx-4xxx-xxxx-xxxxxxxxxxxx';
@@ -63,12 +60,12 @@ export function hexTime(): string {
 export type ShopifyCookies = {
   [SHOPIFY_Y]: string;
   [SHOPIFY_S]: string;
-}
+};
 
 export function getShopifyCookies(cookies: string): ShopifyCookies {
   const cookieData = parse(cookies);
   return {
     [SHOPIFY_Y]: cookieData[SHOPIFY_Y],
     [SHOPIFY_S]: cookieData[SHOPIFY_S],
-  }
+  };
 }
