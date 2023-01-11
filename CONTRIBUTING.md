@@ -48,10 +48,13 @@ If you need a helper function that is shared between the tests and stories files
 Processes that need to happen:
 
 - Create a new branch for the version, e.g. `2022-10`.
+- Comment out the "Create release pull request or publish" job in `releases.yml` so that it won't auto-publish a new version of the branch until you're ready
+- Create a new changeset. Use this changeset to add notes and guides to important things that are changed as part of this update.
 - Do a find & replace in the code to replace nearly all instances of the old version with the new version.
   - However, don't replace documentation unless it makes sense.
   - Also be careful that some versions of the Storefront API don't exactly match code here: for example, SFAPI `2022-07` could be both `2022-07` and `2022-7` in this codebase.
 - Run the `graphql-types` NPM script to generate the new types.
+  - Look through the new schema and see if there are any breaking changes
   - If there are new scalars, or scalars are removed, update the `codegen.yml` file's custom scalar settings and run the command again.
 - Search for all instances of `@deprecated` and see if it is time to make that breaking change
 - Run the `ci:checks` NPM script and fix any issues that may come up.
@@ -60,4 +63,5 @@ Processes that need to happen:
   - Do one last `ci:checks`
   - Push the branch up to Github. Do _not_ make a Pull Request - we want the older Storefront API branch to stay as a snapshot of the code that was there at that release.
 - Change the default branch in Github to the newly-created branch.
+- Un-comment out the "Create release pull request or publish" job in `releases.yml`
 - Create a new changelog and PR to officially publish the new version

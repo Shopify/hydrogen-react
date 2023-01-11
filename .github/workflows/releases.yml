@@ -18,8 +18,8 @@ jobs:
         id: flags
         run: |
           # IMPORTANT: Update this variable whenever we move to a new major version:
-          latest_branch=2022-10
-          echo "latest=${{ github.ref_name == '2022-10' }}" >> $GITHUB_ENV
+          latest_branch=2023-01
+          echo "latest=${{ github.ref_name == '2023-01' }}" >> $GITHUB_ENV
 
       - name: Checkout the code
         uses: actions/checkout@v3
@@ -36,17 +36,17 @@ jobs:
       - name: Install the packages
         run: yarn install --frozen-lockfile --ignore-engines
 
-      - name: (latest) Create Release Pull Request or Publish
-        if: env.latest == 'true'
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: yarn changeset publish
-          commit: '[ci] release ${{ github.ref_name }}'
-          title: '[ci] release ${{ github.ref_name }}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: (latest) Create Release Pull Request or Publish
+      #   if: env.latest == 'true'
+      #   id: changesets
+      #   uses: changesets/action@v1
+      #   with:
+      #     publish: yarn changeset publish
+      #     commit: '[ci] release ${{ github.ref_name }}'
+      #     title: '[ci] release ${{ github.ref_name }}'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: (legacy) Create Release Pull Request or Publish
         if: env.latest != 'true'
