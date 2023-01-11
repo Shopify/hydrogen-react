@@ -4,10 +4,10 @@ import {
   ShopifyAddToCartPayload,
   ShopifyMonorailPayload,
   ShopifyAnalyticsProduct,
-} from "./analytics-types";
-import { AnalyticsPageType, ShopifyAppSource } from "./analytics-constants";
-import {addDataIf, schemaWrapper, stripGId, stripId} from "./analytics-utils";
-import {buildUUID} from "./cookies-utils";
+} from "./analytics-types.js";
+import { AnalyticsPageType, ShopifyAppSource } from "./analytics-constants.js";
+import {addDataIf, schemaWrapper, stripGId, stripId} from "./analytics-utils.js";
+import {buildUUID} from "./cookies-utils.js";
 
 const SCHEMA_ID = 'custom_storefront_customer_tracking/1.0';
 const PAGE_RENDERED_EVENT_NAME = 'page_rendered';

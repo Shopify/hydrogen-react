@@ -5,11 +5,11 @@ import type {
   ShopifyMonorailPayload,
 } from "./analytics-types";
 import {AnalyticsEventName} from "./analytics-constants";
-import {errorIfServer} from "./analytics-errors-utils";
-import {getShopifyCookies} from "./cookies-utils";
+import {errorIfServer} from "./analytics-errors-utils.js";
+import {getShopifyCookies} from "./cookies-utils.js";
 
-import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view';
-import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking';
+import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view.js';
+import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking.js';
 
 export function sendShopifyAnalytics({
   eventName,

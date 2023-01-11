@@ -2,7 +2,7 @@ import type {
   Product,
   ProductVariant,
 } from './storefront-api-types.js';
-import {AnalyticsEventName, ShopifyAppSource} from "./analytics-constants";
+import {AnalyticsEventName, ShopifyAppSource} from "./analytics-constants.js";
 
 export type ClientBrowserParameters = {
   uniqueToken: string;

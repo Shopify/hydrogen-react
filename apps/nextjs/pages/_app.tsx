@@ -8,7 +8,6 @@ import {
   getClientBrowserParameters,
   AnalyticsEventName,
   type ShopifyPageViewPayload,
-  type ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen-react';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';

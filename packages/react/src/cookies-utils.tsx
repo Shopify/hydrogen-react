@@ -2,7 +2,7 @@ import {parse} from "worktop/cookie";
 import {
   SHOPIFY_Y,
   SHOPIFY_S,
-} from "./cart-constants";
+} from "./cart-constants.js";
 
 const zeros = '00000000';
 const tokenHash = 'xxxx-4xxx-xxxx-xxxxxxxxxxxx';

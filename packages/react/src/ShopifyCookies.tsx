@@ -3,11 +3,11 @@ import {stringify} from 'worktop/cookie';
 import {
   SHOPIFY_Y,
   SHOPIFY_S,
-} from './cart-constants';
+} from './cart-constants.js';
 import {
   buildUUID,
   getShopifyCookies,
-} from './shopify-analytics/cookies-utils';
+} from './cookies-utils.js';
 
 const longTermLength = 60 * 60 * 24 * 360 * 1; // ~1 year expiry
 const shortTermLength = 60 * 30; // 30 mins

@@ -2,10 +2,10 @@ import {
   ShopifyAnalyticsPayload,
   ShopifyPageViewPayload,
   ShopifyMonorailPayload,
-} from "./analytics-types";
-import { ShopifyAppId } from "./analytics-constants";
-import {addDataIf, schemaWrapper, stripGId, getResourceType} from "./analytics-utils";
-import {buildUUID} from "./cookies-utils";
+} from "./analytics-types.js";
+import { ShopifyAppId } from "./analytics-constants.js";
+import {addDataIf, schemaWrapper, stripGId, getResourceType} from "./analytics-utils.js";
+import {buildUUID} from "./cookies-utils.js";
 
 const SCHEMA_ID = 'trekkie_storefront_page_view/1.4';
 const oxygenDomain = 'myshopify.dev';
