@@ -22,7 +22,7 @@ export function pageView(
   const pageViewPayload = payload as ShopifyPageViewPayload;
   const additionalPayload = {
     canonical_url: pageViewPayload.canonicalUrl || pageViewPayload.url,
-    customerId: pageViewPayload.customerId,
+    customer_id: pageViewPayload.customerId,
   };
   const pageType = pageViewPayload.pageType;
   const pageViewEvents = [];
@@ -64,7 +64,6 @@ export function pageView(
           {
             event_name: PRODUCT_PAGE_RENDERED_EVENT_NAME,
             ...additionalPayload,
-            collection_name: pageViewPayload.collectionHandle,
             products: formatProductPayload(pageViewPayload.products),
             total_value: pageViewPayload.totalValue,
           },
@@ -150,14 +149,14 @@ function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
     ? products.map((p: ShopifyAnalyticsProduct) => {
         const product = addDataIf(
           {
-            variant_gid: p.variant_gid,
+            variant_gid: p.variantGid,
             category: p.category,
             sku: p.sku,
             product_id: parseGid(p.product_gid).id,
             variant_id: parseGid(p.variant_gid).id,
           },
           {
-            product_gid: p.product_gid,
+            product_gid: p.productGid,
             name: p.name,
             variant: p.variantName || '',
             brand: p.brand,

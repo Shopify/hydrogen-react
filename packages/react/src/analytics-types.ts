@@ -15,8 +15,8 @@ export type ClientBrowserParameters = {
 };
 
 export type ShopifyAnalyticsProduct = {
-  product_gid: Product['id'];
-  variant_gid?: ProductVariant['id'];
+  productGid: Product['id'];
+  variantGid?: ProductVariant['id'];
   name: Product['title'];
   variantName?: ProductVariant['title'];
   brand: Product['vendor'];
@@ -36,7 +36,7 @@ export type ShopifyCommonPayload = ClientBrowserParameters & {
   storefrontId?: string;
   acceptedLanguage?: string;
   customerId?: string;
-  totalValue?: string;
+  totalValue?: number;
   products?: ShopifyAnalyticsProduct[];
 };
 
