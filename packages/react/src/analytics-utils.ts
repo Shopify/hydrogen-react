@@ -26,16 +26,16 @@ export function schemaWrapper(schemaId: string, payload: object) {
  * Parses global id (gid) and returns the resource type and id.
  * @see https://shopify.dev/api/usage/gids
  * @param gid - A shopify GID (string)
- * @returns \{ id: string, resource: string \}
+ * @returns \{ id: number, resource: string \}
  *
  * @example
  * ```ts
  * const {id, resource} = parseGid('gid://shopify/Order/123')
- * // => id = '123', resource = 'Order'
+ * // => id = 123, resource = 'Order'
  * ```
  **/
 export function parseGid(gid: string | undefined): {
-  id: string | null;
+  id: number | null;
   resource: string | null;
 } {
   if (typeof gid !== 'string') return {id: null, resource: null};
@@ -43,7 +43,9 @@ export function parseGid(gid: string | undefined): {
   if (!matches || matches.length === 1) {
     return {id: null, resource: null};
   }
-  return {id: matches[2] ?? null, resource: matches[1] ?? null};
+  const id = matches[2] ? parseInt(matches[2], 10) : null;
+  const resource = matches[1] ? matches[1] : null;
+  return {id, resource};
 }
 
 /**

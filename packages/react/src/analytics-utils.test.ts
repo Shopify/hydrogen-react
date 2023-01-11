@@ -4,7 +4,7 @@ describe('analytic-utils', () => {
   describe('parseGid', () => {
     it('returns the id and resource type from a gid', () => {
       const {id, resource} = parseGid('gid://shopify/Order/123');
-      expect(id).toBe('123');
+      expect(id).toBe(123);
       expect(resource).toBe('Order');
     });
 
@@ -23,7 +23,7 @@ describe('analytic-utils', () => {
 
     it('returns the id and resource type from a gid with a query string', () => {
       const {id, resource} = parseGid('gid://shopify/Order/123?namespace=123');
-      expect(id).toBe('123');
+      expect(id).toBe(123);
       expect(resource).toBe('Order');
     });
 
@@ -31,7 +31,7 @@ describe('analytic-utils', () => {
       const {id, resource} = parseGid(
         'gid://shopify/Order/123?namespace=123#fragment'
       );
-      expect(id).toBe('123');
+      expect(id).toBe(123);
       expect(resource).toBe('Order');
     });
 
