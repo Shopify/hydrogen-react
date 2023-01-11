@@ -5,7 +5,7 @@ import type {
   ShopifyMonorailPayload,
 } from './analytics-types.js';
 import {AnalyticsEventName} from './analytics-constants.js';
-import {errorIfServer} from './analytics-errors-utils.js';
+import {errorIfServer} from './analytics-utils.js';
 import {getShopifyCookies} from './cookies-utils.js';
 
 import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view.js';
@@ -128,7 +128,6 @@ function getNavigationTypeLegacy() {
       performance?.navigation?.type !== undefined
     ) {
       //  https://developer.mozilla.org/en-US/docs/Web/API/Performance/navigation
-
       const rawType = performance.navigation.type;
       switch (rawType) {
         case PerformanceNavigation.TYPE_NAVIGATE:

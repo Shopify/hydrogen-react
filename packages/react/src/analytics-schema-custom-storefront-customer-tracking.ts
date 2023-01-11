@@ -6,12 +6,7 @@ import {
   ShopifyAnalyticsProduct,
 } from './analytics-types.js';
 import {AnalyticsPageType, ShopifyAppSource} from './analytics-constants.js';
-import {
-  addDataIf,
-  schemaWrapper,
-  stripGId,
-  stripId,
-} from './analytics-utils.js';
+import {addDataIf, schemaWrapper, parseGid} from './analytics-utils.js';
 import {buildUUID} from './cookies-utils.js';
 
 const SCHEMA_ID = 'custom_storefront_customer_tracking/1.0';
@@ -102,6 +97,8 @@ export function addToCart(
   payload: ShopifyAnalyticsPayload
 ): ShopifyMonorailPayload[] {
   const addToCartPayload = payload as ShopifyAddToCartPayload;
+  const cartToken = parseGid(addToCartPayload.cartId);
+  const cart_token = cartToken?.id ? `${cartToken.id}` : null;
   return [
     schemaWrapper(
       SCHEMA_ID,
@@ -109,7 +106,7 @@ export function addToCart(
         {
           event_name: PRODUCT_ADDED_TO_CART_EVENT_NAME,
           customerId: addToCartPayload.customerId,
-          cart_token: stripId(addToCartPayload.cartId),
+          cart_token,
           total_value: addToCartPayload.totalValue,
           products: formatProductPayload(addToCartPayload.products),
         },
@@ -122,6 +119,10 @@ export function addToCart(
 function formatPayload(
   payload: ShopifyAnalyticsPayload
 ): ShopifyMonorailPayload {
+  const shop_id =
+    typeof payload.shopId === 'string'
+      ? parseGid(payload.shopId).id
+      : payload.shopId;
   return {
     source: payload.shopifyAppSource || ShopifyAppSource.headless,
     hydrogenSubchannelId: payload.storefrontId || '0',
@@ -139,7 +140,7 @@ function formatPayload(
     navigation_type: payload.navigationType,
     navigation_api: payload.navigationApi,
 
-    shop_id: stripGId(payload.shopId),
+    shop_id,
     currency: payload.currency,
   };
 }
@@ -152,8 +153,8 @@ function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
             variant_gid: p.variant_gid,
             category: p.category,
             sku: p.sku,
-            product_id: stripGId(p.product_gid),
-            variant_id: stripGId(p.variant_gid),
+            product_id: parseGid(p.product_gid).id,
+            variant_id: parseGid(p.variant_gid).id,
           },
           {
             product_gid: p.product_gid,

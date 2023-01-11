@@ -1,6 +1,18 @@
 import type {ShopifyMonorailPayload} from './analytics-types.js';
 
-export function schemaWrapper(schemaId: string, payload: unknown) {
+/**
+ * Builds a Shopify Monorail payload from a Shopify Analytics payload and a schema ID.
+ * @param payload - The payload to format
+ * @param schemaId - The schema ID to use
+ * @returns The formatted payload
+ **/
+export function schemaWrapper(schemaId: string, payload: object) {
+  if (typeof schemaId !== 'string') {
+    throw new Error('`schemaId` must be a string');
+  }
+  if (typeof payload !== 'object' || payload === null) {
+    throw new Error('`payload` must be an object');
+  }
   return {
     schema_id: schemaId,
     payload,
@@ -10,19 +22,43 @@ export function schemaWrapper(schemaId: string, payload: unknown) {
   };
 }
 
-export function stripGId(text: number | string | undefined): number {
-  if (typeof text === 'number') return text;
-  return parseInt(stripId(text || ''));
+/**
+ * Parses global id (gid) and returns the resource type and id.
+ * @see https://shopify.dev/api/usage/gids
+ * @param gid - A shopify GID (string)
+ * @returns \{ id: string, resource: string \}
+ *
+ * @example
+ * ```ts
+ * const {id, resource} = parseGid('gid://shopify/Order/123')
+ * // => id = '123', resource = 'Order'
+ * ```
+ **/
+export function parseGid(gid: string | undefined): {
+  id: string | null;
+  resource: string | null;
+} {
+  if (typeof gid !== 'string') return {id: null, resource: null};
+  const matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/(\d+)/);
+  if (!matches || matches.length === 1) {
+    return {id: null, resource: null};
+  }
+  return {id: matches[2] ?? null, resource: matches[1] ?? null};
 }
 
-export function stripId(text = ''): string {
-  return text.substring(text.lastIndexOf('/') + 1);
-}
-
+/**
+ * Filters properties from an object and returns a new object with only the properties that have a truthy value.
+ * @param keyValuePairs - An object of key-value pairs
+ * @param formattedData - An object which will hold the truthy values
+ * @returns The formatted object
+ **/
 export function addDataIf(
   keyValuePairs: ShopifyMonorailPayload,
   formattedData: ShopifyMonorailPayload
 ): ShopifyMonorailPayload {
+  if (typeof keyValuePairs !== 'object') {
+    return {};
+  }
   Object.entries(keyValuePairs).forEach(([key, value]) => {
     if (value) {
       formattedData[key] = value;
@@ -31,9 +67,17 @@ export function addDataIf(
   return formattedData;
 }
 
-export function getResourceType(text = ''): string {
-  return text
-    .substring(0, text.lastIndexOf('/'))
-    .replace(/.*shopify\//, '')
-    .toLowerCase();
+/**
+ * Utility that errors if a function is called on the server.
+ * @param fnName - The name of the function
+ * @returns A boolean
+ **/
+export function errorIfServer(fnName: string): boolean {
+  if (!window) {
+    console.error(
+      `${fnName} should only be used within the useEffect callback or event handlers`
+    );
+    return true;
+  }
+  return false;
 }
