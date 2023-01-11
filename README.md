@@ -16,8 +16,8 @@ React Storefront Kit is a library of reusable components and utilities for build
 
 ## Packages
 
-| Package                                       | Latest                                                                                                                                          | Next                                                                                                                                          |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Package                                             | Latest                                                                                                                                                      | Next                                                                                                                                                      |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`@shopify/storefront-kit-react`](/packages/react/) | <a href="https://www.npmjs.com/package/@shopify/storefront-kit-react"><img src="https://img.shields.io/npm/v/@shopify/storefront-kit-react/latest.svg"></a> | <a href="https://www.npmjs.com/package/@shopify/storefront-kit-react"><img src="https://img.shields.io/npm/v/@shopify/storefront-kit-react/next.svg"></a> |
 
 ## Versioning
