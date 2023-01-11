@@ -22,6 +22,8 @@ let isInit = false;
 export default function App({Component, pageProps}: AppProps) {
   const router = useRouter();
   const hasUserConsent = true;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const analytics = {
     hasUserConsent,
     ...analyticsShopData,
