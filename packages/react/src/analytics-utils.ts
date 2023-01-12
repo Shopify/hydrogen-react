@@ -26,25 +26,40 @@ export function schemaWrapper(schemaId: string, payload: object) {
  * Parses global id (gid) and returns the resource type and id.
  * @see https://shopify.dev/api/usage/gids
  * @param gid - A shopify GID (string)
- * @returns \{ id: number, resource: string \}
+ * @returns \{ id: string | number | null, resource: string| null \}
  *
  * @example
  * ```ts
  * const {id, resource} = parseGid('gid://shopify/Order/123')
  * // => id = 123, resource = 'Order'
+ *
+ *  * const {id, resource} = parseGid('gid://shopify/Cart/abc123')
+ * // => id = "abc123", resource = 'Cart'
  * ```
  **/
 export function parseGid(gid: string | undefined): {
-  id: number | null;
+  id: string | number | null;
   resource: string | null;
 } {
-  if (typeof gid !== 'string') return {id: null, resource: null};
-  const matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/(\d+)/);
-  if (!matches || matches.length === 1) {
-    return {id: null, resource: null};
+  const defaultReturn = {id: null, resource: null};
+
+  if (typeof gid !== 'string') {
+    return defaultReturn;
   }
-  const id = matches[2] ? parseInt(matches[2], 10) : null;
-  const resource = matches[1] ? matches[1] : null;
+
+  // TODO: add support for parsing query parameters on complex gids
+  const matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/([a-z0-9]+)/);
+
+  if (!matches || matches.length === 1) {
+    return defaultReturn;
+  }
+  const id = matches[2] ?? null;
+  const resource = matches[1] ?? null;
+
+  // if id is of only numbers, return as an integer
+  if (id && /^\d+$/.test(id)) {
+    return {id: parseInt(id, 10), resource};
+  }
   return {id, resource};
 }
 
