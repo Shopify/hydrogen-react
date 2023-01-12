@@ -209,7 +209,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
       const productPayload = BASE_PRODUCT_PAYLOAD;
       const addToCartPayload = {
         ...BASE_PAYLOAD,
-        cartId: '123',
+        cartId: 'gid://shopify/Cart/abc123',
         products: [productPayload],
         totalValue: 100,
       };
@@ -221,7 +221,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
       expect(events[0]).toEqual(
         getExpectedPayload(addToCartPayload, {
           event_name: 'product_added_to_cart',
-          cart_token: addToCartPayload.cartId,
+          cart_token: 'abc123',
           total_value: addToCartPayload.totalValue,
           products: expect.anything(),
         })

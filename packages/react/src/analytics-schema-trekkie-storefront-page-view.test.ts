@@ -66,7 +66,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
   it(`base payload with oxygen domain url`, () => {
     const pageViewPayload = {
       ...BASE_PAYLOAD,
-      url: 'my-shop.myshopify.dev',
+      url: 'https://my-shop.myshopify.dev',
     };
     const events = TrekkieStorefrontPageView.pageView(pageViewPayload);
 
@@ -77,7 +77,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       payload: {
         ...getForwardedPayload(pageViewPayload),
         appClientId: '12875497473',
-        isMerchantRequest: false,
+        isMerchantRequest: true,
         hydrogenSubchannelId: '0',
         isPersistentCookie: true,
         contentLanguage: 'en',
