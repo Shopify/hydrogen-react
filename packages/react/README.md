@@ -150,7 +150,7 @@ Depending on the bundler or runtime that you're using, the correct bundle might 
 
 React Storefront Kit has a development `umd` build and a production `umd` build. Both are meant to be used directly either by `<script src=""></script>` tags in HTML or by `AMD`-compatible loaders.
 
-If you're using React Storefront Kit as a global through the `<script>` tag, then the components can be accessed through the `hydrogenreact` global variable.
+If you're using React Storefront Kit as a global through the `<script>` tag, then the components can be accessed through the `storefrontkitreact` global variable.
 
 ## Enable Storefront API GraphQL autocompletion
 
@@ -180,11 +180,11 @@ If you're having trouble getting it to work, then consult our [troubleshooting s
 
 ## TypeScript
 
-Improve your development experience by using storefront-kit's generated Types and helpers.
+Improve your development experience by using Storefront Kit's generated Types and helpers.
 
 ### Storefront API types
 
-Storefront-Kit ships with generated TypeScript types that match the Storefront API and its objects. Import them from the `/storefront-api-types` package path:
+Storefront Kit ships with generated TypeScript types that match the Storefront API and its objects. Import them from the `/storefront-api-types` package path:
 
 ```ts
 import type {Product} from '@shopify/hydrogen-react/storefront-api-types';

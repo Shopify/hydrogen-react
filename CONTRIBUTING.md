@@ -3,7 +3,7 @@
 There are two ways you can develop React Storefront Kit components:
 
 - Develop components in isolation (faster & easier):
-  1. Run `yarn dev:story` in the `storefront-kit` directory to spin up an instance of [Ladle](https://ladle.dev/)
+  1. Run `yarn dev:story` in the `packages/react` directory to spin up an instance of [Ladle](https://ladle.dev/)
   2. Edit the component or the component's story `[ComponentName].stories.tsx`
 - Develop components in a demo app (good for testing out the ecosystem support)
   1. Run `yarn dev`

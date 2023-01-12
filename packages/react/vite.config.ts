@@ -11,7 +11,7 @@ export default defineConfig(({mode, ssrBuild}) => {
       build: {
         lib: {
           entry: resolve(__dirname, 'src/index.ts'),
-          name: 'hydrogenreact',
+          name: 'storefrontkitreact',
           fileName: () =>
             `storefront-kit-react.${
               mode === 'umdbuilddev' ? 'dev' : 'prod'

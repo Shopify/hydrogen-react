@@ -31,7 +31,7 @@ If applicable, add screenshots to help explain your problem.
 **Additional context**
 Add any other context about the problem here.
 
-- React Storefront Kit version
+- Storefront Kit version
 - Framework used (e.g., Hydrogen, Remix, Next.js, etc.)
 - Node version
 - Browser
