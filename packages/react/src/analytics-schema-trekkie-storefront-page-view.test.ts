@@ -31,6 +31,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
     const pageViewPayload = {
       ...BASE_PAYLOAD,
       hasUserConsent: false,
+      shopId: 'gid://shopify/Shop/1',
       url: 'https://example.com',
       shopifyAppSource: ShopifyAppSource.hydrogen,
       storefrontId: '1',
@@ -47,6 +48,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       schema_id: 'trekkie_storefront_page_view/1.4',
       payload: {
         ...getForwardedPayload(pageViewPayload),
+        shopId: 1,
         appClientId: '6167201',
         isMerchantRequest: false,
         hydrogenSubchannelId: '1',

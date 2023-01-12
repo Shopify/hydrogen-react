@@ -29,6 +29,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
     it(`base payload with non-default values`, () => {
       const pageViewPayload = {
         ...BASE_PAYLOAD,
+        shopId: 'gid://shopify/Shop/1',
         hasUserConsent: false,
         url: 'https://example.com/fr',
         shopifyAppSource: ShopifyAppSource.hydrogen,
@@ -46,6 +47,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
       expect(events[0]).toEqual(
         getExpectedPayload(pageViewPayload, {
           source: 'hydrogen',
+          shop_id: 1,
           event_name: 'page_rendered',
           hydrogenSubchannelId: '1',
           is_persistent_cookie: false,
@@ -84,6 +86,34 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
     });
 
     describe('product', () => {
+      it(`with no product payload`, () => {
+        const pageViewPayload = {
+          ...BASE_PAYLOAD,
+          pageType: 'product',
+          products: [],
+          totalValue: 100,
+        };
+        const events =
+          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+
+        expectType<ShopifyMonorailPayload[]>(events);
+        expect(events.length).toBe(2);
+        expect(events[0]).toEqual(
+          getExpectedPayload(pageViewPayload, {
+            event_name: 'page_rendered',
+            canonical_url: pageViewPayload.url,
+          })
+        );
+        expect(events[1]).toEqual(
+          getExpectedPayload(pageViewPayload, {
+            event_name: 'product_page_rendered',
+            total_value: pageViewPayload.totalValue,
+            products: [],
+            canonical_url: pageViewPayload.url,
+          })
+        );
+      });
+
       it(`with base product payload`, () => {
         const productPayload = BASE_PRODUCT_PAYLOAD;
         const pageViewPayload = {
