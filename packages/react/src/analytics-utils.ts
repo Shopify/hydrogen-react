@@ -64,17 +64,17 @@ export function parseGid(gid: string | undefined): {
     if (!matches || matches.length === 1) {
       return defaultReturn;
     }
-    id = matches[3] ? matches[3] : null;
-    subResource = matches[2] ? matches[2] : null;
-    resource = matches[1] ? matches[1] : null;
+    id = matches[3] ?? null;
+    subResource = matches[2] ?? null;
+    resource = matches[1] ?? null;
   } else {
     matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/([a-z0-9]+)/);
 
     if (!matches || matches.length === 1) {
       return defaultReturn;
     }
-    id = matches[2] ? matches[2] : null;
-    resource = matches[1] ? matches[1] : null;
+    id = matches[2] ?? null;
+    resource = matches[1] ?? null;
   }
 
   // if id is comprasied of only numbers, return as an integer
