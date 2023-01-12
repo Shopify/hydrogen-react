@@ -152,8 +152,8 @@ function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
             variant_gid: p.variantGid,
             category: p.category,
             sku: p.sku,
-            product_id: parseGid(p.product_gid).id,
-            variant_id: parseGid(p.variant_gid).id,
+            product_id: parseGid(p.productGid).id,
+            variant_id: parseGid(p.variantGid).id,
           },
           {
             product_gid: p.productGid,
