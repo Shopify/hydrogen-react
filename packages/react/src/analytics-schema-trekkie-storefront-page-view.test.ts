@@ -19,11 +19,11 @@ describe(`analytics schema - trekkie storefront page view`, () => {
         isMerchantRequest: true,
         hydrogenSubchannelId: '0',
         isPersistentCookie: true,
-        contentLanguage: 'en'
+        contentLanguage: 'en',
       },
       metadata: {
         event_created_at_ms: expect.any(Number),
-      }
+      },
     });
   });
 
@@ -59,7 +59,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       },
       metadata: {
         event_created_at_ms: expect.any(Number),
-      }
+      },
     });
   });
 
@@ -80,16 +80,16 @@ describe(`analytics schema - trekkie storefront page view`, () => {
         isMerchantRequest: false,
         hydrogenSubchannelId: '0',
         isPersistentCookie: true,
-        contentLanguage: 'en'
+        contentLanguage: 'en',
       },
       metadata: {
         event_created_at_ms: expect.any(Number),
-      }
+      },
     });
   });
 });
 
-export function getForwardedPayload(initPayload: any) {
+export function getForwardedPayload(initPayload: ShopifyMonorailPayload) {
   return {
     uniqToken: initPayload.uniqueToken,
     visitToken: initPayload.visitToken,
@@ -102,5 +102,5 @@ export function getForwardedPayload(initPayload: any) {
     title: initPayload.title,
     shopId: initPayload.shopId,
     currency: initPayload.currency,
-  }
+  };
 }

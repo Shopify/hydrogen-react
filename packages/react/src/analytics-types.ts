@@ -63,7 +63,10 @@ export type ShopifyAddToCart = {
   payload: ShopifyAddToCartPayload;
 };
 
-export type ShopifyMonorailPayload = Record<string, unknown>;
+export type ShopifyMonorailPayload = {
+  products?: string[];
+  [key: string]: unknown;
+};
 export type ShopifyAnalyticsPayload =
   | ShopifyPageViewPayload
   | ShopifyAddToCartPayload;

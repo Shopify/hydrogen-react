@@ -1,8 +1,14 @@
 import {expectType} from 'ts-expect';
 import {ShopifyAppSource} from './analytics-constants.js';
 import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking.js';
-import {BASE_PAYLOAD, BASE_PRODUCT_PAYLOAD} from './analytics-schema.test.helpers.js';
-import type {ShopifyMonorailPayload, ShopifyPageViewPayload} from './analytics-types.js';
+import {
+  BASE_PAYLOAD,
+  BASE_PRODUCT_PAYLOAD,
+} from './analytics-schema.test.helpers.js';
+import type {
+  ShopifyAnalyticsPayload,
+  ShopifyMonorailPayload,
+} from './analytics-types.js';
 
 describe(`analytics schema - custom storefront customer tracking`, () => {
   describe('page view', () => {
@@ -56,7 +62,8 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'collection',
           collectionHandle: 'test',
         };
-        const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events =
+          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -84,8 +91,9 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'product',
           products: [productPayload],
           totalValue: 100,
-        };;
-        const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        };
+        const events =
+          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -94,25 +102,26 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
             event_name: 'page_rendered',
             canonical_url: pageViewPayload.url,
           })
-        )
+        );
         expect(events[1]).toEqual(
           getExpectedPayload(pageViewPayload, {
             event_name: 'product_page_rendered',
             total_value: pageViewPayload.totalValue,
-            products: expect.any(Array),
+            products: expect.anything(),
             canonical_url: pageViewPayload.url,
           })
         );
-        const productEventPayload = events[1].payload as any;
-        if (productEventPayload.products) {
-          const product = JSON.parse(productEventPayload.products[0]);
-          expect(product).toEqual({
-            ...getForwardedProductPayload(productPayload),
-            variant: '',
-            quantity: 0,
-            product_id: 1
-          });
-        }
+        const productEventPayload = events[1].payload as ShopifyMonorailPayload;
+        const product = JSON.parse(
+          (productEventPayload.products && productEventPayload.products[0]) ||
+            '{}'
+        );
+        expect(product).toEqual({
+          ...getForwardedProductPayload(productPayload),
+          variant: '',
+          quantity: 0,
+          product_id: 1,
+        });
       });
       it(`with non-default product payload`, () => {
         const productPayload = {
@@ -128,8 +137,9 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'product',
           products: [productPayload],
           totalValue: 100,
-        };;
-        const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        };
+        const events =
+          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -138,29 +148,30 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
             event_name: 'page_rendered',
             canonical_url: pageViewPayload.url,
           })
-        )
+        );
         expect(events[1]).toEqual(
           getExpectedPayload(pageViewPayload, {
             event_name: 'product_page_rendered',
             total_value: pageViewPayload.totalValue,
-            products: expect.any(Array),
+            products: expect.anything(),
             canonical_url: pageViewPayload.url,
           })
         );
-        const productEventPayload = events[1].payload as any;
-        if (productEventPayload.products) {
-          const product = JSON.parse(productEventPayload.products[0]);
-          expect(product).toEqual({
-            ...getForwardedProductPayload(productPayload),
-            variant: productPayload.variantName,
-            quantity: 1,
-            product_id: 1,
-            category: productPayload.category,
-            sku: productPayload.sku,
-            variant_gid: productPayload.variantGid,
-            variant_id: 2,
-          });
-        }
+        const productEventPayload = events[1].payload as ShopifyMonorailPayload;
+        const product = JSON.parse(
+          (productEventPayload.products && productEventPayload.products[0]) ||
+            '{}'
+        );
+        expect(product).toEqual({
+          ...getForwardedProductPayload(productPayload),
+          variant: productPayload.variantName,
+          quantity: 1,
+          product_id: 1,
+          category: productPayload.category,
+          sku: productPayload.sku,
+          variant_gid: productPayload.variantGid,
+          variant_id: 2,
+        });
       });
     });
 
@@ -171,7 +182,8 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'search',
           searchString: 'test',
         };
-        const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events =
+          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -200,8 +212,9 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
         cartId: '123',
         products: [productPayload],
         totalValue: 100,
-      };;
-      const events = CustomStorefrontCustomerTracking.addToCart(addToCartPayload);
+      };
+      const events =
+        CustomStorefrontCustomerTracking.addToCart(addToCartPayload);
 
       expectType<ShopifyMonorailPayload[]>(events);
       expect(events.length).toBe(1);
@@ -210,24 +223,28 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           event_name: 'product_added_to_cart',
           cart_token: addToCartPayload.cartId,
           total_value: addToCartPayload.totalValue,
-          products: expect.any(Array),
+          products: expect.anything(),
         })
       );
-      const productEventPayload = events[0].payload as any;
-      if (productEventPayload.products) {
-        const product = JSON.parse(productEventPayload.products[0]);
-        expect(product).toEqual({
-          ...getForwardedProductPayload(productPayload),
-          variant: '',
-          quantity: 0,
-          product_id: 1
-        });
-      }
+      const productEventPayload = events[0].payload as ShopifyMonorailPayload;
+      const product = JSON.parse(
+        (productEventPayload.products && productEventPayload.products[0]) ||
+          '{}'
+      );
+      expect(product).toEqual({
+        ...getForwardedProductPayload(productPayload),
+        variant: '',
+        quantity: 0,
+        product_id: 1,
+      });
     });
-  })
+  });
 });
 
-function getExpectedPayload(initPayload: any, extraPayload: any) {
+function getExpectedPayload(
+  initPayload: ShopifyAnalyticsPayload,
+  extraPayload: ShopifyMonorailPayload
+) {
   return {
     schema_id: 'custom_storefront_customer_tracking/1.0',
     payload: {
@@ -236,11 +253,11 @@ function getExpectedPayload(initPayload: any, extraPayload: any) {
     },
     metadata: {
       event_created_at_ms: expect.any(Number),
-    }
-  }
+    },
+  };
 }
 
-function getForwardedPayload(initPayload: any) {
+function getForwardedPayload(initPayload: ShopifyAnalyticsPayload) {
   return {
     source: 'headless',
     hydrogenSubchannelId: '0',
@@ -257,14 +274,14 @@ function getForwardedPayload(initPayload: any) {
     gdpr_enforced: false,
     navigation_api: initPayload.navigationApi,
     navigation_type: initPayload.navigationType,
-  }
+  };
 }
 
-function getForwardedProductPayload(initPayload: any) {
+function getForwardedProductPayload(initPayload: ShopifyMonorailPayload) {
   return {
     product_gid: initPayload.productGid,
     name: initPayload.name,
     brand: initPayload.brand,
     price: initPayload.price,
-  }
+  };
 }
