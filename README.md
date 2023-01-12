@@ -8,8 +8,6 @@
 
 React Storefront Kit is a library of reusable components and utilities for building Shopify-powered custom storefronts.
 
-**Note:** React Storefront Kit is currently available as an experimental (beta) feature and functionality is subject to change.
-
 📚 [Docs](https://shopify.dev/custom-storefronts/react-storefront-kit) | 🗣 [Discord](https://discord.gg/Hefq6w5c5d) | 📝 [Changelog](https://github.com/Shopify/storefront-kit/blob/main/packages/react/CHANGELOG.md) | 🖼 [Hydrogen Framework](https://github.com/Shopify/hydrogen)
 
 </div>
@@ -29,3 +27,7 @@ For example, if you're using Storefront API version `2022-07`, then React Storef
 If the Storefront API version update includes breaking changes, then React Storefront Kit includes breaking changes. Because the API version is updated every three months, breaking changes could occur every three months.
 
 Learn more about API [release schedules](https://shopify.dev/api/usage/versioning#release-schedule) at Shopify.
+
+## Contributing to storefront-kit
+
+Thank you for your interest in contributing! Please read through the [CONTRIBUTING.md](./CONTRIBUTING.md) file and let us know if you have questions or concerns.
