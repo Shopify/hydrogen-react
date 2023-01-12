@@ -1,5 +1,3 @@
-**IMPORTANT** This repo is being renamed to `@shopify/storefront-kit`.
-
 <div style="text-align:center">
 
 # React Storefront Kit
