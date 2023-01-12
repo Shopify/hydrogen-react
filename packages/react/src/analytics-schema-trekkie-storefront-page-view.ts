@@ -4,21 +4,18 @@ import {
   ShopifyMonorailPayload,
 } from './analytics-types.js';
 import {ShopifyAppId} from './analytics-constants.js';
-import {
-  addDataIf,
-  schemaWrapper,
-  stripGId,
-  getResourceType,
-} from './analytics-utils.js';
+import {addDataIf, schemaWrapper, parseGid} from './analytics-utils.js';
 import {buildUUID} from './cookies-utils.js';
 
 const SCHEMA_ID = 'trekkie_storefront_page_view/1.4';
-const oxygenDomain = 'myshopify.dev';
+const OXYGEN_DOMAIN = 'myshopify.dev';
 
 export function pageView(
   payload: ShopifyAnalyticsPayload
 ): ShopifyMonorailPayload[] {
   const pageViewPayload = payload as ShopifyPageViewPayload;
+  const {id, resource} = parseGid(pageViewPayload.resourceId);
+  const resourceType = resource ? resource.toLowerCase() : undefined;
   return [
     schemaWrapper(
       SCHEMA_ID,
@@ -26,8 +23,8 @@ export function pageView(
         {
           pageType: pageViewPayload.pageType,
           customerId: pageViewPayload.customerId,
-          resourceType: getResourceType(pageViewPayload.resourceId),
-          resourceId: stripGId(pageViewPayload.resourceId),
+          resourceType,
+          resourceId: id,
         },
         formatPayload(pageViewPayload)
       )
@@ -38,6 +35,10 @@ export function pageView(
 function formatPayload(
   payload: ShopifyAnalyticsPayload
 ): ShopifyMonorailPayload {
+  const shopId =
+    typeof payload.shopId === 'string'
+      ? parseGid(payload.shopId).id
+      : payload.shopId;
   return {
     appClientId: payload.shopifyAppSource
       ? ShopifyAppId[payload.shopifyAppSource]
@@ -57,15 +58,18 @@ function formatPayload(
     referrer: payload.referrer,
     title: payload.title,
 
-    shopId: stripGId(payload.shopId),
+    shopId,
     currency: payload.currency,
     contentLanguage: payload.acceptedLanguage || 'en',
   };
 }
 
 function isMerchantRequest(url: string): boolean {
+  if (typeof url !== 'string') {
+    return false;
+  }
   const hostname = new URL(url).hostname;
-  if (hostname.indexOf(oxygenDomain) !== -1 || hostname === 'localhost') {
+  if (hostname.indexOf(OXYGEN_DOMAIN) !== -1 || hostname === 'localhost') {
     return true;
   }
   return false;
