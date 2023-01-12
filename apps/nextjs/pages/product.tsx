@@ -38,8 +38,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const variant = product.variants.nodes[0];
 
     const productAnalytics: ShopifyAnalyticsProduct = {
-      product_gid: product.id,
-      variant_gid: variant.id,
+      productGid: product.id,
+      variantGid: variant.id,
       name: product.title,
       variantName: variant.title,
       brand: product.vendor,
