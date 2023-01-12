@@ -90,7 +90,6 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
         const pageViewPayload = {
           ...BASE_PAYLOAD,
           pageType: 'product',
-          products: [],
           totalValue: 100,
         };
         const events =
