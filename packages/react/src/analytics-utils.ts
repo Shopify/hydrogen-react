@@ -56,7 +56,7 @@ export function parseGid(gid: string | undefined): {
   const id = matches[2] ?? null;
   const resource = matches[1] ?? null;
 
-  // if id is comprasied of only numbers, return as an integer
+  // if id is of only numbers, return as an integer
   if (id && /^\d+$/.test(id)) {
     return {id: parseInt(id, 10), resource};
   }
