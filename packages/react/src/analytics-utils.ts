@@ -23,10 +23,10 @@ export function schemaWrapper(schemaId: string, payload: object) {
 }
 
 /**
- * Parses global id (gid) and returns the resource, subResource (complex gid only) and id.
+ * Parses global id (gid) and returns the resource type and id.
  * @see https://shopify.dev/api/usage/gids
  * @param gid - A shopify GID (string)
- * @returns \{ id: string | number | null, resource: string| null, subResource: string | null \}
+ * @returns \{ id: string | number | null, resource: string| null \}
  *
  * @example
  * ```ts
@@ -35,53 +35,32 @@ export function schemaWrapper(schemaId: string, payload: object) {
  *
  *  * const {id, resource} = parseGid('gid://shopify/Cart/abc123')
  * // => id = "abc123", resource = 'Cart'
- *
  * ```
  **/
 export function parseGid(gid: string | undefined): {
   id: string | number | null;
   resource: string | null;
-  subResource: string | null;
 } {
-  const defaultReturn = {id: null, resource: null, subResource: null};
+  const defaultReturn = {id: null, resource: null};
 
   if (typeof gid !== 'string') {
     return defaultReturn;
   }
 
-  // complex gids have the following format https://shopify.dev/api/usage/gids#parameterized-global-ids
   // TODO: add support for parsing query parameters on complex gids
-  const isComplexGid = /gid:\/\/shopify\/(\w+)\/(\w+)\/([a-z0-9]+)/.test(gid);
+  const matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/([a-z0-9]+)/);
 
-  let matches,
-    id,
-    resource,
-    subResource = null;
-
-  if (isComplexGid) {
-    matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/(\w+)\/([a-z0-9]+)/);
-
-    if (!matches || matches.length === 1) {
-      return defaultReturn;
-    }
-    id = matches[3] ?? null;
-    subResource = matches[2] ?? null;
-    resource = matches[1] ?? null;
-  } else {
-    matches = gid.match(/^gid:\/\/.hopify\/(\w+)\/([a-z0-9]+)/);
-
-    if (!matches || matches.length === 1) {
-      return defaultReturn;
-    }
-    id = matches[2] ?? null;
-    resource = matches[1] ?? null;
+  if (!matches || matches.length === 1) {
+    return defaultReturn;
   }
+  const id = matches[2] ?? null;
+  const resource = matches[1] ?? null;
 
   // if id is comprasied of only numbers, return as an integer
   if (id && /^\d+$/.test(id)) {
-    return {id: parseInt(id, 10), resource, subResource};
+    return {id: parseInt(id, 10), resource};
   }
-  return {id, resource, subResource};
+  return {id, resource};
 }
 
 /**
