@@ -60,10 +60,16 @@ const createConsoleErrorSpy = () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   return vi.spyOn(console, 'error').mockImplementation(() => {});
 };
+const originalDocument = document;
+const originalPerformance = performance;
+const originalPerformanceNavigation = global.PerformanceNavigation;
 
 describe('analytics', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    document = originalDocument;
+    performance = originalPerformance;
+    global.PerformanceNavigation =originalPerformanceNavigation;
   });
 
   describe('sendShopifyAnalytics', () => {
@@ -136,6 +142,8 @@ describe('analytics', () => {
 
   describe('getClientBrowserParameters', () => {
     it('errors and returns empty object when executed on server side', () => {
+      // @ts-ignore
+      document = undefined;
       const consoleErrorSpy = createConsoleErrorSpy();
       const browserParams = getClientBrowserParameters();
 
@@ -145,17 +153,103 @@ describe('analytics', () => {
       );
     });
 
-    // it('returns browser parameters when executed on client side', () => {
-    //   global.document = {
-    //     referrer: new URL('test').toString(),
-    //   };
-    //   const consoleErrorSpy = createConsoleErrorSpy();
-    //   const browserParams = getClientBrowserParameters();
+    it('returns browser parameters when executed on client side', () => {
+      // @ts-ignore
+      document = {
+        title: 'test',
+        referrer: 'https://www.example.com',
+        cookie: '_shopify_y=abc123; _shopify_s=def456'
+      };
 
-    //   expect(browserParams).toEqual({});
-    //   expect(consoleErrorSpy.mock.calls[0][0]).toBe(
-    //     'getClientBrowserParameters should only be used within the useEffect callback or event handlers'
-    //   );
-    // });
+      const consoleErrorSpy = createConsoleErrorSpy();
+      const browserParams = getClientBrowserParameters();
+
+      expect(browserParams).toEqual({
+        uniqueToken: 'abc123',
+        visitToken: 'def456',
+        url: expect.any(String),
+        path: '',
+        search: '',
+        referrer: 'https://www.example.com',
+        title: 'test',
+        userAgent: expect.any(String),
+        navigationType: 'unknown',
+        navigationApi: 'unknown',
+      });
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it('returns PerformanceNavigationTiming reload navigation api types', () => {
+      // @ts-ignore
+      document = {
+        cookie: '',
+        title: '',
+        referrer: '',
+      };
+      // @ts-ignore
+      performance = {
+        // @ts-ignore
+        getEntriesByType: () => {
+          return [{
+            type: 'reload'
+          }];
+        }
+      }
+
+      const consoleErrorSpy = createConsoleErrorSpy();
+      const browserParams = getClientBrowserParameters();
+
+      expect(browserParams.navigationType).toEqual('reload');
+      expect(browserParams.navigationApi).toEqual('PerformanceNavigationTiming');
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it('returns PerformanceNavigationTiming navigation api types', () => {
+      // @ts-ignore
+      document = {
+        cookie: '',
+        title: '',
+        referrer: '',
+      };
+      // @ts-ignore
+      global.PerformanceNavigation = {
+        TYPE_NAVIGATE: 1,
+        TYPE_RELOAD: 2,
+        TYPE_BACK_FORWARD: 3,
+      }
+      // @ts-ignore
+      performance = {
+        // @ts-ignore
+        navigation: {
+          type: PerformanceNavigation.TYPE_NAVIGATE,
+        }
+      }
+
+      const consoleErrorSpy = createConsoleErrorSpy();
+      let browserParams = getClientBrowserParameters();
+
+      expect(browserParams.navigationType).toEqual('navigate');
+      expect(browserParams.navigationApi).toEqual('performance.navigation');
+
+      // @ts-ignore
+      performance.navigation.type = PerformanceNavigation.TYPE_RELOAD;
+      browserParams = getClientBrowserParameters();
+      expect(browserParams.navigationType).toEqual('reload');
+      expect(browserParams.navigationApi).toEqual('performance.navigation');
+
+      // @ts-ignore
+      performance.navigation.type = PerformanceNavigation.TYPE_BACK_FORWARD;
+      browserParams = getClientBrowserParameters();
+      expect(browserParams.navigationType).toEqual('back_forward');
+      expect(browserParams.navigationApi).toEqual('performance.navigation');
+
+      // @ts-ignore
+      performance.navigation.type = 4;
+      browserParams = getClientBrowserParameters();
+      expect(browserParams.navigationType).toEqual('unknown: 4');
+      expect(browserParams.navigationApi).toEqual('performance.navigation');
+
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
   });
 });

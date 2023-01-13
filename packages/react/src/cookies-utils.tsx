@@ -65,7 +65,7 @@ export type ShopifyCookies = {
 export function getShopifyCookies(cookies: string): ShopifyCookies {
   const cookieData = parse(cookies);
   return {
-    [SHOPIFY_Y]: cookieData[SHOPIFY_Y],
-    [SHOPIFY_S]: cookieData[SHOPIFY_S],
+    [SHOPIFY_Y]: cookieData[SHOPIFY_Y] || '',
+    [SHOPIFY_S]: cookieData[SHOPIFY_S] || '',
   };
 }
