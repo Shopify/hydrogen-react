@@ -40,7 +40,7 @@ export function pageView(
     )
   );
 
-  switch(pageType) {
+  switch (pageType) {
     case AnalyticsPageType.collection:
       pageViewEvents.push(
         schemaWrapper(
