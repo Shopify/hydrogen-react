@@ -47,27 +47,30 @@ function sendToShopify(events: ShopifyMonorailPayload[]) {
   };
 
   try {
-    return fetch('https://monorail-edge.shopifysvc.com/unstable/produce_batch', {
-      method: 'post',
-      headers: {
-        'content-type': 'text/plain',
-      },
-      body: JSON.stringify(eventsToBeSent),
-    })
-    .then((response) => response.text())
-    .then((data) => {
-      if (data) {
-        const jsonResponse = JSON.parse(data);
-        jsonResponse.result.forEach((eventResponse: MonorailResponse) => {
-          if (eventResponse.status !== 200) {
-            console.error(ERROR_MESSAGE, '\n\n', eventResponse.message);
-          }
-        });
+    return fetch(
+      'https://monorail-edge.shopifysvc.com/unstable/produce_batch',
+      {
+        method: 'post',
+        headers: {
+          'content-type': 'text/plain',
+        },
+        body: JSON.stringify(eventsToBeSent),
       }
-    })
-    .catch((err) => {
-      console.error(ERROR_MESSAGE, err);
-    });
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        if (data) {
+          const jsonResponse = JSON.parse(data);
+          jsonResponse.result.forEach((eventResponse: MonorailResponse) => {
+            if (eventResponse.status !== 200) {
+              console.error(ERROR_MESSAGE, '\n\n', eventResponse.message);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(ERROR_MESSAGE, err);
+      });
   } catch (error) {
     // Do nothing
   }
