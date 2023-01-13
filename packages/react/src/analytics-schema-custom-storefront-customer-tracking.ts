@@ -40,53 +40,53 @@ export function pageView(
     )
   );
 
-  if (pageType === AnalyticsPageType.collection) {
-    pageViewEvents.push(
-      schemaWrapper(
-        SCHEMA_ID,
-        addDataIf(
-          {
-            event_name: COLLECTION_PAGE_RENDERED_EVENT_NAME,
-            ...additionalPayload,
-            collection_name: pageViewPayload.collectionHandle,
-          },
-          formatPayload(pageViewPayload)
+  switch(pageType) {
+    case AnalyticsPageType.collection:
+      pageViewEvents.push(
+        schemaWrapper(
+          SCHEMA_ID,
+          addDataIf(
+            {
+              event_name: COLLECTION_PAGE_RENDERED_EVENT_NAME,
+              ...additionalPayload,
+              collection_name: pageViewPayload.collectionHandle,
+            },
+            formatPayload(pageViewPayload)
+          )
         )
-      )
-    );
-  }
-
-  if (pageType === AnalyticsPageType.product) {
-    pageViewEvents.push(
-      schemaWrapper(
-        SCHEMA_ID,
-        addDataIf(
-          {
-            event_name: PRODUCT_PAGE_RENDERED_EVENT_NAME,
-            ...additionalPayload,
-            products: formatProductPayload(pageViewPayload.products),
-            total_value: pageViewPayload.totalValue,
-          },
-          formatPayload(pageViewPayload)
+      );
+      break;
+    case AnalyticsPageType.product:
+      pageViewEvents.push(
+        schemaWrapper(
+          SCHEMA_ID,
+          addDataIf(
+            {
+              event_name: PRODUCT_PAGE_RENDERED_EVENT_NAME,
+              ...additionalPayload,
+              products: formatProductPayload(pageViewPayload.products),
+              total_value: pageViewPayload.totalValue,
+            },
+            formatPayload(pageViewPayload)
+          )
         )
-      )
-    );
-  }
-
-  if (pageType === AnalyticsPageType.search) {
-    pageViewEvents.push(
-      schemaWrapper(
-        SCHEMA_ID,
-        addDataIf(
-          {
-            event_name: SEARCH_SUBMITTED_EVENT_NAME,
-            ...additionalPayload,
-            search_string: pageViewPayload.searchString,
-          },
-          formatPayload(pageViewPayload)
+      );
+      break;
+    case AnalyticsPageType.search:
+      pageViewEvents.push(
+        schemaWrapper(
+          SCHEMA_ID,
+          addDataIf(
+            {
+              event_name: SEARCH_SUBMITTED_EVENT_NAME,
+              ...additionalPayload,
+              search_string: pageViewPayload.searchString,
+            },
+            formatPayload(pageViewPayload)
+          )
         )
-      )
-    );
+      );
+      break;
   }
 
   return pageViewEvents;

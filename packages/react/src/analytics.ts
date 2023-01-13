@@ -8,23 +8,24 @@ import {AnalyticsEventName} from './analytics-constants.js';
 import {errorIfServer} from './analytics-utils.js';
 import {getShopifyCookies} from './cookies-utils.js';
 
-import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view.js';
-import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking.js';
+import {pageView as trekkiePageView} from './analytics-schema-trekkie-storefront-page-view.js';
+import {
+  pageView as customerPageView,
+  addToCart as customerAddToCart,
+} from './analytics-schema-custom-storefront-customer-tracking.js';
 
 export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
   let events: ShopifyMonorailPayload[] = [];
 
   switch (eventName) {
     case AnalyticsEventName.PAGE_VIEW:
-      events = events.concat(TrekkieStorefrontPageView.pageView(payload));
       events = events.concat(
-        CustomStorefrontCustomerTracking.pageView(payload)
+        trekkiePageView(payload),
+        customerPageView(payload)
       );
       break;
     case AnalyticsEventName.ADD_TO_CART:
-      events = events.concat(
-        CustomStorefrontCustomerTracking.addToCart(payload)
-      );
+      events = events.concat(customerAddToCart(payload));
       break;
   }
 
