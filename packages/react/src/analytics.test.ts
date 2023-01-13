@@ -204,7 +204,7 @@ describe('analytics', () => {
       expect(consoleErrorSpy).not.toHaveBeenCalled();
     });
 
-    it('returns PerformanceNavigationTiming navigation api types', () => {
+    it('returns performance.navigation api types', () => {
       // @ts-ignore
       document = {
         cookie: '',
