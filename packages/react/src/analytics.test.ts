@@ -62,7 +62,7 @@ describe('analytics', () => {
   })
 
   describe('sendShopifyAnalytics', () => {
-    it('with base payload', async () => {
+    it('with a page view event', async () => {
       const consoleErrorSpy = createConsoleErrorSpy();
       const fetchSpy = createFetchSpy({expectEventCounts: 2});
 
@@ -77,7 +77,7 @@ describe('analytics', () => {
       expect(consoleErrorSpy).not.toBeCalled()
     });
 
-    it('with error payload', async () => {
+    it('with a page view event that has a bad payload', async () => {
       const consoleErrorSpy = createConsoleErrorSpy();
       const fetchSpy = createFetchSpy({expectEventCounts: 2});
 
@@ -94,7 +94,7 @@ describe('analytics', () => {
       expect(consoleErrorSpy.mock.calls[0][0]).toBe('sendShopifyAnalytics request is unsuccessful');
     });
 
-    it('with a product payload', async () => {
+    it('with a product page view event', async () => {
       const consoleErrorSpy = createConsoleErrorSpy();
       const fetchSpy = createFetchSpy({expectEventCounts: 3});
 
@@ -110,7 +110,7 @@ describe('analytics', () => {
       expect(consoleErrorSpy).not.toBeCalled()
     });
 
-    it('with a product payload', async () => {
+    it('with an add to cart event', async () => {
       const consoleErrorSpy = createConsoleErrorSpy();
       const fetchSpy = createFetchSpy({expectEventCounts: 1});
 
