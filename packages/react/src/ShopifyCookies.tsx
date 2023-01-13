@@ -16,6 +16,17 @@ interface ShopifyCookiesProps {
   hasUserConsent?: boolean;
 }
 
+/**
+ * Set user and session cookies and refresh the expiry time
+ * @param domain - The domain scope of the cookie
+ * @param hasUserConsent - Defaults to false. If hasUserConsent is true, we can set Shopify unique user token cookie
+ * @example
+ * ```tsx
+ * import {ShopifyCookies} from '@shopify/hydrogen-react';
+ *
+ * <ShopifyCookies domain="" hasUserConsent={hasUserConsent} />
+ * ```
+ */
 export function ShopifyCookies(props: ShopifyCookiesProps) {
   const {domain = '', hasUserConsent = false} = props;
 
