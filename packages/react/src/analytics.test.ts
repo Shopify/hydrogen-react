@@ -1,7 +1,7 @@
 import {vi, afterEach} from 'vitest';
 import {AnalyticsEventName} from './analytics-constants.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
-import {sendShopifyAnalytics} from './analytics.js';
+import {getClientBrowserParameters, sendShopifyAnalytics} from './analytics.js';
 
 const MONORAIL_ENDPOINT =
   'https://monorail-edge.shopifysvc.com/unstable/produce_batch';
@@ -132,5 +132,30 @@ describe('analytics', () => {
       expect(fetchSpy).toHaveBeenCalled();
       expect(consoleErrorSpy).not.toHaveBeenCalled();
     });
+  });
+
+  describe('getClientBrowserParameters', () => {
+    it('errors and returns empty object when executed on server side', () => {
+      const consoleErrorSpy = createConsoleErrorSpy();
+      const browserParams = getClientBrowserParameters();
+
+      expect(browserParams).toEqual({});
+      expect(consoleErrorSpy.mock.calls[0][0]).toBe(
+        'getClientBrowserParameters should only be used within the useEffect callback or event handlers'
+      );
+    });
+
+    // it('returns browser parameters when executed on client side', () => {
+    //   global.document = {
+    //     referrer: new URL('test').toString(),
+    //   };
+    //   const consoleErrorSpy = createConsoleErrorSpy();
+    //   const browserParams = getClientBrowserParameters();
+
+    //   expect(browserParams).toEqual({});
+    //   expect(consoleErrorSpy.mock.calls[0][0]).toBe(
+    //     'getClientBrowserParameters should only be used within the useEffect callback or event handlers'
+    //   );
+    // });
   });
 });
