@@ -90,7 +90,7 @@ export function addDataIf(
  * @returns A boolean
  **/
 export function errorIfServer(fnName: string): boolean {
-  if (!window) {
+  if (typeof document !== "undefined") {
     console.error(
       `${fnName} should only be used within the useEffect callback or event handlers`
     );

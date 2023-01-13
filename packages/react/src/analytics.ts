@@ -100,14 +100,14 @@ export function getClientBrowserParameters():
   };
 }
 
-function getNavigationTypeExperimental() {
+function getNavigationTypeExperimental(): string | undefined {
   try {
     const navigationEntries =
       performance?.getEntriesByType &&
       performance?.getEntriesByType('navigation');
 
     if (navigationEntries && navigationEntries[0]) {
-      //  https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming
+      // https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming
       const rawType = (
         window.performance.getEntriesByType(
           'navigation'
@@ -123,7 +123,7 @@ function getNavigationTypeExperimental() {
   return undefined;
 }
 
-function getNavigationTypeLegacy() {
+function getNavigationTypeLegacy(): string | undefined {
   try {
     if (
       PerformanceNavigation &&
@@ -152,7 +152,7 @@ function getNavigationTypeLegacy() {
   return undefined;
 }
 
-function getNavigationType() {
+function getNavigationType(): [string, string] {
   try {
     let navApi = 'PerformanceNavigationTiming';
     let navType = getNavigationTypeExperimental();
