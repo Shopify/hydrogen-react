@@ -48,8 +48,10 @@ export type ShopifyPageViewPayload = ShopifyCommonPayload & {
   searchString?: string;
 };
 
+export type AnalyticsEventNames = keyof typeof AnalyticsEventName;
+
 export type ShopifyPageView = {
-  eventName: AnalyticsEventName.PAGE_VIEW;
+  eventName: string;
   payload: ShopifyPageViewPayload;
 };
 
@@ -59,7 +61,7 @@ export type ShopifyAddToCartPayload = ShopifyCommonPayload & {
 };
 
 export type ShopifyAddToCart = {
-  eventName: AnalyticsEventName.ADD_TO_CART;
+  eventName: string;
   payload: ShopifyAddToCartPayload;
 };
 
