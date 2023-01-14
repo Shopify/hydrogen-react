@@ -67,9 +67,11 @@ const originalPerformanceNavigation = global.PerformanceNavigation;
 describe('analytics', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    /* eslint-disable no-global-assign */
     document = originalDocument;
     performance = originalPerformance;
-    global.PerformanceNavigation =originalPerformanceNavigation;
+    global.PerformanceNavigation = originalPerformanceNavigation;
+    /* eslint-enable no-global-assign */
   });
 
   describe('sendShopifyAnalytics', () => {
@@ -142,8 +144,10 @@ describe('analytics', () => {
 
   describe('getClientBrowserParameters', () => {
     it('errors and returns empty object when executed on server side', () => {
+      /* eslint-disable @typescript-eslint/ban-ts-comment, no-global-assign */
       // @ts-ignore
       document = undefined;
+      /* eslint-enable @typescript-eslint/ban-ts-comment, no-global-assign */
       const consoleErrorSpy = createConsoleErrorSpy();
       const browserParams = getClientBrowserParameters();
 
@@ -154,12 +158,14 @@ describe('analytics', () => {
     });
 
     it('returns browser parameters when executed on client side', () => {
+      /* eslint-disable @typescript-eslint/ban-ts-comment, no-global-assign */
       // @ts-ignore
       document = {
         title: 'test',
         referrer: 'https://www.example.com',
-        cookie: '_shopify_y=abc123; _shopify_s=def456'
+        cookie: '_shopify_y=abc123; _shopify_s=def456',
       };
+      /* eslint-enable @typescript-eslint/ban-ts-comment, no-global-assign */
 
       const consoleErrorSpy = createConsoleErrorSpy();
       const browserParams = getClientBrowserParameters();
@@ -180,6 +186,7 @@ describe('analytics', () => {
     });
 
     it('returns PerformanceNavigationTiming reload navigation api types', () => {
+      /* eslint-disable @typescript-eslint/ban-ts-comment, no-global-assign */
       // @ts-ignore
       document = {
         cookie: '',
@@ -190,21 +197,27 @@ describe('analytics', () => {
       performance = {
         // @ts-ignore
         getEntriesByType: () => {
-          return [{
-            type: 'reload'
-          }];
-        }
-      }
+          return [
+            {
+              type: 'reload',
+            },
+          ];
+        },
+      };
+      /* eslint-enable @typescript-eslint/ban-ts-comment, no-global-assign */
 
       const consoleErrorSpy = createConsoleErrorSpy();
       const browserParams = getClientBrowserParameters();
 
       expect(browserParams.navigationType).toEqual('reload');
-      expect(browserParams.navigationApi).toEqual('PerformanceNavigationTiming');
+      expect(browserParams.navigationApi).toEqual(
+        'PerformanceNavigationTiming'
+      );
       expect(consoleErrorSpy).not.toHaveBeenCalled();
     });
 
     it('returns performance.navigation api types', () => {
+      /* eslint-disable @typescript-eslint/ban-ts-comment, no-global-assign */
       // @ts-ignore
       document = {
         cookie: '',
@@ -216,14 +229,15 @@ describe('analytics', () => {
         TYPE_NAVIGATE: 1,
         TYPE_RELOAD: 2,
         TYPE_BACK_FORWARD: 3,
-      }
+      };
       // @ts-ignore
       performance = {
         // @ts-ignore
         navigation: {
           type: PerformanceNavigation.TYPE_NAVIGATE,
-        }
-      }
+        },
+      };
+      /* eslint-enable @typescript-eslint/ban-ts-comment, no-global-assign */
 
       const consoleErrorSpy = createConsoleErrorSpy();
       let browserParams = getClientBrowserParameters();
@@ -231,20 +245,17 @@ describe('analytics', () => {
       expect(browserParams.navigationType).toEqual('navigate');
       expect(browserParams.navigationApi).toEqual('performance.navigation');
 
-      // @ts-ignore
-      performance.navigation.type = PerformanceNavigation.TYPE_RELOAD;
+      updateNavigationType(PerformanceNavigation.TYPE_RELOAD);
       browserParams = getClientBrowserParameters();
       expect(browserParams.navigationType).toEqual('reload');
       expect(browserParams.navigationApi).toEqual('performance.navigation');
 
-      // @ts-ignore
-      performance.navigation.type = PerformanceNavigation.TYPE_BACK_FORWARD;
+      updateNavigationType(PerformanceNavigation.TYPE_BACK_FORWARD);
       browserParams = getClientBrowserParameters();
       expect(browserParams.navigationType).toEqual('back_forward');
       expect(browserParams.navigationApi).toEqual('performance.navigation');
 
-      // @ts-ignore
-      performance.navigation.type = 4;
+      updateNavigationType(4);
       browserParams = getClientBrowserParameters();
       expect(browserParams.navigationType).toEqual('unknown: 4');
       expect(browserParams.navigationApi).toEqual('performance.navigation');
@@ -253,3 +264,10 @@ describe('analytics', () => {
     });
   });
 });
+
+function updateNavigationType(apiType: number) {
+  /* eslint-disable @typescript-eslint/ban-ts-comment */
+  // @ts-ignore
+  performance.navigation.type = apiType;
+  /* eslint-enable @typescript-eslint/ban-ts-comment */
+}

@@ -80,7 +80,6 @@ function sendToShopify(events: ShopifyMonorailPayload[]) {
 export function getClientBrowserParameters():
   | ClientBrowserParameters
   | Record<string, never> {
-
   if (errorIfServer('getClientBrowserParameters')) {
     return {};
   }
