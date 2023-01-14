@@ -1,7 +1,7 @@
 export const AnalyticsEventName = {
   PAGE_VIEW: 'PAGE_VIEW',
   ADD_TO_CART: 'ADD_TO_CART',
-}
+};
 
 export const AnalyticsPageType = {
   article: 'article',
@@ -26,12 +26,12 @@ export const AnalyticsPageType = {
   product: 'product',
   policy: 'policy',
   search: 'search',
-}
+};
 
 export const ShopifyAppSource = {
   hydrogen: 'hydrogen',
   headless: 'headless',
-}
+};
 
 export const ShopifyAppId = {
   hydrogen: '6167201',
