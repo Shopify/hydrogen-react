@@ -8,9 +8,10 @@ const MONORAIL_ENDPOINT =
 const getShopDomainMonorailEndpoint = (shopDomain = '') => {
   return `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
 }
-const createFetchSpy = ({expectEventCounts, shopDomain}: {
+const createFetchSpy = ({expectEventCounts, shopDomain, failResponse}: {
   expectEventCounts: number;
-  shopDomain?: string
+  shopDomain?: string;
+  failResponse?: boolean;
 }) => {
   const mockFetch = async (
     input: RequestInfo | URL,
@@ -26,6 +27,16 @@ const createFetchSpy = ({expectEventCounts, shopDomain}: {
         // If this expect fails, it will be captured by the
         // spy function on console.error
         expect(data.events.length).toEqual(expectEventCounts);
+
+        if(failResponse) {
+          return new Promise((resolve) => {
+            resolve(
+              new Response('', {
+                status: 400,
+              })
+            );
+          });
+        }
 
         // Mock Monorail returning a multi-status response
         if (!data.events[0].payload.shopId && !data.events[0].payload.shop_id) {
@@ -165,6 +176,29 @@ describe('analytics', () => {
 
       expect(fetchSpy).toHaveBeenCalled();
       expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it('with a failed response', async () => {
+      const consoleErrorSpy = createConsoleErrorSpy();
+      const fetchSpy = createFetchSpy({
+        expectEventCounts: 2,
+        failResponse: true,
+      });
+
+      await sendShopifyAnalytics({
+        eventName: AnalyticsEventName.PAGE_VIEW,
+        payload: {
+          ...BASE_PAYLOAD,
+        }
+      });
+
+      expect(fetchSpy).toHaveBeenCalled();
+      expect(consoleErrorSpy.mock.calls[0][0]).toBe(
+        'sendShopifyAnalytics request is unsuccessful'
+      );
+      expect(consoleErrorSpy.mock.calls[0][1].toString()).toContain(
+        'Error: Response failed'
+      );
     });
   });
 
