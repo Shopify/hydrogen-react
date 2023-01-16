@@ -1,5 +1,4 @@
 import {
-  ShopifyAnalyticsPayload,
   ShopifyPageViewPayload,
   ShopifyMonorailPayload,
 } from './analytics-types.js';
@@ -11,9 +10,9 @@ const SCHEMA_ID = 'trekkie_storefront_page_view/1.4';
 const OXYGEN_DOMAIN = 'myshopify.dev';
 
 export function pageView(
-  payload: ShopifyAnalyticsPayload
+  payload: ShopifyPageViewPayload
 ): ShopifyMonorailPayload[] {
-  const pageViewPayload = payload as ShopifyPageViewPayload;
+  const pageViewPayload = payload;
   const {id, resource} = parseGid(pageViewPayload.resourceId);
   const resourceType = resource ? resource.toLowerCase() : undefined;
   return [
@@ -33,7 +32,7 @@ export function pageView(
 }
 
 function formatPayload(
-  payload: ShopifyAnalyticsPayload
+  payload: ShopifyPageViewPayload
 ): ShopifyMonorailPayload {
   const shopId =
     typeof payload.shopId === 'string'

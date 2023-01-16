@@ -17,9 +17,9 @@ const PRODUCT_ADDED_TO_CART_EVENT_NAME = 'product_added_to_cart';
 const SEARCH_SUBMITTED_EVENT_NAME = 'search_submitted';
 
 export function pageView(
-  payload: ShopifyAnalyticsPayload
+  payload: ShopifyPageViewPayload
 ): ShopifyMonorailPayload[] {
-  const pageViewPayload = payload as ShopifyPageViewPayload;
+  const pageViewPayload = payload;
   const additionalPayload = {
     canonical_url: pageViewPayload.canonicalUrl || pageViewPayload.url,
     customer_id: pageViewPayload.customerId,
@@ -93,9 +93,9 @@ export function pageView(
 }
 
 export function addToCart(
-  payload: ShopifyAnalyticsPayload
+  payload: ShopifyAddToCartPayload
 ): ShopifyMonorailPayload[] {
-  const addToCartPayload = payload as ShopifyAddToCartPayload;
+  const addToCartPayload = payload;
   const cartToken = parseGid(addToCartPayload.cartId);
   const cart_token = cartToken?.id ? `${cartToken.id}` : null;
   return [
@@ -144,7 +144,7 @@ function formatPayload(
   };
 }
 
-function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
+function formatProductPayload(products?: ShopifyAnalyticsProduct[]): string[] {
   return products
     ? products.map((p: ShopifyAnalyticsProduct) => {
         const product = addDataIf(
@@ -164,7 +164,7 @@ function formatProductPayload(products?: ShopifyAnalyticsProduct[]) {
             quantity: Number(p.quantity || 0),
           }
         );
-        return JSON.stringify(product as ShopifyAnalyticsProduct);
+        return JSON.stringify(product);
       })
     : [];
 }

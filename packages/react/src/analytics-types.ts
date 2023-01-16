@@ -28,6 +28,7 @@ export type ShopifyAnalyticsProduct = {
 };
 
 export type ShopifyAppSources = keyof typeof ShopifyAppSource;
+export type AnalyticsEventNames = keyof typeof AnalyticsEventName;
 
 export type ShopifyCommonPayload = ClientBrowserParameters & {
   shopifyAppSource?: ShopifyAppSources;
@@ -49,8 +50,6 @@ export type ShopifyPageViewPayload = ShopifyCommonPayload & {
   searchString?: string;
 };
 
-export type AnalyticsEventNames = keyof typeof AnalyticsEventName;
-
 export type ShopifyPageView = {
   eventName: string;
   payload: ShopifyPageViewPayload;
@@ -70,6 +69,7 @@ export type ShopifyMonorailPayload = {
   products?: string[];
   [key: string]: unknown;
 };
+
 export type ShopifyAnalyticsPayload =
   | ShopifyPageViewPayload
   | ShopifyAddToCartPayload;
