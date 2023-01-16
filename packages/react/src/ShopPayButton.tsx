@@ -1,5 +1,6 @@
 import {useShop} from './ShopifyProvider.js';
 import {useLoadScript} from './load-script.js';
+import {parseGid} from './analytics-utils.js';
 
 // By using 'never' in the "or" cases below, it makes these props "exclusive" and means that you cannot pass both of them; you must pass either one OR the other.
 type ShopPayButtonProps = {
@@ -54,7 +55,7 @@ export function ShopPayButton({
   const {storeDomain} = useShop();
   const shopPayLoadedStatus = useLoadScript(SHOPJS_URL);
 
-  let ids: string[];
+  let ids: string[] = [];
 
   if (variantIds && variantIdsAndQuantities) {
     throw new Error(DoublePropsErrorMessage);
@@ -62,7 +63,8 @@ export function ShopPayButton({
 
   if (variantIds) {
     ids = variantIds.reduce<string[]>((prev, curr) => {
-      const bareId = getIdFromGid(curr);
+      const bareId = parseGid(curr).id;
+      console.log(bareId);
       if (bareId) {
         prev.push(bareId);
       }
@@ -70,7 +72,7 @@ export function ShopPayButton({
     }, []);
   } else if (variantIdsAndQuantities) {
     ids = variantIdsAndQuantities.reduce<string[]>((prev, curr) => {
-      const bareId = getIdFromGid(curr?.id);
+      const bareId = parseGid(curr?.id).id;
       if (bareId) {
         prev.push(`${bareId}:${curr?.quantity ?? 1}`);
       }
@@ -78,6 +80,10 @@ export function ShopPayButton({
     }, []);
   } else {
     throw new Error(MissingPropsErrorMessage);
+  }
+
+  if (ids.length === 0) {
+    throw new Error(InvalidPropsErrorMessage);
   }
 
   const style = width
@@ -95,13 +101,6 @@ export function ShopPayButton({
   );
 }
 
-/**
- * Takes a string in the format of "gid://shopify/ProductVariant/41007289630776" and returns a string of the ID part at the end: "41007289630776"
- */
-export function getIdFromGid(id?: string) {
-  if (!id) return;
-  return id.split('/').pop();
-}
-
+export const InvalidPropsErrorMessage = `You must pass in "variantIds" in the form of ["gid://shopify/ProductVariant/1"]`;
 export const MissingPropsErrorMessage = `You must pass in either "variantIds" or "variantIdsAndQuantities" to ShopPayButton`;
 export const DoublePropsErrorMessage = `You must provide either a variantIds or variantIdsAndQuantities prop, but not both in the ShopPayButton component`;
