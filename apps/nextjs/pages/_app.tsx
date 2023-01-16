@@ -3,11 +3,11 @@ import type {AppProps} from 'next/app';
 import {
   ShopifyProvider,
   CartProvider,
-  ShopifyCookies,
   sendShopifyAnalytics,
   getClientBrowserParameters,
   AnalyticsEventName,
   type ShopifyPageViewPayload,
+  useShopifyCookies,
 } from '@shopify/hydrogen-react';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
@@ -51,6 +51,7 @@ export default function App({Component, pageProps}: AppProps) {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [analytics, router.events]);
+  useShopifyCookies();
 
   return (
     <ShopifyProvider
@@ -64,7 +65,6 @@ export default function App({Component, pageProps}: AppProps) {
       <CartProvider>
         <Component {...pagePropsWithAppAnalytics} />
       </CartProvider>
-      <ShopifyCookies domain="" hasUserConsent={hasUserConsent} />
     </ShopifyProvider>
   );
 }

@@ -2,8 +2,8 @@ import {
   buildUUID,
   hexTime,
   getShopifyCookies,
-  ShopifyCookies,
 } from './cookies-utils.js';
+import {ShopifyCookies} from './analytics-types.js';
 
 describe('cookies-utils', () => {
   describe('buildUUID', () => {
