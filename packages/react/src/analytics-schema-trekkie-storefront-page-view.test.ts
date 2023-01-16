@@ -1,13 +1,13 @@
 import {expectType} from 'ts-expect';
 import {ShopifyAppSource} from './analytics-constants.js';
-import * as TrekkieStorefrontPageView from './analytics-schema-trekkie-storefront-page-view.js';
+import {pageView} from './analytics-schema-trekkie-storefront-page-view.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
 import type {ShopifyMonorailPayload} from './analytics-types.js';
 
 describe(`analytics schema - trekkie storefront page view`, () => {
   it(`base payload with default values`, () => {
     const pageViewPayload = BASE_PAYLOAD;
-    const events = TrekkieStorefrontPageView.pageView(pageViewPayload);
+    const events = pageView(pageViewPayload);
 
     expectType<ShopifyMonorailPayload[]>(events);
     expect(events.length).toBe(1);
@@ -40,7 +40,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       pageType: 'product',
       resourceId: 'gid://shopify/Product/1',
     };
-    const events = TrekkieStorefrontPageView.pageView(pageViewPayload);
+    const events = pageView(pageViewPayload);
 
     expectType<ShopifyMonorailPayload[]>(events);
     expect(events.length).toBe(1);
@@ -70,7 +70,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       ...BASE_PAYLOAD,
       url: 'https://my-shop.myshopify.dev',
     };
-    const events = TrekkieStorefrontPageView.pageView(pageViewPayload);
+    const events = pageView(pageViewPayload);
 
     expectType<ShopifyMonorailPayload[]>(events);
     expect(events.length).toBe(1);

@@ -1,6 +1,6 @@
 import {expectType} from 'ts-expect';
 import {ShopifyAppSource} from './analytics-constants.js';
-import * as CustomStorefrontCustomerTracking from './analytics-schema-custom-storefront-customer-tracking.js';
+import {pageView, addToCart} from './analytics-schema-custom-storefront-customer-tracking.js';
 import {
   BASE_PAYLOAD,
   BASE_PRODUCT_PAYLOAD,
@@ -14,7 +14,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
   describe('page view', () => {
     it(`base payload with default values`, () => {
       const pageViewPayload = BASE_PAYLOAD;
-      const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+      const events = pageView(pageViewPayload);
 
       expectType<ShopifyMonorailPayload[]>(events);
       expect(events.length).toBe(1);
@@ -40,7 +40,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
         resourceId: 'gid://shopify/Product/1',
         canonicalUrl: 'https://example.com',
       };
-      const events = CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+      const events = pageView(pageViewPayload);
 
       expectType<ShopifyMonorailPayload[]>(events);
       expect(events.length).toBe(1);
@@ -64,8 +64,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'collection',
           collectionHandle: 'test',
         };
-        const events =
-          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events = pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -92,8 +91,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'product',
           totalValue: 100,
         };
-        const events =
-          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events = pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -121,8 +119,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           products: [productPayload],
           totalValue: 100,
         };
-        const events =
-          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events = pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -167,8 +164,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           products: [productPayload],
           totalValue: 100,
         };
-        const events =
-          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events = pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -211,8 +207,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
           pageType: 'search',
           searchString: 'test',
         };
-        const events =
-          CustomStorefrontCustomerTracking.pageView(pageViewPayload);
+        const events = pageView(pageViewPayload);
 
         expectType<ShopifyMonorailPayload[]>(events);
         expect(events.length).toBe(2);
@@ -242,8 +237,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
         products: [productPayload],
         totalValue: 100,
       };
-      const events =
-        CustomStorefrontCustomerTracking.addToCart(addToCartPayload);
+      const events = addToCart(addToCartPayload);
 
       expectType<ShopifyMonorailPayload[]>(events);
       expect(events.length).toBe(1);
