@@ -16,6 +16,28 @@ import {
   addToCart as customerAddToCart,
 } from './analytics-schema-custom-storefront-customer-tracking.js';
 
+/**
+ * Sends analytics to Shopify
+ * @param eventName - Type of analytics event
+ * @param payload - The payload of the analytics event
+ * @param shopDomain - Defaults to Shopify's analytics endpoint.
+ * Supply the Online Store domain so that Shopify analytics can be sent under
+ * the same top level domain. (You don't need to set this if you are sending
+ * from the server side)
+ *
+ * @example
+ * ```tsx
+ * import {
+ *   sendShopifyAnalytics,
+ *   AnalyticsEventName,
+ * } from '@shopify/hydrogen-react';
+ *
+ * sendShopifyAnalytics({
+ *   eventName: AnalyticsEventName.PAGE_VIEW,
+ *   payload,
+ * }, 'my-shop.myshopify.com');
+ * ```
+ **/
 export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics, shopDomain?: string) {
   let events: ShopifyMonorailEvent[] = [];
 
@@ -90,6 +112,20 @@ function sendToShopify(
   }
 }
 
+/**
+ * Gathers client browser values commonly used for analytics
+ * @returns Empty object if executed on server
+ * Otherwise:
+ *   - uniqueToken: Shopify unique user token
+ *   - visitToken: Shopify session token
+ *   - url: location.href
+ *   - path: location.pathname
+ *   - search: location.search
+ *   - referrer: document.referrer
+ *   - userAgent: navigator.userAgent
+ *   - navigationType: 'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>'
+ *   - navigationApi: 'PerformanceNavigationTiming' | 'performance.navigation'
+ **/
 export function getClientBrowserParameters():
   | ClientBrowserParameters
   | Record<string, never> {
