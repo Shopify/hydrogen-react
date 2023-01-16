@@ -5,13 +5,20 @@ import {getClientBrowserParameters, sendShopifyAnalytics} from './analytics.js';
 
 const MONORAIL_ENDPOINT =
   'https://monorail-edge.shopifysvc.com/unstable/produce_batch';
-const createFetchSpy = ({expectEventCounts}: {expectEventCounts: number}) => {
+const getShopDomainMonorailEndpoint = (shopDomain = '') => {
+  return `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
+}
+const createFetchSpy = ({expectEventCounts, shopDomain}: {
+  expectEventCounts: number;
+  shopDomain?: string
+}) => {
   const mockFetch = async (
     input: RequestInfo | URL,
     init?: RequestInit
   ): Promise<Response> => {
     // Mock Monorail endpoint
-    if (input === MONORAIL_ENDPOINT) {
+    const shopDomainMonorailEndpoint = getShopDomainMonorailEndpoint(shopDomain);
+    if (input === MONORAIL_ENDPOINT || input === shopDomainMonorailEndpoint) {
       if (init?.body) {
         const reqData = await init.body.toString();
         const data = JSON.parse(reqData || '{}');
@@ -136,6 +143,25 @@ describe('analytics', () => {
           cartId: 'gid://shopify/Cart/abc123',
         },
       });
+
+      expect(fetchSpy).toHaveBeenCalled();
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it('with a page view event to a shop monorail endpoint', async () => {
+      const consoleErrorSpy = createConsoleErrorSpy();
+      const shopDomain = 'my-shop.myshopify.com';
+      const fetchSpy = createFetchSpy({
+        expectEventCounts: 2,
+        shopDomain,
+      });
+
+      await sendShopifyAnalytics({
+        eventName: AnalyticsEventName.PAGE_VIEW,
+        payload: {
+          ...BASE_PAYLOAD,
+        }
+      }, shopDomain);
 
       expect(fetchSpy).toHaveBeenCalled();
       expect(consoleErrorSpy).not.toHaveBeenCalled();

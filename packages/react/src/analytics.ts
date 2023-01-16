@@ -16,7 +16,7 @@ import {
   addToCart as customerAddToCart,
 } from './analytics-schema-custom-storefront-customer-tracking.js';
 
-export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
+export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics, shopDomain?: string) {
   let events: ShopifyMonorailEvent[] = [];
 
   if (eventName === AnalyticsEventName.PAGE_VIEW) {
@@ -31,7 +31,7 @@ export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
     );
   }
 
-  return sendToShopify(events);
+  return sendToShopify(events, shopDomain);
 }
 
 type MonorailResponse = {
@@ -41,7 +41,10 @@ type MonorailResponse = {
 
 const ERROR_MESSAGE = 'sendShopifyAnalytics request is unsuccessful';
 
-function sendToShopify(events: ShopifyMonorailEvent[]): Promise<void> {
+function sendToShopify(
+  events: ShopifyMonorailEvent[],
+  shopDomain?: string
+): Promise<void> {
   const eventsToBeSent = {
     events,
     metadata: {
@@ -51,7 +54,9 @@ function sendToShopify(events: ShopifyMonorailEvent[]): Promise<void> {
 
   try {
     return fetch(
-      'https://monorail-edge.shopifysvc.com/unstable/produce_batch',
+      shopDomain
+      ? `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
+      : 'https://monorail-edge.shopifysvc.com/unstable/produce_batch',
       {
         method: 'post',
         headers: {
