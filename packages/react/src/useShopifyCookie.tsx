@@ -40,7 +40,12 @@ export function useShopifyCookies(hasUserConsent = false, domain = ''): void {
   });
 }
 
-function setCookie(name: string, value: string, maxage: number, domain: string): void {
+function setCookie(
+  name: string,
+  value: string,
+  maxage: number,
+  domain: string
+): void {
   document.cookie = stringify(name, value, {
     maxage,
     domain,

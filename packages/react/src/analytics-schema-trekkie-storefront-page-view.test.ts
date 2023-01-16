@@ -31,7 +31,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
     const pageViewPayload = {
       ...BASE_PAYLOAD,
       hasUserConsent: false,
-      shopId: 'gid://shopify/Shop/1',
+      shopId: 'gid://shopify/Shop/2',
       url: 'https://example.com',
       shopifyAppSource: ShopifyAppSource.hydrogen,
       storefrontId: '1',
@@ -48,7 +48,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       schema_id: 'trekkie_storefront_page_view/1.4',
       payload: {
         ...getForwardedPayload(pageViewPayload),
-        shopId: 1,
+        shopId: 2,
         appClientId: '6167201',
         isMerchantRequest: false,
         hydrogenSubchannelId: '1',
@@ -93,6 +93,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
 
 export function getForwardedPayload(initPayload: ShopifyMonorailPayload) {
   return {
+    shopId: 1,
     uniqToken: initPayload.uniqueToken,
     visitToken: initPayload.visitToken,
     microSessionId: expect.any(String),
@@ -102,7 +103,6 @@ export function getForwardedPayload(initPayload: ShopifyMonorailPayload) {
     search: initPayload.search,
     referrer: initPayload.referrer,
     title: initPayload.title,
-    shopId: initPayload.shopId,
     currency: initPayload.currency,
   };
 }

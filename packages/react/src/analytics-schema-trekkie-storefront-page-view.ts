@@ -1,6 +1,7 @@
 import {
   ShopifyPageViewPayload,
   ShopifyMonorailPayload,
+  ShopifyMonorailEvent,
 } from './analytics-types.js';
 import {ShopifyAppId} from './analytics-constants.js';
 import {addDataIf, schemaWrapper, parseGid} from './analytics-utils.js';
@@ -11,7 +12,7 @@ const OXYGEN_DOMAIN = 'myshopify.dev';
 
 export function pageView(
   payload: ShopifyPageViewPayload
-): ShopifyMonorailPayload[] {
+): ShopifyMonorailEvent[] {
   const pageViewPayload = payload;
   const {id, resource} = parseGid(pageViewPayload.resourceId);
   const resourceType = resource ? resource.toLowerCase() : undefined;
@@ -23,7 +24,7 @@ export function pageView(
           pageType: pageViewPayload.pageType,
           customerId: pageViewPayload.customerId,
           resourceType,
-          resourceId: id,
+          resourceId: parseInt(id),
         },
         formatPayload(pageViewPayload)
       )
@@ -34,10 +35,6 @@ export function pageView(
 function formatPayload(
   payload: ShopifyPageViewPayload
 ): ShopifyMonorailPayload {
-  const shopId =
-    typeof payload.shopId === 'string'
-      ? parseGid(payload.shopId).id
-      : payload.shopId;
   return {
     appClientId: payload.shopifyAppSource
       ? ShopifyAppId[payload.shopifyAppSource]
@@ -57,7 +54,7 @@ function formatPayload(
     referrer: payload.referrer,
     title: payload.title,
 
-    shopId,
+    shopId: parseInt(parseGid(payload.shopId).id),
     currency: payload.currency,
     contentLanguage: payload.acceptedLanguage || 'en',
   };

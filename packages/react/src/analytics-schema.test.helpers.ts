@@ -2,7 +2,7 @@ import {faker} from '@faker-js/faker';
 
 export const BASE_PAYLOAD = {
   hasUserConsent: true,
-  shopId: 1,
+  shopId: 'gid://shopify/Shop/1',
   currency: 'USD',
   uniqueToken: faker.datatype.string(),
   visitToken: faker.datatype.string(),

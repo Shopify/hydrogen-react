@@ -96,10 +96,13 @@ export default function Product({
               const payload: ShopifyAddToCartPayload = {
                 ...getClientBrowserParameters(),
                 ...analytics,
-                products: [{
-                  ...analytics.products[0],
-                  quantity: 1,
-                }],
+                cartId: 'abc123',
+                products: [
+                  {
+                    ...analytics.products[0],
+                    quantity: 1,
+                  },
+                ],
               };
               sendShopifyAnalytics({
                 eventName: AnalyticsEventName.ADD_TO_CART,

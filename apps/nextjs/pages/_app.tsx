@@ -13,7 +13,7 @@ import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 
 const analyticsShopData = {
-  shopId: 55145660472,
+  shopId: 'gid://shopify/Shop/55145660472',
   currency: 'USD',
   acceptedLanguage: 'en',
 };

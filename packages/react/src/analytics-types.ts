@@ -33,7 +33,7 @@ export type AnalyticsEventNames = keyof typeof AnalyticsEventName;
 export type ShopifyCommonPayload = ClientBrowserParameters & {
   shopifyAppSource?: ShopifyAppSources;
   hasUserConsent: boolean;
-  shopId: string | number;
+  shopId: string;
   currency: string;
   storefrontId?: string;
   acceptedLanguage?: string;
@@ -68,6 +68,14 @@ export type ShopifyAddToCart = {
 export type ShopifyMonorailPayload = {
   products?: string[];
   [key: string]: unknown;
+};
+
+export type ShopifyMonorailEvent = {
+  schema_id: string;
+  payload: ShopifyMonorailPayload;
+  metadata: {
+    event_created_at_ms: number;
+  };
 };
 
 export type ShopifyAnalyticsPayload =

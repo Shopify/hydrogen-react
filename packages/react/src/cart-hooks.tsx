@@ -9,12 +9,9 @@ import {
   SHOPIFY_STOREFRONT_Y_HEADER,
   SHOPIFY_STOREFRONT_S_HEADER,
 } from './cart-constants.js';
-import {
-  SHOPIFY_Y,
-  SHOPIFY_S,
-} from './shared-constants.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
 import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
-import { getShopifyCookies } from './cookies-utils.js';
+import {getShopifyCookies} from './cookies-utils.js';
 
 export function useCartFetch() {
   const {storefrontId, getPublicTokenHeaders, getStorefrontApiUrl} = useShop();

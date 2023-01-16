@@ -4,6 +4,7 @@ import {
   ShopifyAddToCartPayload,
   ShopifyMonorailPayload,
   ShopifyAnalyticsProduct,
+  ShopifyMonorailEvent,
 } from './analytics-types.js';
 import {AnalyticsPageType, ShopifyAppSource} from './analytics-constants.js';
 import {addDataIf, schemaWrapper, parseGid} from './analytics-utils.js';
@@ -18,7 +19,7 @@ const SEARCH_SUBMITTED_EVENT_NAME = 'search_submitted';
 
 export function pageView(
   payload: ShopifyPageViewPayload
-): ShopifyMonorailPayload[] {
+): ShopifyMonorailEvent[] {
   const pageViewPayload = payload;
   const additionalPayload = {
     canonical_url: pageViewPayload.canonicalUrl || pageViewPayload.url,
@@ -94,7 +95,7 @@ export function pageView(
 
 export function addToCart(
   payload: ShopifyAddToCartPayload
-): ShopifyMonorailPayload[] {
+): ShopifyMonorailEvent[] {
   const addToCartPayload = payload;
   const cartToken = parseGid(addToCartPayload.cartId);
   const cart_token = cartToken?.id ? `${cartToken.id}` : null;
@@ -118,10 +119,6 @@ export function addToCart(
 function formatPayload(
   payload: ShopifyAnalyticsPayload
 ): ShopifyMonorailPayload {
-  const shop_id =
-    typeof payload.shopId === 'string'
-      ? parseGid(payload.shopId).id
-      : payload.shopId;
   return {
     source: payload.shopifyAppSource || ShopifyAppSource.headless,
     hydrogenSubchannelId: payload.storefrontId || '0',
@@ -139,7 +136,7 @@ function formatPayload(
     navigation_type: payload.navigationType,
     navigation_api: payload.navigationApi,
 
-    shop_id,
+    shop_id: parseInt(parseGid(payload.shopId).id),
     currency: payload.currency,
   };
 }
@@ -152,8 +149,8 @@ function formatProductPayload(products?: ShopifyAnalyticsProduct[]): string[] {
             variant_gid: p.variantGid,
             category: p.category,
             sku: p.sku,
-            product_id: parseGid(p.productGid).id,
-            variant_id: parseGid(p.variantGid).id,
+            product_id: parseInt(parseGid(p.productGid).id),
+            variant_id: parseInt(parseGid(p.variantGid).id),
           },
           {
             product_gid: p.productGid,

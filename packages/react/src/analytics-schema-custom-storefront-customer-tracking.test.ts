@@ -1,6 +1,9 @@
 import {expectType} from 'ts-expect';
 import {ShopifyAppSource} from './analytics-constants.js';
-import {pageView, addToCart} from './analytics-schema-custom-storefront-customer-tracking.js';
+import {
+  pageView,
+  addToCart,
+} from './analytics-schema-custom-storefront-customer-tracking.js';
 import {
   BASE_PAYLOAD,
   BASE_PRODUCT_PAYLOAD,
@@ -29,7 +32,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
     it(`base payload with non-default values`, () => {
       const pageViewPayload = {
         ...BASE_PAYLOAD,
-        shopId: 'gid://shopify/Shop/1',
+        shopId: 'gid://shopify/Shop/2',
         hasUserConsent: false,
         url: 'https://example.com/fr',
         shopifyAppSource: ShopifyAppSource.hydrogen,
@@ -47,7 +50,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
       expect(events[0]).toEqual(
         getExpectedPayload(pageViewPayload, {
           source: 'hydrogen',
-          shop_id: 1,
+          shop_id: 2,
           event_name: 'page_rendered',
           hydrogenSubchannelId: '1',
           is_persistent_cookie: false,
@@ -282,6 +285,7 @@ function getExpectedPayload(
 
 function getForwardedPayload(initPayload: ShopifyAnalyticsPayload) {
   return {
+    shop_id: 1,
     source: 'headless',
     hydrogenSubchannelId: '0',
     is_persistent_cookie: true,
@@ -291,7 +295,6 @@ function getForwardedPayload(initPayload: ShopifyAnalyticsPayload) {
     event_time: expect.any(Number),
     event_source_url: initPayload.url,
     referrer: initPayload.referrer,
-    shop_id: initPayload.shopId,
     currency: initPayload.currency,
     ccpa_enforced: false,
     gdpr_enforced: false,

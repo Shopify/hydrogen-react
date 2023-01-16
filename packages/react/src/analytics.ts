@@ -3,8 +3,8 @@ import type {
   ClientBrowserParameters,
   ShopifyAddToCartPayload,
   ShopifyAnalytics,
-  ShopifyMonorailPayload,
   ShopifyPageViewPayload,
+  ShopifyMonorailEvent,
 } from './analytics-types.js';
 import {AnalyticsEventName} from './analytics-constants.js';
 import {errorIfServer} from './analytics-utils.js';
@@ -17,19 +17,18 @@ import {
 } from './analytics-schema-custom-storefront-customer-tracking.js';
 
 export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
-  let events: ShopifyMonorailPayload[] = [];
+  let events: ShopifyMonorailEvent[] = [];
 
-  switch (eventName) {
-    case AnalyticsEventName.PAGE_VIEW:
-      const pageViewPayload = payload as ShopifyPageViewPayload;
-      events = events.concat(
-        trekkiePageView(pageViewPayload),
-        customerPageView(pageViewPayload)
-      );
-      break;
-    case AnalyticsEventName.ADD_TO_CART:
-      events = events.concat(customerAddToCart(payload as ShopifyAddToCartPayload));
-      break;
+  if (eventName === AnalyticsEventName.PAGE_VIEW) {
+    const pageViewPayload = payload as ShopifyPageViewPayload;
+    events = events.concat(
+      trekkiePageView(pageViewPayload),
+      customerPageView(pageViewPayload)
+    );
+  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {
+    events = events.concat(
+      customerAddToCart(payload as ShopifyAddToCartPayload)
+    );
   }
 
   return sendToShopify(events);
@@ -42,7 +41,7 @@ type MonorailResponse = {
 
 const ERROR_MESSAGE = 'sendShopifyAnalytics request is unsuccessful';
 
-function sendToShopify(events: ShopifyMonorailPayload[]) {
+function sendToShopify(events: ShopifyMonorailEvent[]): Promise<void> {
   const eventsToBeSent = {
     events,
     metadata: {
@@ -77,6 +76,7 @@ function sendToShopify(events: ShopifyMonorailPayload[]) {
       });
   } catch (error) {
     // Do nothing
+    return Promise.resolve();
   }
 }
 
