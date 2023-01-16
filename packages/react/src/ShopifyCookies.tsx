@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {stringify} from 'worktop/cookie';
-import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
 import {buildUUID, getShopifyCookies} from './cookies-utils.js';
 
 const longTermLength = 60 * 60 * 24 * 360 * 1; // ~1 year expiry

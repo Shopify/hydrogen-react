@@ -1,5 +1,6 @@
 import type {Product, ProductVariant} from './storefront-api-types.js';
 import {AnalyticsEventName, ShopifyAppSource} from './analytics-constants.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
 
 export type ClientBrowserParameters = {
   uniqueToken: string;
@@ -73,3 +74,8 @@ export type ShopifyAnalyticsPayload =
   | ShopifyPageViewPayload
   | ShopifyAddToCartPayload;
 export type ShopifyAnalytics = ShopifyPageView | ShopifyAddToCart;
+
+export type ShopifyCookies = {
+  [SHOPIFY_Y]: string;
+  [SHOPIFY_S]: string;
+};

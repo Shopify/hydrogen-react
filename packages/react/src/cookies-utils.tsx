@@ -1,7 +1,7 @@
 import {parse} from 'worktop/cookie';
-import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
+import {ShopifyCookies} from './analytics-types.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
 
-const zeros = '00000000';
 const tokenHash = 'xxxx-4xxx-xxxx-xxxxxxxxxxxx';
 
 export function buildUUID(): string {
@@ -54,13 +54,8 @@ export function hexTime(): string {
     .toString(16)
     .toLowerCase();
 
-  return zeros.substr(0, 8 - output.length) + output;
+  return output.padStart(8 - output.length, '0');
 }
-
-export type ShopifyCookies = {
-  [SHOPIFY_Y]: string;
-  [SHOPIFY_S]: string;
-};
 
 export function getShopifyCookies(cookies: string): ShopifyCookies {
   const cookieData = parse(cookies);

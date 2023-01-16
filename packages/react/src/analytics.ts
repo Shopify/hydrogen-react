@@ -1,4 +1,4 @@
-import {SHOPIFY_S, SHOPIFY_Y} from './cart-constants.js';
+import {SHOPIFY_S, SHOPIFY_Y} from './shared-constants.js';
 import type {
   ClientBrowserParameters,
   ShopifyAnalytics,
