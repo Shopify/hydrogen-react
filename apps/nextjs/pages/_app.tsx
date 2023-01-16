@@ -24,7 +24,7 @@ export default function App({Component, pageProps}: AppProps) {
   const hasUserConsent = true;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const analytics = {
+  const analytics: ShopifyPageViewPayload = {
     hasUserConsent,
     ...analyticsShopData,
     ...pageProps.analytics,
@@ -69,12 +69,13 @@ export default function App({Component, pageProps}: AppProps) {
   );
 }
 
-function sendPageView(analyticsPageData: Partial<ShopifyPageViewPayload>) {
+function sendPageView(analyticsPageData: ShopifyPageViewPayload) {
+  const payload: ShopifyPageViewPayload = {
+    ...getClientBrowserParameters(),
+    ...analyticsPageData,
+  };
   sendShopifyAnalytics({
     eventName: AnalyticsEventName.PAGE_VIEW,
-    payload: {
-      ...getClientBrowserParameters(),
-      ...analyticsPageData,
-    } as ShopifyPageViewPayload,
+    payload,
   });
 }

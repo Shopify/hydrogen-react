@@ -93,19 +93,17 @@ export default function Product({
         <button
           onClick={() => {
             if (analytics.products) {
-              const product = analytics.products[0];
+              const payload: ShopifyAddToCartPayload = {
+                ...getClientBrowserParameters(),
+                ...analytics,
+                products: [{
+                  ...analytics.products[0],
+                  quantity: 1,
+                }],
+              };
               sendShopifyAnalytics({
                 eventName: AnalyticsEventName.ADD_TO_CART,
-                payload: {
-                  ...getClientBrowserParameters(),
-                  ...analytics,
-                  products: [
-                    {
-                      ...product,
-                      quantity: 1,
-                    },
-                  ],
-                } as ShopifyAddToCartPayload,
+                payload,
               });
             }
           }}

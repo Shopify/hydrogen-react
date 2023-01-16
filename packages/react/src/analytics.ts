@@ -1,8 +1,10 @@
 import {SHOPIFY_S, SHOPIFY_Y} from './shared-constants.js';
 import type {
   ClientBrowserParameters,
+  ShopifyAddToCartPayload,
   ShopifyAnalytics,
   ShopifyMonorailPayload,
+  ShopifyPageViewPayload,
 } from './analytics-types.js';
 import {AnalyticsEventName} from './analytics-constants.js';
 import {errorIfServer} from './analytics-utils.js';
@@ -19,13 +21,14 @@ export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics) {
 
   switch (eventName) {
     case AnalyticsEventName.PAGE_VIEW:
+      const pageViewPayload = payload as ShopifyPageViewPayload;
       events = events.concat(
-        trekkiePageView(payload),
-        customerPageView(payload)
+        trekkiePageView(pageViewPayload),
+        customerPageView(pageViewPayload)
       );
       break;
     case AnalyticsEventName.ADD_TO_CART:
-      events = events.concat(customerAddToCart(payload));
+      events = events.concat(customerAddToCart(payload as ShopifyAddToCartPayload));
       break;
   }
 
