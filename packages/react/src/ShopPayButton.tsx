@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {useShop} from './ShopifyProvider.js';
 import {useLoadScript} from './load-script.js';
 
@@ -7,6 +8,8 @@ type ShopPayButtonProps = {
   className?: string;
   /** A string that's applied to the [CSS custom property (variable)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) `--shop-pay-button-width` for the [Buy with Shop Pay component](https://shopify.dev/custom-storefronts/tools/web-components#buy-with-shop-pay-component). */
   width?: string;
+  /** The domain of your Shopify storefront URL (eg: `your-store.myshopify.com`). */
+  storeDomain?: string;
 } & (
   | {
       /** An array of IDs of the variants to purchase with Shop Pay. This will only ever have a quantity of 1 for each variant. If you want to use other quantities, then use 'variantIdsAndQuantities'. */
@@ -45,40 +48,46 @@ const SHOPJS_URL =
  * It renders a [`<shop-pay-button>`](https://shopify.dev/custom-storefronts/tools/web-components) custom element, for which it will lazy-load the source code automatically.
  * It relies on the `<ShopProvider>` context provider.
  */
-export function ShopPayButton({
-  variantIds,
-  className,
-  variantIdsAndQuantities,
-  width,
-}: ShopPayButtonProps) {
-  const {storeDomain} = useShop();
+export function ShopPayButton(props: ShopPayButtonProps) {
+  const {className, variantIds, variantIdsAndQuantities, width} = props;
+  const shop = useShop();
+  const storeDomain = props?.storeDomain || shop?.storeDomain;
   const shopPayLoadedStatus = useLoadScript(SHOPJS_URL);
 
-  let ids: string[];
+  if (!storeDomain) {
+    throw new Error(
+      'You must pass a `storeDomain` prop to the `ShopPayButton` component, or wrap it in a `ShopProvider` component.'
+    );
+  }
 
   if (variantIds && variantIdsAndQuantities) {
     throw new Error(DoublePropsErrorMessage);
   }
 
-  if (variantIds) {
-    ids = variantIds.reduce<string[]>((prev, curr) => {
-      const bareId = getIdFromGid(curr);
-      if (bareId) {
-        prev.push(bareId);
-      }
-      return prev;
-    }, []);
-  } else if (variantIdsAndQuantities) {
-    ids = variantIdsAndQuantities.reduce<string[]>((prev, curr) => {
+  if (!variantIds && !variantIdsAndQuantities) {
+    throw new Error(MissingPropsErrorMessage);
+  }
+
+  const ids = useMemo(() => {
+    if (variantIds) {
+      return variantIds.reduce<string[]>((prev, curr) => {
+        const bareId = getIdFromGid(curr);
+        if (bareId) {
+          prev.push(bareId);
+        }
+        return prev;
+      }, []);
+    }
+
+    // we have variantIdsAndQuantities
+    return variantIdsAndQuantities.reduce<string[]>((prev, curr) => {
       const bareId = getIdFromGid(curr?.id);
       if (bareId) {
         prev.push(`${bareId}:${curr?.quantity ?? 1}`);
       }
       return prev;
     }, []);
-  } else {
-    throw new Error(MissingPropsErrorMessage);
-  }
+  }, [variantIds, variantIdsAndQuantities]);
 
   const style = width
     ? ({

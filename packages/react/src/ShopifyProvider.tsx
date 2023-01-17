@@ -108,7 +108,7 @@ export function ShopifyProvider({
 export function useShop() {
   const shopContext = useContext(ShopifyContext);
   if (!shopContext) {
-    throw new Error(`'useShop()' must be a descendent of <ShopifyProvider/>`);
+    return null;
   }
   return shopContext;
 }
@@ -143,44 +143,46 @@ export type ShopifyContextProps = {
   locale?: string;
 };
 
-export type ShopifyContextValue = ShopifyContextProps & {
-  /**
-   * Creates the fully-qualified URL to your store's GraphQL endpoint.
-   *
-   * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getStorefrontApiUrl({...})`:
-   *
-   * - `storeDomain`
-   * - `storefrontApiVersion`
-   */
-  getStorefrontApiUrl: (props?: {
-    /** The host name of the domain (eg: `{shop}.myshopify.com`). */
-    storeDomain?: string;
-    /** The Storefront API version. This should almost always be the same as the version Hydrogen-UI was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details. */
-    storefrontApiVersion?: string;
-  }) => string;
-  /**
-   * Returns an object that contains headers that are needed for each query to Storefront API GraphQL endpoint. This uses the public Storefront API token.
-   *
-   * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getPublicTokenHeaders({...})`:
-   *
-   * - `contentType`
-   * - `storefrontToken`
-   *
-   */
-  getPublicTokenHeaders: (props: {
-    /**
-     * Customizes which `"content-type"` header is added when using `getPrivateTokenHeaders()` and `getPublicTokenHeaders()`. When fetching with a `JSON.stringify()`-ed `body`, use `"json"`. When fetching with a `body` that is a plain string, use `"graphql"`. Defaults to `"json"`
-     */
-    contentType: 'json' | 'graphql';
-    /** The Storefront API access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */
-    storefrontToken?: string;
-  }) => Record<string, string>;
-  /**
-   * Creates the fully-qualified URL to your myshopify.com domain.
-   *
-   * By default, it will use the config you passed in when calling `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:
-   *
-   * - `storeDomain`
-   */
-  getShopifyDomain: (props?: {storeDomain?: string}) => string;
-};
+export type ShopifyContextValue =
+  | (ShopifyContextProps & {
+      /**
+       * Creates the fully-qualified URL to your store's GraphQL endpoint.
+       *
+       * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getStorefrontApiUrl({...})`:
+       *
+       * - `storeDomain`
+       * - `storefrontApiVersion`
+       */
+      getStorefrontApiUrl: (props?: {
+        /** The host name of the domain (eg: `{shop}.myshopify.com`). */
+        storeDomain?: string;
+        /** The Storefront API version. This should almost always be the same as the version Hydrogen-UI was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details. */
+        storefrontApiVersion?: string;
+      }) => string;
+      /**
+       * Returns an object that contains headers that are needed for each query to Storefront API GraphQL endpoint. This uses the public Storefront API token.
+       *
+       * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getPublicTokenHeaders({...})`:
+       *
+       * - `contentType`
+       * - `storefrontToken`
+       *
+       */
+      getPublicTokenHeaders: (props: {
+        /**
+         * Customizes which `"content-type"` header is added when using `getPrivateTokenHeaders()` and `getPublicTokenHeaders()`. When fetching with a `JSON.stringify()`-ed `body`, use `"json"`. When fetching with a `body` that is a plain string, use `"graphql"`. Defaults to `"json"`
+         */
+        contentType: 'json' | 'graphql';
+        /** The Storefront API access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */
+        storefrontToken?: string;
+      }) => Record<string, string>;
+      /**
+       * Creates the fully-qualified URL to your myshopify.com domain.
+       *
+       * By default, it will use the config you passed in when calling `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:
+       *
+       * - `storeDomain`
+       */
+      getShopifyDomain: (props?: {storeDomain?: string}) => string;
+    })
+  | null;

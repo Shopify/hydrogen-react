@@ -19,6 +19,10 @@ interface BaseProps<ComponentGeneric extends ElementType> {
   data: PartialDeep<MetafieldType, {recurseIntoArrays: true}> | null;
   /** An HTML tag or React component to be rendered as the base element wrapper. The default value varies depending on [metafield.type](https://shopify.dev/apps/metafields/types). */
   as?: ComponentGeneric;
+  /**
+   * The locale string based on `country` and `language`.
+   */
+  locale?: string;
 }
 
 export type MetafieldProps<ComponentGeneric extends ElementType> =
@@ -27,15 +31,22 @@ export type MetafieldProps<ComponentGeneric extends ElementType> =
 /**
  * The `Metafield` component renders the value of a Storefront
  * API's [Metafield object](https://shopify.dev/api/storefront/reference/common-objects/metafield).
- * Relies on the `locale` property of the `useShop()` hook, so it must be a desendent of `<ShopifyProvider/>`
+ * Relies on the `locale` property of the `useShop()` hook, so it must be a descendent of `<ShopifyProvider/>`
  *
  * Renders a smart default of the Metafield's `value`. For more information, refer to the [Default output](#default-output) section.
  */
 export function Metafield<ComponentGeneric extends ElementType>(
   props: MetafieldProps<ComponentGeneric>
 ) {
-  const {data, as, ...passthroughProps} = props;
-  const {locale} = useShop();
+  const {data, locale: _locale, as, ...passthroughProps} = props;
+  const shop = useShop();
+  const locale = _locale || shop?.locale;
+
+  if (!locale) {
+    throw new Error(
+      'You must pass a `locale` prop to the `Metafield` component, or wrap it in a `ShopProvider` component.'
+    );
+  }
 
   const parsedMetafield = useMemo(() => parseMetafield(data), [data]);
 

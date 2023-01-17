@@ -2,6 +2,10 @@ import {useMemo} from 'react';
 import {useShop} from './ShopifyProvider.js';
 import {CurrencyCode, MoneyV2} from './storefront-api-types.js';
 
+interface UseMoneyProps extends MoneyV2 {
+  locale?: string;
+}
+
 export type UseMoneyValue = {
   /**
    * The currency code from the `MoneyV2` object.
@@ -56,23 +60,24 @@ export type UseMoneyValue = {
  * [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
  * Uses `locale` from `ShopifyProvider`
  */
-export function useMoney(money: MoneyV2): UseMoneyValue {
-  const {locale} = useShop();
+export function useMoney(props: UseMoneyProps): UseMoneyValue {
+  const shop = useShop();
+  const locale = props?.locale ?? shop?.locale;
 
   if (!locale) {
     throw new Error(
-      `useMoney(): Unable to get 'locale' from 'useShop()', which means that 'locale' was not passed to '<ShopifyProvider/>'. 'locale' is required for 'useMoney()' to work`
+      'You must pass a `locale` prop to the `ShopPayButton` component, or wrap it in a `ShopProvider` component.'
     );
   }
 
-  const amount = parseFloat(money.amount);
+  const amount = parseFloat(props.amount);
 
   const options = useMemo(
     () => ({
       style: 'currency',
-      currency: money.currencyCode,
+      currency: props.currencyCode,
     }),
-    [money.currencyCode]
+    [props.currencyCode]
   );
 
   const defaultFormatter = useLazyFormatter(locale, options);
@@ -107,8 +112,8 @@ export function useMoney(money: MoneyV2): UseMoneyValue {
   // create formatters if they are going to be used.
   const lazyFormatters = useMemo(
     () => ({
-      original: () => money,
-      currencyCode: () => money.currencyCode,
+      original: () => props,
+      currencyCode: () => props.currencyCode,
 
       localizedString: () => defaultFormatter().format(amount),
 
@@ -126,11 +131,11 @@ export function useMoney(money: MoneyV2): UseMoneyValue {
 
       currencyName: () =>
         nameFormatter().formatToParts(amount).find(isPartCurrency)?.value ??
-        money.currencyCode, // e.g. "US dollars"
+        props.currencyCode, // e.g. "US dollars"
 
       currencySymbol: () =>
         defaultFormatter().formatToParts(amount).find(isPartCurrency)?.value ??
-        money.currencyCode, // e.g. "USD"
+        props.currencyCode, // e.g. "USD"
 
       currencyNarrowSymbol: () =>
         narrowSymbolFormatter().formatToParts(amount).find(isPartCurrency)
@@ -148,7 +153,7 @@ export function useMoney(money: MoneyV2): UseMoneyValue {
           .join(''),
     }),
     [
-      money,
+      props,
       amount,
       nameFormatter,
       defaultFormatter,
