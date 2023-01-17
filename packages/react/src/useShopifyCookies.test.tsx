@@ -4,13 +4,16 @@ import {getShopifyCookies} from './cookies-utils.js';
 import {useShopifyCookies} from './useShopifyCookie.js';
 import {parse} from 'worktop/cookie';
 
-type MockCookieJar = Record<string, {
-  maxage: number | undefined;
-  samesite: string | undefined;
-  path: string | undefined;
-  domain: string | undefined;
-  value: string;
-}>;
+type MockCookieJar = Record<
+  string,
+  {
+    maxage: number | undefined;
+    samesite: string | undefined;
+    path: string | undefined;
+    domain: string | undefined;
+    value: string;
+  }
+>;
 
 function mockCookie(): MockCookieJar {
   const cookieJar: MockCookieJar = {};
@@ -21,24 +24,27 @@ function mockCookie(): MockCookieJar {
       docCookie += `${key}=${cookieJar[key].value};`;
     });
     return docCookie;
-  })
+  });
 
-  vi.spyOn(document, 'cookie', 'set').mockImplementation((cookieString: string) => {
-    const {domain, maxage, path, samesite, ...cookieKeyValuePair} = parse(cookieString);
-    const cookieName = Object.keys(cookieKeyValuePair)[0];
+  vi.spyOn(document, 'cookie', 'set').mockImplementation(
+    (cookieString: string) => {
+      const {domain, maxage, path, samesite, ...cookieKeyValuePair} =
+        parse(cookieString);
+      const cookieName = Object.keys(cookieKeyValuePair)[0];
 
-    if(maxage) {
-      cookieJar[cookieName] = {
-        value: cookieKeyValuePair[cookieName],
-        maxage,
-        path,
-        samesite,
-        domain,
-      };
-    } else {
-      delete cookieJar[cookieName];
+      if (maxage) {
+        cookieJar[cookieName] = {
+          value: cookieKeyValuePair[cookieName],
+          maxage,
+          path,
+          samesite,
+          domain,
+        };
+      } else {
+        delete cookieJar[cookieName];
+      }
     }
-  })
+  );
   return cookieJar;
 }
 
@@ -67,7 +73,9 @@ describe(`useShopifyCookies`, () => {
     expect(cookies['_shopify_s']).not.toBe('');
     expect(cookies['_shopify_y']).not.toBe('');
 
-    expect(cookieJar['_shopify_s'].value).not.toBe(cookieJar['_shopify_y'].value);
+    expect(cookieJar['_shopify_s'].value).not.toBe(
+      cookieJar['_shopify_y'].value
+    );
     expect(cookieJar['_shopify_s'].maxage).toBe(1800);
     expect(cookieJar['_shopify_y'].maxage).toBe(1800);
   });
@@ -134,7 +142,9 @@ describe(`useShopifyCookies`, () => {
     expect(cookies['_shopify_s']).not.toBe('');
     expect(cookies['_shopify_y']).not.toBe('');
 
-    expect(cookieJar['_shopify_s'].value).not.toBe(cookieJar['_shopify_y'].value);
+    expect(cookieJar['_shopify_s'].value).not.toBe(
+      cookieJar['_shopify_y'].value
+    );
     expect(cookieJar['_shopify_s'].maxage).toBe(1800);
     expect(cookieJar['_shopify_y'].maxage).toBe(31104000);
   });
@@ -154,14 +164,16 @@ describe(`useShopifyCookies`, () => {
     expect(cookies['_shopify_s']).not.toBe('');
     expect(cookies['_shopify_y']).not.toBe('');
 
-    expect(cookieJar['_shopify_s'].value).not.toBe(cookieJar['_shopify_y'].value);
+    expect(cookieJar['_shopify_s'].value).not.toBe(
+      cookieJar['_shopify_y'].value
+    );
     expect(cookieJar['_shopify_s']).toContain({
       domain: cookieDomain,
-      maxage: 1800
+      maxage: 1800,
     });
     expect(cookieJar['_shopify_y']).toContain({
       domain: cookieDomain,
-      maxage: 31104000
+      maxage: 31104000,
     });
   });
 });
