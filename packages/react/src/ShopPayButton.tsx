@@ -68,7 +68,6 @@ export function ShopPayButton({
   if (variantIds) {
     ids = variantIds.reduce<string[]>((prev, curr) => {
       const bareId = parseGid(curr).id;
-      console.log(bareId);
       if (bareId) {
         prev.push(bareId);
       }
