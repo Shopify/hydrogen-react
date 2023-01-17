@@ -10,7 +10,7 @@ import {
   type StorefrontApiResponseOk,
   useShop,
   AnalyticsPageType,
-} from '@shopify/hydrogen-react';
+} from '@shopify/storefront-kit-react';
 import Link from 'next/link';
 
 export const getServerSideProps: GetServerSideProps = async () => {

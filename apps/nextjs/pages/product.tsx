@@ -16,7 +16,7 @@ import {
   type ShopifyAddToCartPayload,
   ShopifyAnalyticsProduct,
   ShopifyAnalyticsPayload,
-} from '@shopify/hydrogen-react';
+} from '@shopify/storefront-kit-react';
 import Link from 'next/link';
 
 export const getServerSideProps: GetServerSideProps = async () => {
