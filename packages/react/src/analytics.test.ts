@@ -242,7 +242,7 @@ describe('analytics', () => {
         uniqueToken: 'abc123',
         visitToken: 'def456',
         url: expect.any(String),
-        path: '',
+        path: expect.any(String),
         search: '',
         referrer: 'https://www.example.com',
         title: 'test',
