@@ -38,7 +38,10 @@ import {
  * }, 'my-shop.myshopify.com');
  * ```
  **/
-export function sendShopifyAnalytics({eventName, payload}: ShopifyAnalytics, shopDomain?: string) {
+export function sendShopifyAnalytics(
+  {eventName, payload}: ShopifyAnalytics,
+  shopDomain?: string
+) {
   let events: ShopifyMonorailEvent[] = [];
 
   if (eventName === AnalyticsEventName.PAGE_VIEW) {
@@ -77,8 +80,8 @@ function sendToShopify(
   try {
     return fetch(
       shopDomain
-      ? `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
-      : 'https://monorail-edge.shopifysvc.com/unstable/produce_batch',
+        ? `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
+        : 'https://monorail-edge.shopifysvc.com/unstable/produce_batch',
       {
         method: 'post',
         headers: {
@@ -88,7 +91,7 @@ function sendToShopify(
       }
     )
       .then((response) => {
-        if(!response.ok) {
+        if (!response.ok) {
           throw new Error('Response failed');
         }
         return response.text();

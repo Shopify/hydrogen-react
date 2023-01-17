@@ -95,7 +95,9 @@ describe(`<ShopPayButton />`, () => {
     const {container} = render(
       <ShopPayButton
         width="100%"
-        variantIdsAndQuantities={[{id: 'gid://shopify/ProductVariant/123', quantity: 2}]}
+        variantIdsAndQuantities={[
+          {id: 'gid://shopify/ProductVariant/123', quantity: 2},
+        ]}
       />,
       {
         wrapper: ({children}) => (

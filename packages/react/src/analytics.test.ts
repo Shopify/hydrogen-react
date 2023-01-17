@@ -6,9 +6,13 @@ import {getClientBrowserParameters, sendShopifyAnalytics} from './analytics.js';
 const MONORAIL_ENDPOINT =
   'https://monorail-edge.shopifysvc.com/unstable/produce_batch';
 const getShopDomainMonorailEndpoint = (shopDomain = '') => {
-  return `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`
-}
-const createFetchSpy = ({expectEventCounts, shopDomain, failResponse}: {
+  return `https://${shopDomain}/.well-known/shopify/monorail/unstable/produce_batch`;
+};
+const createFetchSpy = ({
+  expectEventCounts,
+  shopDomain,
+  failResponse,
+}: {
   expectEventCounts: number;
   shopDomain?: string;
   failResponse?: boolean;
@@ -18,7 +22,8 @@ const createFetchSpy = ({expectEventCounts, shopDomain, failResponse}: {
     init?: RequestInit
   ): Promise<Response> => {
     // Mock Monorail endpoint
-    const shopDomainMonorailEndpoint = getShopDomainMonorailEndpoint(shopDomain);
+    const shopDomainMonorailEndpoint =
+      getShopDomainMonorailEndpoint(shopDomain);
     if (input === MONORAIL_ENDPOINT || input === shopDomainMonorailEndpoint) {
       if (init?.body) {
         const reqData = await init.body.toString();
@@ -28,7 +33,7 @@ const createFetchSpy = ({expectEventCounts, shopDomain, failResponse}: {
         // spy function on console.error
         expect(data.events.length).toEqual(expectEventCounts);
 
-        if(failResponse) {
+        if (failResponse) {
           return new Promise((resolve) => {
             resolve(
               new Response('', {
@@ -167,12 +172,15 @@ describe('analytics', () => {
         shopDomain,
       });
 
-      await sendShopifyAnalytics({
-        eventName: AnalyticsEventName.PAGE_VIEW,
-        payload: {
-          ...BASE_PAYLOAD,
-        }
-      }, shopDomain);
+      await sendShopifyAnalytics(
+        {
+          eventName: AnalyticsEventName.PAGE_VIEW,
+          payload: {
+            ...BASE_PAYLOAD,
+          },
+        },
+        shopDomain
+      );
 
       expect(fetchSpy).toHaveBeenCalled();
       expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -189,7 +197,7 @@ describe('analytics', () => {
         eventName: AnalyticsEventName.PAGE_VIEW,
         payload: {
           ...BASE_PAYLOAD,
-        }
+        },
       });
 
       expect(fetchSpy).toHaveBeenCalled();
