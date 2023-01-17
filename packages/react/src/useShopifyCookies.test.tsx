@@ -1,7 +1,7 @@
 import {afterEach} from 'vitest';
 import {renderHook} from '@testing-library/react';
 import {getShopifyCookies} from './cookies-utils.js';
-import {useShopifyCookies} from './useShopifyCookie.js';
+import {useShopifyCookies} from './useShopifyCookies.js';
 import {parse} from 'worktop/cookie';
 
 type MockCookieJar = Record<
