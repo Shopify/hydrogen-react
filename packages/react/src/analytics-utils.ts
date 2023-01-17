@@ -1,6 +1,7 @@
 import type {
   ShopifyMonorailPayload,
   ShopifyMonorailEvent,
+  ShopifyGId,
 } from './analytics-types.js';
 
 /**
@@ -26,21 +27,17 @@ export function schemaWrapper(
  * Parses global id (gid) and returns the resource type and id.
  * @see https://shopify.dev/api/usage/gids
  * @param gid - A shopify GID (string)
- * @returns \{ id: string | number | null, resource: string| null \}
  *
  * @example
  * ```ts
  * const {id, resource} = parseGid('gid://shopify/Order/123')
- * // => id = 123, resource = 'Order'
+ * // => id = "123", resource = 'Order'
  *
  *  * const {id, resource} = parseGid('gid://shopify/Cart/abc123')
  * // => id = "abc123", resource = 'Cart'
  * ```
  **/
-export function parseGid(gid: string | undefined): {
-  id: string;
-  resource: string | null;
-} {
+export function parseGid(gid: string | undefined): ShopifyGId {
   const defaultReturn = {id: '', resource: null};
 
   if (typeof gid !== 'string') {
