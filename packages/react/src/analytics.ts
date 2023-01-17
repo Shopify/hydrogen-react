@@ -41,7 +41,7 @@ import {
 export function sendShopifyAnalytics(
   {eventName, payload}: ShopifyAnalytics,
   shopDomain?: string
-) {
+): Promise<void> {
   let events: ShopifyMonorailEvent[] = [];
 
   if (eventName === AnalyticsEventName.PAGE_VIEW) {
