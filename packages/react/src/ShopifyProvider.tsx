@@ -45,32 +45,17 @@ export function ShopifyProvider({
 
   if (shopifyConfig.storefrontApiVersion !== SFAPI_VERSION) {
     console.warn(
-      `<ShopifyProvider/>: This version of Hydrogen-UI is built for Shopify's Storefront API version ${SFAPI_VERSION}, but it looks like you're using version ${shopifyConfig.storefrontApiVersion}. There may be issues or bugs if you use a mismatched version of Hydrogen-UI and the Storefront API.`
+      `<ShopifyProvider/>: This version of React Storefront Kit is built for Shopify's Storefront API version ${SFAPI_VERSION}, but it looks like you're using version ${shopifyConfig.storefrontApiVersion}. There may be issues or bugs if you use a mismatched version of React Storefront Kit and the Storefront API.`
     );
   }
 
   const finalConfig = useMemo<ShopifyContextValue>(() => {
-    const storeDomain = shopifyConfig.storeDomain.replace(/^https?:\/\//, '');
-
-    // @deprecated remove the ability to pass in '.myshopify.com' strings in the future
-    if (storeDomain.includes('.myshopify.com')) {
-      if (__HYDROGEN_DEV__) {
-        console.warn(
-          `<ShopifyProvider/>: passing a 'storeDomain' prop that includes '.myshopify.com' will be unsupported in the future. Passing only the subdomain (for example, if the URL is 'test.myshopify.com', passing in 'test') will be the supported way going forward.`
-        );
-      }
-    }
-
     function getShopifyDomain(overrideProps?: {storeDomain?: string}) {
-      let subDomain = overrideProps?.storeDomain ?? storeDomain;
-      subDomain = subDomain.replace('.myshopify.com', '');
-
-      return `https://${subDomain}.myshopify.com`;
+      return overrideProps?.storeDomain ?? shopifyConfig.storeDomain;
     }
 
     return {
       ...shopifyConfig,
-      storeDomain,
       getPublicTokenHeaders(overrideProps) {
         return getPublicTokenHeadersRaw(
           overrideProps.contentType,
@@ -88,7 +73,7 @@ export function ShopifyProvider({
           }
         }
         return `${getShopifyDomain({
-          storeDomain: overrideProps?.storeDomain ?? storeDomain,
+          storeDomain: overrideProps?.storeDomain ?? shopifyConfig.storeDomain,
         })}/api/${
           overrideProps?.storefrontApiVersion ??
           shopifyConfig.storefrontApiVersion
@@ -116,16 +101,16 @@ export function useShop() {
 }
 
 /**
- * Shopify-specific values that are used in various Hydrogen-UI components and hooks.
+ * Shopify-specific values that are used in various React Storefront Kit components and hooks.
  */
 export type ShopifyContextProps = {
   /** The globally-unique identifier for the Shop */
   storefrontId?: string;
-  /** The subdomain of your Shopify storefront URL (eg: `{subdomain}.myshopify.com`). */
+  /** The full domain of your Shopify storefront URL (eg: the complete string of `{subdomain}.myshopify.com`). */
   storeDomain: string;
   /** The Storefront API public access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */
   storefrontToken: string;
-  /** The Storefront API version. This should almost always be the same as the version Hydrogen-UI was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details.  */
+  /** The Storefront API version. This should almost always be the same as the version React Storefront Kit was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details.  */
   storefrontApiVersion: string;
   country?: ContextCountry;
   language?: ContextLanguage;
