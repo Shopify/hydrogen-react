@@ -6,3 +6,7 @@ packages/react/storefront.schema.json
 # apps/nextjs ignored files/folders
 apps/nextjs/.next/**
 apps/nextjs/gql/**
+
+# app/remix ignored files/folders
+apps/remix/build/**
+apps/remix/gql/**

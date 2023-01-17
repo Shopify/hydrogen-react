@@ -1,0 +1,37 @@
+{
+  "name": "remix",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "remix build",
+    "dev": "run-p dev:next codegen",
+    "dev:next": "remix dev",
+    "codegen": "graphql-codegen --config codegen.ts --watch",
+    "start": "remix-serve build",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@remix-run/node": "^1.10.1",
+    "@remix-run/react": "^1.10.1",
+    "@remix-run/serve": "^1.10.1",
+    "@shopify/hydrogen-react": "*",
+    "graphql-request": "^5.1.0",
+    "isbot": "^3.6.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.15.0",
+    "@graphql-codegen/client-preset": "1.2.1",
+    "@remix-run/dev": "^1.10.1",
+    "@remix-run/eslint-config": "^1.10.1",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "eslint": "^8.27.0",
+    "typescript": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
