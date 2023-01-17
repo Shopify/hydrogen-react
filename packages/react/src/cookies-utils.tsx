@@ -57,6 +57,15 @@ export function hexTime(): string {
   return output.padStart(8 - output.length, '0');
 }
 
+/**
+ * Returns Shopify cookies
+ * @returns Empty string if cookie not found
+ *
+ * @example
+ * ```tsx
+ *   getShopifyCookies(document.cookie);
+ * ```
+ **/
 export function getShopifyCookies(cookies: string): ShopifyCookies {
   const cookieData = parse(cookies);
   return {

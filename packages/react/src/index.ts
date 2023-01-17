@@ -45,6 +45,8 @@ export type {
   ShopifyAnalyticsPayload,
   ShopifyAnalytics,
   ShopifyAnalyticsProduct,
+  ShopifyCookies,
 } from './analytics-types.js';
 export {useShopifyCookies} from './useShopifyCookie.js';
+export {getShopifyCookies} from './cookies-utils.js';
 export {sendShopifyAnalytics, getClientBrowserParameters} from './analytics.js';
