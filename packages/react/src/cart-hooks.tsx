@@ -8,8 +8,9 @@ import {
   SHOPIFY_STOREFRONT_ID_HEADER,
   SHOPIFY_STOREFRONT_Y_HEADER,
   SHOPIFY_STOREFRONT_S_HEADER,
+  SHOPIFY_Y,
+  SHOPIFY_S,
 } from './cart-constants.js';
-import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
 import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
 import {getShopifyCookies} from './cookies-utils.js';
 

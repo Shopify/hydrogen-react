@@ -1,6 +1,6 @@
 import {parse} from 'worktop/cookie';
 import {ShopifyCookies} from './analytics-types.js';
-import {SHOPIFY_Y, SHOPIFY_S} from './shared-constants.js';
+import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
 
 const tokenHash = 'xxxx-4xxx-xxxx-xxxxxxxxxxxx';
 
