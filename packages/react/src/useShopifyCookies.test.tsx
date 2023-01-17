@@ -3,10 +3,13 @@ import {renderHook} from '@testing-library/react';
 import {getShopifyCookies} from './cookies-utils.js';
 import {useShopifyCookies} from './useShopifyCookie.js';
 
+const originalDocument = document;
+
 describe(`useShopifyCookies`, () => {
   afterEach(() => {
-    document.cookie = '_shopify_y=1; expires=1 Jan 1970 00:00:00 GMT;';
-    document.cookie = '_shopify_s=1; expires=1 Jan 1970 00:00:00 GMT;';
+    /* eslint-disable no-global-assign */
+    document = originalDocument;
+    /* eslint-enable no-global-assign */
   });
 
   it('sets _shopify_s and _shopify_y cookies when not found', () => {
@@ -28,10 +31,12 @@ describe(`useShopifyCookies`, () => {
   });
 
   it('does not override cookies when it already exists', () => {
-    document.cookie = '_shopify_s=abc123';
-    document.cookie = '_shopify_y=def456';
+    renderHook(() => {
+      document.cookie = '_shopify_s=abc123';
+      document.cookie = '_shopify_y=def456';
 
-    renderHook(() => useShopifyCookies());
+      useShopifyCookies();
+    });
 
     const cookies = getShopifyCookies(document.cookie);
 
