@@ -8,7 +8,7 @@ import {
   AnalyticsEventName,
   type ShopifyPageViewPayload,
   useShopifyCookies,
-} from '@shopify/hydrogen-react';
+} from '@shopify/storefront-kit-react';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 
