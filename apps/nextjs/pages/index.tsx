@@ -39,12 +39,16 @@ export default function Home({
   data,
   errors,
 }: StorefrontApiResponseOk<IndexQueryQuery>) {
-  const {storeDomain} = useShop();
+  const shop = useShop();
+  const storeDomain = shop?.storeDomain;
 
   if (!data || errors) {
     console.error(errors);
     return <div>Whoops there was an error! Please refresh and try again.</div>;
   }
+
+  const variant = data.products.nodes[0].variants.nodes[0];
+
   return (
     <div className={styles.container}>
       <Head>
@@ -57,11 +61,8 @@ export default function Home({
         <h1>Welcome to {data?.shop.name} on NextJS</h1>
 
         {/* @TODO Using hydrogen-react's <Image/> is nice, but we should also provide our 'loader' so you can used NextJS' Image component as well */}
-        <ShopifyImage
-          data={data.products.nodes[0].variants.nodes[0].image ?? {}}
-          width={500}
-          loading="eager"
-        />
+        <ShopifyImage data={variant.image ?? {}} width={500} loading="eager" />
+
         <div>Storefront API Domain: {storeDomain}</div>
       </main>
 
