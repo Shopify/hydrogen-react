@@ -44,6 +44,7 @@ describe('<ShopifyProvider/>', () => {
       ),
     });
 
+    // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
     expect(result.current.storeDomain).toBe('notashop.myshopify.com');
   });
 
@@ -62,6 +63,7 @@ describe('<ShopifyProvider/>', () => {
         ),
       });
 
+      // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
       expect(result.current.getStorefrontApiUrl()).toBe(
         'https://notashop.myshopify.com/api/2022-10/graphql.json'
       );
@@ -82,6 +84,7 @@ describe('<ShopifyProvider/>', () => {
       });
 
       expect(
+        // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
         result.current.getStorefrontApiUrl({
           storeDomain: 'override.myshopify.com',
           storefrontApiVersion: '2022-07',
@@ -106,6 +109,8 @@ describe('<ShopifyProvider/>', () => {
       });
 
       expect(
+        // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
+
         result.current.getPublicTokenHeaders({contentType: 'json'})
       ).toEqual({
         'X-SDK-Variant': 'hydrogen-ui',
@@ -131,6 +136,7 @@ describe('<ShopifyProvider/>', () => {
       });
 
       expect(
+        // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
         result.current.getPublicTokenHeaders({
           contentType: 'graphql',
           storefrontToken: 'newtoken',
@@ -160,6 +166,7 @@ describe('<ShopifyProvider/>', () => {
         ),
       });
 
+      // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
       expect(result.current.storeDomain).toBe('notashop');
     });
   });
@@ -179,6 +186,7 @@ describe('<ShopifyProvider/>', () => {
         ),
       });
 
+      // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
       expect(result.current.getShopifyDomain()).toBe(
         'https://notashop.myshopify.com'
       );
@@ -199,6 +207,7 @@ describe('<ShopifyProvider/>', () => {
         ),
       });
 
+      // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
       expect(result.current.getShopifyDomain()).toBe(
         'https://notashop.myshopify.com'
       );
@@ -218,6 +227,7 @@ describe('<ShopifyProvider/>', () => {
         ),
       });
 
+      // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
       expect(result.current.getShopifyDomain({storeDomain: 'test'})).toBe(
         'https://test.myshopify.com'
       );
@@ -239,6 +249,7 @@ describe('<ShopifyProvider/>', () => {
       });
 
       expect(
+        // @ts-expect-error - we know useShop() doesn't return null as its wrapped in a ShopifyContextProvider
         result.current.getShopifyDomain({storeDomain: 'test.myshopify.com'})
       ).toBe('https://test.myshopify.com');
     });

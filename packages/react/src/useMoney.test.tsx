@@ -61,4 +61,17 @@ describe(`useMoney`, () => {
       withoutTrailingZerosAndCurrency: '19',
     });
   });
+
+  it(`removes trailing zeros and localizes based on a locale passed in as a prop`, () => {
+    const {result} = renderHook(() =>
+      useMoney({
+        amount: '19.00',
+        currencyCode: 'CAD',
+        locale: 'fr-ca',
+      })
+    );
+
+    // TIL: https://stackoverflow.com/questions/58769806/identical-strings-not-matching-in-jest
+    expect(result.current.withoutTrailingZeros).toMatch('19\xa0$');
+  });
 });

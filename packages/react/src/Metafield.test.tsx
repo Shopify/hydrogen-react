@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {parseMetafieldValue, Metafield, type Rating} from './Metafield.js';
 import type {Page, Product, ProductVariant} from './storefront-api-types.js';
 import {vi} from 'vitest';
@@ -7,6 +6,7 @@ import {ShopifyProvider} from './ShopifyProvider.js';
 import {getShopifyConfig} from './ShopifyProvider.test.js';
 import {getRawMetafield} from './Metafield.test.helpers.js';
 import {getMediaImage} from './MediaFile.test.helpers.js';
+import {ShopPayButton} from './ShopPayButton.js';
 
 const TEST_ID = 'metafields_test_id';
 
@@ -52,6 +52,66 @@ describe('<Metafield />', () => {
     // expect(component).toContainReactComponent(Link, {
     //   to: '/test',
     // });
+  });
+
+  describe('without ShopifyProvider', () => {
+    it('Metafield uses the passed `locale`', () => {
+      const metafield = getRawMetafield({
+        type: 'dimension',
+        value: JSON.stringify({value: 5, unit: 'in'}),
+      });
+
+      render(<Metafield data={metafield} locale="fr-ca" />);
+      expect(screen.getByText('5 po')).toBeInTheDocument();
+    });
+
+    it('ShopPayButton uses the passed `storeDomain`', async () => {
+      const product = {
+        id: 'gid://shopify/Product/6730850828344',
+        title: 'The Hydrogen Snowboard',
+        publishedAt: '2022-06-09T21:22:48Z',
+        handle: 'snowboard',
+        metafield: {
+          key: 'list_integer',
+          value: '[1,2,3]',
+        },
+        variants: {
+          nodes: [
+            {
+              id: 'gid://shopify/ProductVariant/41007289630776',
+              image: {
+                url: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg?v=1655932274',
+                altText: null,
+                width: 3908,
+                height: 3908,
+              },
+            },
+          ],
+        },
+      };
+
+      const variant = product.variants.nodes[0];
+
+      function sleep(ms = 500) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      const {container} = render(
+        <ShopPayButton
+          variantIdsAndQuantities={[{id: variant.id, quantity: 1}]}
+          storeDomain="testing.myshopify.com"
+        />
+      );
+
+      // Wait for the pay js to be loaded. may have to +adjust if test fails
+      await sleep(100);
+
+      expect(
+        container.querySelector('[store-url^="https://testing.myshopify.com"]')
+      ).toBeInTheDocument();
+    });
   });
 
   describe('with `date` type metafield', () => {

@@ -34,15 +34,20 @@ const TemplateChildren = () => {
   return (
     <>
       Use the Controls tab change these values on the fly
+      {/* @ts-expect-error -  we know useShop() doesn't return null as it's wrapped in a ShopifyProvider */}
       {(Object.keys(shopValues) as Array<keyof typeof shopValues>).map(
         (key) => {
           return (
             <p key={key}>
               <>
                 <strong>{key}: </strong>
+                these tests
+                {/* @ts-expect-error -  we know useShop() doesn't return null as it's wrapped in a ShopifyProvider */}
                 {typeof shopValues[key] === 'string'
-                  ? shopValues[key]
-                  : JSON.stringify(shopValues[key])}
+                  ? // @ts-expect-error - we know useShop() doesn't return null as it's wrapped in a ShopifyProvider
+                    shopValues[key]
+                  : // @ts-expect-error - we know useShop() doesn't return null as it's wrapped in a ShopifyProvider
+                    JSON.stringify(shopValues[key])}
               </>
             </p>
           );
