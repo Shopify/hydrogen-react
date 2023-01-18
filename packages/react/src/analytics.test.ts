@@ -193,13 +193,15 @@ describe('analytics', () => {
         failResponse: true,
       });
 
-      await sendShopifyAnalytics({
-        eventName: AnalyticsEventName.PAGE_VIEW,
-        payload: {
-          ...BASE_PAYLOAD,
-        },
-      });
-
+      await expect(
+        async () =>
+          await sendShopifyAnalytics({
+            eventName: AnalyticsEventName.PAGE_VIEW,
+            payload: {
+              ...BASE_PAYLOAD,
+            },
+          })
+      ).rejects.toThrow();
       expect(fetchSpy).toHaveBeenCalled();
       expect(consoleErrorSpy.mock.calls[0][0]).toBe(
         'sendShopifyAnalytics request is unsuccessful'

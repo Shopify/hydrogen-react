@@ -108,6 +108,9 @@ function sendToShopify(
       })
       .catch((err) => {
         console.error(ERROR_MESSAGE, err);
+        if (__HYDROGEN_DEV__) {
+          throw new Error(ERROR_MESSAGE);
+        }
       });
   } catch (error) {
     // Do nothing
