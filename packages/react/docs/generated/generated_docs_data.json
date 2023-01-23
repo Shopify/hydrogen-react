@@ -7,7 +7,7 @@
       {
         "name": "MediaFile",
         "type": "component",
-        "url": "api/hydrogen/components/product-variant/mediafile"
+        "url": "/api/react-storefront-kit/components/mediafile"
       }
     ],
     "description": "The `ExternalVideo` component renders an embedded video for the Storefront API's [ExternalVideo object](https://shopify.dev/api/storefront/reference/products/externalvideo).",
@@ -413,7 +413,7 @@
       {
         "name": "MediaFile",
         "type": "component",
-        "url": "api/hydrogen/components/product-variant/mediafile"
+        "url": "/api/react-storefront-kit/components/mediafile"
       }
     ],
     "description": "The `Image` component renders an image for the Storefront API's\n[Image object](https://shopify.dev/api/storefront/reference/common-objects/image) by using the `data` prop. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.\n\nAn image's width and height are determined using the following priority list:\n1. The width and height values for the `loaderOptions` prop\n2. The width and height values for bare props\n3. The width and height values for the `data` prop\n\nIf only one of `width` or `height` are defined, then the other will attempt to be calculated based on the image's aspect ratio,\nprovided that both `data.width` and `data.height` are available. If `data.width` and `data.height` aren't available, then the aspect ratio cannot be determined and the missing value will remain as `null`",
@@ -573,25 +573,25 @@
       {
         "name": "Image",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/image"
+        "url": "/api/react-storefront-kit/components/image"
       },
       {
         "name": "Video",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/video"
+        "url": "/api/react-storefront-kit/components/video"
       },
       {
         "name": "ExternalVideo",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/externalvideo"
+        "url": "/api/react-storefront-kit/components/externalvideo"
       },
       {
         "name": "ModelViewer",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/modelviewer"
+        "url": "/api/react-storefront-kit/components/modelviewer"
       }
     ],
-    "description": "The `MediaFile` component renders the media for the Storefront API's\n[Media object](https://shopify.dev/api/storefront/reference/products/media). It renders an `Image `Video`, an `ExternalVideo`, or a `ModelViewer` depending on the `__typename` of the `data` prop.",
+    "description": "The `MediaFile` component renders the media for the Storefront API's\n[Media object](https://shopify.dev/api/storefront/reference/products/media). It renders an `Image`, `Video`, an `ExternalVideo`, or a `ModelViewer` depending on the `__typename` of the `data` prop.",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
@@ -3365,7 +3365,7 @@
       {
         "name": "MediaFile",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/mediafile"
+        "url": "/api/react-storefront-kit/components/mediafile"
       }
     ],
     "description": "The `ModelViewer` component renders a 3D model (with the `model-viewer` custom element) for the Storefront API's [Model3d object](https://shopify.dev/api/storefront/reference/products/model3d). The `model-viewer` custom element is lazily downloaded through a dynamically-injected `<script type='module'>` tag when the `<ModelViewer />` component is rendered. ModelViewer is using version `1.21.1` of the `@google/model-viewer` library.",
@@ -3526,14 +3526,14 @@
     ]
   },
   {
-    "name": "money",
+    "name": "Money",
     "category": "components",
     "isVisualComponent": false,
     "related": [
       {
         "name": "useMoney",
         "type": "hook",
-        "url": "api/hydrogen/hooks/primitive/usemoney"
+        "url": "/api/react-storefront-kit/hooks/usemoney"
       }
     ],
     "description": "The `Money` component renders a string of the Storefront API's[MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) according to the `locale` in the [`ShopifyProvider` component](/api/hydrogen/components/global/shopifyprovider).\nThe component outputs a `<div>`. You can [customize this component](https://api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
@@ -3636,12 +3636,12 @@
       {
         "name": "ProductProvider",
         "type": "component",
-        "url": "api/hydrogen/components/product-variant/productoptionsprovider"
+        "url": "/api/react-storefront-kit/components/productprovider"
       },
       {
         "name": "Money",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/money"
+        "url": "/api/react-storefront-kit/components/money"
       }
     ],
     "description": "The `ProductPrice` component renders a `Money` component with the product [`priceRange`](https://shopify.dev/api/storefront/reference/products/productpricerange)'s `maxVariantPrice` or `minVariantPrice`, for either the regular price or compare at price range.",
@@ -3719,14 +3719,14 @@
     "isVisualComponent": false,
     "related": [
       {
-        "name": "useProductOptions",
+        "name": "useProduct",
         "type": "hook",
-        "url": "api/hydrogen/hooks/product-variant/useproductoptions"
+        "url": "/api/react-storefront-kit/hooks/useproduct"
       },
       {
         "name": "ProductPrice",
         "type": "component",
-        "url": "api/hydrogen/components/product-variant/productprice"
+        "url": "/api/react-storefront-kit/components/productprice"
       }
     ],
     "description": "`<ProductProvider />` is a context provider that enables use of the `useProduct()` hook. It helps manage selected options and variants for a product.",
@@ -3793,14 +3793,8 @@
     "name": "ShopPayButton",
     "category": "components",
     "isVisualComponent": false,
-    "related": [
-      {
-        "name": "CartShopPayButton",
-        "type": "component",
-        "url": "api/hydrogen/components/cart/cartshoppaybutton"
-      }
-    ],
-    "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
+    "related": [],
+    "description": "The `ShopPayButton` component renders a button that redirects to the Shop Pay checkout.\n    It renders a [`<shop-pay-button>`](https://shopify.dev/custom-storefronts/tools/web-components) custom element, for which it will lazy-load the source code automatically.\n    It relies on the `<ShopProvider>` context provider.",
     "type": "component",
     "defaultExample": {
       "description": "I am the default example",
@@ -3914,7 +3908,13 @@
     "name": "ShopifyProvider",
     "category": "components",
     "isVisualComponent": false,
-    "related": [],
+    "related": [
+      {
+        "name": "useShop",
+        "type": "hook",
+        "url": "/api/react-storefront-kit/hooks/useshop"
+      }
+    ],
     "description": "The `ShopifyProvider` component wraps your entire app and provides functionality for many components, hooks, and utilities. The `ShopifyProvider` component also provides localization data for the app. You should place it in your app's entry point component.",
     "type": "component",
     "defaultExample": {
@@ -3938,7 +3938,7 @@
     "definitions": [
       {
         "title": "Props",
-        "description": "interface description",
+        "description": "",
         "type": "ShopifyProviderProps",
         "typeDefinitions": {
           "ShopifyProviderProps": {
@@ -4063,19 +4063,19 @@
     ]
   },
   {
-    "name": "video",
+    "name": "Video",
     "category": "components",
     "isVisualComponent": false,
     "related": [
       {
         "name": "MediaFile",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/mediafile"
+        "url": "/api/react-storefront-kit/hooks/mediafile"
       },
       {
         "name": "Image",
         "type": "component",
-        "url": "api/hydrogen/components/primitive/image"
+        "url": "/api/react-storefront-kit/hooks/image"
       }
     ],
     "description": "The `Video` component renders a video for the Storefront API's [Video object](https://shopify.dev/api/storefront/reference/products/video).\nThe component outputs a `video` element. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
