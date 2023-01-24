@@ -1,4 +1,21 @@
 export {AddToCartButton} from './AddToCartButton.js';
+export {
+  AnalyticsEventName,
+  AnalyticsPageType,
+  ShopifyAppSource,
+} from './analytics-constants.js';
+export type {
+  ClientBrowserParameters,
+  ShopifyPageViewPayload,
+  ShopifyPageView,
+  ShopifyAddToCartPayload,
+  ShopifyAddToCart,
+  ShopifyAnalyticsPayload,
+  ShopifyAnalytics,
+  ShopifyAnalyticsProduct,
+  ShopifyCookies,
+} from './analytics-types.js';
+export {sendShopifyAnalytics, getClientBrowserParameters} from './analytics.js';
 export {BuyNowButton} from './BuyNowButton.js';
 export type {
   CartState,
@@ -10,6 +27,7 @@ export type {
 export {CartCheckoutButton} from './CartCheckoutButton.js';
 export {CartProvider, useCart} from './CartProvider.js';
 export {storefrontApiCustomScalars} from './codegen.helpers.js';
+export {getShopifyCookies} from './cookies-utils.js';
 export {ExternalVideo} from './ExternalVideo.js';
 export {flattenConnection} from './flatten-connection.js';
 export {Image} from './Image.js';
@@ -30,23 +48,5 @@ export type {
 } from './storefront-api-response.types.js';
 export {createStorefrontClient} from './storefront-client.js';
 export {useMoney} from './useMoney.js';
-export {Video} from './Video.js';
-export {
-  AnalyticsEventName,
-  AnalyticsPageType,
-  ShopifyAppSource,
-} from './analytics-constants.js';
-export type {
-  ClientBrowserParameters,
-  ShopifyPageViewPayload,
-  ShopifyPageView,
-  ShopifyAddToCartPayload,
-  ShopifyAddToCart,
-  ShopifyAnalyticsPayload,
-  ShopifyAnalytics,
-  ShopifyAnalyticsProduct,
-  ShopifyCookies,
-} from './analytics-types.js';
 export {useShopifyCookies} from './useShopifyCookies.js';
-export {getShopifyCookies} from './cookies-utils.js';
-export {sendShopifyAnalytics, getClientBrowserParameters} from './analytics.js';
+export {Video} from './Video.js';
