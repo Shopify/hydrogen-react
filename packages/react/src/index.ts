@@ -26,6 +26,7 @@ export type {
 } from './cart-types.js';
 export {CartCheckoutButton} from './CartCheckoutButton.js';
 export {CartCost} from './CartCost.js';
+export {CartLinePrice} from './CartLinePrice.js';
 export {CartProvider, useCart} from './CartProvider.js';
 export {storefrontApiCustomScalars} from './codegen.helpers.js';
 export {getShopifyCookies} from './cookies-utils.js';

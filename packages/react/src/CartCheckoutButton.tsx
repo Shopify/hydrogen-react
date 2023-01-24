@@ -6,14 +6,14 @@ type ChildrenProps = {
   /** A `ReactNode` element. */
   children: ReactNode;
 };
-type CartCheckoutButtonBase = Omit<BaseButtonProps<'button'>, 'onClick'> &
+type CartCheckoutButtonProps = Omit<BaseButtonProps<'button'>, 'onClick'> &
   ChildrenProps;
 
 /**
  * The `CartCheckoutButton` component renders a button that redirects to the checkout URL for the cart.
  * It must be a descendent of a `CartProvider` component.
  */
-export function CartCheckoutButton(props: CartCheckoutButtonBase) {
+export function CartCheckoutButton(props: CartCheckoutButtonProps) {
   const [requestedCheckout, setRequestedCheckout] = useState(false);
   const {status, checkoutUrl} = useCart();
   const {children, ...passthroughProps} = props;

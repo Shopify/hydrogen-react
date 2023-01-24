@@ -2,4 +2,4 @@
 '@shopify/storefront-kit-react': patch
 ---
 
-Adds the `<CartCost/>` component, which has been a part of this package for awhile but wasn't actually exported.
+Added the `<CartCost/>` and `<CartLinePrice/>` components, which have been a part of this package for awhile but weren't actually able to be used/imported.
