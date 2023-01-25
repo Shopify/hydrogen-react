@@ -16,16 +16,14 @@ export interface BaseSeo {
 
 export interface Seo {
   /**
-   * The <title> HTML element defines the document's title that is shown in a
-   * browser's title bar or a page's tab. It only contains text; tags within the
-   * element are ignored.
+   * The <title> HTML element defines the document's title that is shown in a browser's title bar or a page's tab. It
+   * only contains text; tags within the element are ignored.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
    */
   title: Maybe<string> | undefined;
   /**
-   * Generate the title from a template that includes a `%s` placeholder for the
-   * title.
+   * Generate the title from a template that includes a `%s` placeholder for the title.
    *
    * @example
    * ```js
@@ -37,13 +35,11 @@ export interface Seo {
    */
   titleTemplate: Maybe<string> | undefined | null;
   /**
-   * The media associated with the given page (images, videos, etc). If you pass
-   * a string, it will be used as the `og:image` meta tag. If you pass an object
-   * or an array of objects, that will be used to generate `og:<type of media>`
-   * meta tags. The `url` property should be the URL of the media. The `height`
-   * and `width` properties are optional and should be the height and width of
-   * the media. The `alt` property is optional and should be a description of
-   * the media.
+   * The media associated with the given page (images, videos, etc). If you pass a string, it will be used as the
+   * `og:image` meta tag. If you pass an object or an array of objects, that will be used to generate
+   * `og:<type of media>` meta tags. The `url` property should be the URL of the media. The `height` and `width`
+   * properties are optional and should be the height and width of the media. The `altText` property is optional and
+   * should be a description of the media.
    *
    * @example
    * ```js
@@ -63,24 +59,23 @@ export interface Seo {
    */
   media: Maybe<string> | undefined | SeoMedia | SeoMedia[];
   /**
-   * The description of the page. This is used in the `name="description"` meta
-   * tag as well as the `og:description` meta tag.
+   * The description of the page. This is used in the `name="description"` meta tag as well as the `og:description` meta
+   * tag.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
    */
   description: Maybe<string> | undefined;
   /**
-   * The canonical URL of the page. This is used to tell search engines which
-   * URL is the canonical version of a page. This is useful when you have
-   * multiple URLs that point to the same page. The value here will be used in
-   * the `rel="canonical"` link tag as well as the `og:url` meta tag.
+   * The canonical URL of the page. This is used to tell search engines which URL is the canonical version of a page.
+   * This is useful when you have multiple URLs that point to the same page. The value here will be used in the
+   * `rel="canonical"` link tag as well as the `og:url` meta tag.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
    */
   url: Maybe<string> | undefined;
   /**
-   * The handle is used to generate the `twitter:site` and `twitter:creator`
-   * meta tags. Include the `@` symbol in the handle.
+   * The handle is used to generate the `twitter:site` and `twitter:creator` meta tags. Include the `@` symbol in the
+   * handle.
    *
    * @example
    * ```js
@@ -91,11 +86,9 @@ export interface Seo {
    */
   handle: Maybe<string> | undefined;
   /**
-   * The `ldJson` property is used to generate the `application/ld+json` script
-   * tag. This is used to provide structured data to search engines. The value
-   * should be an object that conforms to the schema.org spec. The `type`
-   * property should be the type of schema you are using. The `type` property is
-   * required and should be one of the following:
+   * The `ldJson` property is used to generate the `application/ld+json` script tag. This is used to provide structured
+   * data to search engines. The value should be an object that conforms to the schema.org spec. The `type` property
+   * should be the type of schema you are using. The `type` property is required and should be one of the following:
    *
    * - `Product`
    * - `ItemList`
@@ -180,8 +173,8 @@ export interface Seo {
 export interface LanguageAlternate {
   // Language code for the alternate page. This is used to generate the hreflang meta tag property.
   language: string;
-  // Whether or not the alternate page is the default page. This will add the `x-default`
-  // attribution to the language code.
+  // Whether or not the alternate page is the default page. This will add the `x-default` attribution to the language
+  // code.
   default?: boolean;
   // The url of the alternate page. This is used to generate the hreflang meta tag property.
   url: string;
@@ -197,17 +190,13 @@ export interface MobileAlternate {
 export type SeoMedia = {
   // Used to generate og:<type of media> meta tag
   type: 'image' | 'video' | 'audio';
-  // The url value populates both url and secure_url and is used to infer the
-  // og:<type of media>:type meta tag.
+  // The url value populates both url and secure_url and is used to infer the og:<type of media>:type meta tag.
   url: Maybe<string> | undefined;
-  // The height in pixels of the media. This is used to generate the og:<type of
-  // media>:height meta tag.
+  // The height in pixels of the media. This is used to generate the og:<type of media>:height meta tag.
   height: Maybe<number> | undefined;
-  // The width in pixels of the media. This is used to generate the og:<type of
-  // media>:width meta tag/
+  // The width in pixels of the media. This is used to generate the og:<type of media>:width meta tag/
   width: Maybe<number> | undefined;
-  // The alt text for the media. This is used to generate the og:<type of
-  // media>:alt meta tag.
+  // The alt text for the media. This is used to generate the og:<type of media>:alt meta tag.
   altText: Maybe<string> | undefined;
 };
 
@@ -229,6 +218,11 @@ export type SchemaType =
   | 'BlogPosting'
   | 'Thing';
 
+/**
+ * The `generateSeoTags` function generates the SEO title, meta, link and script (JSON Linking Data) tags for a page. It
+ * pairs well with the SEO component in `@shopify/hydrogen` when building a Hydrogen Remix app, but can be used on its
+ * own if you want to generate the tags yourself.
+ */
 export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
   const output: HeadTag[] = [];
   let ldJson: WithContext<any> = {
@@ -313,8 +307,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
             if (media && typeof media === 'object') {
               const type = media.type || 'image';
 
-              // Order matters here when adding multiple media tags
-              // @see https://ogp.me/#array
+              // Order matters here when adding multiple media tags @see https://ogp.me/#array
               const normalizedMedia = media
                 ? {
                     url: media?.url,
@@ -453,8 +446,8 @@ function generateKey(tag: HeadTag, group?: string) {
   }
 
   if (tagName === 'meta') {
-    // leading 0 moves meta to the top when sorting
-    // exclude secure_url from the logic because the content is the same as url
+    // leading 0 moves meta to the top when sorting exclude secure_url from the logic because the content is the same as
+    // url
     const priority =
       props.content === group && !props.property.endsWith('secure_url') && '0';
     const groupName = [group, priority];
