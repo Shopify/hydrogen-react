@@ -52,7 +52,7 @@ export interface Seo {
    *       type: 'image',
    *       height: '400',
    *       width: '400',
-   *       alt: 'A custom snowboard with an alpine color pallet.',
+   *       altText: 'A custom snowboard with an alpine color pallet.',
    *     }
    *   ]
    * }
@@ -110,7 +110,7 @@ export interface Seo {
    *     '@context': 'https://schema.org',
    *     '@type': 'Product',
    *     name: 'My Product',
-   *     image: 'https://example.com/image.jpg',
+   *     image: 'https://hydrogen.shop/image.jpg',
    *     description: 'A product that is great',
    *     sku: '12345',
    *     mpn: '12345',
@@ -160,12 +160,12 @@ export interface Seo {
    *       default: true,
    *     },
    *     {
-   *       media: 'only screen and (max-width: 640px)',
-   *       url: 'https://m.hydrogen.shop/en-ca',
-   *     },
-   *     {
    *       language: 'fr-CA',
    *       url: 'https://hydrogen.shop/fr-ca',
+   *     },
+   *     {
+   *       media: 'only screen and (max-width: 640px)',
+   *       url: 'https://m.hydrogen.shop/en-ca',
    *     },
    *   ]
    * }

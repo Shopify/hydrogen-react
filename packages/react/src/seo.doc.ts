@@ -13,8 +13,13 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          title: 'JavaScript',
-          code: './seo.example.js',
+          title: 'Basic example',
+          code: './seo.basic.example.js',
+          language: 'js',
+        },
+        {
+          title: 'All options',
+          code: './seo.all.example.js',
           language: 'js',
         },
       ],
