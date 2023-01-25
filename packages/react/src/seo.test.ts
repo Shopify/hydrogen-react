@@ -1,5 +1,5 @@
 import {expect, describe, it} from 'vitest';
-import {generateSeoTags} from './seo';
+import {generateSeoTags} from './seo.js';
 
 describe('generateSeoTags', () => {
   it('removes undefined values', () => {
