@@ -4743,10 +4743,35 @@
     },
     "definitions": [
       {
-        "title": "ShopifyAnalytics",
+        "title": "sendShopifyAnalytics",
         "description": "",
-        "type": "ShopifyAnalytics",
+        "type": "SendShopifyAnalyticsGeneratedType",
         "typeDefinitions": {
+          "SendShopifyAnalyticsGeneratedType": {
+            "filePath": "/analytics.ts",
+            "name": "SendShopifyAnalyticsGeneratedType",
+            "params": [
+              {
+                "name": "{eventName, payload}",
+                "description": "- Type of analytics event",
+                "value": "ShopifyAnalytics",
+                "filePath": "/analytics.ts"
+              },
+              {
+                "name": "shopDomain",
+                "description": "- Defaults to Shopify's analytics endpoint.\nSupply the Online Store domain so that Shopify analytics can be sent under\nthe same top level domain. (You don't need to set this if you are sending\nfrom the server side)",
+                "value": "string",
+                "filePath": "/analytics.ts"
+              }
+            ],
+            "returns": {
+              "filePath": "/analytics.ts",
+              "description": "",
+              "name": "Promise<void>",
+              "value": "Promise<void>"
+            },
+            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  return sendToShopify(events, shopDomain);\n}"
+          },
           "ShopifyAnalytics": {
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
@@ -4983,20 +5008,6 @@
             "name": "ShopifyAddToCartPayload",
             "value": "ShopifyCommonPayload & {\n  /** The cart's ID if it has been created through the Storefront API. */\n  cartId: string;\n}",
             "description": ""
-          }
-        }
-      },
-      {
-        "title": "shopDomain",
-        "description": "",
-        "type": "ShopDomain",
-        "typeDefinitions": {
-          "ShopDomain": {
-            "filePath": "/analytics.ts",
-            "syntaxKind": "TypeAliasDeclaration",
-            "name": "ShopDomain",
-            "value": "string",
-            "description": "Supply the Online Store domain so that Shopify analytics can be sent under\nthe same top level domain. (You don't need to set this if you are sending\nfrom the server side)"
           }
         }
       }

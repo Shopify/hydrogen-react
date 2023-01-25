@@ -27,14 +27,9 @@ const data: ReferenceEntityTemplateSchema = {
   },
   definitions: [
     {
-      title: 'ShopifyAnalytics',
-      type: 'ShopifyAnalytics',
+      title: 'sendShopifyAnalytics',
+      type: 'SendShopifyAnalyticsGeneratedType',
       description: '',
-    },
-    {
-      title: 'shopDomain',
-      type: 'ShopDomain',
-      description: ``,
     },
   ],
 };

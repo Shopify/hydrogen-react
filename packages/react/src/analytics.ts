@@ -16,13 +16,6 @@ import {
 } from './analytics-schema-custom-storefront-customer-tracking.js';
 
 /**
- * Supply the Online Store domain so that Shopify analytics can be sent under
- * the same top level domain. (You don't need to set this if you are sending
- * from the server side)
- */
-type ShopDomain = string;
-
-/**
  * Sends analytics to Shopify
  * @param eventName - Type of analytics event
  * @param payload - The payload of the analytics event
@@ -46,7 +39,7 @@ type ShopDomain = string;
  **/
 export function sendShopifyAnalytics(
   {eventName, payload}: ShopifyAnalytics,
-  shopDomain?: ShopDomain
+  shopDomain?: string
 ): Promise<void> {
   let events: ShopifyMonorailEvent[] = [];
 
