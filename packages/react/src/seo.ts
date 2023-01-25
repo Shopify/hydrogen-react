@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {Maybe} from './storefront-api-types.js';
 import {WithContext} from 'schema-dts';
 
@@ -248,6 +250,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
 
       switch (tag) {
         case 'title':
+          // eslint-disable-next-line no-case-declarations
           const title = renderTitle(input.titleTemplate, value as string);
 
           tagResults.push(
@@ -295,6 +298,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
           break;
 
         case 'media':
+          // eslint-disable-next-line no-case-declarations
           const values: any = Array.isArray(value) ? value : [value];
 
           for (const media of values) {
@@ -342,6 +346,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
           break;
 
         case 'alternates':
+          // eslint-disable-next-line no-case-declarations
           const alternates = Array.isArray(value) ? value : [value];
 
           for (const alternate of alternates) {
@@ -534,19 +539,19 @@ function inferSchemaType(url: string): SchemaType {
     },
     {
       type: 'ItemList',
-      pattern: /\/collections\/([^\/]+)/,
+      pattern: /\/collections\/([^/]+)/,
     },
     {
       type: 'WebPage',
-      pattern: /\/pages\/([^\/]+)/,
+      pattern: /\/pages\/([^/]+)/,
     },
     {
       type: 'WebSite',
-      pattern: /\/blogs\/([^\/]+)/,
+      pattern: /\/blogs\/([^/]+)/,
     },
     {
       type: 'BlogPosting',
-      pattern: /\/blogs\/([^\/]+)\/([^\/]+)/,
+      pattern: /\/blogs\/([^/]+)\/([^/]+)/,
     },
     {
       type: 'Organization',
@@ -554,7 +559,7 @@ function inferSchemaType(url: string): SchemaType {
     },
     {
       type: 'Organization',
-      pattern: /\/policies\/([^\/]+)/,
+      pattern: /\/policies\/([^/]+)/,
     },
   ];
 

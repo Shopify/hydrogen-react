@@ -14,12 +14,12 @@ const data: ReferenceEntityTemplateSchema = {
       tabs: [
         {
           title: 'Basic example',
-          code: './seo.basic.example.js',
+          code: './seo.basic.example.jsx',
           language: 'js',
         },
         {
           title: 'All options',
-          code: './seo.all.example.js',
+          code: './seo.all.example.jsx',
           language: 'js',
         },
       ],
