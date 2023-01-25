@@ -438,6 +438,14 @@ describe('generateSeoTags', () => {
             "tag": "meta",
           },
           {
+            "key": "meta-https://example.com/image-1.jpg-og:image:secure_url",
+            "props": {
+              "content": "https://example.com/image-1.jpg",
+              "property": "og:image:secure_url",
+            },
+            "tag": "meta",
+          },
+          {
             "key": "meta-https://example.com/image-1.jpg-og:image:type",
             "props": {
               "content": "image/jpeg",
@@ -511,6 +519,14 @@ describe('generateSeoTags', () => {
             "tag": "meta",
           },
           {
+            "key": "meta-https://example.com/image-1.jpg-og:image:secure_url",
+            "props": {
+              "content": "https://example.com/image-1.jpg",
+              "property": "og:image:secure_url",
+            },
+            "tag": "meta",
+          },
+          {
             "key": "meta-https://example.com/image-1.jpg-og:image:type",
             "props": {
               "content": "image/jpeg",
@@ -523,6 +539,14 @@ describe('generateSeoTags', () => {
             "props": {
               "content": "https://example.com/image-2.jpg",
               "property": "og:image:url",
+            },
+            "tag": "meta",
+          },
+          {
+            "key": "meta-https://example.com/image-2.jpg-og:image:secure_url",
+            "props": {
+              "content": "https://example.com/image-2.jpg",
+              "property": "og:image:secure_url",
             },
             "tag": "meta",
           },
@@ -570,7 +594,7 @@ describe('generateSeoTags', () => {
       `);
     });
 
-    it.only('should add media tags for multiple types of media', () => {
+    it('should add media tags for multiple types of media', () => {
       // Given
       const input = {
         media: [
