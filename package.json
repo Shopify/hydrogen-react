@@ -38,7 +38,8 @@
     "jsonlint": "^1.6.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.2",
-    "turbo": "^1.7.0"
+    "turbo": "^1.7.0",
+    "schema-dts": "^1.1.0"
   },
   "engines": {
     "node": ">=14.0.0"
