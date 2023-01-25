@@ -5,8 +5,6 @@ const data: ReferenceEntityTemplateSchema = {
   category: 'utilities',
   isVisualComponent: false,
   related: [],
-  description:
-    'The `generateSeoTags` function generates the SEO title, meta, link and script (JSON Linking Data) tags for a page. It pairs well with the SEO component in `@shopify/hydrogen` when building a Hydrogen Remix app, but can be used on its own if you want to generate the tags yourself.',
   type: 'function',
   defaultExample: {
     description: 'Basic example',
