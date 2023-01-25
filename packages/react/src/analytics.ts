@@ -9,12 +9,18 @@ import type {
 import {AnalyticsEventName} from './analytics-constants.js';
 import {errorIfServer} from './analytics-utils.js';
 import {getShopifyCookies} from './cookies-utils.js';
-
 import {pageView as trekkiePageView} from './analytics-schema-trekkie-storefront-page-view.js';
 import {
   pageView as customerPageView,
   addToCart as customerAddToCart,
 } from './analytics-schema-custom-storefront-customer-tracking.js';
+
+/**
+ * Supply the Online Store domain so that Shopify analytics can be sent under
+ * the same top level domain. (You don't need to set this if you are sending
+ * from the server side)
+ */
+type ShopDomain = string;
 
 /**
  * Sends analytics to Shopify
@@ -40,7 +46,7 @@ import {
  **/
 export function sendShopifyAnalytics(
   {eventName, payload}: ShopifyAnalytics,
-  shopDomain?: string
+  shopDomain?: ShopDomain
 ): Promise<void> {
   let events: ShopifyMonorailEvent[] = [];
 

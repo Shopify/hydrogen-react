@@ -4717,6 +4717,292 @@
     ]
   },
   {
+    "name": "sendShopifyAnalytics",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "Sends analytics to Shopify",
+    "type": "utility",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "title": "JavaScript",
+            "code": "import {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\n\nfunction sendPageView(analyticsPageData) {\n  const payload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nexport default function App({Component, pageProps}) {\n  const router = useRouter();\n\n  const analytics = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
+            "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n  type ShopifyPageViewPayload,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\n\nfunction sendPageView(analyticsPageData: ShopifyPageViewPayload) {\n  const payload: ShopifyPageViewPayload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nexport default function App({Component, pageProps}: AppProps) {\n  const router = useRouter();\n\n  const analytics: ShopifyPageViewPayload = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
+            "language": "tsx"
+          }
+        ],
+        "title": "Example code"
+      }
+    },
+    "definitions": [
+      {
+        "title": "ShopifyAnalytics",
+        "description": "",
+        "type": "ShopifyAnalytics",
+        "typeDefinitions": {
+          "ShopifyAnalytics": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyAnalytics",
+            "value": "ShopifyPageView | ShopifyAddToCart",
+            "description": ""
+          },
+          "ShopifyPageView": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyPageView",
+            "value": "{\n  eventName: string;\n  payload: ShopifyPageViewPayload;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "eventName",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "payload",
+                "value": "ShopifyPageViewPayload",
+                "description": ""
+              }
+            ]
+          },
+          "ShopifyPageViewPayload": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyPageViewPayload",
+            "value": "ShopifyCommonPayload & {\n  canonicalUrl?: string;\n  pageType?: string;\n  resourceId?: string;\n  collectionHandle?: string;\n  searchString?: string;\n}",
+            "description": ""
+          },
+          "ShopifyCommonPayload": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyCommonPayload",
+            "value": "ClientBrowserParameters & {\n  shopifyAppSource?: ShopifyAppSources;\n  hasUserConsent: boolean;\n  shopId: string;\n  currency: string;\n  storefrontId?: string;\n  acceptedLanguage?: string;\n  customerId?: string;\n  totalValue?: number;\n  products?: ShopifyAnalyticsProduct[];\n}",
+            "description": ""
+          },
+          "ClientBrowserParameters": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ClientBrowserParameters",
+            "value": "{\n  uniqueToken: string;\n  visitToken: string;\n  url: string;\n  path: string;\n  search: string;\n  referrer: string;\n  title: string;\n  userAgent: string;\n  navigationType: string;\n  navigationApi: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "uniqueToken",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "visitToken",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "url",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "path",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "search",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "referrer",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "title",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "userAgent",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "navigationType",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "navigationApi",
+                "value": "string",
+                "description": ""
+              }
+            ]
+          },
+          "ShopifyAppSources": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyAppSources",
+            "value": "keyof typeof ShopifyAppSource",
+            "description": ""
+          },
+          "ShopifyAnalyticsProduct": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyAnalyticsProduct",
+            "value": "{\n  productGid: Product['id'];\n  variantGid?: ProductVariant['id'];\n  name: Product['title'];\n  variantName?: ProductVariant['title'];\n  brand: Product['vendor'];\n  category?: Product['productType'];\n  price: ProductVariant['price']['amount'];\n  sku?: ProductVariant['sku'];\n  quantity?: number;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "productGid",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "variantGid",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "name",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "variantName",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "brand",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "category",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "price",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "sku",
+                "value": "string",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "quantity",
+                "value": "number",
+                "description": "",
+                "isOptional": true
+              }
+            ]
+          },
+          "ShopifyAddToCart": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyAddToCart",
+            "value": "{\n  eventName: string;\n  payload: ShopifyAddToCartPayload;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "eventName",
+                "value": "string",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "payload",
+                "value": "ShopifyAddToCartPayload",
+                "description": ""
+              }
+            ]
+          },
+          "ShopifyAddToCartPayload": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyAddToCartPayload",
+            "value": "ShopifyCommonPayload & {\n  /** The cart's ID if it has been created through the Storefront API. */\n  cartId: string;\n}",
+            "description": ""
+          }
+        }
+      },
+      {
+        "title": "shopDomain",
+        "description": "",
+        "type": "ShopDomain",
+        "typeDefinitions": {
+          "ShopDomain": {
+            "filePath": "/analytics.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopDomain",
+            "value": "string",
+            "description": "Supply the Online Store domain so that Shopify analytics can be sent under\nthe same top level domain. (You don't need to set this if you are sending\nfrom the server side)"
+          }
+        }
+      }
+    ]
+  },
+  {
     "name": "cart",
     "category": "hooks",
     "isVisualComponent": false,
