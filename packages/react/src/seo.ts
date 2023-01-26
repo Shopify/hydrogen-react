@@ -1,18 +1,6 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {Maybe} from './storefront-api-types.js';
-import {WithContext} from 'schema-dts';
-
-export interface BaseSeo {
-  description?: any;
-  media?: any;
-  title?: any;
-  titleTemplate?: any;
-  url?: any;
-  handle?: any;
-  ldJson?: any;
-  alternates?: any[];
-}
+import type {Maybe} from './storefront-api-types.js';
+import type {WithContext, Thing} from 'schema-dts';
+import type {ComponentPropsWithoutRef, HTMLAttributes} from 'react';
 
 export interface Seo {
   /**
@@ -202,9 +190,9 @@ export type SeoMedia = {
 
 export type TagKey = 'title' | 'base' | 'meta' | 'link' | 'script';
 
-export interface HeadTag {
+export interface CustomHeadTagObject {
   tag: TagKey;
-  props: Record<string, any>;
+  props: Record<string, unknown>;
   children?: string;
   key: string;
 }
@@ -223,32 +211,35 @@ export type SchemaType =
  * pairs well with the SEO component in `@shopify/hydrogen` when building a Hydrogen Remix app, but can be used on its
  * own if you want to generate the tags yourself.
  */
-export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
-  const output: HeadTag[] = [];
-  let ldJson: WithContext<any> = {
+export function generateSeoTags<T extends Seo = Seo>(
+  seoInput: T
+): CustomHeadTagObject[] {
+  const output: CustomHeadTagObject[] = [];
+
+  // https://github.com/google/schema-dts/issues/98
+  let ldJson: WithContext<Exclude<Thing, string>> = {
     '@context': 'https://schema.org',
     '@type': 'Thing',
   };
 
-  for (const tag of Object.keys(input)) {
-    const values = Array.isArray(input[tag as keyof T])
-      ? (input[tag as keyof T] as [keyof T][])
-      : [input[tag as keyof T]];
+  for (const seoKey of Object.keys(seoInput) as (keyof T)[]) {
+    const values = Array.isArray(seoInput[seoKey])
+      ? (seoInput[seoKey] as T[keyof T][])
+      : [seoInput[seoKey]];
 
     const tags = values.map((value) => {
-      const tagResults: any[] = [];
+      const tagResults: CustomHeadTagObject[] = [];
 
       if (!value) {
         return tagResults;
       }
 
-      switch (tag) {
-        case 'title':
-          // eslint-disable-next-line no-case-declarations
-          const title = renderTitle(input.titleTemplate, value as string);
+      switch (seoKey) {
+        case 'title': {
+          const title = renderTitle(seoInput?.titleTemplate, value);
 
           tagResults.push(
-            generateTag('title', title),
+            generateTag('title', {title}),
             generateTag('meta', {property: 'og:title', content: title}),
             generateTag('meta', {name: 'twitter:title', content: title})
           );
@@ -256,6 +247,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
           ldJson.name = title;
 
           break;
+        }
 
         case 'description':
           tagResults.push(
@@ -291,9 +283,8 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
           ldJson = {...ldJson, ...value};
           break;
 
-        case 'media':
-          // eslint-disable-next-line no-case-declarations
-          const values: any = Array.isArray(value) ? value : [value];
+        case 'media': {
+          const values = Array.isArray(value) ? value : [value];
 
           for (const media of values) {
             if (typeof media === 'string') {
@@ -337,19 +328,16 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
             }
           }
           break;
+        }
 
-        case 'alternates':
-          // eslint-disable-next-line no-case-declarations
+        case 'alternates': {
           const alternates = Array.isArray(value) ? value : [value];
 
           for (const alternate of alternates) {
             const {
-              // @ts-expect-error untyped
               language,
-              // @ts-expect-error untyped
               media,
               url,
-              // @ts-expect-error untyped
               default: defaultLang,
             } = alternate as Seo['alternates'][0];
 
@@ -368,6 +356,7 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
           }
 
           break;
+        }
       }
 
       return tagResults;
@@ -402,16 +391,48 @@ export function generateSeoTags<T extends BaseSeo = Seo>(input: T) {
     .flat();
 }
 
-function generateTag<T extends HeadTag>(
-  tagName: T['tag'],
-  input: any,
+type MetaTagProps =
+  | ComponentPropsWithoutRef<'title'>
+  | ComponentPropsWithoutRef<'base'>
+  | ComponentPropsWithoutRef<'meta'>
+  | ComponentPropsWithoutRef<'link'>
+  | ComponentPropsWithoutRef<'script'>;
+
+function generateTag(
+  tagName: 'title',
+  input: ComponentPropsWithoutRef<'title'>,
   group?: string
-): T | T[] {
-  const tag = {tag: tagName, props: {}} as T;
+): CustomHeadTagObject;
+function generateTag(
+  tagName: 'base',
+  input: ComponentPropsWithoutRef<'base'>,
+  group?: string
+): CustomHeadTagObject;
+function generateTag(
+  tagName: 'meta',
+  input: ComponentPropsWithoutRef<'meta'>,
+  group?: string
+): CustomHeadTagObject;
+function generateTag(
+  tagName: 'link',
+  input: ComponentPropsWithoutRef<'link'>,
+  group?: string
+): CustomHeadTagObject;
+function generateTag(
+  tagName: 'script',
+  input: ComponentPropsWithoutRef<'script'>,
+  group?: string
+): CustomHeadTagObject;
+function generateTag(
+  tagName: TagKey,
+  input: MetaTagProps,
+  group?: string
+): CustomHeadTagObject {
+  const tag: CustomHeadTagObject = {tag: tagName, props: {}, key: ''};
 
   // title tags don't have props so move to children
   if (tagName === 'title') {
-    tag.children = input;
+    tag.children = JSON.stringify(input);
     tag.key = generateKey(tag);
 
     return tag;
@@ -419,7 +440,7 @@ function generateTag<T extends HeadTag>(
 
   // also move the input children to children and delete it
   if (tagName === 'script') {
-    tag.children = input.children;
+    tag.children = JSON.stringify(input.children);
 
     delete input.children;
   }
@@ -437,7 +458,7 @@ function generateTag<T extends HeadTag>(
   return tag;
 }
 
-function generateKey(tag: HeadTag, group?: string) {
+function generateKey(tag: CustomHeadTagObject, group?: string) {
   const {tag: tagName, props} = tag;
 
   if (tagName === 'title') {
@@ -469,8 +490,12 @@ function generateKey(tag: HeadTag, group?: string) {
   return `${tagName}-${props.type}`;
 }
 
-function renderTitle<T extends HeadTag['children']>(
-  template?: string | ((title?: string) => string | undefined),
+function renderTitle<T extends CustomHeadTagObject['children']>(
+  template?:
+    | string
+    | ((title?: string) => string | undefined)
+    | undefined
+    | null,
   title?: T
 ): string | undefined {
   if (!template) {
