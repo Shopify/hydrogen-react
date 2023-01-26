@@ -1,13 +1,15 @@
+import * as React from 'react';
+import {useEffect} from 'react';
 import {
   sendShopifyAnalytics,
   getClientBrowserParameters,
   AnalyticsEventName,
-  type ShopifyPageViewPayload,
+  useShopifyCookies,
 } from '@shopify/storefront-kit-react';
 import {useRouter} from 'next/router';
 
-function sendPageView(analyticsPageData: ShopifyPageViewPayload) {
-  const payload: ShopifyPageViewPayload = {
+function sendPageView(analyticsPageData) {
+  const payload = {
     ...getClientBrowserParameters(),
     ...analyticsPageData,
   };
@@ -20,10 +22,20 @@ function sendPageView(analyticsPageData: ShopifyPageViewPayload) {
 // Hook into your router's page change events to fire this analytics event:
 // for example, in NextJS:
 
-export default function App({Component, pageProps}: AppProps) {
+const analyticsShopData = {
+  shopId: 'gid://shopify/Shop/{your-shop-id}',
+  currency: 'USD',
+  acceptedLanguage: 'en',
+};
+
+export default function App({Component, pageProps}) {
   const router = useRouter();
 
-  const analytics: ShopifyPageViewPayload = {
+  // @ts-expect-error - this is an example, you should implement this function
+  const hasUserConsent = yourFunctionToDetermineIfUserHasConsent();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const analytics = {
     hasUserConsent,
     ...analyticsShopData,
     ...pageProps.analytics,
@@ -44,6 +56,8 @@ export default function App({Component, pageProps}: AppProps) {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [analytics, router.events]);
+
+  useShopifyCookies();
 
   return <Component {...pagePropsWithAppAnalytics} />;
 }
