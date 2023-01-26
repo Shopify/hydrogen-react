@@ -3,15 +3,25 @@ import {AnalyticsEventName, ShopifyAppSource} from './analytics-constants.js';
 import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
 
 export type ClientBrowserParameters = {
+  /** Shopify unique user token: Value of `_shopify_y` cookie */
   uniqueToken: string;
+  /** Shopify session token: Value of `_shopify_s` cookie */
   visitToken: string;
+  /** `window.location.href` */
   url: string;
+  /** `window.location.pathname` */
   path: string;
+  /** `window.location.href` */
   search: string;
+  /** `window.location.search` */
   referrer: string;
+  /** `document.referrer` */
   title: string;
+  /** `navigator.userAgent` */
   userAgent: string;
+  /** 'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>' */
   navigationType: string;
+  /** 'PerformanceNavigationTiming' | 'performance.navigation' */
   navigationApi: string;
 };
 

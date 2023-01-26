@@ -1,7 +1,8 @@
 import {vi, afterEach} from 'vitest';
 import {AnalyticsEventName} from './analytics-constants.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
-import {getClientBrowserParameters, sendShopifyAnalytics} from './analytics.js';
+import {sendShopifyAnalytics} from './analytics.js';
+import {getClientBrowserParameters} from './get-client-browser-parameters.js';
 
 const MONORAIL_ENDPOINT =
   'https://monorail-edge.shopifysvc.com/unstable/produce_batch';

@@ -1,11 +1,11 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'sendShopifyAnalytics',
+  name: 'getClientBrowserParameters',
   category: 'utilities',
   isVisualComponent: false,
   related: [],
-  description: 'Sends analytics to Shopify',
+  description: 'Gathers client browser values commonly used for analytics',
   type: 'utility',
   defaultExample: {
     description: 'I am the default example',
@@ -13,12 +13,12 @@ const data: ReferenceEntityTemplateSchema = {
       tabs: [
         {
           title: 'JavaScript',
-          code: './analytics.example.jsx',
+          code: './get-client-browser-parameters.example.jsx',
           language: 'jsx',
         },
         {
           title: 'TypeScript',
-          code: './analytics.example.tsx',
+          code: './get-client-browser-parameters.example.tsx',
           language: 'tsx',
         },
       ],
@@ -27,9 +27,10 @@ const data: ReferenceEntityTemplateSchema = {
   },
   definitions: [
     {
-      title: 'sendShopifyAnalytics',
-      type: 'SendShopifyAnalyticsGeneratedType',
-      description: 'Sends analytics to Shopify',
+      title: 'Returns ClientBrowserParameters',
+      type: 'ClientBrowserParameters',
+      description:
+        'If executed on server, this method will return empty string for each field.',
     },
   ],
 };

@@ -4729,12 +4729,12 @@
         "tabs": [
           {
             "title": "JavaScript",
-            "code": "import {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\n\nfunction sendPageView(analyticsPageData) {\n  const payload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nexport default function App({Component, pageProps}) {\n  const router = useRouter();\n\n  const analytics = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
+            "code": "import {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n  useShopifyCookies,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\nimport {useEffect} from 'react';\n\nfunction sendPageView(analyticsPageData) {\n  const payload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nconst analyticsShopData = {\n  shopId: 'gid://shopify/Shop/{your-shop-id}',\n  currency: 'USD',\n  acceptedLanguage: 'en',\n};\n\nexport default function App({Component, pageProps}) {\n  const router = useRouter();\n\n  // eslint-disable-next-line no-undef\n  const hasUserConsent = yourFunctionToDetermineIfUserHasConsent();\n\n  // eslint-disable-next-line react-hooks/exhaustive-deps\n  const analytics = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  useShopifyCookies();\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
             "language": "jsx"
           },
           {
             "title": "TypeScript",
-            "code": "import {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n  type ShopifyPageViewPayload,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\n\nfunction sendPageView(analyticsPageData: ShopifyPageViewPayload) {\n  const payload: ShopifyPageViewPayload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nexport default function App({Component, pageProps}: AppProps) {\n  const router = useRouter();\n\n  const analytics: ShopifyPageViewPayload = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {\n  sendShopifyAnalytics,\n  getClientBrowserParameters,\n  AnalyticsEventName,\n  useShopifyCookies,\n} from '@shopify/storefront-kit-react';\nimport {useRouter} from 'next/router';\n\nfunction sendPageView(analyticsPageData) {\n  const payload = {\n    ...getClientBrowserParameters(),\n    ...analyticsPageData,\n  };\n  sendShopifyAnalytics({\n    eventName: AnalyticsEventName.PAGE_VIEW,\n    payload,\n  });\n}\n\n// Hook into your router's page change events to fire this analytics event:\n// for example, in NextJS:\n\nconst analyticsShopData = {\n  shopId: 'gid://shopify/Shop/{your-shop-id}',\n  currency: 'USD',\n  acceptedLanguage: 'en',\n};\n\nexport default function App({Component, pageProps}) {\n  const router = useRouter();\n\n  // @ts-expect-error - this is an example, you should implement this function\n  const hasUserConsent = yourFunctionToDetermineIfUserHasConsent();\n\n  // eslint-disable-next-line react-hooks/exhaustive-deps\n  const analytics = {\n    hasUserConsent,\n    ...analyticsShopData,\n    ...pageProps.analytics,\n  };\n  const pagePropsWithAppAnalytics = {\n    ...pageProps,\n    analytics,\n  };\n\n  useEffect(() => {\n    const handleRouteChange = () => {\n      sendPageView(analytics);\n    };\n\n    router.events.on('routeChangeComplete', handleRouteChange);\n\n    return () => {\n      router.events.off('routeChangeComplete', handleRouteChange);\n    };\n  }, [analytics, router.events]);\n\n  useShopifyCookies();\n\n  return <Component {...pagePropsWithAppAnalytics} />;\n}\n",
             "language": "tsx"
           }
         ],
@@ -4744,7 +4744,7 @@
     "definitions": [
       {
         "title": "sendShopifyAnalytics",
-        "description": "",
+        "description": "Sends analytics to Shopify",
         "type": "SendShopifyAnalyticsGeneratedType",
         "typeDefinitions": {
           "SendShopifyAnalyticsGeneratedType": {
@@ -4753,13 +4753,13 @@
             "params": [
               {
                 "name": "{eventName, payload}",
-                "description": "- Type of analytics event",
+                "description": "",
                 "value": "ShopifyAnalytics",
                 "filePath": "/analytics.ts"
               },
               {
                 "name": "shopDomain",
-                "description": "- Defaults to Shopify's analytics endpoint.\nSupply the Online Store domain so that Shopify analytics can be sent under\nthe same top level domain. (You don't need to set this if you are sending\nfrom the server side)",
+                "description": "",
                 "value": "string",
                 "filePath": "/analytics.ts"
               }
@@ -4770,7 +4770,7 @@
               "name": "Promise<void>",
               "value": "Promise<void>"
             },
-            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  return sendToShopify(events, shopDomain);\n}"
+            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
           },
           "ShopifyAnalytics": {
             "filePath": "/analytics-types.ts",
@@ -4820,7 +4820,7 @@
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ClientBrowserParameters",
-            "value": "{\n  uniqueToken: string;\n  visitToken: string;\n  url: string;\n  path: string;\n  search: string;\n  referrer: string;\n  title: string;\n  userAgent: string;\n  navigationType: string;\n  navigationApi: string;\n}",
+            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie */\n  uniqueToken: string;\n  /** Shopify session token: Value of `_shopify_s` cookie */\n  visitToken: string;\n  /** `window.location.href` */\n  url: string;\n  /** `window.location.pathname` */\n  path: string;\n  /** `window.location.href` */\n  search: string;\n  /** `window.location.search` */\n  referrer: string;\n  /** `document.referrer` */\n  title: string;\n  /** `navigator.userAgent` */\n  userAgent: string;\n  /** 'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>' */\n  navigationType: string;\n  /** 'PerformanceNavigationTiming' | 'performance.navigation' */\n  navigationApi: string;\n}",
             "description": "",
             "members": [
               {
@@ -4828,70 +4828,70 @@
                 "syntaxKind": "PropertySignature",
                 "name": "uniqueToken",
                 "value": "string",
-                "description": ""
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "visitToken",
                 "value": "string",
-                "description": ""
+                "description": "Shopify session token: Value of `_shopify_s` cookie"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "url",
                 "value": "string",
-                "description": ""
+                "description": "`window.location.href`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "path",
                 "value": "string",
-                "description": ""
+                "description": "`window.location.pathname`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "search",
                 "value": "string",
-                "description": ""
+                "description": "`window.location.href`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "referrer",
                 "value": "string",
-                "description": ""
+                "description": "`window.location.search`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "title",
                 "value": "string",
-                "description": ""
+                "description": "`document.referrer`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "userAgent",
                 "value": "string",
-                "description": ""
+                "description": "`navigator.userAgent`"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationType",
                 "value": "string",
-                "description": ""
+                "description": "'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>'"
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationApi",
                 "value": "string",
-                "description": ""
+                "description": "'PerformanceNavigationTiming' | 'performance.navigation'"
               }
             ]
           },
@@ -5008,6 +5008,120 @@
             "name": "ShopifyAddToCartPayload",
             "value": "ShopifyCommonPayload & {\n  /** The cart's ID if it has been created through the Storefront API. */\n  cartId: string;\n}",
             "description": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "getClientBrowserParameters",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "Gathers client browser values commonly used for analytics",
+    "type": "utility",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "title": "JavaScript",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    console.log(getClientBrowserParameters());\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    console.log(getClientBrowserParameters());\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "tsx"
+          }
+        ],
+        "title": "Example code"
+      }
+    },
+    "definitions": [
+      {
+        "title": "Returns ClientBrowserParameters",
+        "description": "If executed on server, this method will return empty string for each field.",
+        "type": "ClientBrowserParameters",
+        "typeDefinitions": {
+          "ClientBrowserParameters": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ClientBrowserParameters",
+            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie */\n  uniqueToken: string;\n  /** Shopify session token: Value of `_shopify_s` cookie */\n  visitToken: string;\n  /** `window.location.href` */\n  url: string;\n  /** `window.location.pathname` */\n  path: string;\n  /** `window.location.href` */\n  search: string;\n  /** `window.location.search` */\n  referrer: string;\n  /** `document.referrer` */\n  title: string;\n  /** `navigator.userAgent` */\n  userAgent: string;\n  /** 'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>' */\n  navigationType: string;\n  /** 'PerformanceNavigationTiming' | 'performance.navigation' */\n  navigationApi: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "uniqueToken",
+                "value": "string",
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "visitToken",
+                "value": "string",
+                "description": "Shopify session token: Value of `_shopify_s` cookie"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "url",
+                "value": "string",
+                "description": "`window.location.href`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "path",
+                "value": "string",
+                "description": "`window.location.pathname`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "search",
+                "value": "string",
+                "description": "`window.location.href`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "referrer",
+                "value": "string",
+                "description": "`window.location.search`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "title",
+                "value": "string",
+                "description": "`document.referrer`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "userAgent",
+                "value": "string",
+                "description": "`navigator.userAgent`"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "navigationType",
+                "value": "string",
+                "description": "'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown <number>'"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "navigationApi",
+                "value": "string",
+                "description": "'PerformanceNavigationTiming' | 'performance.navigation'"
+              }
+            ]
           }
         }
       }
