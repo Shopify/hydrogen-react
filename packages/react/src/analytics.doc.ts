@@ -29,7 +29,7 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'sendShopifyAnalytics',
       type: 'SendShopifyAnalyticsGeneratedType',
-      description: 'Sends analytics to Shopify',
+      description: '',
     },
   ],
 };

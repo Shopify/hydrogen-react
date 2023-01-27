@@ -27,8 +27,8 @@ const data: ReferenceEntityTemplateSchema = {
   },
   definitions: [
     {
-      title: 'Returns ClientBrowserParameters',
-      type: 'ClientBrowserParameters',
+      title: 'getClientBrowserParameters',
+      type: 'GetClientBrowserParametersGeneratedType',
       description:
         'If executed on server, this method will return empty string for each field.',
     },

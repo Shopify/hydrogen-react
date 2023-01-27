@@ -15,8 +15,7 @@ export type {
   ShopifyAnalyticsProduct,
   ShopifyCookies,
 } from './analytics-types.js';
-export {sendShopifyAnalytics} from './analytics.js';
-export {getClientBrowserParameters} from './get-client-browser-parameters.js';
+export {sendShopifyAnalytics, getClientBrowserParameters} from './analytics.js';
 export {BuyNowButton} from './BuyNowButton.js';
 export type {
   CartState,

@@ -4744,7 +4744,7 @@
     "definitions": [
       {
         "title": "sendShopifyAnalytics",
-        "description": "Sends analytics to Shopify",
+        "description": "",
         "type": "SendShopifyAnalyticsGeneratedType",
         "typeDefinitions": {
           "SendShopifyAnalyticsGeneratedType": {
@@ -5040,10 +5040,22 @@
     },
     "definitions": [
       {
-        "title": "Returns ClientBrowserParameters",
+        "title": "getClientBrowserParameters",
         "description": "If executed on server, this method will return empty string for each field.",
-        "type": "ClientBrowserParameters",
+        "type": "GetClientBrowserParametersGeneratedType",
         "typeDefinitions": {
+          "GetClientBrowserParametersGeneratedType": {
+            "filePath": "/analytics.ts",
+            "name": "GetClientBrowserParametersGeneratedType",
+            "params": [],
+            "returns": {
+              "filePath": "/analytics.ts",
+              "description": "",
+              "name": "ClientBrowserParameters",
+              "value": "ClientBrowserParameters"
+            },
+            "value": "export function getClientBrowserParameters(): ClientBrowserParameters {\n  if (errorIfServer('getClientBrowserParameters')) {\n    return {\n      uniqueToken: '',\n      visitToken: '',\n      url: '',\n      path: '',\n      search: '',\n      referrer: '',\n      title: '',\n      userAgent: '',\n      navigationType: '',\n      navigationApi: '',\n    };\n  }\n\n  const [navigationType, navigationApi] = getNavigationType();\n  const cookies = getShopifyCookies(document.cookie);\n\n  return {\n    uniqueToken: cookies[SHOPIFY_Y],\n    visitToken: cookies[SHOPIFY_S],\n    url: location.href,\n    path: location.pathname,\n    search: location.search,\n    referrer: document.referrer,\n    title: document.title,\n    userAgent: navigator.userAgent,\n    navigationType,\n    navigationApi,\n  };\n}"
+          },
           "ClientBrowserParameters": {
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
