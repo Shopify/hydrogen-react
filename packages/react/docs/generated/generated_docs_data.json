@@ -4721,7 +4721,7 @@
     "category": "utilities",
     "isVisualComponent": false,
     "related": [],
-    "description": "Sends analytics to Shopify",
+    "description": "Sends analytics to Shopify.",
     "type": "utility",
     "defaultExample": {
       "description": "I am the default example",
@@ -4744,7 +4744,7 @@
     "definitions": [
       {
         "title": "sendShopifyAnalytics",
-        "description": "",
+        "description": "If `payload.hasUserConsent` is false, no analytics event will happen.",
         "type": "SendShopifyAnalyticsGeneratedType",
         "typeDefinitions": {
           "SendShopifyAnalyticsGeneratedType": {
@@ -4770,7 +4770,7 @@
               "name": "Promise<void>",
               "value": "Promise<void>"
             },
-            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
+            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  if (!payload.hasUserConsent) return Promise.resolve();\n\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
           },
           "ShopifyAnalytics": {
             "filePath": "/analytics-types.ts",
@@ -5026,12 +5026,12 @@
         "tabs": [
           {
             "title": "JavaScript",
-            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    console.log(getClientBrowserParameters());\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    getClientBrowserParameters();\n  });\n\n  return <Component {...pageProps} />;\n}\n",
             "language": "jsx"
           },
           {
             "title": "TypeScript",
-            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    console.log(getClientBrowserParameters());\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getClientBrowserParameters} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    getClientBrowserParameters();\n  });\n\n  return <Component {...pageProps} />;\n}\n",
             "language": "tsx"
           }
         ],
@@ -5140,11 +5140,148 @@
     ]
   },
   {
+    "name": "getShopifyCookies",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "Parses cookie string and returns Shopify cookies.",
+    "type": "utility",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "title": "JavaScript",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getShopifyCookies} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    getShopifyCookies(document.cookie);\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import * as React from 'react';\nimport {useEffect} from 'react';\nimport {getShopifyCookies} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useEffect(() => {\n    getShopifyCookies(document.cookie);\n  });\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "tsx"
+          }
+        ],
+        "title": "Example code"
+      }
+    },
+    "definitions": [
+      {
+        "title": "getShopifyCookies",
+        "description": "If the Shopify cookies doesn't exist, this method will return empty string for each missing cookie.",
+        "type": "GetShopifyCookiesGeneratedType",
+        "typeDefinitions": {
+          "GetShopifyCookiesGeneratedType": {
+            "filePath": "/cookies-utils.tsx",
+            "name": "GetShopifyCookiesGeneratedType",
+            "params": [
+              {
+                "name": "cookies",
+                "description": "",
+                "value": "string",
+                "filePath": "/cookies-utils.tsx"
+              }
+            ],
+            "returns": {
+              "filePath": "/cookies-utils.tsx",
+              "description": "",
+              "name": "ShopifyCookies",
+              "value": "ShopifyCookies"
+            },
+            "value": "export function getShopifyCookies(cookies: string): ShopifyCookies {\n  const cookieData = parse(cookies);\n  return {\n    [SHOPIFY_Y]: cookieData[SHOPIFY_Y] || '',\n    [SHOPIFY_S]: cookieData[SHOPIFY_S] || '',\n  };\n}"
+          },
+          "ShopifyCookies": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyCookies",
+            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie */\n  [SHOPIFY_Y]: string;\n  /** Shopify session token: Value of `_shopify_s` cookie */\n  [SHOPIFY_S]: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "_shopify_y",
+                "value": "string",
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie"
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "_shopify_s",
+                "value": "string",
+                "description": "Shopify session token: Value of `_shopify_s` cookie"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
     "name": "cart",
     "category": "hooks",
     "isVisualComponent": false,
     "related": [],
     "description": "",
     "type": "hook"
+  },
+  {
+    "name": "useShopifyCookies",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "Sets Shopify user and session cookies and refreshes the expiry time.",
+    "type": "utility",
+    "defaultExample": {
+      "description": "I am the default example",
+      "codeblock": {
+        "tabs": [
+          {
+            "title": "JavaScript",
+            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies();\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "jsx"
+          },
+          {
+            "title": "TypeScript",
+            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/storefront-kit-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies();\n\n  return <Component {...pageProps} />;\n}\n",
+            "language": "tsx"
+          }
+        ],
+        "title": "Example code"
+      }
+    },
+    "definitions": [
+      {
+        "title": "useShopifyCookies",
+        "description": "",
+        "type": "UseShopifyCookiesGeneratedType",
+        "typeDefinitions": {
+          "UseShopifyCookiesGeneratedType": {
+            "filePath": "/useShopifyCookies.tsx",
+            "name": "UseShopifyCookiesGeneratedType",
+            "params": [
+              {
+                "name": "hasUserConsent",
+                "description": "Defaults to false.\nIf set to `false`, Shopify cookies will be removed.\nIf set to `true`, Shopify unique user token cookie expiry to 1 year",
+                "value": "",
+                "filePath": "/useShopifyCookies.tsx"
+              },
+              {
+                "name": "domain",
+                "description": "The domain scope of the cookie. Defaults to empty string.",
+                "value": "",
+                "filePath": "/useShopifyCookies.tsx"
+              }
+            ],
+            "returns": {
+              "filePath": "/useShopifyCookies.tsx",
+              "description": "",
+              "name": "void",
+              "value": "void"
+            },
+            "value": "export function useShopifyCookies(hasUserConsent = false, domain = ''): void {\n  useEffect(() => {\n    const cookies = getShopifyCookies(document.cookie);\n\n    /**\n     * Set user and session cookies and refresh the expiry time\n     */\n    if (hasUserConsent) {\n      setCookie(\n        SHOPIFY_Y,\n        cookies[SHOPIFY_Y] || buildUUID(),\n        longTermLength,\n        domain\n      );\n      setCookie(\n        SHOPIFY_S,\n        cookies[SHOPIFY_S] || buildUUID(),\n        shortTermLength,\n        domain\n      );\n    } else {\n      setCookie(SHOPIFY_Y, '', 0, domain);\n      setCookie(SHOPIFY_S, '', 0, domain);\n    }\n  });\n}"
+          }
+        }
+      }
+    ]
   }
 ]

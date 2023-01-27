@@ -8,15 +8,10 @@ const shortTermLength = 60 * 30; // 30 mins
 
 /**
  * Set user and session cookies and refresh the expiry time
- * @param hasUserConsent - Defaults to false. If hasUserConsent is true, we can set Shopify unique user
- * token cookie from expiry of 30 mins to 1 year
- * @param domain - The domain scope of the cookie
- * @example
- * ```tsx
- * import {useShopifyCookies} from '@shopify/storefront-kit-react';
- *
- * useShopifyCookies(true, 'my-shop.com')
- * ```
+ * @param {boolean} hasUserConsent Defaults to false.
+ *   If set to `false`, Shopify cookies will be removed.
+ *   If set to `true`, Shopify unique user token cookie expiry to 1 year
+ * @param {string} domain The domain scope of the cookie. Defaults to empty string.
  */
 export function useShopifyCookies(hasUserConsent = false, domain = ''): void {
   useEffect(() => {
@@ -25,18 +20,23 @@ export function useShopifyCookies(hasUserConsent = false, domain = ''): void {
     /**
      * Set user and session cookies and refresh the expiry time
      */
-    setCookie(
-      SHOPIFY_Y,
-      cookies[SHOPIFY_Y] || buildUUID(),
-      hasUserConsent ? longTermLength : shortTermLength,
-      domain
-    );
-    setCookie(
-      SHOPIFY_S,
-      cookies[SHOPIFY_S] || buildUUID(),
-      shortTermLength,
-      domain
-    );
+    if (hasUserConsent) {
+      setCookie(
+        SHOPIFY_Y,
+        cookies[SHOPIFY_Y] || buildUUID(),
+        longTermLength,
+        domain
+      );
+      setCookie(
+        SHOPIFY_S,
+        cookies[SHOPIFY_S] || buildUUID(),
+        shortTermLength,
+        domain
+      );
+    } else {
+      setCookie(SHOPIFY_Y, '', 0, domain);
+      setCookie(SHOPIFY_S, '', 0, domain);
+    }
   });
 }
 

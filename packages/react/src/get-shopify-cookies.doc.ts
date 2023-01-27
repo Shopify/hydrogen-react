@@ -1,11 +1,11 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'sendShopifyAnalytics',
+  name: 'getShopifyCookies',
   category: 'utilities',
   isVisualComponent: false,
   related: [],
-  description: 'Sends analytics to Shopify.',
+  description: 'Parses cookie string and returns Shopify cookies.',
   type: 'utility',
   defaultExample: {
     description: 'I am the default example',
@@ -13,12 +13,12 @@ const data: ReferenceEntityTemplateSchema = {
       tabs: [
         {
           title: 'JavaScript',
-          code: './analytics.example.jsx',
+          code: './get-shopify-cookies.example.jsx',
           language: 'jsx',
         },
         {
           title: 'TypeScript',
-          code: './analytics.example.tsx',
+          code: './get-shopify-cookies.example.tsx',
           language: 'tsx',
         },
       ],
@@ -27,10 +27,10 @@ const data: ReferenceEntityTemplateSchema = {
   },
   definitions: [
     {
-      title: 'sendShopifyAnalytics',
-      type: 'SendShopifyAnalyticsGeneratedType',
+      title: 'getShopifyCookies',
+      type: 'GetShopifyCookiesGeneratedType',
       description:
-        'If `payload.hasUserConsent` is false, no analytics event will happen.',
+        "If the Shopify cookies doesn't exist, this method will return empty string for each missing cookie.",
     },
   ],
 };

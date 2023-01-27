@@ -62,7 +62,7 @@ describe(`useShopifyCookies`, () => {
       _shopify_y: '',
     });
 
-    renderHook(() => useShopifyCookies());
+    renderHook(() => useShopifyCookies(true));
 
     cookies = getShopifyCookies(document.cookie);
 
@@ -77,7 +77,7 @@ describe(`useShopifyCookies`, () => {
       cookieJar['_shopify_y'].value
     );
     expect(cookieJar['_shopify_s'].maxage).toBe(1800);
-    expect(cookieJar['_shopify_y'].maxage).toBe(1800);
+    expect(cookieJar['_shopify_y'].maxage).toBe(31104000);
   });
 
   it('does not override cookies when it already exists', () => {
@@ -85,9 +85,7 @@ describe(`useShopifyCookies`, () => {
     document.cookie = '_shopify_s=abc123; Max-Age=1800;';
     document.cookie = '_shopify_y=def456; Max-Age=1800;';
 
-    renderHook(() => {
-      useShopifyCookies();
-    });
+    renderHook(() => useShopifyCookies(true));
 
     const cookies = getShopifyCookies(document.cookie);
 
@@ -102,7 +100,7 @@ describe(`useShopifyCookies`, () => {
     const cookieJar: MockCookieJar = mockCookie();
     document.cookie = '_shopify_s=abc123; Max-Age=1800;';
 
-    renderHook(() => useShopifyCookies());
+    renderHook(() => useShopifyCookies(true));
 
     let cookies = getShopifyCookies(document.cookie);
 
@@ -116,7 +114,7 @@ describe(`useShopifyCookies`, () => {
     document.cookie = '_shopify_s=1; expires=1 Jan 1970 00:00:00 GMT;';
     document.cookie = '_shopify_y=def456; Max-Age=1800;';
 
-    renderHook(() => useShopifyCookies());
+    renderHook(() => useShopifyCookies(true));
 
     cookies = getShopifyCookies(document.cookie);
 
@@ -175,5 +173,31 @@ describe(`useShopifyCookies`, () => {
       domain: cookieDomain,
       maxage: 31104000,
     });
+  });
+
+  it('removes cookies if hasUserConsent is set to false', () => {
+    const cookieJar: MockCookieJar = mockCookie();
+    document.cookie = '_shopify_s=abc123; Max-Age=1800;';
+    document.cookie = '_shopify_y=def456; Max-Age=1800;';
+
+    renderHook(() => useShopifyCookies(true));
+
+    let cookies = getShopifyCookies(document.cookie);
+
+    expect(cookies).toEqual({
+      _shopify_s: 'abc123',
+      _shopify_y: 'def456',
+    });
+
+    renderHook(() => useShopifyCookies());
+
+    cookies = getShopifyCookies(document.cookie);
+
+    expect(cookies).toEqual({
+      _shopify_s: '',
+      _shopify_y: '',
+    });
+
+    expect(Object.keys(cookieJar).length).toBe(0);
   });
 });

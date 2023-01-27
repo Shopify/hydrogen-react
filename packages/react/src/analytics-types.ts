@@ -94,7 +94,9 @@ export type ShopifyAnalyticsPayload =
 export type ShopifyAnalytics = ShopifyPageView | ShopifyAddToCart;
 
 export type ShopifyCookies = {
+  /** Shopify unique user token: Value of `_shopify_y` cookie */
   [SHOPIFY_Y]: string;
+  /** Shopify session token: Value of `_shopify_s` cookie */
   [SHOPIFY_S]: string;
 };
 
