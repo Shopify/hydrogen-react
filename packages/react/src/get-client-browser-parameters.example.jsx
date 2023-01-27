@@ -4,7 +4,7 @@ import {getClientBrowserParameters} from '@shopify/storefront-kit-react';
 
 export default function App({Component, pageProps}) {
   useEffect(() => {
-    console.log(getClientBrowserParameters());
+    getClientBrowserParameters();
   });
 
   return <Component {...pageProps} />;

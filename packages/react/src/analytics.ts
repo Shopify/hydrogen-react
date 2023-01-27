@@ -20,6 +20,8 @@ export function sendShopifyAnalytics(
   {eventName, payload}: ShopifyAnalytics,
   shopDomain?: string
 ): Promise<void> {
+  if (!payload.hasUserConsent) return Promise.resolve();
+
   let events: ShopifyMonorailEvent[] = [];
 
   if (eventName === AnalyticsEventName.PAGE_VIEW) {

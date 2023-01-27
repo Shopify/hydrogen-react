@@ -5,7 +5,7 @@ const data: ReferenceEntityTemplateSchema = {
   category: 'utilities',
   isVisualComponent: false,
   related: [],
-  description: 'Sends analytics to Shopify',
+  description: 'Sends analytics to Shopify.',
   type: 'utility',
   defaultExample: {
     description: 'I am the default example',
@@ -29,7 +29,7 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'sendShopifyAnalytics',
       type: 'SendShopifyAnalyticsGeneratedType',
-      description: '',
+      description: 'If `payload.hasUserConsent` is false, no analytics event will happen.',
     },
   ],
 };
