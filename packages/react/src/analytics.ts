@@ -16,10 +16,17 @@ import {
   addToCart as customerAddToCart,
 } from './analytics-schema-custom-storefront-customer-tracking.js';
 
+/**
+ * Set user and session cookies and refresh the expiry time
+ * @param {ShopifyAnalytics} event The analytics event.
+ * @param {string} shopDomain The Online Store domain to sent Shopify analytics under the same
+ *   top level domain.
+ */
 export function sendShopifyAnalytics(
-  {eventName, payload}: ShopifyAnalytics,
+  event: ShopifyAnalytics,
   shopDomain?: string
 ): Promise<void> {
+  const {eventName, payload} = event;
   if (!payload.hasUserConsent) return Promise.resolve();
 
   let events: ShopifyMonorailEvent[] = [];

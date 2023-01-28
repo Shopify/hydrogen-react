@@ -6,14 +6,21 @@ import {buildUUID, getShopifyCookies} from './cookies-utils.js';
 const longTermLength = 60 * 60 * 24 * 360 * 1; // ~1 year expiry
 const shortTermLength = 60 * 30; // 30 mins
 
-/**
- * Set user and session cookies and refresh the expiry time
- * @param {boolean} hasUserConsent Defaults to false.
- *   If set to `false`, Shopify cookies will be removed.
- *   If set to `true`, Shopify unique user token cookie expiry to 1 year
- * @param {string} domain The domain scope of the cookie. Defaults to empty string.
- */
-export function useShopifyCookies(hasUserConsent = false, domain = ''): void {
+type UseShopifyCookiesOptions = {
+  /**
+   * If set to `false`, Shopify cookies will be removed.
+   * If set to `true`, Shopify unique user token cookie will have cookie expiry of 1 year.
+   * Defaults to false.
+   **/
+  hasUserConsent?: boolean;
+  /**
+   * The domain scope of the cookie. Defaults to empty string.
+   **/
+  domain?: string;
+};
+
+export function useShopifyCookies(options?: UseShopifyCookiesOptions): void {
+  const {hasUserConsent = false, domain = ''} = options || {};
   useEffect(() => {
     const cookies = getShopifyCookies(document.cookie);
 

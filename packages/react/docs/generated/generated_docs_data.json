@@ -4717,6 +4717,269 @@
     ]
   },
   {
+    "name": "Analytics constants",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "A list of analytics constants used by Shopify analytics.",
+    "type": "utility",
+    "definitions": [
+      {
+        "title": "AnalyticsEventName",
+        "description": "Analytics event names accepted by Shopify analytics.",
+        "type": "AnalyticsEventNameInterface",
+        "typeDefinitions": {
+          "AnalyticsEventNameInterface": {
+            "filePath": "/analytics-constants.ts",
+            "name": "AnalyticsEventNameInterface",
+            "description": "These duplicated interface declaration is so that we can generate proper documentation\nfor these public facing constants",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "PAGE_VIEW",
+                "value": "\"PAGE_VIEW\"",
+                "description": "Page view",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "ADD_TO_CART",
+                "value": "\"ADD_TO_CART\"",
+                "description": "Add to cart",
+                "isOptional": true
+              }
+            ],
+            "value": "interface AnalyticsEventNameInterface {\n  /** Page view */\n  PAGE_VIEW?: 'PAGE_VIEW';\n  /** Add to cart */\n  ADD_TO_CART?: 'ADD_TO_CART';\n}"
+          }
+        }
+      },
+      {
+        "title": "AnalyticsPageType",
+        "description": "Analytics page type values accepted by Shopify analytics.",
+        "type": "AnalyticsPageTypeInterface",
+        "typeDefinitions": {
+          "AnalyticsPageTypeInterface": {
+            "filePath": "/analytics-constants.ts",
+            "name": "AnalyticsPageTypeInterface",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "article",
+                "value": "\"article\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "blog",
+                "value": "\"blog\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "captcha",
+                "value": "\"captcha\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "cart",
+                "value": "\"cart\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "collection",
+                "value": "\"collection\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersAccount",
+                "value": "\"customers/account\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersActivateAccount",
+                "value": "\"customers/activate_account\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersAddresses",
+                "value": "\"customers/addresses\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersLogin",
+                "value": "\"customers/login\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersOrder",
+                "value": "\"customers/order\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersRegister",
+                "value": "\"customers/register\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersResetPassword",
+                "value": "\"customers/reset_password\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "giftCard",
+                "value": "\"gift_card\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "home",
+                "value": "\"index\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "listCollections",
+                "value": "\"list-collections\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "forbidden",
+                "value": "\"403\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "notFound",
+                "value": "\"404\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "page",
+                "value": "\"page\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "password",
+                "value": "\"password\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "product",
+                "value": "\"product\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "policy",
+                "value": "\"policy\"",
+                "description": "",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "search",
+                "value": "\"search\"",
+                "description": "",
+                "isOptional": true
+              }
+            ],
+            "value": "interface AnalyticsPageTypeInterface {\n  article?: 'article';\n  blog?: 'blog';\n  captcha?: 'captcha';\n  cart?: 'cart';\n  collection?: 'collection';\n  customersAccount?: 'customers/account';\n  customersActivateAccount?: 'customers/activate_account';\n  customersAddresses?: 'customers/addresses';\n  customersLogin?: 'customers/login';\n  customersOrder?: 'customers/order';\n  customersRegister?: 'customers/register';\n  customersResetPassword?: 'customers/reset_password';\n  giftCard?: 'gift_card';\n  home?: 'index';\n  listCollections?: 'list-collections';\n  forbidden?: '403';\n  notFound?: '404';\n  page?: 'page';\n  password?: 'password';\n  product?: 'product';\n  policy?: 'policy';\n  search?: 'search';\n}"
+          }
+        }
+      },
+      {
+        "title": "ShopifyAppSource",
+        "description": "Analytics sales channel values accepted by Shopify analytics.",
+        "type": "ShopifyAppSourceInterface",
+        "typeDefinitions": {
+          "ShopifyAppSourceInterface": {
+            "filePath": "/analytics-constants.ts",
+            "name": "ShopifyAppSourceInterface",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "hydrogen",
+                "value": "\"hydrogen\"",
+                "description": "Shopify Hydrogen sales channel",
+                "isOptional": true
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "headless",
+                "value": "\"headless\"",
+                "description": "Shopify Headless sales channel",
+                "isOptional": true
+              }
+            ],
+            "value": "interface ShopifyAppSourceInterface {\n  /** Shopify Hydrogen sales channel */\n  hydrogen?: 'hydrogen';\n  /** Shopify Headless sales channel */\n  headless?: 'headless';\n}"
+          }
+        }
+      }
+    ]
+  },
+  {
     "name": "sendShopifyAnalytics",
     "category": "utilities",
     "isVisualComponent": false,
@@ -4752,14 +5015,14 @@
             "name": "SendShopifyAnalyticsGeneratedType",
             "params": [
               {
-                "name": "{eventName, payload}",
-                "description": "",
+                "name": "event",
+                "description": "The analytics event.",
                 "value": "ShopifyAnalytics",
                 "filePath": "/analytics.ts"
               },
               {
                 "name": "shopDomain",
-                "description": "",
+                "description": "The Online Store domain to sent Shopify analytics under the same\ntop level domain.",
                 "value": "string",
                 "filePath": "/analytics.ts"
               }
@@ -4770,7 +5033,7 @@
               "name": "Promise<void>",
               "value": "Promise<void>"
             },
-            "value": "export function sendShopifyAnalytics(\n  {eventName, payload}: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  if (!payload.hasUserConsent) return Promise.resolve();\n\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
+            "value": "export function sendShopifyAnalytics(\n  event: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  const {eventName, payload} = event;\n  if (!payload.hasUserConsent) return Promise.resolve();\n\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
           },
           "ShopifyAnalytics": {
             "filePath": "/analytics-types.ts",
@@ -5260,15 +5523,9 @@
             "name": "UseShopifyCookiesGeneratedType",
             "params": [
               {
-                "name": "hasUserConsent",
-                "description": "Defaults to false.\nIf set to `false`, Shopify cookies will be removed.\nIf set to `true`, Shopify unique user token cookie expiry to 1 year",
-                "value": "",
-                "filePath": "/useShopifyCookies.tsx"
-              },
-              {
-                "name": "domain",
-                "description": "The domain scope of the cookie. Defaults to empty string.",
-                "value": "",
+                "name": "options",
+                "description": "",
+                "value": "UseShopifyCookiesOptions",
                 "filePath": "/useShopifyCookies.tsx"
               }
             ],
@@ -5278,7 +5535,32 @@
               "name": "void",
               "value": "void"
             },
-            "value": "export function useShopifyCookies(hasUserConsent = false, domain = ''): void {\n  useEffect(() => {\n    const cookies = getShopifyCookies(document.cookie);\n\n    /**\n     * Set user and session cookies and refresh the expiry time\n     */\n    if (hasUserConsent) {\n      setCookie(\n        SHOPIFY_Y,\n        cookies[SHOPIFY_Y] || buildUUID(),\n        longTermLength,\n        domain\n      );\n      setCookie(\n        SHOPIFY_S,\n        cookies[SHOPIFY_S] || buildUUID(),\n        shortTermLength,\n        domain\n      );\n    } else {\n      setCookie(SHOPIFY_Y, '', 0, domain);\n      setCookie(SHOPIFY_S, '', 0, domain);\n    }\n  });\n}"
+            "value": "export function useShopifyCookies(options?: UseShopifyCookiesOptions): void {\n  const {hasUserConsent = false, domain = ''} = options || {};\n  useEffect(() => {\n    const cookies = getShopifyCookies(document.cookie);\n\n    /**\n     * Set user and session cookies and refresh the expiry time\n     */\n    if (hasUserConsent) {\n      setCookie(\n        SHOPIFY_Y,\n        cookies[SHOPIFY_Y] || buildUUID(),\n        longTermLength,\n        domain\n      );\n      setCookie(\n        SHOPIFY_S,\n        cookies[SHOPIFY_S] || buildUUID(),\n        shortTermLength,\n        domain\n      );\n    } else {\n      setCookie(SHOPIFY_Y, '', 0, domain);\n      setCookie(SHOPIFY_S, '', 0, domain);\n    }\n  });\n}"
+          },
+          "UseShopifyCookiesOptions": {
+            "filePath": "/useShopifyCookies.tsx",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "UseShopifyCookiesOptions",
+            "value": "{\n  /**\n   * If set to `false`, Shopify cookies will be removed.\n   * If set to `true`, Shopify unique user token cookie will have cookie expiry of 1 year.\n   * Defaults to false.\n   **/\n  hasUserConsent?: boolean;\n  /**\n   * The domain scope of the cookie. Defaults to empty string.\n   **/\n  domain?: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/useShopifyCookies.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "hasUserConsent",
+                "value": "boolean",
+                "description": "If set to `false`, Shopify cookies will be removed.\nIf set to `true`, Shopify unique user token cookie will have cookie expiry of 1 year.\nDefaults to false.",
+                "isOptional": true
+              },
+              {
+                "filePath": "/useShopifyCookies.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "domain",
+                "value": "string",
+                "description": "The domain scope of the cookie. Defaults to empty string.",
+                "isOptional": true
+              }
+            ]
           }
         }
       }
