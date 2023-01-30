@@ -1,16 +1,22 @@
 import {afterEach} from 'vitest';
 import {renderHook} from '@testing-library/react';
 import {getShopifyCookies} from './cookies-utils.js';
-import {useShopifyCookies} from './useShopifyCookies.js';
+import {
+  POLICY_NO_COOKIE,
+  POLICY_SESSIONIZED,
+  POLICY_SHORT_TERM,
+  useShopifyCookies,
+} from './useShopifyCookies.js';
 import {parse} from 'worktop/cookie';
 
 type MockCookieJar = Record<
   string,
   {
-    maxage: number | undefined;
-    samesite: string | undefined;
-    path: string | undefined;
-    domain: string | undefined;
+    maxage?: number;
+    expires?: Date;
+    samesite?: string;
+    path?: string;
+    domain?: string;
     value: string;
   }
 >;
@@ -28,20 +34,32 @@ function mockCookie(): MockCookieJar {
 
   vi.spyOn(document, 'cookie', 'set').mockImplementation(
     (cookieString: string) => {
-      const {domain, maxage, path, samesite, ...cookieKeyValuePair} =
+      const {domain, maxage, path, samesite, expires, ...cookieKeyValuePair} =
         parse(cookieString);
-      const cookieName = Object.keys(cookieKeyValuePair)[0];
+      const cookieName = Object.keys(cookieKeyValuePair)[0]; // WTF?
 
-      if (maxage) {
+      if (maxage || (expires && expires.getUTCFullYear() > 2000)) {
         cookieJar[cookieName] = {
           value: cookieKeyValuePair[cookieName],
           maxage,
           path,
+          expires,
           samesite,
           domain,
         };
       } else {
-        delete cookieJar[cookieName];
+        if (!expires) {
+          // session cookie === no maxage && no expires
+          cookieJar[cookieName] = {
+            value: cookieKeyValuePair[cookieName],
+            path,
+            samesite,
+            domain,
+          };
+        } else {
+          // delete cookie
+          delete cookieJar[cookieName];
+        }
       }
     }
   );
@@ -128,7 +146,7 @@ describe(`useShopifyCookies`, () => {
     expect(Object.keys(cookieJar).length).toBe(2);
   });
 
-  it('sets _shopify_y cookie expiry to 1 year when hasUserConsent is set to true', () => {
+  it('sets _shopify_y cookie expiry to 1 year when hasUserConsent is set to true and no policies provided', () => {
     const cookieJar: MockCookieJar = mockCookie();
 
     renderHook(() => useShopifyCookies(true));
@@ -147,6 +165,55 @@ describe(`useShopifyCookies`, () => {
     );
     expect(cookieJar['_shopify_s'].maxage).toBe(1800);
     expect(cookieJar['_shopify_y'].maxage).toBe(31104000);
+  });
+
+  describe('cookie policies', () => {
+    it(`deletes shopify_* cookies with ${POLICY_NO_COOKIE}`, () => {
+      mockCookie();
+      renderHook(() => useShopifyCookies(false, '', POLICY_NO_COOKIE));
+
+      const cookies = getShopifyCookies(document.cookie);
+      expect(cookies).toEqual({
+        _shopify_s: '',
+        _shopify_y: '',
+      });
+    });
+    it(`sessionizes shopify_* cookies with ${POLICY_SESSIONIZED}`, () => {
+      const cookieJar: MockCookieJar = mockCookie();
+      renderHook(() => useShopifyCookies(false, '', POLICY_SESSIONIZED));
+
+      const cookies = getShopifyCookies(document.cookie);
+      expect(cookies).toEqual({
+        _shopify_s: expect.any(String),
+        _shopify_y: expect.any(String),
+      });
+      expect(cookieJar['_shopify_s'].expires).toBeUndefined();
+      expect(cookieJar['_shopify_y'].maxage).toBeUndefined();
+    });
+    it(`sets short-term shopify_* cookies with ${POLICY_SHORT_TERM}`, () => {
+      const cookieJar: MockCookieJar = mockCookie();
+      renderHook(() => useShopifyCookies(false, '', POLICY_SHORT_TERM));
+
+      const cookies = getShopifyCookies(document.cookie);
+      expect(cookies).toEqual({
+        _shopify_s: expect.any(String),
+        _shopify_y: expect.any(String),
+      });
+      expect(cookieJar['_shopify_s'].expires).toBeUndefined();
+      expect(cookieJar['_shopify_y'].maxage).toBe(1800);
+    });
+    it(`sets shopify_* cookies appropriately with consent given and ${POLICY_SHORT_TERM}`, () => {
+      const cookieJar: MockCookieJar = mockCookie();
+      renderHook(() => useShopifyCookies(true, '', POLICY_NO_COOKIE));
+
+      const cookies = getShopifyCookies(document.cookie);
+      expect(cookies).toEqual({
+        _shopify_s: expect.any(String),
+        _shopify_y: expect.any(String),
+      });
+      expect(cookieJar['_shopify_s'].maxage).toBe(1800);
+      expect(cookieJar['_shopify_y'].maxage).toBe(31104000);
+    });
   });
 
   it('sets domain when provided', () => {
