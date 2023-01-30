@@ -10,17 +10,17 @@ const data: ReferenceEntityTemplateSchema = {
   definitions: [
     {
       title: 'AnalyticsEventName',
-      type: 'AnalyticsEventNameInterface',
+      type: 'AnalyticsEventName',
       description: 'Analytics event names accepted by Shopify analytics.',
     },
     {
       title: 'AnalyticsPageType',
-      type: 'AnalyticsPageTypeInterface',
+      type: 'AnalyticsPageType',
       description: 'Analytics page type values accepted by Shopify analytics.',
     },
     {
       title: 'ShopifySalesChannel',
-      type: 'ShopifySalesChannelInterface',
+      type: 'ShopifySalesChannel',
       description:
         'Analytics sales channel values accepted by Shopify analytics.',
     },

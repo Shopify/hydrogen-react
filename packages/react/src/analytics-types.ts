@@ -95,7 +95,7 @@ export type ShopifyPageViewPayload = {
 };
 
 export type ShopifyPageView = {
-  eventName: 'PAGE_VIEW';
+  eventName: string;
   payload: ShopifyPageViewPayload;
 };
 
@@ -144,7 +144,7 @@ export type ShopifyAddToCartPayload = {
 };
 
 export type ShopifyAddToCart = {
-  eventName: 'ADD_TO_CART';
+  eventName: string;
   payload: ShopifyAddToCartPayload;
 };
 
