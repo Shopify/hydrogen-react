@@ -19,8 +19,8 @@ const data: ReferenceEntityTemplateSchema = {
       description: 'Analytics page type values accepted by Shopify analytics.',
     },
     {
-      title: 'ShopifyAppSource',
-      type: 'ShopifyAppSourceInterface',
+      title: 'ShopifySalesChannel',
+      type: 'ShopifySalesChannelInterface',
       description:
         'Analytics sales channel values accepted by Shopify analytics.',
     },

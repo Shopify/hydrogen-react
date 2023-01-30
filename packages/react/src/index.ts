@@ -2,7 +2,7 @@ export {AddToCartButton} from './AddToCartButton.js';
 export {
   AnalyticsEventName,
   AnalyticsPageType,
-  ShopifyAppSource,
+  ShopifySalesChannel,
 } from './analytics-constants.js';
 export type {
   ClientBrowserParameters,

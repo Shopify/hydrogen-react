@@ -28,7 +28,7 @@ export const AnalyticsPageType: AnalyticsPageTypeInterface = {
   search: 'search',
 } as const;
 
-export const ShopifyAppSource: ShopifyAppSourceInterface = {
+export const ShopifySalesChannel: ShopifySalesChannelInterface = {
   hydrogen: 'hydrogen',
   headless: 'headless',
 } as const;
@@ -74,7 +74,7 @@ interface AnalyticsPageTypeInterface {
   search?: 'search';
 }
 
-interface ShopifyAppSourceInterface {
+interface ShopifySalesChannelInterface {
   /** Shopify Hydrogen sales channel */
   hydrogen?: 'hydrogen';
   /** Shopify Headless sales channel */

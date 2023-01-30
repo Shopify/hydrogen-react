@@ -1,5 +1,5 @@
 import {expectType} from 'ts-expect';
-import {ShopifyAppSource} from './analytics-constants.js';
+import {ShopifySalesChannel} from './analytics-constants.js';
 import {pageView} from './analytics-schema-trekkie-storefront-page-view.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
 import type {ShopifyMonorailPayload} from './analytics-types.js';
@@ -33,7 +33,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       hasUserConsent: false,
       shopId: 'gid://shopify/Shop/2',
       url: 'https://example.com',
-      shopifyAppSource: ShopifyAppSource.hydrogen,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
       storefrontId: '1',
       acceptedLanguage: 'fr',
       customerId: '1',
