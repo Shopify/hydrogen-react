@@ -17,9 +17,19 @@ module.exports = {
   overrides: [
     {
       // for .example.tsx files, we want to show the import for our own package, so we turn off the eslint rules for extraneous imports
-      files: ['src/*.example.?(j|t)sx'],
+      files: ['src/*.example.?(ts|js|tsx|jsx)'],
       rules: {
         'node/no-extraneous-import': 'off',
+        'node/no-extraneous-require': 'off',
+      },
+    },
+    {
+      // only for the index.ts file, apply the simple-import-sort rules so that exports are sorted alphabetically.
+      // it doesn't matter for any other file, but it's good for index.ts because it helps to easily compare what's in the filesystem vs what we export
+      files: ['src/index.ts'],
+      plugins: ['simple-import-sort'],
+      rules: {
+        'simple-import-sort/exports': 'error',
       },
     },
   ],
