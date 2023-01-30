@@ -14,14 +14,9 @@ const data: ReferenceEntityTemplateSchema = {
     codeblock: {
       tabs: [
         {
-          title: 'JavaScript',
+          title: 'Client Example in NextJS',
           code: './storefront-client.example.js',
-          language: 'jsx',
-        },
-        {
-          title: 'TypeScript',
-          code: './storefront-client.example.ts',
-          language: 'tsx',
+          language: 'js',
         },
       ],
       title: 'Example code',
