@@ -33,12 +33,13 @@ export const ALL_POLICIES: Set<NoConsentCookiePolicy> = new Set([
  * token cookie for 1 year; otherwise, do what policyForNoConsent specifies
  * @param domain - The domain scope of the cookie
  * @param policyForNoConsent - One of POLICY_NO_COOKIE, POLICY_SESSIONIZED, POLICY_SHORT_TERM:
- * how to set cookies if no consent given
+ * what to do if no consent given
  * @example
  * ```tsx
- * import {useShopifyCookies} from '@shopify/storefront-kit-react';
+ * import {useShopifyCookies, POLICY_NO_COOKIE} from '@shopify/hydrogen-react';
  *
- * useShopifyCookies(true, 'my-shop.com')
+ * useShopifyCookies(true, 'my-shop.com', )
+ * useShopifyCookies(false, 'my-shop.com', POLICY_NO_COOKIE)
  * ```
  */
 
