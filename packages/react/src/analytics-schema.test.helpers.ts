@@ -1,5 +1,8 @@
 import {faker} from '@faker-js/faker';
-import type {ShopifyAnalyticsPayload} from './analytics-types.js';
+import type {
+  ShopifyAnalyticsPayload,
+  ShopifyAnalyticsProduct,
+} from './analytics-types.js';
 
 export const BASE_PAYLOAD: ShopifyAnalyticsPayload = {
   hasUserConsent: true,
@@ -17,7 +20,7 @@ export const BASE_PAYLOAD: ShopifyAnalyticsPayload = {
   navigationApi: faker.datatype.string(),
 };
 
-export const BASE_PRODUCT_PAYLOAD = {
+export const BASE_PRODUCT_PAYLOAD: ShopifyAnalyticsProduct = {
   productGid: 'gid://shopify/Product/1',
   name: faker.datatype.string(),
   brand: faker.datatype.string(),
