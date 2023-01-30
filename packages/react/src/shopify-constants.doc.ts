@@ -1,11 +1,11 @@
 import {ReferenceEntityTemplateSchema} from '@shopify/generate-docs';
 
 const data: ReferenceEntityTemplateSchema = {
-  name: 'Analytics constants',
+  name: 'Shopify constants',
   category: 'utilities',
   isVisualComponent: false,
   related: [],
-  description: 'A list of analytics constants used by Shopify analytics.',
+  description: 'A list of constants used by Shopify.',
   type: 'utility',
   definitions: [
     {

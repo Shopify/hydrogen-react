@@ -5013,243 +5013,6 @@
     ]
   },
   {
-    "name": "Analytics constants",
-    "category": "utilities",
-    "isVisualComponent": false,
-    "related": [],
-    "description": "A list of analytics constants used by Shopify analytics.",
-    "type": "utility",
-    "definitions": [
-      {
-        "title": "AnalyticsEventName",
-        "description": "Analytics event names accepted by Shopify analytics.",
-        "type": "AnalyticsEventName",
-        "typeDefinitions": {
-          "AnalyticsEventName": {
-            "filePath": "/analytics-constants.ts",
-            "name": "AnalyticsEventName",
-            "description": "These duplicated interface declaration is so that we can generate proper documentation\nfor these public facing constants",
-            "members": [
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "PAGE_VIEW",
-                "value": "\"PAGE_VIEW\"",
-                "description": "Page view"
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "ADD_TO_CART",
-                "value": "\"ADD_TO_CART\"",
-                "description": "Add to cart"
-              }
-            ],
-            "value": "interface AnalyticsEventName {\n  /** Page view */\n  PAGE_VIEW: 'PAGE_VIEW';\n  /** Add to cart */\n  ADD_TO_CART: 'ADD_TO_CART';\n}"
-          }
-        }
-      },
-      {
-        "title": "AnalyticsPageType",
-        "description": "Analytics page type values accepted by Shopify analytics.",
-        "type": "AnalyticsPageType",
-        "typeDefinitions": {
-          "AnalyticsPageType": {
-            "filePath": "/analytics-constants.ts",
-            "name": "AnalyticsPageType",
-            "description": "",
-            "members": [
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "article",
-                "value": "\"article\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "blog",
-                "value": "\"blog\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "captcha",
-                "value": "\"captcha\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "cart",
-                "value": "\"cart\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "collection",
-                "value": "\"collection\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersAccount",
-                "value": "\"customers/account\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersActivateAccount",
-                "value": "\"customers/activate_account\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersAddresses",
-                "value": "\"customers/addresses\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersLogin",
-                "value": "\"customers/login\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersOrder",
-                "value": "\"customers/order\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersRegister",
-                "value": "\"customers/register\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "customersResetPassword",
-                "value": "\"customers/reset_password\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "giftCard",
-                "value": "\"gift_card\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "home",
-                "value": "\"index\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "listCollections",
-                "value": "\"list-collections\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "forbidden",
-                "value": "\"403\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "notFound",
-                "value": "\"404\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "page",
-                "value": "\"page\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "password",
-                "value": "\"password\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "product",
-                "value": "\"product\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "policy",
-                "value": "\"policy\"",
-                "description": ""
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "search",
-                "value": "\"search\"",
-                "description": ""
-              }
-            ],
-            "value": "interface AnalyticsPageType {\n  article: 'article';\n  blog: 'blog';\n  captcha: 'captcha';\n  cart: 'cart';\n  collection: 'collection';\n  customersAccount: 'customers/account';\n  customersActivateAccount: 'customers/activate_account';\n  customersAddresses: 'customers/addresses';\n  customersLogin: 'customers/login';\n  customersOrder: 'customers/order';\n  customersRegister: 'customers/register';\n  customersResetPassword: 'customers/reset_password';\n  giftCard: 'gift_card';\n  home: 'index';\n  listCollections: 'list-collections';\n  forbidden: '403';\n  notFound: '404';\n  page: 'page';\n  password: 'password';\n  product: 'product';\n  policy: 'policy';\n  search: 'search';\n}"
-          }
-        }
-      },
-      {
-        "title": "ShopifySalesChannel",
-        "description": "Analytics sales channel values accepted by Shopify analytics.",
-        "type": "ShopifySalesChannel",
-        "typeDefinitions": {
-          "ShopifySalesChannel": {
-            "filePath": "/analytics-constants.ts",
-            "name": "ShopifySalesChannel",
-            "description": "",
-            "members": [
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "hydrogen",
-                "value": "\"hydrogen\"",
-                "description": "Shopify Hydrogen sales channel"
-              },
-              {
-                "filePath": "/analytics-constants.ts",
-                "syntaxKind": "PropertySignature",
-                "name": "headless",
-                "value": "\"headless\"",
-                "description": "Shopify Headless sales channel"
-              }
-            ],
-            "value": "interface ShopifySalesChannel {\n  /** Shopify Hydrogen sales channel */\n  hydrogen: 'hydrogen';\n  /** Shopify Headless sales channel */\n  headless: 'headless';\n}"
-          }
-        }
-      }
-    ]
-  },
-  {
     "name": "sendShopifyAnalytics",
     "category": "utilities",
     "isVisualComponent": false,
@@ -5316,7 +5079,7 @@
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyPageView",
-            "value": "{\n  eventName: string;\n  payload: ShopifyPageViewPayload;\n}",
+            "value": "{\n  /** Use `AnalyticsEventName.PAGE_VIEW` constant */\n  eventName: string;\n  payload: ShopifyPageViewPayload;\n}",
             "description": "",
             "members": [
               {
@@ -5324,7 +5087,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "eventName",
                 "value": "string",
-                "description": ""
+                "description": "Use `AnalyticsEventName.PAGE_VIEW` constant"
               },
               {
                 "filePath": "/analytics-types.ts",
@@ -5626,7 +5389,7 @@
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyAddToCart",
-            "value": "{\n  eventName: string;\n  payload: ShopifyAddToCartPayload;\n}",
+            "value": "{\n  /** Use `AnalyticsEventName.ADD_TO_CART` constant */\n  eventName: string;\n  payload: ShopifyAddToCartPayload;\n}",
             "description": "",
             "members": [
               {
@@ -5634,7 +5397,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "eventName",
                 "value": "string",
-                "description": ""
+                "description": "Use `AnalyticsEventName.ADD_TO_CART` constant"
               },
               {
                 "filePath": "/analytics-types.ts",
@@ -6134,6 +5897,243 @@
       }
     },
     "definitions": []
+  },
+  {
+    "name": "Shopify constants",
+    "category": "utilities",
+    "isVisualComponent": false,
+    "related": [],
+    "description": "A list of constants used by Shopify.",
+    "type": "utility",
+    "definitions": [
+      {
+        "title": "AnalyticsEventName",
+        "description": "Analytics event names accepted by Shopify analytics.",
+        "type": "AnalyticsEventName",
+        "typeDefinitions": {
+          "AnalyticsEventName": {
+            "filePath": "/analytics-constants.ts",
+            "name": "AnalyticsEventName",
+            "description": "These duplicated interface declaration is so that we can generate proper documentation\nfor these public facing constants",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "PAGE_VIEW",
+                "value": "\"PAGE_VIEW\"",
+                "description": "Page view"
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "ADD_TO_CART",
+                "value": "\"ADD_TO_CART\"",
+                "description": "Add to cart"
+              }
+            ],
+            "value": "interface AnalyticsEventName {\n  /** Page view */\n  PAGE_VIEW: 'PAGE_VIEW';\n  /** Add to cart */\n  ADD_TO_CART: 'ADD_TO_CART';\n}"
+          }
+        }
+      },
+      {
+        "title": "AnalyticsPageType",
+        "description": "Analytics page type values accepted by Shopify analytics.",
+        "type": "AnalyticsPageType",
+        "typeDefinitions": {
+          "AnalyticsPageType": {
+            "filePath": "/analytics-constants.ts",
+            "name": "AnalyticsPageType",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "article",
+                "value": "\"article\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "blog",
+                "value": "\"blog\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "captcha",
+                "value": "\"captcha\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "cart",
+                "value": "\"cart\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "collection",
+                "value": "\"collection\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersAccount",
+                "value": "\"customers/account\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersActivateAccount",
+                "value": "\"customers/activate_account\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersAddresses",
+                "value": "\"customers/addresses\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersLogin",
+                "value": "\"customers/login\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersOrder",
+                "value": "\"customers/order\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersRegister",
+                "value": "\"customers/register\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "customersResetPassword",
+                "value": "\"customers/reset_password\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "giftCard",
+                "value": "\"gift_card\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "home",
+                "value": "\"index\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "listCollections",
+                "value": "\"list-collections\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "forbidden",
+                "value": "\"403\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "notFound",
+                "value": "\"404\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "page",
+                "value": "\"page\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "password",
+                "value": "\"password\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "product",
+                "value": "\"product\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "policy",
+                "value": "\"policy\"",
+                "description": ""
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "search",
+                "value": "\"search\"",
+                "description": ""
+              }
+            ],
+            "value": "interface AnalyticsPageType {\n  article: 'article';\n  blog: 'blog';\n  captcha: 'captcha';\n  cart: 'cart';\n  collection: 'collection';\n  customersAccount: 'customers/account';\n  customersActivateAccount: 'customers/activate_account';\n  customersAddresses: 'customers/addresses';\n  customersLogin: 'customers/login';\n  customersOrder: 'customers/order';\n  customersRegister: 'customers/register';\n  customersResetPassword: 'customers/reset_password';\n  giftCard: 'gift_card';\n  home: 'index';\n  listCollections: 'list-collections';\n  forbidden: '403';\n  notFound: '404';\n  page: 'page';\n  password: 'password';\n  product: 'product';\n  policy: 'policy';\n  search: 'search';\n}"
+          }
+        }
+      },
+      {
+        "title": "ShopifySalesChannel",
+        "description": "Analytics sales channel values accepted by Shopify analytics.",
+        "type": "ShopifySalesChannel",
+        "typeDefinitions": {
+          "ShopifySalesChannel": {
+            "filePath": "/analytics-constants.ts",
+            "name": "ShopifySalesChannel",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "hydrogen",
+                "value": "\"hydrogen\"",
+                "description": "Shopify Hydrogen sales channel"
+              },
+              {
+                "filePath": "/analytics-constants.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "headless",
+                "value": "\"headless\"",
+                "description": "Shopify Headless sales channel"
+              }
+            ],
+            "value": "interface ShopifySalesChannel {\n  /** Shopify Hydrogen sales channel */\n  hydrogen: 'hydrogen';\n  /** Shopify Headless sales channel */\n  headless: 'headless';\n}"
+          }
+        }
+      }
+    ]
   },
   {
     "name": "storefront.schema.json",

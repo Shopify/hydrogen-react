@@ -95,6 +95,7 @@ export type ShopifyPageViewPayload = {
 };
 
 export type ShopifyPageView = {
+  /** Use `AnalyticsEventName.PAGE_VIEW` constant */
   eventName: string;
   payload: ShopifyPageViewPayload;
 };
@@ -144,6 +145,7 @@ export type ShopifyAddToCartPayload = {
 };
 
 export type ShopifyAddToCart = {
+  /** Use `AnalyticsEventName.ADD_TO_CART` constant */
   eventName: string;
   payload: ShopifyAddToCartPayload;
 };
