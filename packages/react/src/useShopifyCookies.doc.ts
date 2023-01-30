@@ -4,7 +4,26 @@ const data: ReferenceEntityTemplateSchema = {
   name: 'useShopifyCookies',
   category: 'utilities',
   isVisualComponent: false,
-  related: [],
+  related: [
+    {
+      subtitle: 'Utility',
+      name: 'sendShopifyAnalytics',
+      url: '/api/react-storefront-kit/utilities/sendShopifyAnalytics',
+      type: 'gear',
+    },
+    {
+      subtitle: 'Utility',
+      name: 'getClientBrowserParameters',
+      url: '/api/react-storefront-kit/utilities/getclientbrowserparameters',
+      type: 'gear',
+    },
+    {
+      subtitle: 'Utility',
+      name: 'getShopifyCookies',
+      url: '/api/react-storefront-kit/utilities/getShopifyCookies',
+      type: 'gear',
+    },
+  ],
   description:
     'Sets Shopify user and session cookies and refreshes the expiry time.',
   type: 'utility',

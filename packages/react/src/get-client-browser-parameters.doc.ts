@@ -4,7 +4,20 @@ const data: ReferenceEntityTemplateSchema = {
   name: 'getClientBrowserParameters',
   category: 'utilities',
   isVisualComponent: false,
-  related: [],
+  related: [
+    {
+      subtitle: 'Utility',
+      name: 'sendShopifyAnalytics',
+      url: '/api/react-storefront-kit/utilities/sendShopifyAnalytics',
+      type: 'gear',
+    },
+    {
+      subtitle: 'Utility',
+      name: 'useShopifyCookies',
+      url: '/api/react-storefront-kit/utilities/useShopifyCookies',
+      type: 'gear',
+    },
+  ],
   description: 'Gathers client browser values commonly used for analytics',
   type: 'utility',
   defaultExample: {

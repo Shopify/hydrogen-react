@@ -5016,7 +5016,26 @@
     "name": "sendShopifyAnalytics",
     "category": "utilities",
     "isVisualComponent": false,
-    "related": [],
+    "related": [
+      {
+        "subtitle": "How to set up",
+        "name": "Shopify analytics",
+        "url": "/custom-storefronts/hydrogen/analytics/shopify-analytics",
+        "type": "tutorial"
+      },
+      {
+        "subtitle": "Utility",
+        "name": "useShopifyCookies",
+        "url": "/api/react-storefront-kit/utilities/useShopifyCookies",
+        "type": "gear"
+      },
+      {
+        "subtitle": "Utility",
+        "name": "getClientBrowserParameters",
+        "url": "/api/react-storefront-kit/utilities/getclientbrowserparameters",
+        "type": "gear"
+      }
+    ],
     "description": "Sends analytics to Shopify.",
     "type": "utility",
     "defaultExample": {
@@ -5040,7 +5059,7 @@
     "definitions": [
       {
         "title": "sendShopifyAnalytics",
-        "description": "If `payload.hasUserConsent` is false, no analytics event will happen.",
+        "description": "If `event.payload.hasUserConsent` is false, no analytics event will happen.",
         "type": "SendShopifyAnalyticsGeneratedType",
         "typeDefinitions": {
           "SendShopifyAnalyticsGeneratedType": {
@@ -5049,13 +5068,13 @@
             "params": [
               {
                 "name": "event",
-                "description": "",
+                "description": "- The analytics event.",
                 "value": "ShopifyAnalytics",
                 "filePath": "/analytics.ts"
               },
               {
                 "name": "shopDomain",
-                "description": "",
+                "description": "- The Online Store domain to sent Shopify analytics under the same\ntop level domain.",
                 "value": "string",
                 "filePath": "/analytics.ts"
               }
@@ -5066,7 +5085,7 @@
               "name": "Promise<void>",
               "value": "Promise<void>"
             },
-            "value": "export function sendShopifyAnalytics(\n  /** The analytics event. */\n  event: ShopifyAnalytics,\n  /** The Online Store domain to sent Shopify analytics under the same top level domain. */\n  shopDomain?: string\n): Promise<void> {\n  const {eventName, payload} = event;\n  if (!payload.hasUserConsent) return Promise.resolve();\n\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
+            "value": "export function sendShopifyAnalytics(\n  event: ShopifyAnalytics,\n  shopDomain?: string\n): Promise<void> {\n  const {eventName, payload} = event;\n  if (!payload.hasUserConsent) return Promise.resolve();\n\n  let events: ShopifyMonorailEvent[] = [];\n\n  if (eventName === AnalyticsEventName.PAGE_VIEW) {\n    const pageViewPayload = payload as ShopifyPageViewPayload;\n    events = events.concat(\n      trekkiePageView(pageViewPayload),\n      customerPageView(pageViewPayload)\n    );\n  } else if (eventName === AnalyticsEventName.ADD_TO_CART) {\n    events = events.concat(\n      customerAddToCart(payload as ShopifyAddToCartPayload)\n    );\n  }\n\n  if (events.length) {\n    return sendToShopify(events, shopDomain);\n  } else {\n    return Promise.resolve();\n  }\n}"
           },
           "ShopifyAnalytics": {
             "filePath": "/analytics-types.ts",
@@ -5656,7 +5675,20 @@
     "name": "getClientBrowserParameters",
     "category": "utilities",
     "isVisualComponent": false,
-    "related": [],
+    "related": [
+      {
+        "subtitle": "Utility",
+        "name": "sendShopifyAnalytics",
+        "url": "/api/react-storefront-kit/utilities/sendShopifyAnalytics",
+        "type": "gear"
+      },
+      {
+        "subtitle": "Utility",
+        "name": "useShopifyCookies",
+        "url": "/api/react-storefront-kit/utilities/useShopifyCookies",
+        "type": "gear"
+      }
+    ],
     "description": "Gathers client browser values commonly used for analytics",
     "type": "utility",
     "defaultExample": {
@@ -5782,7 +5814,14 @@
     "name": "getShopifyCookies",
     "category": "utilities",
     "isVisualComponent": false,
-    "related": [],
+    "related": [
+      {
+        "subtitle": "Utility",
+        "name": "useShopifyCookies",
+        "url": "/api/react-storefront-kit/utilities/useShopifyCookies",
+        "type": "gear"
+      }
+    ],
     "description": "Parses cookie string and returns Shopify cookies.",
     "type": "utility",
     "defaultExample": {
@@ -6256,7 +6295,26 @@
     "name": "useShopifyCookies",
     "category": "utilities",
     "isVisualComponent": false,
-    "related": [],
+    "related": [
+      {
+        "subtitle": "Utility",
+        "name": "sendShopifyAnalytics",
+        "url": "/api/react-storefront-kit/utilities/sendShopifyAnalytics",
+        "type": "gear"
+      },
+      {
+        "subtitle": "Utility",
+        "name": "getClientBrowserParameters",
+        "url": "/api/react-storefront-kit/utilities/getclientbrowserparameters",
+        "type": "gear"
+      },
+      {
+        "subtitle": "Utility",
+        "name": "getShopifyCookies",
+        "url": "/api/react-storefront-kit/utilities/getShopifyCookies",
+        "type": "gear"
+      }
+    ],
     "description": "Sets Shopify user and session cookies and refreshes the expiry time.",
     "type": "utility",
     "defaultExample": {

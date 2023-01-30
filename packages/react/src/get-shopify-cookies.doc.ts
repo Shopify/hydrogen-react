@@ -4,7 +4,14 @@ const data: ReferenceEntityTemplateSchema = {
   name: 'getShopifyCookies',
   category: 'utilities',
   isVisualComponent: false,
-  related: [],
+  related: [
+    {
+      subtitle: 'Utility',
+      name: 'useShopifyCookies',
+      url: '/api/react-storefront-kit/utilities/useShopifyCookies',
+      type: 'gear',
+    },
+  ],
   description: 'Parses cookie string and returns Shopify cookies.',
   type: 'utility',
   defaultExample: {

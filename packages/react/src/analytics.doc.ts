@@ -4,7 +4,26 @@ const data: ReferenceEntityTemplateSchema = {
   name: 'sendShopifyAnalytics',
   category: 'utilities',
   isVisualComponent: false,
-  related: [],
+  related: [
+    {
+      subtitle: 'How to set up',
+      name: 'Shopify analytics',
+      url: '/custom-storefronts/hydrogen/analytics/shopify-analytics',
+      type: 'tutorial',
+    },
+    {
+      subtitle: 'Utility',
+      name: 'useShopifyCookies',
+      url: '/api/react-storefront-kit/utilities/useShopifyCookies',
+      type: 'gear',
+    },
+    {
+      subtitle: 'Utility',
+      name: 'getClientBrowserParameters',
+      url: '/api/react-storefront-kit/utilities/getclientbrowserparameters',
+      type: 'gear',
+    },
+  ],
   description: 'Sends analytics to Shopify.',
   type: 'utility',
   defaultExample: {
@@ -30,7 +49,7 @@ const data: ReferenceEntityTemplateSchema = {
       title: 'sendShopifyAnalytics',
       type: 'SendShopifyAnalyticsGeneratedType',
       description:
-        'If `payload.hasUserConsent` is false, no analytics event will happen.',
+        'If `event.payload.hasUserConsent` is false, no analytics event will happen.',
     },
   ],
 };
