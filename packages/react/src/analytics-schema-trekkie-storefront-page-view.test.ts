@@ -2,8 +2,11 @@ import {expectType} from 'ts-expect';
 import {ShopifySalesChannel} from './analytics-constants.js';
 import {pageView} from './analytics-schema-trekkie-storefront-page-view.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
-import type {ShopifyMonorailPayload} from './analytics-types.js';
-import type {LanguageCode} from './storefront-api-types.js';
+import type {
+  ShopifyAnalyticsPayload,
+  ShopifyMonorailPayload,
+  ShopifyPageViewPayload,
+} from './analytics-types.js';
 
 describe(`analytics schema - trekkie storefront page view`, () => {
   it(`base payload with default values`, () => {
@@ -29,14 +32,14 @@ describe(`analytics schema - trekkie storefront page view`, () => {
   });
 
   it(`base payload with non-default values`, () => {
-    const pageViewPayload = {
+    const pageViewPayload: ShopifyPageViewPayload = {
       ...BASE_PAYLOAD,
       hasUserConsent: false,
       shopId: 'gid://shopify/Shop/2',
       url: 'https://example.com',
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       storefrontId: '1',
-      acceptedLanguage: 'fr' as LanguageCode,
+      acceptedLanguage: 'FR',
       customerId: '1',
       pageType: 'product',
       resourceId: 'gid://shopify/Product/1',
@@ -55,7 +58,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
         hydrogenSubchannelId: '1',
         isPersistentCookie: false,
         pageType: 'product',
-        contentLanguage: 'fr' as LanguageCode,
+        contentLanguage: 'FR',
         customerId: '1',
         resourceId: 1,
         resourceType: 'product',
@@ -92,7 +95,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
   });
 });
 
-export function getForwardedPayload(initPayload: ShopifyMonorailPayload) {
+export function getForwardedPayload(initPayload: ShopifyAnalyticsPayload) {
   return {
     shopId: 1,
     uniqToken: initPayload.uniqueToken,
