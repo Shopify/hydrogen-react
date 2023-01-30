@@ -1,9 +1,10 @@
 import {faker} from '@faker-js/faker';
+import type {CurrencyCode} from './storefront-api-types.js';
 
 export const BASE_PAYLOAD = {
   hasUserConsent: true,
   shopId: 'gid://shopify/Shop/1',
-  currency: 'USD',
+  currency: 'USD' as CurrencyCode,
   uniqueToken: faker.datatype.string(),
   visitToken: faker.datatype.string(),
   url: 'https://localhost:3000',

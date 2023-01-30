@@ -3,6 +3,7 @@ import {ShopifySalesChannel} from './analytics-constants.js';
 import {pageView} from './analytics-schema-trekkie-storefront-page-view.js';
 import {BASE_PAYLOAD} from './analytics-schema.test.helpers.js';
 import type {ShopifyMonorailPayload} from './analytics-types.js';
+import type {LanguageCode} from './storefront-api-types.js';
 
 describe(`analytics schema - trekkie storefront page view`, () => {
   it(`base payload with default values`, () => {
@@ -35,7 +36,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
       url: 'https://example.com',
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       storefrontId: '1',
-      acceptedLanguage: 'fr',
+      acceptedLanguage: 'fr' as LanguageCode,
       customerId: '1',
       pageType: 'product',
       resourceId: 'gid://shopify/Product/1',
@@ -54,7 +55,7 @@ describe(`analytics schema - trekkie storefront page view`, () => {
         hydrogenSubchannelId: '1',
         isPersistentCookie: false,
         pageType: 'product',
-        contentLanguage: 'fr',
+        contentLanguage: 'fr' as LanguageCode,
         customerId: '1',
         resourceId: 1,
         resourceType: 'product',

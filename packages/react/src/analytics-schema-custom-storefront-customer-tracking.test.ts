@@ -12,6 +12,7 @@ import type {
   ShopifyAnalyticsPayload,
   ShopifyMonorailPayload,
 } from './analytics-types.js';
+import type {LanguageCode} from './storefront-api-types.js';
 
 describe(`analytics schema - custom storefront customer tracking`, () => {
   describe('page view', () => {
@@ -37,7 +38,7 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
         url: 'https://example.com/fr',
         shopifySalesChannel: ShopifySalesChannel.hydrogen,
         storefrontId: '1',
-        acceptedLanguage: 'fr',
+        acceptedLanguage: 'fr' as LanguageCode,
         customerId: '1',
         pageType: 'index',
         resourceId: 'gid://shopify/Product/1',
