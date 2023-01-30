@@ -18,8 +18,8 @@ import {
 
 /**
  * Set user and session cookies and refresh the expiry time
- * @param {ShopifyAnalytics} event The analytics event.
- * @param {string} shopDomain The Online Store domain to sent Shopify analytics under the same
+ * @param event - The analytics event.
+ * @param shopDomain - The Online Store domain to sent Shopify analytics under the same
  *   top level domain.
  */
 export function sendShopifyAnalytics(

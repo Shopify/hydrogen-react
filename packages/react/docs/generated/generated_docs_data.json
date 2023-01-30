@@ -5286,13 +5286,13 @@
             "params": [
               {
                 "name": "event",
-                "description": "The analytics event.",
+                "description": "- The analytics event.",
                 "value": "ShopifyAnalytics",
                 "filePath": "/analytics.ts"
               },
               {
                 "name": "shopDomain",
-                "description": "The Online Store domain to sent Shopify analytics under the same\ntop level domain.",
+                "description": "- The Online Store domain to sent Shopify analytics under the same\ntop level domain.",
                 "value": "string",
                 "filePath": "/analytics.ts"
               }
