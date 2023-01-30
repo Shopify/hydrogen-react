@@ -11,8 +11,8 @@ import {
 import type {
   ShopifyAnalyticsPayload,
   ShopifyMonorailPayload,
+  ShopifyPageViewPayload,
 } from './analytics-types.js';
-import type {LanguageCode} from './storefront-api-types.js';
 
 describe(`analytics schema - custom storefront customer tracking`, () => {
   describe('page view', () => {
@@ -31,14 +31,14 @@ describe(`analytics schema - custom storefront customer tracking`, () => {
     });
 
     it(`base payload with non-default values`, () => {
-      const pageViewPayload = {
+      const pageViewPayload: ShopifyPageViewPayload = {
         ...BASE_PAYLOAD,
         shopId: 'gid://shopify/Shop/2',
         hasUserConsent: false,
         url: 'https://example.com/fr',
         shopifySalesChannel: ShopifySalesChannel.hydrogen,
         storefrontId: '1',
-        acceptedLanguage: 'fr' as LanguageCode,
+        acceptedLanguage: 'FR',
         customerId: '1',
         pageType: 'index',
         resourceId: 'gid://shopify/Product/1',
