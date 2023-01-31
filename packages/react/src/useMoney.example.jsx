@@ -2,7 +2,6 @@ import {useMoney, ShopifyProvider} from '@shopify/storefront-kit-react';
 
 export function App() {
   return (
-    // @ts-expect-error missing values for shopifyConfig
     <ShopifyProvider shopifyConfig={{locale: 'en'}}>
       <UsingMoney />
     </ShopifyProvider>
