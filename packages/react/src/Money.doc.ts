@@ -11,12 +11,8 @@ const data: ReferenceEntityTemplateSchema = {
       url: '/api/react-storefront-kit/hooks/useMoney',
     },
   ],
-  description: `
-    The \`useMoney\` hook takes a [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) and returns a
-    default-formatted string of the amount with the correct currency indicator, along with some of the parts provided by
-    [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
-    Uses \`locale\` from \`ShopifyProvider\`
-  `,
+  description:
+    "The `Money` component renders a string of the Storefront API's[MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) according to the `locale` in the [`ShopifyProvider` component](/api/hydrogen/components/global/shopifyprovider).\nThe component outputs a `<div>`. You can [customize this component](https://api/hydrogen/components#customizing-hydrogen-components) using passthrough props.",
   type: 'component',
   defaultExample: {
     description: 'I am the default example',

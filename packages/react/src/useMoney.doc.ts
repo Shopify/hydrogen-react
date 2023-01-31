@@ -11,9 +11,13 @@ const data: ReferenceEntityTemplateSchema = {
       url: '/api/react-storefront-kit/components/money',
     },
   ],
-  description:
-    "The `useMoney` component renders an useMoney for the Storefront API's\n[useMoney object](https://shopify.dev/api/storefront/reference/common-objects/useMoney) by using the `data` prop. You can [customize this component](https://shopify.dev/api/hydrogen/components#customizing-hydrogen-components) using passthrough props.\n\nAn useMoney's width and height are determined using the following priority list:\n1. The width and height values for the `loaderOptions` prop\n2. The width and height values for bare props\n3. The width and height values for the `data` prop\n\nIf only one of `width` or `height` are defined, then the other will attempt to be calculated based on the useMoney's aspect ratio,\nprovided that both `data.width` and `data.height` are available. If `data.width` and `data.height` aren't available, then the aspect ratio cannot be determined and the missing value will remain as `null`",
-  type: 'component',
+  description: `
+    The \`useMoney\` hook takes a [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) and returns a
+    default-formatted string of the amount with the correct currency indicator, along with some of the parts provided by
+    [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
+    Uses \`locale\` from \`ShopifyProvider\`
+  `,
+  type: 'hook',
   defaultExample: {
     description: 'I am the default example',
     codeblock: {
