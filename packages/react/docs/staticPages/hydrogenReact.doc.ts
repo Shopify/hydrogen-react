@@ -128,17 +128,17 @@ const data: LandingTemplateSchema = {
         tabs: [
           {
             title: 'Component',
-            code: './component.example.tsx',
+            code: './component.example.jsx',
             language: 'javascript',
           },
           {
             title: 'Hook',
-            code: './hook.example.tsx',
+            code: './hook.example.jsx',
             language: 'javascript',
           },
           {
             title: 'Utility',
-            code: './utility.example.tsx',
+            code: './utility.example.jsx',
             language: 'javascript',
           },
         ],
