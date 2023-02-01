@@ -1,13 +1,13 @@
 import {useMoney} from '@shopify/hydrogen-react';
 
 export function MyComponent() {
-  const [value, parts] = useMoney(variant.pricev2);
+  const {currencyCode, currencySymbol, amount} = useMoney(variant.pricev2);
 
   return (
     <div>
-      <strong>{parts.currencyCode}</strong>
-      <span>{parts.currencySymbol}</span>
-      <span>{parts.amount}</span>
+      <strong>{currencyCode}</strong>
+      <span>{currencySymbol}</span>
+      <span>{amount}</span>
     </div>
   );
 }
