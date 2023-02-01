@@ -32,7 +32,7 @@ const data: LandingTemplateSchema = {
         {
           title: 'Authentication',
           sectionContent: `
-          To use Hydrogen React, you need to authenticate with and make requests to the [Storefront API](/api/storefront-api). Refer to [Get started with Hydrogen React](/custom-storefronts/hydrogen-react#get-started-with-hydrogen-react) for instructions on how to get an access token and set up the Storefront API client."
+          To use Hydrogen React, you need to authenticate with and make requests to the [Storefront API](/api/storefront-api). Refer to [Get started with Hydrogen React](/custom-storefronts/hydrogen-react#get-started-with-hydrogen-react) for instructions on how to get an access token and set up the Storefront API client.
            `,
           sectionCard: [
             {
