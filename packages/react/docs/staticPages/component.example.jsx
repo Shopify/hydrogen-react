@@ -1,7 +1,5 @@
-import {Metafield} from '@shopify/hydrogen-react';
+import {ShopPayButton} from '@shopify/hydrogen-react';
 
-export function Product({product}) {
-  const metafield = product.metafield;
-
-  return <Metafield data={metafield} />;
+export function MyProduct({variantId}) {
+  return <ShopPayButton variantIds={[variantId]} />;
 }
