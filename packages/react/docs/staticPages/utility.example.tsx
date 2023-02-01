@@ -1,4 +1,4 @@
-import { flattenConnection, MediaFile } from '@shopify/hydrogen';
+import { flattenConnection, MediaFile } from '@shopify/hydrogen-react';
 
 export function Product({product}) {
  const media = flattenConnection(product.media);
@@ -9,5 +9,5 @@ export function Product({product}) {
         })}
       </>
     );
-  }
+}
   
