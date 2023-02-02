@@ -39,6 +39,11 @@ const data: ReferenceEntityTemplateSchema = {
       description:
         "If the Shopify cookies doesn't exist, this method will return empty string for each missing cookie.",
     },
+    {
+      title: 'ShopifyCookies',
+      type: 'ShopifyCookies',
+      description: 'Shopify cookies names',
+    },
   ],
 };
 

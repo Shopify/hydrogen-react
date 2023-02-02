@@ -6061,6 +6061,36 @@
             ]
           }
         }
+      },
+      {
+        "title": "ShopifyCookies",
+        "description": "Shopify cookies names",
+        "type": "ShopifyCookies",
+        "typeDefinitions": {
+          "ShopifyCookies": {
+            "filePath": "/analytics-types.ts",
+            "syntaxKind": "TypeAliasDeclaration",
+            "name": "ShopifyCookies",
+            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie. */\n  [SHOPIFY_Y]: string;\n  /** Shopify session token: Value of `_shopify_s` cookie. */\n  [SHOPIFY_S]: string;\n}",
+            "description": "",
+            "members": [
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "_shopify_y",
+                "value": "string",
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie."
+              },
+              {
+                "filePath": "/analytics-types.ts",
+                "syntaxKind": "PropertySignature",
+                "name": "_shopify_s",
+                "value": "string",
+                "description": "Shopify session token: Value of `_shopify_s` cookie."
+              }
+            ]
+          }
+        }
       }
     ]
   },
@@ -6912,12 +6942,12 @@
         "tabs": [
           {
             "title": "JavaScript",
-            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/hydrogen-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies();\n\n  return <Component {...pageProps} />;\n}\n",
+            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/hydrogen-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies({hasUserConsent: false});\n\n  return <Component {...pageProps} />;\n}\n",
             "language": "jsx"
           },
           {
             "title": "TypeScript",
-            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/hydrogen-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies();\n\n  return <Component {...pageProps} />;\n}\n",
+            "code": "import * as React from 'react';\nimport {useShopifyCookies} from '@shopify/hydrogen-react';\n\nexport default function App({Component, pageProps}) {\n  useShopifyCookies({hasUserConsent: false});\n\n  return <Component {...pageProps} />;\n}\n",
             "language": "tsx"
           }
         ],
@@ -6927,7 +6957,7 @@
     "definitions": [
       {
         "title": "useShopifyCookies",
-        "description": "",
+        "description": "Manages Shopify cookies. If `hasUserConsent` option is false, Shopify cookies will be removed.",
         "type": "UseShopifyCookiesGeneratedType",
         "typeDefinitions": {
           "UseShopifyCookiesGeneratedType": {

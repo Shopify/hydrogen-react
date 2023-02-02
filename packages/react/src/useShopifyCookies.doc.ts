@@ -49,7 +49,8 @@ const data: ReferenceEntityTemplateSchema = {
     {
       title: 'useShopifyCookies',
       type: 'UseShopifyCookiesGeneratedType',
-      description: '',
+      description:
+        'Manages Shopify cookies. If `hasUserConsent` option is false, Shopify cookies will be removed.',
     },
   ],
 };
