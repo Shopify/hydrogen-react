@@ -51,6 +51,22 @@ const data: ReferenceEntityTemplateSchema = {
       description:
         'If `event.payload.hasUserConsent` is false, no analytics event will happen.',
     },
+    {
+      title: 'AnalyticsEventName',
+      type: 'AnalyticsEventName',
+      description: 'Analytics event names accepted by Shopify analytics.',
+    },
+    {
+      title: 'AnalyticsPageType',
+      type: 'AnalyticsPageType',
+      description: 'Analytics page type values accepted by Shopify analytics.',
+    },
+    {
+      title: 'ShopifySalesChannel',
+      type: 'ShopifySalesChannel',
+      description:
+        'Analytics sales channel values accepted by Shopify analytics.',
+    },
   ],
 };
 
