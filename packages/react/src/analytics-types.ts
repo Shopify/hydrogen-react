@@ -11,25 +11,25 @@ import {
 import {SHOPIFY_Y, SHOPIFY_S} from './cart-constants.js';
 
 export type ClientBrowserParameters = {
-  /** Shopify unique user token: Value of `_shopify_y` cookie.<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Shopify unique user token: Value of `_shopify_y` cookie. <br/>Use `getClientBrowserParameters()` to collect this value. */
   uniqueToken: string;
-  /** Shopify session token: Value of `_shopify_s` cookie.<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Shopify session token: Value of `_shopify_s` cookie. <br/>Use `getClientBrowserParameters()` to collect this value. */
   visitToken: string;
-  /** Value of `window.location.href`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `window.location.href`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   url: string;
-  /** Value of `window.location.pathname`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `window.location.pathname`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   path: string;
-  /** Value of `window.location.search`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `window.location.search`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   search: string;
-  /** Value of `window.location.referrer`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `window.location.referrer`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   referrer: string;
-  /** Value of `document.title`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `document.title`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   title: string;
-  /** Value of `navigator.userAgent`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Value of `navigator.userAgent`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   userAgent: string;
-  /** Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   navigationType: string;
-  /** Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`<br/>Use `getClientBrowserParameters()` to collect this value. */
+  /** Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`. <br/>Use `getClientBrowserParameters()` to collect this value. */
   navigationApi: string;
 };
 
