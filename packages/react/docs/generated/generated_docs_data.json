@@ -5171,7 +5171,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "products",
                 "value": "ShopifyAnalyticsProduct[]",
-                "description": "Shopify products.",
+                "description": "Product list.",
                 "isOptional": true
               },
               {
@@ -5179,70 +5179,70 @@
                 "syntaxKind": "PropertySignature",
                 "name": "uniqueToken",
                 "value": "string",
-                "description": "Shopify unique user token: Value of `_shopify_y` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "visitToken",
                 "value": "string",
-                "description": "Shopify session token: Value of `_shopify_s` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify session token: Value of `_shopify_s` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "url",
                 "value": "string",
-                "description": "Value of `window.location.href`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.href`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "path",
                 "value": "string",
-                "description": "Value of `window.location.pathname`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.pathname`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "search",
                 "value": "string",
-                "description": "Value of `window.location.search`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.search`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "referrer",
                 "value": "string",
-                "description": "Value of `window.location.referrer`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.referrer`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "title",
                 "value": "string",
-                "description": "Value of `document.title`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `document.title`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "userAgent",
                 "value": "string",
-                "description": "Value of `navigator.userAgent`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `navigator.userAgent`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationType",
                 "value": "string",
-                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationApi",
                 "value": "string",
-                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               }
             ],
             "value": "export interface ShopifyPageViewPayload\n  extends ShopifyAnalyticsBase,\n    ClientBrowserParameters {\n  /** Canonical url. */\n  canonicalUrl?: string;\n  /** Shopify page type. */\n  pageType?: string;\n  /** Shopify resource id in the form of `gid://shopify/<type>/<id>`. */\n  resourceId?: string;\n  /** Shopify collection handle. */\n  collectionHandle?: string;\n  /** Search term used on a search results page. */\n  searchString?: string;\n}"
@@ -5273,7 +5273,7 @@
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyAnalyticsProduct",
-            "value": "{\n  productGid: Product['id'];\n  variantGid?: ProductVariant['id'];\n  name: Product['title'];\n  variantName?: ProductVariant['title'];\n  brand: Product['vendor'];\n  category?: Product['productType'];\n  price: ProductVariant['price']['amount'];\n  sku?: ProductVariant['sku'];\n  quantity?: number;\n}",
+            "value": "{\n  /** Product id in the form of `gid://shopify/Product/<id>`. */\n  productGid: Product['id'];\n  /** Variant id in the form of `gid://shopify/ProductVariant/<id>`. */\n  variantGid?: ProductVariant['id'];\n  /** Product name. */\n  name: Product['title'];\n  /** Variant name. */\n  variantName?: ProductVariant['title'];\n  /** Product brand or vendor. */\n  brand: Product['vendor'];\n  /** Product category or type. */\n  category?: Product['productType'];\n  /** Product price. */\n  price: ProductVariant['price']['amount'];\n  /** Product sku. */\n  sku?: ProductVariant['sku'];\n  /** Quantity of the product in this event. */\n  quantity?: number;\n}",
             "description": "",
             "members": [
               {
@@ -5281,14 +5281,14 @@
                 "syntaxKind": "PropertySignature",
                 "name": "productGid",
                 "value": "string",
-                "description": ""
+                "description": "Product id in the form of `gid://shopify/Product/<id>`."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "variantGid",
                 "value": "string",
-                "description": "",
+                "description": "Variant id in the form of `gid://shopify/ProductVariant/<id>`.",
                 "isOptional": true
               },
               {
@@ -5296,14 +5296,14 @@
                 "syntaxKind": "PropertySignature",
                 "name": "name",
                 "value": "string",
-                "description": ""
+                "description": "Product name."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "variantName",
                 "value": "string",
-                "description": "",
+                "description": "Variant name.",
                 "isOptional": true
               },
               {
@@ -5311,14 +5311,14 @@
                 "syntaxKind": "PropertySignature",
                 "name": "brand",
                 "value": "string",
-                "description": ""
+                "description": "Product brand or vendor."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "category",
                 "value": "string",
-                "description": "",
+                "description": "Product category or type.",
                 "isOptional": true
               },
               {
@@ -5326,14 +5326,14 @@
                 "syntaxKind": "PropertySignature",
                 "name": "price",
                 "value": "string",
-                "description": ""
+                "description": "Product price."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "sku",
                 "value": "string",
-                "description": "",
+                "description": "Product sku.",
                 "isOptional": true
               },
               {
@@ -5341,7 +5341,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "quantity",
                 "value": "number",
-                "description": "",
+                "description": "Quantity of the product in this event.",
                 "isOptional": true
               }
             ]
@@ -5447,7 +5447,7 @@
                 "syntaxKind": "PropertySignature",
                 "name": "products",
                 "value": "ShopifyAnalyticsProduct[]",
-                "description": "Shopify products.",
+                "description": "Product list.",
                 "isOptional": true
               },
               {
@@ -5455,70 +5455,70 @@
                 "syntaxKind": "PropertySignature",
                 "name": "uniqueToken",
                 "value": "string",
-                "description": "Shopify unique user token: Value of `_shopify_y` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "visitToken",
                 "value": "string",
-                "description": "Shopify session token: Value of `_shopify_s` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify session token: Value of `_shopify_s` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "url",
                 "value": "string",
-                "description": "Value of `window.location.href`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.href`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "path",
                 "value": "string",
-                "description": "Value of `window.location.pathname`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.pathname`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "search",
                 "value": "string",
-                "description": "Value of `window.location.search`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.search`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "referrer",
                 "value": "string",
-                "description": "Value of `window.location.referrer`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.referrer`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "title",
                 "value": "string",
-                "description": "Value of `document.title`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `document.title`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "userAgent",
                 "value": "string",
-                "description": "Value of `navigator.userAgent`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `navigator.userAgent`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationType",
                 "value": "string",
-                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationApi",
                 "value": "string",
-                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               }
             ],
             "value": "export interface ShopifyAddToCartPayload\n  extends ShopifyAnalyticsBase,\n    ClientBrowserParameters {\n  /** Shopify cart id in the form of `gid://shopify/Cart/<id>`. */\n  cartId: string;\n}"
@@ -5901,7 +5901,7 @@
             "filePath": "/analytics-types.ts",
             "syntaxKind": "TypeAliasDeclaration",
             "name": "ClientBrowserParameters",
-            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie.<br/>Use `getClientBrowserParameters()` to collect this value. */\n  uniqueToken: string;\n  /** Shopify session token: Value of `_shopify_s` cookie.<br/>Use `getClientBrowserParameters()` to collect this value. */\n  visitToken: string;\n  /** Value of `window.location.href`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  url: string;\n  /** Value of `window.location.pathname`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  path: string;\n  /** Value of `window.location.search`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  search: string;\n  /** Value of `window.location.referrer`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  referrer: string;\n  /** Value of `document.title`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  title: string;\n  /** Value of `navigator.userAgent`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  userAgent: string;\n  /** Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  navigationType: string;\n  /** Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`<br/>Use `getClientBrowserParameters()` to collect this value. */\n  navigationApi: string;\n}",
+            "value": "{\n  /** Shopify unique user token: Value of `_shopify_y` cookie. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  uniqueToken: string;\n  /** Shopify session token: Value of `_shopify_s` cookie. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  visitToken: string;\n  /** Value of `window.location.href`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  url: string;\n  /** Value of `window.location.pathname`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  path: string;\n  /** Value of `window.location.search`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  search: string;\n  /** Value of `window.location.referrer`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  referrer: string;\n  /** Value of `document.title`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  title: string;\n  /** Value of `navigator.userAgent`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  userAgent: string;\n  /** Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  navigationType: string;\n  /** Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`. <br/>Use `getClientBrowserParameters()` to collect this value. */\n  navigationApi: string;\n}",
             "description": "",
             "members": [
               {
@@ -5909,70 +5909,70 @@
                 "syntaxKind": "PropertySignature",
                 "name": "uniqueToken",
                 "value": "string",
-                "description": "Shopify unique user token: Value of `_shopify_y` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify unique user token: Value of `_shopify_y` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "visitToken",
                 "value": "string",
-                "description": "Shopify session token: Value of `_shopify_s` cookie.<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Shopify session token: Value of `_shopify_s` cookie. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "url",
                 "value": "string",
-                "description": "Value of `window.location.href`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.href`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "path",
                 "value": "string",
-                "description": "Value of `window.location.pathname`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.pathname`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "search",
                 "value": "string",
-                "description": "Value of `window.location.search`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.search`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "referrer",
                 "value": "string",
-                "description": "Value of `window.location.referrer`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `window.location.referrer`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "title",
                 "value": "string",
-                "description": "Value of `document.title`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `document.title`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "userAgent",
                 "value": "string",
-                "description": "Value of `navigator.userAgent`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Value of `navigator.userAgent`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationType",
                 "value": "string",
-                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation type: `'navigate' | 'reload' | 'back_forward' | 'prerender' | 'unknown'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               },
               {
                 "filePath": "/analytics-types.ts",
                 "syntaxKind": "PropertySignature",
                 "name": "navigationApi",
                 "value": "string",
-                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`<br/>Use `getClientBrowserParameters()` to collect this value."
+                "description": "Navigation api: `'PerformanceNavigationTiming' | 'performance.navigation'`. <br/>Use `getClientBrowserParameters()` to collect this value."
               }
             ]
           }
