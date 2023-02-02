@@ -32,7 +32,7 @@ The detailed changelog now follows:
   - `getClientBrowserParameters` returns empty string for each field key if run on server
   - Added documents on analytics components
 
-- 6184517: Added the following components and hooks, which have been a part of this package for awhile but weren't actually able to be used/imported.
+- 6184517: Added the following components and hooks, which have been a part of this package for a while but weren't actually able to be used/imported.
 
   - `<CartCost />`
   - `<CartLinePrice />`
