@@ -6,18 +6,18 @@
 
 This is admittedly a strange release.
 
-It has been decided to rename the repo yet again to `@shopify/hydrogen-react`, and with that we're abandoning the name `@shopify/storefront-kit-react`. Sorry about that, and hopefully it isn't too big of an inconvenience.
+It has been decided to rename the repo back to `@shopify/hydrogen-react`, and with that we're abandoning the name `@shopify/storefront-kit-react`. Sorry about that, and hopefully it isn't too big of an inconvenience.
 
 Additionally, the renaming offered an opportunity to introduce a couple of breaking changes that normally we wouldn't do in a `patch` release. This is the one and only time that we'll do this, so again, we apologize for the strangeness and inconvenience.
 
 Depending on your upgrade path, here's a summary of the changes you need to be aware of:
 
 - If upgrading from `@shopify/storefront-kit-react`
-  - Please note the breaking changes below [to `<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
+  - Please note the breaking changes below to [`<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
   - Please note the breaking changes below to the Analytics components
 - If upgrading from an older release of `@shopify/hydrogen-react`
 
-  - Please note the breaking changes below [to `<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
+  - Please note the breaking changes below to [`<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
   - Analytics components were [added in 2023.1.2](#202312), and then were updated in this release
   - Please note the breaking changes in the [`2023.1.1`](#202311) release below
 
