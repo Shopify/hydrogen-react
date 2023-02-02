@@ -16,7 +16,6 @@ Depending on your upgrade path, here's a summary of the changes you need to be a
   - Please note the breaking changes below to [`<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
   - Please note the breaking changes below to the Analytics components
 - If upgrading from an older release of `@shopify/hydrogen-react`
-
   - Please note the breaking changes below to [`<ShopifyProvider />`](#shopifyprovider) and [`useShop()`](#useshop)
   - Analytics components were [added in 2023.1.2](#202312), and then were updated in this release
   - Please note the breaking changes in the [`2023.1.1`](#202311) release below
