@@ -26,7 +26,7 @@ const data: ReferenceEntityTemplateSchema = {
   ],
   description:
     'Sets Shopify user and session cookies and refreshes the expiry time.',
-  type: 'gear',
+  type: 'utility',
   defaultExample: {
     description: 'I am the default example',
     codeblock: {
