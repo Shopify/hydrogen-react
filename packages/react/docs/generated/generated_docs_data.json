@@ -4969,7 +4969,7 @@
       {
         "subtitle": "Utility",
         "name": "useShopifyCookies",
-        "url": "/api/hydrogen-react/utilities/useShopifyCookies",
+        "url": "/api/hydrogen-react/hooks/useShopifyCookies",
         "type": "gear"
       },
       {
@@ -5855,7 +5855,7 @@
       {
         "subtitle": "Utility",
         "name": "useShopifyCookies",
-        "url": "/api/hydrogen-react/utilities/useShopifyCookies",
+        "url": "/api/hydrogen-react/hooks/useShopifyCookies",
         "type": "gear"
       }
     ],
@@ -5988,7 +5988,7 @@
       {
         "subtitle": "Utility",
         "name": "useShopifyCookies",
-        "url": "/api/hydrogen-react/utilities/useShopifyCookies",
+        "url": "/api/hydrogen-react/hooks/useShopifyCookies",
         "type": "gear"
       }
     ],
