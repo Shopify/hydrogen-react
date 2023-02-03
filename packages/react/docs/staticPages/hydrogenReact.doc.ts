@@ -24,7 +24,7 @@ const data: LandingTemplateSchema = {
         {
           subtitle: 'Navigate to',
           name: 'Objects and resources',
-          url: '/hydrogen-react/objects-and-functions',
+          url: 'hydrogen-react/objects-and-functions',
           type: 'resource',
         },
       ],
@@ -91,7 +91,7 @@ const data: LandingTemplateSchema = {
             {
               subtitle: 'Navigate to',
               name: 'All Hydrogen React Components',
-              url: '/hydrogen-react/components',
+              url: 'hydrogen-react/components',
               type: 'library',
             },
           ],
@@ -104,7 +104,7 @@ const data: LandingTemplateSchema = {
             {
               subtitle: 'Navigate to',
               name: 'All Hydrogen React hooks',
-              url: '/hydrogen-react/hooks',
+              url: 'hydrogen-react/hooks',
               type: 'library',
             },
           ],
@@ -117,7 +117,7 @@ const data: LandingTemplateSchema = {
             {
               subtitle: 'Navigate to',
               name: 'All Hydrogen React utility functions',
-              url: '/hydrogen-react/utilities',
+              url: 'hydrogen-react/utilities',
               type: 'library',
             },
           ],
