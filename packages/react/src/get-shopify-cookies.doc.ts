@@ -6,10 +6,10 @@ const data: ReferenceEntityTemplateSchema = {
   isVisualComponent: false,
   related: [
     {
-      subtitle: 'Utility',
+      subtitle: 'Hook',
       name: 'useShopifyCookies',
       url: '/api/hydrogen-react/hooks/useShopifyCookies',
-      type: 'gear',
+      type: 'tool',
     },
   ],
   description: 'Parses cookie string and returns Shopify cookies.',

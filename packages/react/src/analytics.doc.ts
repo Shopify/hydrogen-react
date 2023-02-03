@@ -12,10 +12,10 @@ const data: ReferenceEntityTemplateSchema = {
       type: 'tutorial',
     },
     {
-      subtitle: 'Utility',
+      subtitle: 'Hook',
       name: 'useShopifyCookies',
       url: '/api/hydrogen-react/hooks/useShopifyCookies',
-      type: 'gear',
+      type: 'tool',
     },
     {
       subtitle: 'Utility',
