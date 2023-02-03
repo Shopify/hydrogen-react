@@ -12,7 +12,7 @@ const data: LandingTemplateSchema = {
       title: 'Setup',
       sectionContent: `
 1. Run one of the example commands to install the package
-1. Import the component, hook, or utility that you want to use in your app. Refer to the list of [what's available](/api/hydrogen-react/components) in Hydrogen React.
+1. Import the component, hook, or utility that you want to use in your app. For more detailed instructions, see the Getting Started Guide.
       `,
       sectionCard: [
         {
@@ -46,8 +46,8 @@ const data: LandingTemplateSchema = {
       sectionCard: [
         {
           subtitle: 'Navigate to',
-          name: 'Storefront API Client Authentication',
-          url: '/custom-storefronts/hydrogen-react#step-2-authenticate-the-storefront-api-client',
+          name: 'Enable Storefront API Access',
+          url: '/custom-storefronts/hydrogen-react#step-2-enable-storefront-api-access',
           type: 'key',
         },
       ],
@@ -57,21 +57,21 @@ const data: LandingTemplateSchema = {
       anchorLink: 'versioning',
       title: 'Versioning',
       sectionContent:
-        "Hydrogen React is tied to specific versions of the [Storefront API](/api/storefront). For example, if you're using Storefront API version `2022-10`, then Hydrogen React versions `2022.10.x` are fully compatible.",
-      sectionNotice: [
-        {
-          title: 'Caution',
-          type: 'warning',
-          sectionContent:
-            'If the Storefront API version update includes breaking changes, then Hydrogen React includes breaking changes. Because the API version is updated every three months, breaking changes to Hydrogen React could occur every three months.',
-        },
-        {
-          title: 'Learn more',
-          type: 'note',
-          sectionContent:
-            'Learn more about [API versioning](/api/usage/versioning).',
-        },
-      ],
+        "Hydrogen React is tied to specific versions of the [Storefront API](/api/storefront). For example, if you're using Storefront API version `2023-01`, then Hydrogen React versions `2023.1.x` are fully compatible. \n\n >Caution: \n>If the Storefront API version update includes breaking changes, then Hydrogen React includes breaking changes. Because the API version is updated every three months, breaking changes to Hydrogen React could occur every three months. \n\n Learn more about [API versioning](/api/usage/versioning).",
+      // sectionNotice: [
+      //   {
+      //     title: 'Caution',
+      //     type: 'warning',
+      //     sectionContent:
+      //       'If the Storefront API version update includes breaking changes, then Hydrogen React includes breaking changes. Because the API version is updated every three months, breaking changes to Hydrogen React could occur every three months.',
+      //   },
+      //   {
+      //     title: 'Learn more',
+      //     type: 'note',
+      //     sectionContent:
+      //       'Learn more about [API versioning](/api/usage/versioning).',
+      //   },
+      // ],
     },
     {
       type: 'Generic',
@@ -79,14 +79,6 @@ const data: LandingTemplateSchema = {
       title: 'Components',
       sectionContent:
         'A component encapsulates all of the business logic and data parsing/processing for the concept it represents and outputs limited, sensible markup. Components provide defaults, but allow customizations and provide no visual styles, other than those provided natively by the browser.',
-      sectionCard: [
-        {
-          subtitle: 'Navigate to',
-          name: 'All Hydrogen React Components',
-          url: 'hydrogen-react/components',
-          type: 'library',
-        },
-      ],
       codeblock: {
         title: 'Component example',
         tabs: [
@@ -104,14 +96,6 @@ const data: LandingTemplateSchema = {
       title: 'Hooks',
       sectionContent:
         'Hooks are functions that provide reusable, business and/or stateful logic. These functions allow you to leverage the business logic and state management functions used in the components with more flexibility.',
-      sectionCard: [
-        {
-          subtitle: 'Navigate to',
-          name: 'All Hydrogen React hooks',
-          url: 'hydrogen-react/hooks',
-          type: 'library',
-        },
-      ],
       codeblock: {
         title: 'Hook example',
         tabs: [
@@ -129,14 +113,6 @@ const data: LandingTemplateSchema = {
       title: 'Utilities',
       sectionContent:
         'Utilities are reusable functions for common data manipulations performed on Storefront API data.',
-      sectionCard: [
-        {
-          subtitle: 'Navigate to',
-          name: 'All Hydrogen React utility functions',
-          url: 'hydrogen-react/utilities',
-          type: 'library',
-        },
-      ],
       codeblock: {
         title: 'Utility example',
         tabs: [
@@ -154,23 +130,22 @@ const data: LandingTemplateSchema = {
       title: 'Resources',
       resources: [
         {
-          name: 'Hydrogen framework',
+          name: 'Custom Storefronts',
           subtitle:
-            'Hydrogen React includes a framework that offers a set of best practices and scaffolding for building a website.',
-          url: '/api/hydrogen',
+            'Learn more about how to design, build, and manage, your custom storefront.',
+          url: '/custom-storefronts',
           type: 'custom-storefronts',
         },
         {
           name: 'Getting started guide',
-          subtitle:
-            'Follow this tutorial to start making requests to the Storefront API in no time.',
+          subtitle: 'Follow this tutorial to get started with Hydrogen React.',
           url: '/custom-storefronts/hydrogen-react#get-started-with-hydrogen-react',
           type: 'quickstart',
         },
         {
           name: 'Hydrogen React README',
           subtitle:
-            'Get more details on how to speed up the end-to-end development experience.',
+            'Get more details on how to improve your end-to-end development experience.',
           url: 'https://github.com/Shopify/hydrogen-react/blob/main/packages/react/README.md',
           type: 'github',
         },
