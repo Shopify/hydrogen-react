@@ -6,9 +6,9 @@ const data: ReferenceEntityTemplateSchema = {
   isVisualComponent: false,
   related: [
     {
-      name: 'storefront.schema.json',
+      name: 'Storefront Schema',
       type: 'gear',
-      url: '/api/hydrogen-react/utilities/storefront.schema.json',
+      url: '/api/hydrogen-react/utilities/storefront-schema',
     },
     {
       name: 'Storefront API Types',
