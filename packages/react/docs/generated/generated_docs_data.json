@@ -6812,7 +6812,7 @@
                 "description": "Creates the fully-qualified URL to your myshopify.com domain.\n\nBy default, it will use the config you passed in when calling `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:\n\n- `storeDomain`"
               }
             ],
-            "value": "export interface ShopifyContextValue extends ShopifyProviderBase, ShopifyContextReturn {}"
+            "value": "export interface ShopifyContextValue\n  extends ShopifyProviderBase,\n    ShopifyContextReturn {}"
           },
           "GetStorefrontApiUrlProps": {
             "filePath": "/ShopifyProvider.tsx",
