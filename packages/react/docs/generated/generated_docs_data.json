@@ -4759,11 +4759,17 @@
         "typeDefinitions": {
           "ShopifyProviderProps": {
             "filePath": "/ShopifyProvider.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyProviderProps",
-            "value": "{\n  /** The globally-unique identifier for the Shop */\n  storefrontId?: string;\n  /** The full domain of your Shopify storefront URL (eg: the complete string of `{subdomain}.myshopify.com`). */\n  storeDomain: string;\n  /** The Storefront API public access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */\n  storefrontToken: string;\n  /** The Storefront API version. This should almost always be the same as the version Hydrogen React was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details.  */\n  storefrontApiVersion: string;\n  /**\n   * The code designating a country, which generally follows ISO 3166-1 alpha-2 guidelines. If a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision of another country. For example, the territories associated with Spain are represented by the country code `ES`, and the territories associated with the United States of America are represented by the country code `US`.\n   */\n  countryIsoCode: CountryCode;\n  /**\n   * `ISO 369` language codes supported by Shopify.\n   */\n  languageIsoCode: LanguageCode;\n  /** React children to render. */\n  children?: ReactNode;\n}",
             "description": "Shopify-specific values that are used in various Hydrogen React components and hooks.",
             "members": [
+              {
+                "filePath": "/ShopifyProvider.tsx",
+                "syntaxKind": "PropertySignature",
+                "name": "children",
+                "value": "ReactNode",
+                "description": "React children to render.",
+                "isOptional": true
+              },
               {
                 "filePath": "/ShopifyProvider.tsx",
                 "syntaxKind": "PropertySignature",
@@ -4806,16 +4812,9 @@
                 "name": "languageIsoCode",
                 "value": "LanguageCode",
                 "description": "`ISO 369` language codes supported by Shopify."
-              },
-              {
-                "filePath": "/ShopifyProvider.tsx",
-                "syntaxKind": "PropertySignature",
-                "name": "children",
-                "value": "ReactNode",
-                "description": "React children to render.",
-                "isOptional": true
               }
-            ]
+            ],
+            "value": "export interface ShopifyProviderProps extends ShopifyProviderBase {\n  /** React children to render. */\n  children?: ReactNode;\n}"
           }
         }
       }
@@ -6745,17 +6744,8 @@
           },
           "ShopifyContextValue": {
             "filePath": "/ShopifyProvider.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
             "name": "ShopifyContextValue",
-            "value": "Omit<ShopifyProviderProps, 'children'> & ShopifyContextReturn",
-            "description": ""
-          },
-          "ShopifyProviderProps": {
-            "filePath": "/ShopifyProvider.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
-            "name": "ShopifyProviderProps",
-            "value": "{\n  /** The globally-unique identifier for the Shop */\n  storefrontId?: string;\n  /** The full domain of your Shopify storefront URL (eg: the complete string of `{subdomain}.myshopify.com`). */\n  storeDomain: string;\n  /** The Storefront API public access token. Refer to the [authentication](https://shopify.dev/api/storefront#authentication) documentation for more details. */\n  storefrontToken: string;\n  /** The Storefront API version. This should almost always be the same as the version Hydrogen React was built for. Learn more about Shopify [API versioning](https://shopify.dev/api/usage/versioning) for more details.  */\n  storefrontApiVersion: string;\n  /**\n   * The code designating a country, which generally follows ISO 3166-1 alpha-2 guidelines. If a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision of another country. For example, the territories associated with Spain are represented by the country code `ES`, and the territories associated with the United States of America are represented by the country code `US`.\n   */\n  countryIsoCode: CountryCode;\n  /**\n   * `ISO 369` language codes supported by Shopify.\n   */\n  languageIsoCode: LanguageCode;\n  /** React children to render. */\n  children?: ReactNode;\n}",
-            "description": "Shopify-specific values that are used in various Hydrogen React components and hooks.",
+            "description": "",
             "members": [
               {
                 "filePath": "/ShopifyProvider.tsx",
@@ -6803,23 +6793,6 @@
               {
                 "filePath": "/ShopifyProvider.tsx",
                 "syntaxKind": "PropertySignature",
-                "name": "children",
-                "value": "ReactNode",
-                "description": "React children to render.",
-                "isOptional": true
-              }
-            ]
-          },
-          "ShopifyContextReturn": {
-            "filePath": "/ShopifyProvider.tsx",
-            "syntaxKind": "TypeAliasDeclaration",
-            "name": "ShopifyContextReturn",
-            "value": "{\n  /**\n   * Creates the fully-qualified URL to your store's GraphQL endpoint.\n   *\n   * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getStorefrontApiUrl({...})`:\n   *\n   * - `storeDomain`\n   * - `storefrontApiVersion`\n   */\n  getStorefrontApiUrl: (props?: GetStorefrontApiUrlProps) => string;\n  /**\n   * Returns an object that contains headers that are needed for each query to Storefront API GraphQL endpoint. This uses the public Storefront API token.\n   *\n   * By default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getPublicTokenHeaders({...})`:\n   *\n   * - `contentType`\n   * - `storefrontToken`\n   *\n   */\n  getPublicTokenHeaders: (\n    props: GetPublicTokenHeadersProps\n  ) => Record<string, string>;\n  /**\n   * Creates the fully-qualified URL to your myshopify.com domain.\n   *\n   * By default, it will use the config you passed in when calling `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:\n   *\n   * - `storeDomain`\n   */\n  getShopifyDomain: (props?: GetShopifyDomainProps) => string;\n}",
-            "description": "",
-            "members": [
-              {
-                "filePath": "/ShopifyProvider.tsx",
-                "syntaxKind": "PropertySignature",
                 "name": "getStorefrontApiUrl",
                 "value": "(props?: GetStorefrontApiUrlProps) => string",
                 "description": "Creates the fully-qualified URL to your store's GraphQL endpoint.\n\nBy default, it will use the config you passed in when creating `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getStorefrontApiUrl({...})`:\n\n- `storeDomain`\n- `storefrontApiVersion`"
@@ -6838,7 +6811,8 @@
                 "value": "(props?: GetShopifyDomainProps) => string",
                 "description": "Creates the fully-qualified URL to your myshopify.com domain.\n\nBy default, it will use the config you passed in when calling `<ShopifyProvider/>`. However, you can override the following settings on each invocation of `getShopifyDomain({...})`:\n\n- `storeDomain`"
               }
-            ]
+            ],
+            "value": "export interface ShopifyContextValue extends ShopifyProviderBase, ShopifyContextReturn {}"
           },
           "GetStorefrontApiUrlProps": {
             "filePath": "/ShopifyProvider.tsx",
