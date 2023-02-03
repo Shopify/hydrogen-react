@@ -30,7 +30,6 @@ export {CartLinePrice} from './CartLinePrice.js';
 export {CartLineProvider, useCartLine} from './CartLineProvider.js';
 export {CartProvider, useCart} from './CartProvider.js';
 export {storefrontApiCustomScalars} from './codegen.helpers.js';
-export {generateSeoTags, type Seo} from './seo.js';
 export {getShopifyCookies} from './cookies-utils.js';
 export {ExternalVideo} from './ExternalVideo.js';
 export {flattenConnection} from './flatten-connection.js';
@@ -41,6 +40,7 @@ export {Money} from './Money.js';
 export {type ParsedMetafields, parseMetafield} from './parse-metafield.js';
 export {ProductPrice} from './ProductPrice.js';
 export {ProductProvider, useProduct} from './ProductProvider.js';
+export {generateSeoTags, type Seo} from './seo.js';
 export {ShopifyProvider, useShop} from './ShopifyProvider.js';
 export {ShopPayButton} from './ShopPayButton.js';
 export type {

@@ -6,10 +6,12 @@ describe('generateSeoTags', () => {
     // Given
     const input = {
       title: undefined,
+      titleTemplate: undefined,
+      alternates: undefined,
       description: undefined,
       url: undefined,
       handle: undefined,
-      ldJson: undefined,
+      jsonLd: undefined,
       media: undefined,
     };
 
@@ -796,11 +798,11 @@ describe('generateSeoTags', () => {
     });
   });
 
-  describe('ldJson', () => {
+  describe('jsonLd', () => {
     it('should infer default values from the URL', () => {
       // Given
       const input = {
-        ldJson: {},
+        jsonLd: {},
         url: 'https://hydrogen.shopify.com/products/1234',
       };
 
@@ -854,10 +856,10 @@ describe('generateSeoTags', () => {
       `);
     });
 
-    it('should add additional ldJson values', () => {
+    it('should add additional jsonLd values', () => {
       // Given
       const input = {
-        ldJson: {
+        jsonLd: {
           '@type': 'Product',
           aggregateRating: {
             '@type': 'AggregateRating',
@@ -929,10 +931,6 @@ describe('generateSeoTags', () => {
             url: 'https://hydrogen.shop.com/de/products/1234',
             language: 'de',
           },
-          {
-            url: 'https://m.hydrogen.shop.com/es/products/1234',
-            media: 'only screen and (max-width: 640px)',
-          },
         ],
       };
 
@@ -946,7 +944,7 @@ describe('generateSeoTags', () => {
             "key": "link-alternate-de",
             "props": {
               "href": "https://hydrogen.shop.com/de/products/1234",
-              "hreflang": "de",
+              "hrefLang": "de",
               "rel": "alternate",
             },
             "tag": "link",
@@ -955,16 +953,7 @@ describe('generateSeoTags', () => {
             "key": "link-alternate-fr-default",
             "props": {
               "href": "https://hydrogen.shop.com/fr/products/1234",
-              "hreflang": "fr-default",
-              "rel": "alternate",
-            },
-            "tag": "link",
-          },
-          {
-            "key": "link-alternate-only-screen-and-(max-width:-640px)",
-            "props": {
-              "href": "https://m.hydrogen.shop.com/es/products/1234",
-              "media": "only screen and (max-width: 640px)",
+              "hrefLang": "fr-default",
               "rel": "alternate",
             },
             "tag": "link",
