@@ -82,3 +82,13 @@ type ConnectionEdges = {
 type ConnectionNodes = {
   nodes: Array<unknown>;
 };
+
+// This is only for documenation purposes, and it is not used in the code.
+// we ignore this issue because it makes the documentation look better than the equivalent `type` that it wants us to convert to
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ConnectionGenericForDoc {
+  connection?: ConnectionEdges | ConnectionNodes;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export type FlattenConnectionReturnForDoc = Array<unknown>;
