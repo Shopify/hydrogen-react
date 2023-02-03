@@ -71,7 +71,7 @@
         "type": "Generic",
         "anchorLink": "hooks",
         "title": "Hooks",
-        "sectionContent": "Hooks are functions that provide reusable, business, and/or stateful logic. These functions allow you to leverage the business logic and state management functions used in the components with more flexibility.",
+        "sectionContent": "Hooks are functions that provide reusable, business and/or stateful logic. These functions allow you to leverage the business logic and state management functions used in the components with more flexibility.",
         "codeblock": {
           "title": "Hook example",
           "tabs": [
@@ -106,7 +106,7 @@
         "resources": [
           {
             "name": "Custom Storefronts",
-            "subtitle": "Learn more about how to design, build, and manage your custom storefront.",
+            "subtitle": "Learn more about how to design, build, and manage, your custom storefront.",
             "url": "/custom-storefronts",
             "type": "custom-storefronts"
           },
