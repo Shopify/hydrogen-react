@@ -45,7 +45,11 @@ export interface Seo {
    * ```
    *
    */
-  media: Maybe<string> | undefined | Partial<SeoMedia> | Partial<SeoMedia>[];
+  media:
+    | Maybe<string>
+    | Partial<SeoMedia>
+    | (Partial<SeoMedia> | Maybe<string>)[]
+    | undefined;
   /**
    * The description of the page. This is used in the `name="description"` meta tag as well as the `og:description` meta
    * tag.

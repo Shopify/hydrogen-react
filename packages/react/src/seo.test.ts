@@ -413,7 +413,7 @@ describe('generateSeoTags', () => {
       const input = {
         media: {
           url: 'https://example.com/image-1.jpg',
-          height: '100',
+          height: 100,
         },
       };
 
@@ -489,11 +489,11 @@ describe('generateSeoTags', () => {
         media: [
           {
             url: 'https://example.com/image-1.jpg',
-            height: '100',
+            height: 100,
           },
           {
             url: 'https://example.com/image-2.jpg',
-            width: '100',
+            width: 100,
           },
         ],
       };
@@ -602,16 +602,16 @@ describe('generateSeoTags', () => {
         media: [
           {
             url: 'https://example.com/image-1.swf',
-            height: '100',
-            type: 'video',
+            height: 100,
+            type: 'video' as const,
           },
           {
             url: 'https://example.com/image-1.mp3',
-            type: 'audio',
+            type: 'audio' as const,
           },
           {
             url: 'https://example.com/image-1.jpg',
-            type: 'image',
+            type: 'image' as const,
             height: 100,
           },
         ],
