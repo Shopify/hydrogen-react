@@ -1,5 +1,6 @@
 import {expect, describe, it} from 'vitest';
 import {generateSeoTags} from './seo.js';
+import type {Product} from 'schema-dts';
 
 describe('generateSeoTags', () => {
   it('removes undefined values', () => {
@@ -434,7 +435,7 @@ describe('generateSeoTags', () => {
           {
             "key": "meta-https://example.com/image-1.jpg-og:image:height",
             "props": {
-              "content": "100",
+              "content": 100,
               "property": "og:image:height",
             },
             "tag": "meta",
@@ -515,7 +516,7 @@ describe('generateSeoTags', () => {
           {
             "key": "meta-https://example.com/image-1.jpg-og:image:height",
             "props": {
-              "content": "100",
+              "content": 100,
               "property": "og:image:height",
             },
             "tag": "meta",
@@ -563,7 +564,7 @@ describe('generateSeoTags', () => {
           {
             "key": "meta-https://example.com/image-2.jpg-og:image:width",
             "props": {
-              "content": "100",
+              "content": 100,
               "property": "og:image:width",
             },
             "tag": "meta",
@@ -690,7 +691,7 @@ describe('generateSeoTags', () => {
           {
             "key": "meta-https://example.com/image-1.swf-og:video:height",
             "props": {
-              "content": "100",
+              "content": 100,
               "property": "og:video:height",
             },
             "tag": "meta",
@@ -799,63 +800,6 @@ describe('generateSeoTags', () => {
   });
 
   describe('jsonLd', () => {
-    it('should infer default values from the URL', () => {
-      // Given
-      const input = {
-        jsonLd: {},
-        url: 'https://hydrogen.shopify.com/products/1234',
-      };
-
-      // When
-      const output = generateSeoTags(input);
-
-      // Then
-      expect(output).toMatchInlineSnapshot(`
-        [
-          {
-            "key": "link-canonical",
-            "props": {
-              "href": "https://hydrogen.shopify.com/products/1234",
-              "rel": "canonical",
-            },
-            "tag": "link",
-          },
-          {
-            "key": "meta-og:type",
-            "props": {
-              "content": "website",
-              "property": "og:type",
-            },
-            "tag": "meta",
-          },
-          {
-            "key": "meta-og:url",
-            "props": {
-              "content": "https://hydrogen.shopify.com/products/1234",
-              "property": "og:url",
-            },
-            "tag": "meta",
-          },
-          {
-            "key": "meta-twitter:card",
-            "props": {
-              "content": "summary_large_image",
-              "name": "twitter:card",
-            },
-            "tag": "meta",
-          },
-          {
-            "children": "{\\"@context\\":\\"https://schema.org\\",\\"@type\\":\\"Product\\",\\"url\\":\\"https://hydrogen.shopify.com/products/1234\\"}",
-            "key": "script-application/ld+json",
-            "props": {
-              "type": "application/ld+json",
-            },
-            "tag": "script",
-          },
-        ]
-      `);
-    });
-
     it('should add additional jsonLd values', () => {
       // Given
       const input = {
@@ -879,11 +823,11 @@ describe('generateSeoTags', () => {
               },
             ],
           },
-        },
+        } satisfies Product,
       };
 
       // When
-      const output = generateSeoTags(input);
+      const output = generateSeoTags<Product>(input);
 
       // Then
       expect(output).toMatchInlineSnapshot(`

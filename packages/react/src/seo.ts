@@ -2,14 +2,14 @@ import type {Maybe} from './storefront-api-types.js';
 import type {WithContext, Thing} from 'schema-dts';
 import type {ComponentPropsWithoutRef} from 'react';
 
-export interface Seo {
+export interface Seo<Schema extends Thing = Thing> {
   /**
    * The <title> HTML element defines the document's title that is shown in a browser's title bar or a page's tab. It
    * only contains text; tags within the element are ignored.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
    */
-  title: Maybe<string> | undefined;
+  title?: Maybe<string>;
   /**
    * Generate the title from a template that includes a `%s` placeholder for the title.
    *
@@ -21,7 +21,7 @@ export interface Seo {
    * }
    * ```
    */
-  titleTemplate: Maybe<string> | undefined | null;
+  titleTemplate?: Maybe<string> | null;
   /**
    * The media associated with the given page (images, videos, etc). If you pass a string, it will be used as the
    * `og:image` meta tag. If you pass an object or an array of objects, that will be used to generate
@@ -45,18 +45,17 @@ export interface Seo {
    * ```
    *
    */
-  media:
+  media?:
     | Maybe<string>
     | Partial<SeoMedia>
-    | (Partial<SeoMedia> | Maybe<string>)[]
-    | undefined;
+    | (Partial<SeoMedia> | Maybe<string>)[];
   /**
    * The description of the page. This is used in the `name="description"` meta tag as well as the `og:description` meta
    * tag.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
    */
-  description: Maybe<string> | undefined;
+  description?: Maybe<string>;
   /**
    * The canonical URL of the page. This is used to tell search engines which URL is the canonical version of a page.
    * This is useful when you have multiple URLs that point to the same page. The value here will be used in the
@@ -64,7 +63,7 @@ export interface Seo {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
    */
-  url: Maybe<string> | undefined;
+  url?: Maybe<string>;
   /**
    * The handle is used to generate the `twitter:site` and `twitter:creator` meta tags. Include the `@` symbol in the
    * handle.
@@ -76,7 +75,7 @@ export interface Seo {
    * }
    * ```
    */
-  handle: Maybe<string> | undefined;
+  handle?: Maybe<string>;
   /**
    * The `jsonLd` property is used to generate the `application/ld+json` script tag. This is used to provide structured
    * data to search engines. The value should be an object that conforms to the schema.org spec. The `type` property
@@ -131,7 +130,7 @@ export interface Seo {
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
    *
    */
-  jsonLd?: <T extends SchemaType>(type: T) => WithContext<T>;
+  jsonLd?: WithContext<Schema>;
   /**
    * The `alternates` property is used to specify the language and geographical targeting when you have multiple
    * versions of the same page in different languages. The `url` property tells search engines about these variations
@@ -156,7 +155,7 @@ export interface Seo {
    *
    * @see https://support.google.com/webmasters/answer/189077?hl=en
    */
-  alternates: LanguageAlternate | LanguageAlternate[] | undefined;
+  alternates?: LanguageAlternate | LanguageAlternate[];
 }
 
 export interface LanguageAlternate {
@@ -191,31 +190,20 @@ export interface CustomHeadTagObject {
   key: string;
 }
 
-export type SchemaType =
-  | 'Product'
-  | 'ItemList'
-  | 'Organization'
-  | 'WebSite'
-  | 'WebPage'
-  | 'BlogPosting'
-  | 'Thing';
-
-function ensureArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value];
-}
-
 /**
  * The `generateSeoTags` function generates the SEO title, meta, link and script (JSON Linking Data) tags for a page. It
  * pairs well with the SEO component in `@shopify/hydrogen` when building a Hydrogen Remix app, but can be used on its
  * own if you want to generate the tags yourself.
  */
-export function generateSeoTags<T extends Seo = Seo>(
-  seoInput: Partial<T>
-): CustomHeadTagObject[] {
+export function generateSeoTags<
+  Schema extends Thing,
+  T extends Seo<Schema> = Seo<Schema>
+>(seoInput: T): CustomHeadTagObject[] {
   const output: CustomHeadTagObject[] = [];
 
   // https://github.com/google/schema-dts/issues/98
-  let jsonLd: WithContext<Exclude<Thing, string>> = {
+  // @ts-expect-error - Exclude string from Schema
+  let jsonLd: WithContext<Exclude<Schema, string>> = {
     '@context': 'https://schema.org',
     '@type': 'Thing',
   };
@@ -298,9 +286,8 @@ export function generateSeoTags<T extends Seo = Seo>(
           break;
 
         case 'jsonLd':
-          content = value as Record<string, unknown>;
+          jsonLd = {...jsonLd, ...value};
 
-          jsonLd = {...jsonLd, ...content};
           break;
 
         case 'media': {
@@ -563,6 +550,19 @@ function inferMimeType(url: Maybe<string> | undefined) {
   return 'image/jpeg';
 }
 
+function ensureArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
+}
+
+export type SchemaType =
+  | 'Product'
+  | 'ItemList'
+  | 'Organization'
+  | 'WebSite'
+  | 'WebPage'
+  | 'BlogPosting'
+  | 'Thing';
+
 function inferSchemaType(url: Maybe<string> | undefined): SchemaType {
   const defaultType = 'Thing';
 
@@ -575,7 +575,6 @@ function inferSchemaType(url: Maybe<string> | undefined): SchemaType {
       type: 'WebSite',
       pattern: '^/$',
     },
-
     {
       type: 'Product',
       pattern: '/products/.*',
@@ -612,7 +611,6 @@ function inferSchemaType(url: Maybe<string> | undefined): SchemaType {
 
   const typeMatches = routes.filter((route) => {
     const {pattern} = route;
-
     const regex = new RegExp(pattern);
     return regex.test(url);
   });
