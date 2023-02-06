@@ -1,8 +1,14 @@
-import {expect, describe, it} from 'vitest';
+import {expect, describe, it, vi} from 'vitest';
 import {generateSeoTags} from './seo.js';
 import type {Product} from 'schema-dts';
 
 describe('generateSeoTags', () => {
+  const consoleMock = {
+    log: vi.fn(),
+  };
+
+  vi.stubGlobal('console', consoleMock);
+
   it('removes undefined values', () => {
     // Given
     const input = {
@@ -175,6 +181,22 @@ describe('generateSeoTags', () => {
         ]
       `);
     });
+
+    it('should warn if the title is too long', () => {
+      // Given
+      const input = {
+        title: 'Snowdevil'.padEnd(121, '.'), // 121 characters
+      };
+
+      // When
+      generateSeoTags(input);
+
+      // Then
+
+      expect(console.log).toHaveBeenCalledWith(
+        'Error in SEO input: `title` should not be longer than 120 characters'
+      );
+    });
   });
 
   describe('description', () => {
@@ -241,6 +263,22 @@ describe('generateSeoTags', () => {
         ]
       `);
     });
+
+    it('should warn if the description is too long', () => {
+      // Given
+      const input = {
+        description: ''.padEnd(121, '.'), // 121 characters
+      };
+
+      // When
+      generateSeoTags(input);
+
+      // Then
+
+      expect(console.log).toHaveBeenCalledWith(
+        'Error in SEO input: `description` should not be longer than 120 characters'
+      );
+    });
   });
 
   describe('url', () => {
@@ -298,6 +336,22 @@ describe('generateSeoTags', () => {
           },
         ]
       `);
+    });
+
+    it('should warn if the url is not a url', () => {
+      // Given
+      const input = {
+        url: 'not a url',
+      };
+
+      // When
+      generateSeoTags(input);
+
+      // Then
+
+      expect(console.log).toHaveBeenCalledWith(
+        'Error in SEO input: `url` should be a valid URL'
+      );
     });
   });
 
@@ -796,6 +850,22 @@ describe('generateSeoTags', () => {
           },
         ]
       `);
+    });
+
+    it('should warn if the handle is not a valid', () => {
+      // Given
+      const input = {
+        handle: 'shopify',
+      };
+
+      // When
+      generateSeoTags(input);
+
+      // Then
+
+      expect(console.log).toHaveBeenCalledWith(
+        'Error in SEO input: `handle` should start with `@`'
+      );
     });
   });
 

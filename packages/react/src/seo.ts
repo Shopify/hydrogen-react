@@ -1,6 +1,25 @@
 import type {Maybe} from './storefront-api-types.js';
 import type {WithContext, Thing} from 'schema-dts';
 import type {ComponentPropsWithoutRef} from 'react';
+import {z} from 'zod';
+
+const ERROR_PREFIX = 'Error in SEO input: ';
+const schema = {
+  title: z.string().max(120, {
+    message: ERROR_PREFIX.concat(
+      '`title` should not be longer than 120 characters'
+    ),
+  }),
+  description: z.string().max(120, {
+    message: ERROR_PREFIX.concat(
+      '`description` should not be longer than 120 characters'
+    ),
+  }),
+  url: z.string().url(ERROR_PREFIX.concat('`url` should be a valid URL')),
+  handle: z.string().startsWith('@', {
+    message: ERROR_PREFIX.concat('`handle` should start with `@`'),
+  }),
+};
 
 export interface Seo<Schema extends Thing = Thing> {
   /**
@@ -225,7 +244,7 @@ export function generateSeoTags<
 
       switch (seoKey) {
         case 'title': {
-          content = value as string;
+          content = validate(schema.title, value);
 
           const title = renderTitle(seoInput?.titleTemplate, content);
 
@@ -241,7 +260,7 @@ export function generateSeoTags<
         }
 
         case 'description':
-          content = value as string;
+          content = validate(schema.description, value);
 
           tagResults.push(
             generateTag('meta', {
@@ -263,7 +282,7 @@ export function generateSeoTags<
           break;
 
         case 'url':
-          content = value as string;
+          content = validate(schema.url, value);
 
           tagResults.push(
             generateTag('meta', {property: 'og:url', content}),
@@ -276,7 +295,7 @@ export function generateSeoTags<
           break;
 
         case 'handle':
-          content = value as string | undefined;
+          content = validate(schema.handle, value);
 
           tagResults.push(
             generateTag('meta', {name: 'twitter:site', content}),
@@ -550,10 +569,6 @@ function inferMimeType(url: Maybe<string> | undefined) {
   return 'image/jpeg';
 }
 
-function ensureArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value];
-}
-
 export type SchemaType =
   | 'Product'
   | 'ItemList'
@@ -618,4 +633,31 @@ function inferSchemaType(url: Maybe<string> | undefined): SchemaType {
   return typeMatches.length > 0
     ? typeMatches[typeMatches.length - 1].type
     : defaultType;
+}
+
+function ensureArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
+}
+
+function extractValidationError(error: z.ZodError) {
+  return error.errors.map((error) => error.message).join(', ');
+}
+
+function validate<T>(
+  schema: z.ZodSchema<T>,
+  data: unknown,
+  {strict}: {strict?: boolean} = {}
+): T {
+  try {
+    return schema.parse(data);
+  } catch (error: unknown) {
+    const message = extractValidationError(error as z.ZodError);
+
+    if (strict) {
+      throw new Error(message);
+    } else {
+      console.log(message);
+      return data as T;
+    }
+  }
 }

@@ -130,9 +130,10 @@
     "@xstate/fsm": "^2.0.0",
     "@xstate/react": "^3.0.1",
     "graphql": "^16.6.0",
+    "schema-dts": "^1.1.0",
     "type-fest": "^3.5.1",
     "worktop": "^0.7.3",
-    "schema-dts": "^1.1.0"
+    "zod": "^3.20.2"
   },
   "repository": {
     "type": "git",
