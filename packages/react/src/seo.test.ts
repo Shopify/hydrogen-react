@@ -267,7 +267,7 @@ describe('generateSeoTags', () => {
     it('should warn if the description is too long', () => {
       // Given
       const input = {
-        description: ''.padEnd(121, '.'), // 121 characters
+        description: ''.padEnd(156, '.'), // 156 characters
       };
 
       // When
@@ -276,7 +276,7 @@ describe('generateSeoTags', () => {
       // Then
 
       expect(console.log).toHaveBeenCalledWith(
-        'Error in SEO input: `description` should not be longer than 120 characters'
+        'Error in SEO input: `description` should not be longer than 155 characters'
       );
     });
   });

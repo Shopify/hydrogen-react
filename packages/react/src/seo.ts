@@ -10,9 +10,9 @@ const schema = {
       '`title` should not be longer than 120 characters'
     ),
   }),
-  description: z.string().max(120, {
+  description: z.string().max(155, {
     message: ERROR_PREFIX.concat(
-      '`description` should not be longer than 120 characters'
+      '`description` should not be longer than 155 characters'
     ),
   }),
   url: z.string().url(ERROR_PREFIX.concat('`url` should be a valid URL')),
