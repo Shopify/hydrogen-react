@@ -1,6 +1,6 @@
 import {type ElementType, useMemo, type ComponentPropsWithoutRef} from 'react';
 import {useShop} from './ShopifyProvider.js';
-import {Image} from './Image.js';
+import {Image} from './ImageLegacy.js';
 import type {
   MediaImage,
   Page,

@@ -1,4 +1,4 @@
-import {Image, type ShopifyImageProps} from './Image.js';
+import {Image, type ShopifyImageProps} from './ImageLegacy.js';
 import {Video} from './Video.js';
 import {ExternalVideo} from './ExternalVideo.js';
 import {ModelViewer} from './ModelViewer.js';

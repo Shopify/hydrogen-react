@@ -12,7 +12,7 @@ export {CartProvider, useCart} from './CartProvider.js';
 export {storefrontApiCustomScalars} from './codegen.helpers.js';
 export {ExternalVideo} from './ExternalVideo.js';
 export {flattenConnection} from './flatten-connection.js';
-export {Image} from './Image.js';
+export {Image} from './ImageLegacy.js';
 export {MediaFile} from './MediaFile.js';
 export {metafieldParser, type ParsedMetafields} from './metafield-parser.js';
 export {Metafield, parseMetafield, parseMetafieldValue} from './Metafield.js';
