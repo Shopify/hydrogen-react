@@ -156,8 +156,7 @@ export function Image({
    * supporting the presence of `data` in addition to flat props.
    */
 
-  const normalizedWidthProp: string | number =
-    width || (dataUnitsMatch && data?.width) || '100%';
+  const normalizedWidthProp: string | number = width || '100%';
 
   const normalizedWidth: string =
     getUnitValueParts(normalizedWidthProp.toString()).number +
