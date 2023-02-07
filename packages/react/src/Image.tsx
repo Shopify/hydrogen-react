@@ -6,7 +6,7 @@ import type {Image as ImageType} from './storefront-api-types.js';
  * An optional prop you can use to change the
  * default srcSet generation behaviour
  */
-interface ImageConfig {
+interface SrcSetOptions {
   intervals: number;
   startingWidth: number;
   incrementSize: number;
@@ -24,10 +24,10 @@ export type ShopifyLoaderOptions = {
 
 export type ShopifyLoaderParams = Simplify<
   ShopifyLoaderOptions & {
-    src: ImageType['url'];
-    width: number;
-    height: number;
-    crop: Crop;
+    src?: ImageType['url'];
+    width?: number;
+    height?: number;
+    crop?: Crop;
   }
 >;
 
@@ -36,7 +36,7 @@ export type ShopifyLoaderParams = Simplify<
  * or switch this to be an SF API type
  */
 
-type Crop = 'center' | 'top' | 'bottom' | 'left' | 'right';
+type Crop = 'center' | 'top' | 'bottom' | 'left' | 'right' | undefined;
 
 export function Image({
   /** An object with fields that correspond to the Storefront API's
@@ -73,7 +73,7 @@ export function Image({
    * An optional prop you can use to change
    * the default srcSet generation behaviour
    */
-  config = {
+  srcSetOptions = {
     intervals: 10,
     startingWidth: 300,
     incrementSize: 300,
@@ -98,18 +98,13 @@ export function Image({
   as?: 'img' | 'source';
   data?: PartialDeep<ImageType, {recurseIntoArrays: true}>;
   src?: string;
-  loader?: (
-    src?: string,
-    width?: number,
-    height?: number,
-    crop?: Crop
-  ) => string;
+  loader?: (params: ShopifyLoaderParams) => string;
   width?: string | number;
   height?: string | number;
   crop?: Crop;
   sizes?: string;
   aspectRatio?: string;
-  config?: ImageConfig;
+  srcSetOptions?: SrcSetOptions;
   alt?: string;
   loading?: 'lazy' | 'eager';
   loaderOptions?: ShopifyLoaderOptions;
@@ -121,7 +116,7 @@ export function Image({
   if (loaderOptions) {
     console.warn(
       `Deprecated property from original Image component in use: ` +
-        `Use the flat \`crop\`, \`width\`, \`height\`, and src props, or` +
+        `Use the \`crop\`, \`width\`, \`height\`, and src props, or` +
         `the \`data\` prop to achieve the same result. Image used is ${
           src || data?.url
         }`
@@ -188,7 +183,8 @@ export function Image({
       )}`
     : undefined;
 
-  const {intervals, startingWidth, incrementSize, placeholderWidth} = config;
+  const {intervals, startingWidth, incrementSize, placeholderWidth} =
+    srcSetOptions;
 
   /*
    * This function creates an array of widths to be used in srcSet
@@ -234,16 +230,16 @@ export function Image({
 
     return React.createElement(Component, {
       srcSet: generateShopifySrcSet(normalizedSrc, sizesArray),
-      src: loader(
-        normalizedSrc,
-        intWidth,
-        intHeight
+      src: loader({
+        src: normalizedSrc,
+        width: intWidth,
+        height: intHeight
           ? intHeight
           : fixedAspectRatio && intWidth
           ? intWidth * (parseAspectRatio(fixedAspectRatio) ?? 1)
           : undefined,
-        normalizedHeight === 'auto' ? undefined : crop
-      ),
+        crop: normalizedHeight === 'auto' ? undefined : crop,
+      }),
       alt: normalizedAlt,
       sizes: sizes || normalizedWidth,
       style: {
@@ -262,13 +258,14 @@ export function Image({
 
     return React.createElement(Component, {
       srcSet: generateShopifySrcSet(normalizedSrc, sizesArray),
-      src: loader(
-        normalizedSrc,
-        placeholderWidth,
-        normalizedAspectRatio && placeholderWidth
-          ? placeholderWidth * (parseAspectRatio(normalizedAspectRatio) ?? 1)
-          : undefined
-      ),
+      src: loader({
+        src: normalizedSrc,
+        width: placeholderWidth,
+        height:
+          normalizedAspectRatio && placeholderWidth
+            ? placeholderWidth * (parseAspectRatio(normalizedAspectRatio) ?? 1)
+            : undefined,
+      }),
       alt: normalizedAlt,
       sizes,
       style: {
@@ -357,7 +354,7 @@ function getNormalizedFixedUnit(value?: string | number) {
 }
 
 function isFixedWidth(width: string | number) {
-  const fixedEndings = new RegExp('px|em|rem', 'g');
+  const fixedEndings = /\d(px|em|rem)$/;
   return (
     typeof width === 'number' ||
     (typeof width === 'string' && fixedEndings.test(width))
@@ -385,7 +382,12 @@ export function generateShopifySrcSet(
   return sizesArray
     .map(
       (size) =>
-        shopifyLoader(src, size.width, size.height, size.crop) +
+        shopifyLoader({
+          src,
+          width: size.width,
+          height: size.height,
+          crop: size.crop,
+        }) +
         ' ' +
         size.width +
         'w'
@@ -471,12 +473,17 @@ export function generateSizes(
  * It can be used with the Hydrogen Image component or with the next/image component.
  * (or any others that accept equivalent configuration)
  */
-export function shopifyLoader(
-  src?: string,
-  width?: number,
-  height?: number,
-  crop?: Crop
-): string {
+export function shopifyLoader({
+  src,
+  width,
+  height,
+  crop,
+}: {
+  src?: string;
+  width?: number;
+  height?: number;
+  crop?: Crop;
+}): string {
   if (!src) {
     return '';
   }
