@@ -98,9 +98,12 @@ export function Image({
   as?: 'img' | 'source';
   data?: PartialDeep<ImageType, {recurseIntoArrays: true}>;
   src?: string;
-  // TODO: Fix this type to be more specific
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  loader?: Function;
+  loader?: (
+    src?: string,
+    width?: number,
+    height?: number,
+    crop?: Crop
+  ) => string;
   width?: string | number;
   height?: string | number;
   crop?: Crop;
@@ -368,9 +371,13 @@ function isFixedWidth(width: string | number) {
 }
 
 export function generateShopifySrcSet(
-  src: string,
+  src?: string,
   sizesArray?: Array<{width?: number; height?: number; crop?: Crop}>
 ) {
+  if (!src) {
+    return '';
+  }
+
   if (sizesArray?.length === 0 || !sizesArray) {
     return src;
   }
@@ -465,11 +472,15 @@ export function generateSizes(
  * (or any others that accept equivalent configuration)
  */
 export function shopifyLoader(
-  src: string,
+  src?: string,
   width?: number,
   height?: number,
   crop?: Crop
-) {
+): string {
+  if (!src) {
+    return '';
+  }
+
   const url = new URL(src);
   width && url.searchParams.append('width', Math.round(width).toString());
   height && url.searchParams.append('height', Math.round(height).toString());
