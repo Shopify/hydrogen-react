@@ -139,10 +139,22 @@ export function Image({
     );
   }
 
+  /* Only use data width if height is also set */
+
+  const dataWidth: number | undefined =
+    data?.width && data?.height ? data?.width : undefined;
+
+  const dataHeight: number | undefined =
+    data?.width && data?.height ? data?.height : undefined;
+
+  const dataUnitsMatch: boolean = unitsMatch(dataWidth, dataHeight);
+
   /*
    * Sanitizes width and height inputs to account for 'number' type
    */
-  const normalizedWidthProp: string | number = width || data?.width || '100%';
+
+  const normalizedWidthProp: string | number =
+    width || (dataUnitsMatch && data?.width) || '100%';
 
   const normalizedWidth: string =
     getUnitValueParts(normalizedWidthProp.toString()).number +
@@ -154,10 +166,18 @@ export function Image({
       : getUnitValueParts(height.toString()).number +
         getUnitValueParts(height.toString()).unit;
 
-  const normalizedSrc: string = data?.url && !src ? data?.url : src;
+  const normalizedSrc: string = src || data?.url;
 
   const normalizedAlt: string =
     data?.altText && !alt ? data?.altText : alt || '';
+
+  const normalizedAspectRatio: string | undefined = aspectRatio
+    ? aspectRatio
+    : dataUnitsMatch
+    ? `${getNormalizedFixedUnit(dataWidth)}/${getNormalizedFixedUnit(
+        dataHeight
+      )}`
+    : undefined;
 
   const {intervals, startingWidth, incrementSize, placeholderWidth} = config;
 
@@ -188,8 +208,10 @@ export function Image({
      */
     const fixedAspectRatio = aspectRatio
       ? aspectRatio
-      : unitsMatch(width, height)
+      : unitsMatch(normalizedWidth, normalizedHeight)
       ? `${intWidth}/${intHeight}`
+      : normalizedAspectRatio
+      ? normalizedAspectRatio
       : undefined;
 
     /*
@@ -208,8 +230,8 @@ export function Image({
         intWidth,
         intHeight
           ? intHeight
-          : aspectRatio && intWidth
-          ? intWidth * (parseAspectRatio(aspectRatio) ?? 1)
+          : fixedAspectRatio && intWidth
+          ? intWidth * (parseAspectRatio(fixedAspectRatio) ?? 1)
           : undefined,
         normalizedHeight === 'auto' ? undefined : crop
       ),
@@ -218,7 +240,7 @@ export function Image({
       style: {
         width: normalizedWidth,
         height: normalizedHeight,
-        aspectRatio,
+        aspectRatio: fixedAspectRatio,
       },
       loading,
       ...passthroughProps,
@@ -227,15 +249,15 @@ export function Image({
     const sizesArray =
       imageWidths === undefined
         ? undefined
-        : generateSizes(imageWidths, aspectRatio, crop);
+        : generateSizes(imageWidths, normalizedAspectRatio, crop);
 
     return React.createElement(Component, {
       srcSet: generateShopifySrcSet(normalizedSrc, sizesArray),
       src: loader(
         normalizedSrc,
         placeholderWidth,
-        aspectRatio && placeholderWidth
-          ? placeholderWidth * (parseAspectRatio(aspectRatio) ?? 1)
+        normalizedAspectRatio && placeholderWidth
+          ? placeholderWidth * (parseAspectRatio(normalizedAspectRatio) ?? 1)
           : undefined
       ),
       alt: normalizedAlt,
@@ -243,7 +265,7 @@ export function Image({
       style: {
         width: normalizedWidth,
         height: normalizedHeight,
-        aspectRatio,
+        aspectRatio: normalizedAspectRatio,
       },
       loading,
       ...passthroughProps,
@@ -437,7 +459,7 @@ export function generateSizes(
  * (or any others that accept equivalent configuration)
  */
 export function shopifyLoader(
-  src = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+  src: string,
   width?: number,
   height?: number,
   crop?: Crop

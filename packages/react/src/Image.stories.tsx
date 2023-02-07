@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type {Story} from '@ladle/react';
 import {Image, ShopifyLoaderOptions} from './Image.js';
+import type {PartialDeep} from 'type-fest';
 import type {Image as ImageType} from './storefront-api-types.js';
 
 type Crop = 'center' | 'top' | 'bottom' | 'left' | 'right';
@@ -16,6 +17,7 @@ type HtmlImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
 const Template: Story<{
   as?: 'img' | 'source';
+  data?: PartialDeep<ImageType, {recurseIntoArrays: true}>;
   src: string;
   width?: string | number;
   height?: string | number;
@@ -30,6 +32,7 @@ const Template: Story<{
 }> = (props) => {
   return (
     <>
+      {/* Standard Usage */}
       <Image
         {...props}
         width="100%"
@@ -37,15 +40,8 @@ const Template: Story<{
         aspectRatio="1/1"
         sizes="100vw"
       />
-      <Image
-        src=""
-        data={{
-          url: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg',
-          altText: 'alt text',
-        }}
-        sizes="50vw"
-        width="50vw"
-      />
+      {/*  */}
+      <Image {...props} sizes="50vw" width="50vw" />
       <Image {...props} aspectRatio="4/3" width="50vw" sizes="50vw" />
       <Image {...props} width="30vw" sizes="30vw" />
       <Image {...props} width={100} height={200} />
@@ -64,5 +60,10 @@ const Template: Story<{
 
 export const Default = Template.bind({});
 Default.args = {
-  src: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg',
+  data: {
+    url: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg',
+    altText: 'alt text',
+    width: 3908,
+    height: 3908,
+  },
 };
