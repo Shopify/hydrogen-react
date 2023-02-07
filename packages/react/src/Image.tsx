@@ -36,7 +36,14 @@ export type ShopifyLoaderParams = Simplify<
  * or switch this to be an SF API type
  */
 
-type Crop = 'center' | 'top' | 'bottom' | 'left' | 'right' | undefined;
+type Crop =
+  | 'center'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | {top: number; left: number; width: number; height: number}
+  | undefined;
 
 export function Image({
   /** An object with fields that correspond to the Storefront API's
