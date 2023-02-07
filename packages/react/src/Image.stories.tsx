@@ -37,12 +37,27 @@ const Template: Story<{
         aspectRatio="1/1"
         sizes="100vw"
       />
+      <Image
+        src=""
+        data={{
+          url: 'https://cdn.shopify.com/s/files/1/0551/4566/0472/products/Main.jpg',
+          altText: 'alt text',
+        }}
+        sizes="50vw"
+        width="50vw"
+      />
       <Image {...props} aspectRatio="4/3" width="50vw" sizes="50vw" />
       <Image {...props} width="30vw" sizes="30vw" />
       <Image {...props} width={100} height={200} />
       <Image {...props} width="5rem" />
-      <h2>Tests to use the old component</h2>
       <Image {...props} widths={[100, 200, 300]} />
+      <Image
+        {...props}
+        loaderOptions={{
+          crop: 'center',
+        }}
+        widths={[200, 300]}
+      />
     </>
   );
 };

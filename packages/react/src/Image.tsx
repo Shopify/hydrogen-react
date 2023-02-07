@@ -81,11 +81,23 @@ export function Image({
   },
   alt,
   loading = 'lazy',
+  /*
+   * Deprecated property from original Image component,
+   * you can now use the flat `crop`, `width`, and `height` props
+   * as well as `src` and `data` to achieve the same result.
+   */
+  loaderOptions,
+  /*
+   * Deprecated property from original Image component,
+   * widths are now calculated automatically based on the
+   * config and width props.
+   */
+  widths,
   ...passthroughProps
 }: {
   as?: 'img' | 'source';
   data?: PartialDeep<ImageType, {recurseIntoArrays: true}>;
-  src: string;
+  src?: string;
   // TODO: Fix this type to be more specific
   // eslint-disable-next-line @typescript-eslint/ban-types
   loader?: Function;
@@ -103,28 +115,38 @@ export function Image({
   /*
    * Deprecated Props from original Image component
    */
-  if (passthroughProps?.loaderOptions || passthroughProps?.widths) {
-    /*
-     * If either of these are used, check if experimental is true
-     * otherwise check for new props, if either exist, throw an error
-     */
-    if (aspectRatio || typeof width === 'string') {
-      console.warn(
-        'The `loaderOptions` and `widths` props are deprecated. Please use the config prop instead.'
-      );
-    }
+  if (loaderOptions) {
+    console.warn(
+      `Deprecated property from original Image component in use: ` +
+        `Use the flat \`crop\`, \`width\`, \`height\`, and src props, or` +
+        `the \`data\` prop to achieve the same result. Image used is ${src}`
+    );
+  }
+
+  if (widths) {
+    console.warn(
+      `Deprecated property from original Image component in use: ` +
+        `\`widths\` are now calculated automatically based on the ` +
+        `config and width props. Image used is ${src}`
+    );
+  }
+
+  if (!sizes) {
+    console.warn(
+      'No sizes prop provided to Image component, ' +
+        'you may be loading unnecessarily large images.' +
+        `Image used is ${src}`
+    );
   }
 
   /*
    * Sanitizes width and height inputs to account for 'number' type
    */
-  const normalizedWidthProp: string | number | undefined =
-    width || data?.width || undefined;
+  const normalizedWidthProp: string | number = width || data?.width || '100%';
 
-  const normalizedWidth: string = normalizedWidthProp
-    ? getUnitValueParts(normalizedWidthProp.toString()).number +
-      getUnitValueParts(normalizedWidthProp.toString()).unit
-    : '100%';
+  const normalizedWidth: string =
+    getUnitValueParts(normalizedWidthProp.toString()).number +
+    getUnitValueParts(normalizedWidthProp.toString()).unit;
 
   const normalizedHeight: string =
     height === undefined
