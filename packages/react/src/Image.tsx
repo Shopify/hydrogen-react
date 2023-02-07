@@ -119,7 +119,9 @@ export function Image({
     console.warn(
       `Deprecated property from original Image component in use: ` +
         `Use the flat \`crop\`, \`width\`, \`height\`, and src props, or` +
-        `the \`data\` prop to achieve the same result. Image used is ${src}`
+        `the \`data\` prop to achieve the same result. Image used is ${
+          src || data?.url
+        }`
     );
   }
 
@@ -127,15 +129,15 @@ export function Image({
     console.warn(
       `Deprecated property from original Image component in use: ` +
         `\`widths\` are now calculated automatically based on the ` +
-        `config and width props. Image used is ${src}`
+        `config and width props. Image used is ${src || data?.url}`
     );
   }
 
   if (!sizes) {
     console.warn(
       'No sizes prop provided to Image component, ' +
-        'you may be loading unnecessarily large images.' +
-        `Image used is ${src}`
+        'you may be loading unnecessarily large images. ' +
+        `Image used is ${src || data?.url}`
     );
   }
 
@@ -150,7 +152,8 @@ export function Image({
   const dataUnitsMatch: boolean = unitsMatch(dataWidth, dataHeight);
 
   /*
-   * Sanitizes width and height inputs to account for 'number' type
+   * Gets normalized values for width, height, src, alt, and aspectRatio props
+   * supporting the presence of `data` in addition to flat props.
    */
 
   const normalizedWidthProp: string | number =
@@ -166,7 +169,11 @@ export function Image({
       : getUnitValueParts(height.toString()).number +
         getUnitValueParts(height.toString()).unit;
 
-  const normalizedSrc: string = src || data?.url;
+  const normalizedSrc: string | undefined = src || data?.url;
+
+  if (!normalizedSrc) {
+    console.error(`No src or data.url provided to Image component.`);
+  }
 
   const normalizedAlt: string =
     data?.altText && !alt ? data?.altText : alt || '';
