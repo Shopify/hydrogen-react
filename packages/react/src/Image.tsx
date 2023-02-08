@@ -214,7 +214,7 @@ function internalImageSrcSet({
           height: crop ? Number(size) * aspectRatio : undefined,
           crop,
           scale,
-        })} ${size}w`
+        })} ${size ?? ''}w`
     )
     .join(', ');
 }

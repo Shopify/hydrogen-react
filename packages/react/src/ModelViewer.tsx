@@ -237,6 +237,7 @@ export function ModelViewer(props: ModelViewerProps) {
       ar-modes={passthroughProps.arModes}
       ar-scale={passthroughProps.arScale}
       // @ts-expect-error arPlacement should exist as a type, not sure why it doesn't. https://modelviewer.dev/docs/index.html#entrydocs-augmentedreality-attributes-arPlacement
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ar-placement={passthroughProps.arPlacement}
       ios-src={passthroughProps.iosSrc}
       touch-action={passthroughProps.touchAction}
@@ -245,6 +246,7 @@ export function ModelViewer(props: ModelViewerProps) {
       auto-rotate={passthroughProps.autoRotate}
       auto-rotate-delay={passthroughProps.autoRotateDelay}
       // @ts-expect-error rotationPerSecond should exist as a type, not sure why it doesn't. https://modelviewer.dev/docs/index.html#entrydocs-stagingandcameras-attributes-rotationPerSecond
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       rotation-per-second={passthroughProps.rotationPerSecond}
       interaction-policy={passthroughProps.interactionPolicy}
       interaction-prompt={passthroughProps.interactionPrompt}

@@ -6,8 +6,9 @@ export function loadScript(
   src: string,
   options?: {module?: boolean; in?: 'head' | 'body'}
 ): Promise<boolean> {
-  const isScriptLoaded: Promise<boolean> = SCRIPTS_LOADED[src];
+  const isScriptLoaded = SCRIPTS_LOADED[src];
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   if (isScriptLoaded) {
     return isScriptLoaded;
   }
@@ -61,7 +62,9 @@ export function useLoadScript(
       }
     }
 
-    loadScriptWrapper();
+    loadScriptWrapper().catch(() => {
+      setStatus('error');
+    });
   }, [url, stringifiedOptions, options]);
 
   return status;

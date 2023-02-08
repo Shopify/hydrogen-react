@@ -40,7 +40,7 @@ export function ExternalVideo(props: ExternalVideoProps) {
 
   if (options) {
     const urlObject = new URL(data.embedUrl);
-    for (const key of Object.keys(options)) {
+    for (const key of Object.keys(options) as (keyof typeof options)[]) {
       // @ts-expect-error https://github.com/microsoft/TypeScript/issues/32951
       urlObject.searchParams.set(key, options[key]);
     }

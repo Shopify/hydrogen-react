@@ -44,11 +44,15 @@ export function useCartFetch() {
           variables,
         }),
       })
-        .then((res) => res.json())
+        .then(
+          (res) =>
+            res.json() as StorefrontApiResponseOkPartial<ReturnDataGeneric>
+        )
         .catch((error) => {
           return {
             data: undefined,
-            errors: error.toString(),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            errors: error?.toString(),
           };
         });
     },

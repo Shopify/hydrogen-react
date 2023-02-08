@@ -4,15 +4,22 @@ module.exports = {
       version: 28,
     },
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 2020,
+    project: ['./tsconfig.json'],
+    tsconfigRootDir: __dirname,
   },
   plugins: ['eslint-plugin-tsdoc'],
   ignorePatterns: [
     '**/storefront-api-types.d.ts',
     '**/dist/**',
     '**/coverage/**',
+    '**/docs/**',
+    '**/.eslintrc.cjs',
+    '**/src/*.example.tsx',
+    '**/src/*.example.ts',
+    '**/src/*.example.jsx',
+    '**/src/*.example.js',
   ],
   extends: [
     'plugin:node/recommended',
@@ -21,6 +28,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   rules: {
     'jest/no-disabled-tests': 'off',

@@ -151,10 +151,10 @@ export function parseMetafield<ReturnGeneric>(
 export function parseJSON(json: string) {
   if (String(json).includes('__proto__')) {
     return JSON.parse(json, (k, v) => {
-      if (k !== '__proto__') return v;
-    });
+      if (k !== '__proto__') return v as unknown;
+    }) as unknown;
   }
-  return JSON.parse(json);
+  return JSON.parse(json) as unknown;
 }
 
 // taken from https://shopify.dev/apps/metafields/types

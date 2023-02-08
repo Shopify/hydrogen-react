@@ -165,6 +165,7 @@ export function useMoney(money: MoneyV2): UseMoneyValue {
   return useMemo(
     () =>
       new Proxy(lazyFormatters as unknown as UseMoneyValue, {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         get: (target, key) => Reflect.get(target, key)?.call(null),
       }),
     [lazyFormatters]
