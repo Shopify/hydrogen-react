@@ -89,7 +89,7 @@
     "copy-storefront-types": "cpy ./src/storefront-api-types.d.ts ./dist/types/ --flat",
     "format": "prettier --write \"{src,docs}/**/*\" --ignore-unknown",
     "graphql-types": "graphql-codegen --config codegen.ts && yarn format",
-    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx packages/*/src",
+    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx src",
     "prepack": "yarn build",
     "test": "vitest",
     "test:ci": "vitest run --coverage",
