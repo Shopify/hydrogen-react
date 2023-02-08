@@ -36,13 +36,6 @@ module.exports = {
     'no-console': 'off',
     'no-constant-condition': 'off',
     'tsdoc/syntax': 'error',
-    // 'node/no-missing-import': [
-    //   'error',
-    //   {
-    //     allowModules: ['types', 'testUtils'],
-    //     tryExtensions: ['.ts', '.js', '.jsx', '.tsx', '.d.ts'],
-    //   },
-    // ],
     'node/no-extraneous-import': [
       'error',
       {
@@ -79,11 +72,7 @@ module.exports = {
         destructuring: 'all',
       },
     ],
-    // "@typescript-eslint/ban-types": "off",
-    // "@typescript-eslint/ban-ts-comment": "off",
     '@typescript-eslint/naming-convention': 'off',
-    // "@typescript-eslint/no-namespace": "off",
-    // "@typescript-eslint/no-empty-function": "off",
 
     // ensure that file extensions are used from now on
     'import/extensions': ['error', 'ignorePackages'],
@@ -110,6 +99,13 @@ module.exports = {
       plugins: ['simple-import-sort'],
       rules: {
         'simple-import-sort/exports': 'error',
+      },
+    },
+    {
+      // we want explicit function return types for source files, but not for the examples, tests, etc.
+      files: ['src/**/!(*.test|*.example|*.doc|*.stories).?(ts|js|tsx|jsx)'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'error',
       },
     },
   ],

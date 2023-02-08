@@ -73,7 +73,7 @@ export function Image({
   widths,
   decoding = 'async',
   ...rest
-}: ShopifyImageProps) {
+}: ShopifyImageProps): JSX.Element | null {
   if (!data.url) {
     const missingUrlError = `<Image/>: the 'data' prop requires the 'url' property. Image: ${
       data.id ?? 'no ID provided'
@@ -181,7 +181,7 @@ function internalImageSrcSet({
   widths,
   loader,
   height,
-}: InternalShopifySrcSetGeneratorsParams) {
+}: InternalShopifySrcSetGeneratorsParams): string {
   const hasCustomWidths = widths && Array.isArray(widths);
   if (hasCustomWidths && widths.some((size) => isNaN(size as number))) {
     throw new Error(

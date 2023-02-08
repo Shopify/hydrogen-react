@@ -21,10 +21,10 @@ export function loadScript(
       script.type = 'text/javascript';
     }
     script.src = src;
-    script.onload = () => {
+    script.onload = (): void => {
       resolve(true);
     };
-    script.onerror = () => {
+    script.onerror = (): void => {
       reject(false);
     };
     if (options?.in === 'head') {
@@ -52,7 +52,7 @@ export function useLoadScript(
   const stringifiedOptions = JSON.stringify(options);
 
   useEffect(() => {
-    async function loadScriptWrapper() {
+    async function loadScriptWrapper(): Promise<void> {
       try {
         setStatus('loading');
         await loadScript(url, options);

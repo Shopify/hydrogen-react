@@ -128,6 +128,7 @@ const UPDATING_CART_EVENTS: StateMachine.Machine<
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function createCartMachine(
   initialCart?: PartialDeep<CartType, {recurseIntoArrays: true}>
 ) {
@@ -174,6 +175,7 @@ function createCartMachine(
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useCartAPIStateMachine({
   numCartLines,
   onCartActionEntry,
@@ -363,7 +365,7 @@ export function useCartAPIStateMachine({
         send(resultEvent);
       },
       ...(onCartActionEntry && {
-        onCartActionEntry: (context, event) => {
+        onCartActionEntry: (context, event): void => {
           if (isCartActionEvent(event)) {
             onCartActionEntry(context, event);
           }
@@ -375,7 +377,7 @@ export function useCartAPIStateMachine({
         }),
       }),
       ...(onCartActionComplete && {
-        onCartActionComplete: (context, event) => {
+        onCartActionComplete: (context, event): void => {
           if (isCartFetchResultEvent(event)) {
             onCartActionComplete(context, event);
           }

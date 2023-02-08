@@ -14,6 +14,7 @@ import {
 import type {StorefrontApiResponseOkPartial} from './storefront-api-response.types.js';
 import {getShopifyCookies} from './cookies-utils.js';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useCartFetch() {
   const {storefrontId, getPublicTokenHeaders, getStorefrontApiUrl} = useShop();
 
@@ -60,6 +61,7 @@ export function useCartFetch() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useInstantCheckout() {
   const [cart, updateCart] = useState<Cart | undefined>();
   const [checkoutUrl, updateCheckoutUrl] = useState<Cart['checkoutUrl']>();

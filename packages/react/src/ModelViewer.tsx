@@ -61,7 +61,7 @@ type ModelViewerBaseProps = {
  *
  * ModelViewer is using version `1.21.1` of the `@google/model-viewer` library.
  */
-export function ModelViewer(props: ModelViewerProps) {
+export function ModelViewer(props: ModelViewerProps): JSX.Element | null {
   const [modelViewer, setModelViewer] = useState<undefined | HTMLElement>(
     undefined
   );
