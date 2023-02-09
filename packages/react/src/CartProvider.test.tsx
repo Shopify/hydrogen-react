@@ -177,7 +177,7 @@ describe('<CartProvider />', () => {
 
       expect(result.current.status).toBe('uninitialized');
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -212,7 +212,7 @@ describe('<CartProvider />', () => {
         }),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -238,7 +238,7 @@ describe('<CartProvider />', () => {
 
       expect(result.current.status).toBe('uninitialized');
 
-      await act(() => {
+      void void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -271,7 +271,7 @@ describe('<CartProvider />', () => {
 
       expect(result.current.status).toBe('uninitialized');
 
-      await act(() => {
+      void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -311,7 +311,7 @@ describe('<CartProvider />', () => {
       });
 
       // First create cart should fail with error
-      await act(() => {
+      void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -335,7 +335,7 @@ describe('<CartProvider />', () => {
       });
 
       // Create cart should work now
-      await act(() => {
+      void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -366,7 +366,7 @@ describe('<CartProvider />', () => {
           cartLineAdd: cartLineAddSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesAdd([
             {
               merchandiseId: '123',
@@ -397,7 +397,7 @@ describe('<CartProvider />', () => {
           cartLineAdd: cartLineAddSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesAdd([
             {
               merchandiseId: '123',
@@ -429,7 +429,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.linesAdd([
             {
               merchandiseId: '123',
@@ -456,7 +456,7 @@ describe('<CartProvider />', () => {
           cartLineUpdate: cartLineUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesUpdate([
             {
               id: '123',
@@ -488,7 +488,7 @@ describe('<CartProvider />', () => {
           cartLineUpdate: cartLineUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesUpdate([
             {
               id: '123',
@@ -521,7 +521,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.linesUpdate([
             {
               id: '123',
@@ -550,7 +550,7 @@ describe('<CartProvider />', () => {
           cartLineRemove: cartLineRemoveSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesRemove(['123']);
         });
 
@@ -577,7 +577,7 @@ describe('<CartProvider />', () => {
           cartLineRemove: cartLineRemoveSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.linesRemove(['123']);
         });
 
@@ -604,7 +604,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.linesRemove(['123']);
         });
 
@@ -628,7 +628,7 @@ describe('<CartProvider />', () => {
           noteUpdate: noteUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.noteUpdate('test note');
         });
 
@@ -655,7 +655,7 @@ describe('<CartProvider />', () => {
           noteUpdate: noteUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.noteUpdate('test note');
         });
 
@@ -682,7 +682,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.noteUpdate('test note');
         });
 
@@ -706,7 +706,7 @@ describe('<CartProvider />', () => {
           buyerIdentityUpdate: buyerIdentityUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
@@ -733,7 +733,7 @@ describe('<CartProvider />', () => {
           buyerIdentityUpdate: buyerIdentityUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
@@ -760,7 +760,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.buyerIdentityUpdate({countryCode: 'US'});
         });
 
@@ -784,7 +784,7 @@ describe('<CartProvider />', () => {
           cartAttributesUpdate: cartAttributesUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.cartAttributesUpdate([{key: 'key', value: 'value'}]);
         });
 
@@ -811,7 +811,7 @@ describe('<CartProvider />', () => {
           cartAttributesUpdate: cartAttributesUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.cartAttributesUpdate([{key: 'key', value: 'value'}]);
         });
 
@@ -838,7 +838,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.cartAttributesUpdate([{key: 'key', value: 'value'}]);
         });
 
@@ -862,7 +862,7 @@ describe('<CartProvider />', () => {
           discountCodesUpdate: discountCodesUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.discountCodesUpdate(['DiscountCode']);
         });
 
@@ -889,7 +889,7 @@ describe('<CartProvider />', () => {
           discountCodesUpdate: discountCodesUpdateSpy,
         });
 
-        await act(() => {
+        void act(() => {
           result.current.discountCodesUpdate(['DiscountCode']);
         });
 
@@ -917,7 +917,7 @@ describe('<CartProvider />', () => {
           }
         );
 
-        await act(() => {
+        void act(() => {
           result.current.discountCodesUpdate(['DiscountCode']);
         });
 
@@ -942,7 +942,7 @@ describe('<CartProvider />', () => {
         cartLineAdd: cartLineAddSpy,
       });
 
-      await act(() => {
+      void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -967,7 +967,7 @@ describe('<CartProvider />', () => {
         cartCreate: cartCreateSpy,
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -1006,7 +1006,8 @@ describe('<CartProvider />', () => {
       });
 
       // First create cart should be successful
-      await act(() => {
+      // eslint-disable-next-line @typescript-eslint/require-await
+      await act(async () => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -1015,7 +1016,7 @@ describe('<CartProvider />', () => {
       });
 
       // create an error
-      await act(() => {
+      void act(() => {
         result.current.linesAdd([
           {
             merchandiseId: '123',
@@ -1049,7 +1050,7 @@ describe('<CartProvider />', () => {
         wrapper: ShopifyCartProvider({countryCode: mockCountryCode}),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -1084,7 +1085,7 @@ describe('<CartProvider />', () => {
         wrapper: ShopifyCartProvider({countryCode: mockCountryCodeServerProps}),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({
           buyerIdentity: {countryCode: mockCountryCode},
         });
@@ -1136,7 +1137,7 @@ describe('<CartProvider />', () => {
         }),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -1173,7 +1174,7 @@ describe('<CartProvider />', () => {
         }),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({});
       });
 
@@ -1210,7 +1211,7 @@ describe('<CartProvider />', () => {
         }),
       });
 
-      await act(() => {
+      void act(() => {
         result.current.cartCreate({
           buyerIdentity: {
             customerAccessToken: mockCustomerAccessToken,
@@ -1249,7 +1250,7 @@ describe('<CartProvider />', () => {
         cartFromGraphQL(cartMockWithLine).lines
       );
 
-      await act(() => {
+      void act(() => {
         result.current.linesRemove([
           cartMockWithLine.lines.edges[0].node.id ?? '',
         ]);
@@ -1283,7 +1284,7 @@ describe('<CartProvider />', () => {
         cartLineRemove: cartLineRemoveSpy,
       });
 
-      await act(() => {
+      void act(() => {
         result.current.linesRemove([
           cartMockWithLine.lines.edges[0].node.id ?? '',
         ]);
@@ -1335,7 +1336,7 @@ describe('<CartProvider />', () => {
         cartFromGraphQL(cartMockWithLine).lines
       );
 
-      await act(() => {
+      void act(() => {
         result.current.linesUpdate([
           {
             id: cartMockWithLine.lines.edges[0].node.id ?? '',
@@ -1393,7 +1394,7 @@ describe('<CartProvider />', () => {
         cartFromGraphQL(cartMockWithLine).lines
       );
 
-      await act(() => {
+      void act(() => {
         result.current.linesUpdate([
           {
             id: cartMockWithLine.lines.edges[0].node.id ?? '',
@@ -1438,7 +1439,7 @@ describe('<CartProvider />', () => {
       wrapper: ShopifyCartProvider({cartFragment: cartFragmentMock}),
     });
 
-    await act(() => {
+    void act(() => {
       result.current.cartCreate({});
     });
 
@@ -1472,7 +1473,8 @@ async function useCartWithInitializedCart(
   });
 
   // creates a cart and wait till idle
-  await act(() => {
+  // eslint-disable-next-line @typescript-eslint/require-await
+  await act(async () => {
     result.current.linesAdd([
       {
         merchandiseId: '123',
