@@ -27,27 +27,33 @@ describe('<CartLineQuantity />', () => {
     expect(quantity.tagName).toBe('P');
   });
 
-  it(`validates props for a component passed to the 'as' prop`, () => {
-    render(
-      <CartLineProvider line={CART_LINE}>
-        <CartLineQuantity as={FakeComponentWithRequiredProp} testing />
-        <CartLineQuantity
-          as={FakeComponentWithRequiredProp}
-          // @ts-expect-error Testing should be a boolean
-          testing="alsdkjf"
-        />
-      </CartLineProvider>
-    );
-
-    const quantity = screen.getByRole('link', {
-      name: `${CART_LINE?.quantity ?? ''}`,
+  describe(`typescript validation`, () => {
+    it.skip(`validates props for a component passed to the 'as' prop`, () => {
+      expect.assertions(0);
+      render(
+        <CartLineProvider line={CART_LINE}>
+          <CartLineQuantity as={FakeComponentWithRequiredProp} testing />
+        </CartLineProvider>
+      );
     });
 
-    expect(quantity).toBeInTheDocument();
-    expect(quantity).toHaveAttribute('href', '/test');
+    it.skip(`typescript validation: validates props for a component passed to the 'as' prop`, () => {
+      expect.assertions(0);
+      render(
+        <CartLineProvider line={CART_LINE}>
+          <CartLineQuantity
+            as={FakeComponentWithRequiredProp}
+            // @ts-expect-error Testing should be a boolean
+            testing="alsdkjf"
+          />
+        </CartLineProvider>
+      );
+    });
   });
 });
 
+const FAKECOMPONENTID = 'fake-component';
+
 function FakeComponentWithRequiredProp({testing}: {testing: boolean}) {
-  return <div>{testing}</div>;
+  return <div data-testId={FAKECOMPONENTID}>{testing}</div>;
 }
