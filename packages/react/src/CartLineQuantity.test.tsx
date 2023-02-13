@@ -55,5 +55,5 @@ describe('<CartLineQuantity />', () => {
 const FAKECOMPONENTID = 'fake-component';
 
 function FakeComponentWithRequiredProp({testing}: {testing: boolean}) {
-  return <div data-testId={FAKECOMPONENTID}>{testing}</div>;
+  return <div data-testid={FAKECOMPONENTID}>{testing}</div>;
 }

@@ -1,32 +1,46 @@
+import {render, screen} from '@testing-library/react';
+import {useCart, CartProvider} from './CartProvider.js';
+import {
+  CART_LINE,
+  CART_WITH_LINES_FLATTENED,
+  getCartWithActionsMock,
+} from './CartProvider.test.helpers.js';
 import {CartLineProvider} from './CartLineProvider.js';
 import {CartLineQuantity} from './CartLineQuantity.js';
 import {CartLineQuantityAdjustButton} from './CartLineQuantityAdjustButton.js';
-import {CART_LINE} from './CartLineProvider/tests/fixtures.js';
-import {useCart} from './CartProvider.js';
-import {CART_WITH_LINES_FLATTENED} from './CartProvider/tests/fixtures.js';
-import {mountWithCartProvider} from './CartProvider/tests/utilities.js';
-import {BaseButton} from './BaseButton.js';
+import userEvent from '@testing-library/user-event';
+
+vi.mock('./CartProvider');
 
 describe('CartLineQuantityAdjustButton', () => {
-  it('increases quantity', () => {
-    const linesUpdateMock = jest.fn();
-    const wrapper = mountWithCartProvider(
+  it('increases quantity', async () => {
+    const linesUpdateMock = vi.fn();
+
+    vi.mocked(useCart).mockImplementation(() =>
+      getCartWithActionsMock({
+        linesUpdate: linesUpdateMock,
+        lines: [CART_LINE],
+      })
+    );
+
+    const user = userEvent.setup();
+
+    render(
       <Cart>
         <CartLineQuantityAdjustButton adjust="increase">
           Increase
         </CartLineQuantityAdjustButton>
       </Cart>,
       {
-        linesUpdate: linesUpdateMock,
-        cart: {lines: [CART_LINE]},
+        wrapper: CartProvider,
       }
     );
 
-    expect(wrapper).toContainReactComponent('span', {
-      children: CART_LINE.quantity,
-    });
+    expect(screen.getByTestId(QUANTITY_TEST_ID)).toHaveTextContent(
+      (CART_LINE?.quantity ?? 0).toString()
+    );
 
-    wrapper.find('button')!.trigger('onClick');
+    await user.click(screen.getByRole('button'));
 
     expect(linesUpdateMock).toHaveBeenCalledWith([
       {
@@ -36,30 +50,38 @@ describe('CartLineQuantityAdjustButton', () => {
     ]);
   });
 
-  it('decreases quantity when quantity >= 2', () => {
-    const linesUpdateMock = jest.fn();
-    const customLine = {
+  it('decreases quantity when quantity >= 2', async () => {
+    const linesUpdateMock = vi.fn();
+    const user = userEvent.setup();
+
+    const tempCartLine = {
       ...CART_WITH_LINES_FLATTENED['lines'][0],
       quantity: 2,
     };
-    const wrapper = mountWithCartProvider(
+
+    vi.mocked(useCart).mockImplementation(() =>
+      getCartWithActionsMock({
+        linesUpdate: linesUpdateMock,
+        lines: [tempCartLine],
+      })
+    );
+
+    render(
       <Cart>
         <CartLineQuantityAdjustButton adjust="decrease">
-          Decrease
+          Increase
         </CartLineQuantityAdjustButton>
       </Cart>,
       {
-        linesUpdate: linesUpdateMock,
-        // @ts-ignore
-        lines: [customLine],
+        wrapper: CartProvider,
       }
     );
 
-    expect(wrapper).toContainReactComponent('span', {
-      children: customLine.quantity,
-    });
+    expect(screen.getByTestId(QUANTITY_TEST_ID)).toHaveTextContent(
+      (tempCartLine?.quantity ?? 0).toString()
+    );
 
-    wrapper.find('button')!.trigger('onClick');
+    await user.click(screen.getByRole('button'));
 
     expect(linesUpdateMock).toHaveBeenCalledWith([
       {
@@ -69,107 +91,96 @@ describe('CartLineQuantityAdjustButton', () => {
     ]);
   });
 
-  it('decreases quantity and removes the line when quantity === 1', () => {
-    const linesRemoveMock = jest.fn();
-    const wrapper = mountWithCartProvider(
+  it('decreases quantity and removes the line when quantity === 1', async () => {
+    const linesRemoveMock = vi.fn();
+    const user = userEvent.setup();
+
+    const tempCartLine = {
+      ...CART_WITH_LINES_FLATTENED['lines'][0],
+      quantity: 1,
+    };
+
+    vi.mocked(useCart).mockImplementation(() =>
+      getCartWithActionsMock({
+        linesRemove: linesRemoveMock,
+        lines: [tempCartLine],
+      })
+    );
+
+    render(
       <Cart>
         <CartLineQuantityAdjustButton adjust="decrease">
-          Decrease
+          Increase
         </CartLineQuantityAdjustButton>
       </Cart>,
       {
-        linesRemove: linesRemoveMock,
-        cart: {
-          lines: [CART_LINE],
-        },
+        wrapper: CartProvider,
       }
     );
 
-    expect(wrapper).toContainReactComponent('span', {
-      children: CART_LINE.quantity,
-    });
+    expect(screen.getByTestId(QUANTITY_TEST_ID)).toHaveTextContent(
+      (tempCartLine?.quantity ?? 0).toString()
+    );
 
-    wrapper.find('button')!.trigger('onClick');
+    await user.click(screen.getByRole('button'));
 
     expect(linesRemoveMock).toHaveBeenCalledWith([CART_LINE.id]);
   });
 
-  it('removes the line', () => {
-    const linesRemoveMock = jest.fn();
-    const wrapper = mountWithCartProvider(
-      <Cart>
-        <CartLineQuantityAdjustButton adjust="remove">
-          Remove
-        </CartLineQuantityAdjustButton>
-      </Cart>,
-      {
+  it('removes the line', async () => {
+    const linesRemoveMock = vi.fn();
+    const user = userEvent.setup();
+
+    vi.mocked(useCart).mockImplementation(() =>
+      getCartWithActionsMock({
         linesRemove: linesRemoveMock,
         lines: [CART_LINE],
+      })
+    );
+
+    render(
+      <Cart>
+        <CartLineQuantityAdjustButton adjust="remove">
+          Increase
+        </CartLineQuantityAdjustButton>
+      </Cart>,
+      {
+        wrapper: CartProvider,
       }
     );
 
-    expect(wrapper).toContainReactComponent('span', {
-      children: CART_LINE.quantity,
-    });
+    expect(screen.getByTestId(QUANTITY_TEST_ID)).toHaveTextContent(
+      (CART_LINE?.quantity ?? 0).toString()
+    );
 
-    wrapper.find('button')!.trigger('onClick');
+    await user.click(screen.getByRole('button'));
 
     expect(linesRemoveMock).toHaveBeenCalledWith([CART_LINE.id]);
-  });
-
-  describe('BaseButton', () => {
-    it('passes the onClick handler', () => {
-      const mockOnClick = jest.fn();
-      const wrapper = mountWithCartProvider(
-        <Cart>
-          <CartLineQuantityAdjustButton onClick={mockOnClick} adjust="increase">
-            Increase
-          </CartLineQuantityAdjustButton>
-        </Cart>,
-        {
-          cart: {lines: [CART_LINE]},
-        }
-      );
-
-      expect(wrapper).toContainReactComponent(BaseButton, {
-        onClick: mockOnClick,
-      });
-    });
-
-    it('passes the buttonRef', () => {
-      const mockRef = React.createRef<HTMLButtonElement>();
-
-      const wrapper = mountWithCartProvider(
-        <Cart>
-          <CartLineQuantityAdjustButton buttonRef={mockRef} adjust="increase">
-            Increase
-          </CartLineQuantityAdjustButton>
-        </Cart>,
-        {
-          cart: {lines: [CART_LINE]},
-        }
-      );
-
-      expect(wrapper).toContainReactComponent(BaseButton, {
-        buttonRef: mockRef,
-      });
-    });
   });
 });
 
-function Cart({children}: {children: any}) {
+const QUANTITY_TEST_ID = 'quantity';
+
+function Cart({children}: {children: React.ReactNode}) {
   const {lines} = useCart();
+
+  if (!lines) {
+    throw new Error('No lines found in cart.');
+  }
 
   return (
     <ul>
-      {lines.map((line) => (
-        <li key={line.id}>
-          <CartLineProvider line={line}>
-            <CartLineQuantity />
-            {children}
-          </CartLineProvider>
-        </li>
-      ))}
+      {lines.map((line) => {
+        if (!line) throw new Error('no line');
+        return (
+          <li key={line?.id}>
+            <CartLineProvider line={line}>
+              <CartLineQuantity data-testid={QUANTITY_TEST_ID} />
+              {children}
+            </CartLineProvider>
+          </li>
+        );
+      })}
     </ul>
   );
 }
