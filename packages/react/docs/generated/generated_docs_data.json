@@ -574,7 +574,7 @@
     "related": [
       {
         "name": "useCartLine",
-        "type": "hooks",
+        "type": "gear",
         "url": "/api/hydrogen-react/hooks/useCartLine"
       },
       {
@@ -636,7 +636,7 @@
     "related": [
       {
         "name": "useCartLine",
-        "type": "hooks",
+        "type": "gear",
         "url": "/api/hydrogen-react/hooks/useCartLine"
       },
       {
