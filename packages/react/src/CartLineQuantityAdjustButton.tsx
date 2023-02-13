@@ -2,6 +2,7 @@ import {useCallback} from 'react';
 import {useCart} from './CartProvider.js';
 import {useCartLine} from './CartLineProvider.js';
 import {BaseButton, type BaseButtonProps} from './BaseButton.js';
+import type {CartLineUpdateInput} from './storefront-api-types.js';
 
 type CartLineQuantityAdjustButtonProps<
   AsType extends React.ElementType = 'button'
@@ -37,9 +38,22 @@ export function CartLineQuantityAdjustButton<
       return;
     }
 
-    // @TODO: update to pass in the whole cart line object
-    linesUpdate([{id: cartLine?.id ?? '', quantity}]);
-  }, [adjust, cartLine.id, cartLine.quantity, linesRemove, linesUpdate]);
+    const lineUpdate = {
+      id: cartLine?.id ?? '',
+      quantity,
+      attributes: (cartLine?.attributes ??
+        []) as CartLineUpdateInput['attributes'],
+    } satisfies CartLineUpdateInput;
+
+    linesUpdate([lineUpdate]);
+  }, [
+    adjust,
+    cartLine?.attributes,
+    cartLine?.id,
+    cartLine?.quantity,
+    linesRemove,
+    linesUpdate,
+  ]);
 
   return (
     <BaseButton

@@ -46,6 +46,12 @@ describe('CartLineQuantityAdjustButton', () => {
       {
         id: CART_LINE.id,
         quantity: 2,
+        attributes: [
+          {
+            key: 'color',
+            value: 'red',
+          },
+        ],
       },
     ]);
   });
@@ -87,6 +93,12 @@ describe('CartLineQuantityAdjustButton', () => {
       {
         id: CART_LINE.id,
         quantity: 1,
+        attributes: [
+          {
+            key: 'color',
+            value: 'red',
+          },
+        ],
       },
     ]);
   });
