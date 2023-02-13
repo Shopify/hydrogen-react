@@ -6,7 +6,7 @@ Adding `<CartLineQuantity />` and `<CartLineQuantityAdjustButton />`
 
 The `<CartLineQuantity />` and `<CartLineQuantityAdjustButton />` components have been added / migrated over from Hydrogen v1.
 
-Additionally, a bug with `<CartLineQuantityAdjustButton />` causing CartLine Attributes to be erased has been fixed in the process.
+Additionally, fixed a bug when using `<CartLineQuantityAdjustButton />` that caused CartLine Attributes to be erased. CartLine Attributes should now be persisted when using that component.
 
 ## `useCartLine()` TypeScript types update
 
