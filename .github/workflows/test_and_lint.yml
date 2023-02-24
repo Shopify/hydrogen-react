@@ -37,7 +37,7 @@ jobs:
           cache: 'npm'
 
       - name: Install the packages
-        run: npm run install --frozen-lockfile
+        run: npm ci
 
       - name: Run CI checks
         run: npm run ci:checks
